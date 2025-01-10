@@ -3,7 +3,7 @@ import { PenTool, Cog, Activity } from "lucide-react";
 import Image from "next/image";
 
 import { PageLayout, FeatureCard } from "../components/user";
-import { Navbar, BaseButton } from "@/components/common";
+import { Navbar } from "@/components/common";
 
 const EngineeringHome = () => {
   const procedures = [
@@ -24,23 +24,6 @@ const EngineeringHome = () => {
     },
   ];
 
-  const projects = [
-    {
-      title: "Industrial Automation",
-      description: "Automated production line components",
-      image: "/assets/1.jpg",
-    },
-    {
-      title: "Aerospace Components",
-      description: "High-precision aerospace parts",
-      image: "/assets/2.jpg",
-    },
-    {
-      title: "Renewable Energy Solutions",
-      description: "Innovative components for solar and wind energy systems",
-      image: "/assets/3.jpg",
-    },
-  ];
   const featuredComponents = [
     {
       title: "Component 1",
@@ -86,34 +69,6 @@ const EngineeringHome = () => {
                   icon={procedure.icon}
                   featured={index === 0}
                 />
-              ))}
-            </div>
-          </section>
-
-          {/* Projects Section */}
-          <section>
-            <h2 className="mb-6 text-2xl font-bold">Featured Projects</h2>
-            <div className="grid gap-6 md:grid-cols-3">
-              {projects.map((project, index) => (
-                <div key={index} className="overflow-hidden rounded-lg bg-white shadow-md">
-                  <Image
-                    width={192}
-                    height={108}
-                    src={project.image}
-                    alt={project.title}
-                    className="h-52 w-full object-cover"
-                  />
-                  <div className="px-6 py-3">
-                    <h3 className="mb-2 text-xl font-semibold">{project.title}</h3>
-                    <p className="">{project.description}</p>
-
-                    <div className="mt-4 w-fit">
-                      <BaseButton id="viewDetailsButton" type="submit" handleClick={() => {}}>
-                        <span className="px-3">View Details</span>
-                      </BaseButton>
-                    </div>
-                  </div>
-                </div>
               ))}
             </div>
           </section>

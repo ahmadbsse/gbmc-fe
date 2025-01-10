@@ -47,6 +47,20 @@ const ProductPage = () => {
     { text: "Tractor Parts", href: "/tractor-parts" },
     { text: "Product Details", href: "product-details" },
   ];
+
+  const specifications = {
+    product_code: "12DT8A5FD",
+    SKU: "A5SWH43ATBGU2",
+    model: "5075E",
+    manufacturer: "John Deere",
+    rating: 4.5,
+    weight: "5710kg",
+    material: "Aluminium",
+    alternative_part_number: ["111111", "44444", "55555"],
+  };
+  const replaceSpecialCharacterWithSpaced = (key: string): string => {
+    return key.replace(/[^a-zA-Z0-9\s]/g, " ");
+  };
   return (
     <>
       <Navbar />
@@ -143,19 +157,21 @@ const ProductPage = () => {
                 {/* Product Details Section */}
                 <div className="space-y-6">
                   <div className="space-y-2">
-                    <p className="text-sm lg:text-base">PRODUCT CODE: 12DT8A5FD</p>
+                    <p className="text-sm lg:text-base">
+                      PRODUCT CODE: {specifications.product_code}
+                    </p>
 
                     <h1 className="text-xl font-bold text-primary lg:text-3xl">
                       Engine Head Cover- Genuine
                     </h1>
 
-                    <span className="text-xs italic">SKU: A5SWH43ATBGU2</span>
+                    <span className="text-xs italic">SKU: {specifications.SKU}</span>
 
                     <div className="flex items-center space-x-2">
                       {[...Array(5)].map((_, i) => (
                         <Star key={i} className="text-fill-primary/40 fill-secondary" size={16} />
                       ))}
-                      <span className="">(77 reviews)</span>
+                      <span className="">({specifications.rating} reviews)</span>
                     </div>
                   </div>
 
@@ -168,6 +184,27 @@ const ProductPage = () => {
                     culpa qui officia deserunt mollit anim id est laborum.
                   </p>
                 </div>
+              </div>
+              <div className="mt-8 max-w-3xl">
+                <h2 className="mb-3 font-semibold lg:text-xl">Specifications</h2>
+                <table className="product-specification-table product-specification-table-striped">
+                  <tbody>
+                    {Object.keys(specifications).map((key, index) => {
+                      const value = (
+                        specifications as unknown as Record<
+                          string,
+                          number | [] | string | undefined
+                        >
+                      )[key];
+                      return (
+                        <tr key={index}>
+                          <td className="capitalize">{replaceSpecialCharacterWithSpaced(key)}:</td>
+                          <td>{Array.isArray(value) ? value.join(", ") : value}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
               </div>
             </div>
           </PageLayout>
