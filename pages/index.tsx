@@ -42,12 +42,12 @@ const Home = () => {
         {/* Main Split Screen Sections */}
         <div className="flex flex-1 flex-col md:flex-row">
           {/* Engineering Components Section */}
-          <div className="relative m-4 cursor-pointer md:w-1/2 lg:m-0 lg:my-10">
+          <div className="relative m-4 cursor-pointer md:w-1/2 lg:m-0">
             <div className="absolute inset-0 z-10 bg-gradient-to-b from-slate-900/50 to-slate-900/80" />
             <Image
               src="/assets/engineering-comp.webp"
               alt="Engineering"
-              height={1000}
+              height={1200}
               width={1000}
               priority
               className="absolute inset-0 h-full w-full object-cover"
@@ -74,7 +74,7 @@ const Home = () => {
           </div>
 
           {/* Tractor Parts Section */}
-          <div className="relative m-4 cursor-pointer md:w-1/2 lg:m-0 lg:my-10">
+          <div className="relative m-4 cursor-pointer md:w-1/2 lg:m-0">
             <div className="absolute inset-0 z-10 bg-gradient-to-b from-gray-900/50 to-gray-900/80" />
             <Image
               src="/assets/tractor-parts.webp"
