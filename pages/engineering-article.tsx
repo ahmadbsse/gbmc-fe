@@ -46,9 +46,9 @@ const Article = () => {
           <p className="text-sm lg:text-base">{data.description}</p>
           <section id="projects" className="pt-5 lg:py-8">
             <article className="reverse grid grid-cols-1 md:grid-cols-10">
-              <div className="text rounded-lg bg-[#707070] p-4 text-sm text-white lg:text-base">
-                <div className="flex flex-col gap-5 px-11 py-7 lg:w-[400px]">
-                  <h2 className="text-2xl font-bold">Plate Service, Leppävesi</h2>
+              <div className="rounded-lg bg-[#707070] p-4 text-sm text-white lg:text-base">
+                <div className="flex flex-col gap-2 py-7 lg:w-[400px] lg:gap-5 lg:px-11">
+                  <h2 className="text-xl font-bold lg:text-2xl">Plate Service, Leppävesi</h2>
                   <p className="">
                     <strong>
                       Services:
