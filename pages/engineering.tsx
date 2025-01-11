@@ -1,11 +1,13 @@
 import React from "react";
 import { PenTool, Cog, Activity } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 import { PageLayout, FeatureCard } from "../components/user";
 import { Navbar } from "@/components/common";
 
 const EngineeringHome = () => {
+  const router = useRouter();
   const procedures = [
     {
       title: "Precision Machining",
@@ -50,7 +52,7 @@ const EngineeringHome = () => {
     <>
       <Navbar showSearchbar />
       <PageLayout
-        title="Engineering Components"
+        title="Engineering Procedures"
         breadcrumbs={[
           { text: "Home", href: "/" },
           { text: "Engineering", href: "/engineering" },
@@ -59,7 +61,6 @@ const EngineeringHome = () => {
         <div className="grid gap-8">
           {/* Procedures Section */}
           <section>
-            <h2 className="mb-6 text-lg font-bold xl:text-2xl">Engineering Procedures</h2>
             <div className="grid gap-6 md:grid-cols-3">
               {procedures.map((procedure, index) => (
                 <FeatureCard
@@ -78,7 +79,13 @@ const EngineeringHome = () => {
             <h2 className="mb-6 text-2xl font-bold">Featured Components</h2>
             <div className="grid gap-4 md:grid-cols-4">
               {featuredComponents.map((component, index) => (
-                <div key={index} className="overflow-hidden rounded-lg bg-white shadow-md">
+                <div
+                  key={index}
+                  className="cursor-pointer overflow-hidden rounded-lg bg-white shadow-md hover:shadow-lg"
+                  onClick={() => {
+                    router.push("/engineering-article");
+                  }}
+                >
                   <Image
                     height={160}
                     width={240}

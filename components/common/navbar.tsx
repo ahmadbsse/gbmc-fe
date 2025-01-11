@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import { SearchBar } from "@/components/user";
+import ScrollingMarquee from "@/components/common/Marquee";
 
 import { adminRoutes, userRoutes } from "@/data";
 import { appData } from "@/constants";
@@ -12,7 +13,13 @@ const Navbar = ({ isAdmin = false, showSearchbar = false }) => {
   const router = useRouter();
   return (
     <>
-      <nav className="mr-2 border-b bg-white shadow-sm">
+      <ScrollingMarquee
+        text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                    nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
+        speed={30}
+      />
+      <nav className="mr-2 border-b bg-white shadow-sm lg:mr-0">
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             <div className="flex w-full items-center justify-between gap-8">
@@ -26,7 +33,8 @@ const Navbar = ({ isAdmin = false, showSearchbar = false }) => {
                       key={index}
                       href={item.href}
                       className={`hover:text-black ${
-                        item.routeName.toLowerCase() === router.route.toLowerCase()
+                        item.routeName.toLowerCase() === router.route.toLowerCase() ||
+                        router.route.toLowerCase().includes(item.routeName.toLowerCase())
                           ? "border-b font-semibold text-black"
                           : ""
                       }`}
@@ -42,7 +50,8 @@ const Navbar = ({ isAdmin = false, showSearchbar = false }) => {
                       key={index}
                       href={item.href}
                       className={`hover:text-black ${
-                        item.routeName.toLowerCase() === router.route.toLowerCase()
+                        item.routeName.toLowerCase() === router.route.toLowerCase() ||
+                        router.route.toLowerCase().includes(item.routeName.toLowerCase())
                           ? "border-b border-primary-color font-medium text-black"
                           : ""
                       }`}

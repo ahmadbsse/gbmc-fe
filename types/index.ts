@@ -39,3 +39,8 @@ export type ButtonProps = {
   rounded?: boolean;
   id?: string;
 };
+
+export interface ScrollingMarqueeProps {
+  text?: string;
+  speed?: number;
+}
