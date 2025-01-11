@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Tractor, Star, ChevronRight } from "lucide-react";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 import { PageLayout } from "@/components/user";
 
@@ -64,6 +65,25 @@ const TractorPartsHome = () => {
 
   return (
     <>
+      <Head>
+        <title>Parts</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta
+          property="og:title"
+          content="Platform where you get tractor related parts in one place"
+        />
+        <meta
+          name="og:description"
+          content="Platform where you get tractor related parts in one place"
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          name="description"
+          content="Platform where you get tractor related parts in one place"
+        />
+        <meta name="keywords" content="tractor,spare parts,machinary" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Navbar showSearchbar />
       <div className="flex flex-wrap justify-start bg-primary text-xs lg:justify-center lg:gap-5 lg:text-base">
         {brandCategories.map((brand, index) => (

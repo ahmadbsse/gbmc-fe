@@ -21,11 +21,6 @@ const Home = () => {
           name="og:description"
           content="Platform where you get tractor related parts in one place"
         />
-        {/* <meta property="og:url:secure_url" content="Page URL" /> */}
-        {/* <meta
-          property="og:image:secure_url"
-          content="Image Link"
-        /> */}
         <meta property="og:type" content="website" />
         <meta
           name="description"
