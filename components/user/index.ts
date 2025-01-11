@@ -1,4 +1,4 @@
-export { default as FeatureCard } from './featureCard';
-export { default as SearchBar } from './searchbar';
-export { default as PageLayout } from './pageLayout';
-export { default as Footer } from './footer';
+export { default as FeatureCard } from './FeatureCard';
+export { default as SearchBar } from './SearchBar';
+export { default as PageLayout } from './PageLayout';
+export { default as Footer } from './Footer';
