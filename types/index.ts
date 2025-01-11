@@ -44,3 +44,9 @@ export interface ScrollingMarqueeProps {
   text?: string;
   speed?: number;
 }
+
+export interface EngineeringCardProps {
+  title: string;
+  description: string;
+  image: string;
+}

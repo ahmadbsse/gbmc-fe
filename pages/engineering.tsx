@@ -1,13 +1,11 @@
 import React from "react";
 import { PenTool, Cog, Activity } from "lucide-react";
-import Image from "next/image";
-import { useRouter } from "next/router";
 
 import { PageLayout, FeatureCard } from "../components/user";
 import { Navbar } from "@/components/common";
+import EngineeringListingCard from "@/components/user/EngineeringListingCard";
 
 const EngineeringHome = () => {
-  const router = useRouter();
   const procedures = [
     {
       title: "Precision Machining",
@@ -79,25 +77,12 @@ const EngineeringHome = () => {
             <h2 className="mb-6 text-2xl font-bold">Featured Components</h2>
             <div className="grid gap-4 md:grid-cols-4">
               {featuredComponents.map((component, index) => (
-                <div
+                <EngineeringListingCard
                   key={index}
-                  className="cursor-pointer overflow-hidden rounded-lg bg-white shadow-md hover:shadow-lg"
-                  onClick={() => {
-                    router.push("/engineering-article");
-                  }}
-                >
-                  <Image
-                    height={160}
-                    width={240}
-                    src={component.image}
-                    alt={component.title}
-                    className="h-40 w-full object-cover"
-                  />
-                  <div className="p-4">
-                    <h3 className="font-semibold">{component.title}</h3>
-                    <p className="text-sm">{component.description}</p>
-                  </div>
-                </div>
+                  image={component.image}
+                  title={component.title}
+                  description={component.description}
+                />
               ))}
             </div>
           </section>
