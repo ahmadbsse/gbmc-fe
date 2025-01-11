@@ -50,6 +50,7 @@ label {
   z-index: -1;
   clip-path: polygon(100% 0, 0% 100%, 100% 100%);
 }
+
 @keyframes btn-anim {
   0% {
     width: 10%;
@@ -67,53 +68,62 @@ label {
   }
 }
 
-* + .product-specification-table {
+*+.product-specification-table {
   margin-top: 20px;
 }
+
 .product-specification-table {
   border-collapse: collapse;
   border-spacing: 0;
   width: 100%;
   margin-bottom: 20px;
 }
+
 .product-specification-table tbody {
   display: table-row-group;
   vertical-align: middle;
   unicode-bidi: isolate;
   border-color: inherit;
 }
+
 .product-specification-table-striped tbody tr:nth-of-type(odd) {
   background: #f3f3f3;
   border-top: 1px solid #e5e5e5;
   border-bottom: 1px solid #e5e5e5;
 }
+
 .product-specification-table tbody tr {
   transition: background-color 0.1s linear;
 }
+
 .product-specification-table {
   border-collapse: collapse;
   border-spacing: 0;
   width: 100%;
   margin-bottom: 20px;
 }
+
 .product-specification-table td {
   padding: 16px 12px;
   vertical-align: top;
 }
+
 /* projects section */
 
 @media (min-width: 800px) {
-  .text {
+  .card-details {
     grid-column: 6/11;
     grid-row: 1/2;
     order: 2;
     text-align: right;
   }
-  #projects .reverse .text {
+
+  #projects .reverse .card-details {
     grid-column: 1/7;
     order: 2;
     text-align: left;
   }
+
   #projects .reverse img {
     grid-column: 5/11;
     grid-row: 1/2;
