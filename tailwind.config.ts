@@ -19,7 +19,8 @@ export default {
         error: '#FF5454',
         'primary-color': '#FFAD32',
       },
-    }, fontFamily: {
+    },
+    fontFamily: {
       'primary-font': 'Space Grotesk, sans-serif',
       'secondary-font': 'BioRhyme, serif',
     },

@@ -57,11 +57,7 @@ const AdminDashboard = () => {
         <div className="rounded-lg bg-white shadow">
           <div className="border-b border-gray-200 px-6 py-4">
             <h2 className="text-lg font-medium">
-              {activeTab === "categories"
-                ? "Categories"
-                : activeTab === "parts"
-                  ? "Parts"
-                  : "Engineering Projects"}
+              {activeTab === "categories" ? "Categories" : "Parts"}
             </h2>
           </div>
 

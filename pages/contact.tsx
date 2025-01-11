@@ -9,9 +9,9 @@ const ContactPage = () => {
       {/* Navigation */}
       <Navbar />
 
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto p-4 pt-7">
         <div className="mx-auto max-w-4xl">
-          <h1 className="mb-8 text-4xl font-bold text-slate-900">Contact Us</h1>
+          <h1 className="mb-4 text-3xl font-bold text-slate-900">Contact Us</h1>
 
           <div className="grid gap-12 md:grid-cols-2">
             {/* Contact Form */}
@@ -81,7 +81,7 @@ const ContactPage = () => {
                       <p className="text-slate-600">
                         {appData.address.street_address}
                         <br />
-                        {appData.address.district}, {appData.address.post_code}
+                        {appData.address.district}, {appData.address.postal_code}
                         <br />
                         {appData.address.city}, {appData.address.country}
                       </p>

@@ -42,7 +42,7 @@ export const adminRoutes = [
     { name: "Categories", href: "/admin/categories", routeName: "/categories" },
     { name: "Parts", href: "/admin/parts", routeName: "/parts" },
     { name: "Engineering", href: "/admin/engineering", routeName: "/engineering" },
-    { name: "Projects", href: "/admin/projects", routeName: "/projects" },
+
 ];
 export const userRoutes = [
     { name: "Engineering", href: "/engineering", routeName: "/engineering" },

@@ -21,23 +21,18 @@ const TractorPartsHome = () => {
 
   const categories = [
     {
-      title: "Engine Parts",
+      title: "Parts",
       description: "Complete range of engine components",
       featured: true,
     },
     {
-      title: "Transmission",
+      title: "TXL (Sub Assemblies)",
       description: "Gearbox and transmission components",
-      featured: true,
-    },
-    {
-      title: "Hydraulic Systems",
-      description: "Pumps, valves, and hydraulic accessories",
       featured: false,
     },
     {
-      title: "Electrical Parts",
-      description: "Starters, alternators, and electrical components",
+      title: "Tractors",
+      description: "Pumps, valves, and hydraulic accessories",
       featured: false,
     },
   ];
@@ -86,7 +81,7 @@ const TractorPartsHome = () => {
           {/* Categories Section */}
           <section>
             <h2 className="mb-6 text-lg font-bold xl:text-2xl">Part Categories</h2>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {categories.map((category, index) => (
                 <div
                   key={index}
