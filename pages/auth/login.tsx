@@ -25,6 +25,9 @@ const Login = () => {
     } else {
       const data = await res.json();
       setError(data.error);
+      setTimeout(() => {
+        setError(null);
+      }, 3500);
     }
   };
   return (
@@ -107,7 +110,7 @@ const Login = () => {
                 </p>
               </form>
             </div>
-            {error && <p className="text-error">{error}</p>}
+            {error && <p className="mx-auto w-fit py-1 text-error">{error}</p>}
           </div>
         </div>
       </section>
