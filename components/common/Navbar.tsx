@@ -16,6 +16,10 @@ const Navbar = ({ isAdmin = false, showSearchbar = false }) => {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+  const handleLogout = async () => {
+    await fetch("/api/auth/logout");
+    window.location.href = "/auth/login";
+  };
   return (
     <>
       <ScrollingMarquee
@@ -114,7 +118,10 @@ const Navbar = ({ isAdmin = false, showSearchbar = false }) => {
                 {showSearchbar ? <SearchBar /> : null}
                 {isAdmin && (
                   <div className="flex items-center gap-4">
-                    <LogOut className="h-5 w-5 cursor-pointer hover:text-primary" />
+                    <LogOut
+                      className="h-5 w-5 cursor-pointer hover:text-primary"
+                      onClick={handleLogout}
+                    />
                     {/* Mobile menu */}
                     <>
                       <button

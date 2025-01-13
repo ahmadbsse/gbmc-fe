@@ -30,7 +30,12 @@ const ForgetPassword = () => (
               />
             </div>
 
-            <BaseButton id="passwordResetButton" type="submit" handleClick={() => {}}>
+            <BaseButton
+              loading={false}
+              id="passwordResetButton"
+              type="submit"
+              handleClick={() => {}}
+            >
               reset
             </BaseButton>
             <p className="text-sm font-light">

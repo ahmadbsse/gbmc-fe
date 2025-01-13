@@ -46,6 +46,7 @@ const AdminDashboard = () => {
             <h1 className="text-2xl font-bold">Dashboard</h1>
             <div className="w-fit">
               <BaseButton
+                loading={false}
                 id="viewDetailsButton"
                 type="submit"
                 handleClick={() => {
