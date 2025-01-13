@@ -5,7 +5,9 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
+    console.log('Processing POST request...');
     const { email, password } = req.body;
+    console.log(`Email: ${email}`);
     if (email == '' || password == '') {
       return res.status(400).json({
         error: "Request body incomplete",
@@ -40,6 +42,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(200).json({ message: 'Login successful' });
   }
 
-  res.setHeader('Allow', ['POST']);
-  return res.status(405).end(`Method ${req.method} Not Allowed`);
+  else {
+    console.log(`Method not allowed: ${req.method}`);
+    res.setHeader('Allow', ['POST']);
+    return res.status(405).end(`Method ${req.method} Not Allowed`);
+  }
 }
