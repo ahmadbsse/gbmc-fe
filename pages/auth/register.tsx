@@ -74,7 +74,7 @@ const Register = () => (
                 />
               </div>
 
-              <BaseButton id="signUpButton" type="submit" handleClick={() => {}}>
+              <BaseButton loading={false} id="signUpButton" type="submit" handleClick={() => {}}>
                 sign up
               </BaseButton>
               <p className="text-sm font-light">

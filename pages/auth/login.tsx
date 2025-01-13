@@ -11,8 +11,10 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    setIsLoading(true);
     e.preventDefault();
 
     const res = await fetch("/api/auth/login", {
@@ -21,6 +23,7 @@ const Login = () => {
       body: JSON.stringify({ email, password }),
     });
     if (res.ok) {
+      setIsLoading(false);
       router.push("/admin");
     } else {
       const data = await res.json();
@@ -28,6 +31,7 @@ const Login = () => {
       setTimeout(() => {
         setError(null);
       }, 3500);
+      setIsLoading(false);
     }
   };
   return (
@@ -99,7 +103,7 @@ const Login = () => {
                   </Link>
                 </div>
 
-                <BaseButton id="signInButton" type="submit" handleClick={() => {}}>
+                <BaseButton loading={isLoading} id="signInButton" type="submit">
                   sign in
                 </BaseButton>
                 <p className="text-sm font-light">

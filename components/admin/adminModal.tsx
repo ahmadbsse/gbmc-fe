@@ -100,12 +100,23 @@ const AdminModal: React.FC<AdminModalProps> = ({ isOpen, onClose, type = "catego
 
           <div className="mt-6 flex gap-4">
             <div className="basis-1/2">
-              <BaseButton id="viewDetailsButton" btnStyle type="button" handleClick={onClose}>
+              <BaseButton
+                loading={false}
+                id="viewDetailsButton"
+                btnStyle
+                type="button"
+                handleClick={onClose}
+              >
                 Cancel
               </BaseButton>
             </div>
             <div className="basis-1/2">
-              <BaseButton id="viewDetailsButton" type="submit" handleClick={onClose}>
+              <BaseButton
+                loading={false}
+                id="viewDetailsButton"
+                type="submit"
+                handleClick={onClose}
+              >
                 Add {type}
               </BaseButton>
             </div>
