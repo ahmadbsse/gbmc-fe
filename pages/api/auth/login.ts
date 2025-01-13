@@ -1,6 +1,5 @@
 import { sign } from 'jsonwebtoken';
 import cookie from 'cookie';
-import { envVar } from '@/constants';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -12,20 +11,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           error: "Request body incomplete",
         });
       }
-      if (!envVar.JWT_SECRET || !envVar.ADMIN_EMAIL || !envVar.ADMIN_PASSWORD) {
+      if (!process.env.JWT_SECRET || !process.env.ADMIN_EMAIL || !process.env.ADMIN_PASSWORD) {
         return res.status(500).json({ error: 'ENV SECRETS missing' });
       }
-      if (envVar.ADMIN_EMAIL !== email) {
+      if (process.env.ADMIN_EMAIL !== email) {
         return res.status(401).json({ error: 'Invalid email' });
       }
 
-      const isPasswordCorrect = (password === envVar.ADMIN_PASSWORD ? true : false);
+      const isPasswordCorrect = (password === process.env.ADMIN_PASSWORD ? true : false);
 
       if (!isPasswordCorrect) {
         return res.status(401).json({ error: 'Invalid password' });
       }
 
-      const token = sign({ email: envVar.ADMIN_EMAIL, role: 'admin' }, envVar.JWT_SECRET, { expiresIn: '1h' });
+      const token = sign({ email: process.env.ADMIN_EMAIL, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
       res.setHeader(
         'Set-Cookie',
