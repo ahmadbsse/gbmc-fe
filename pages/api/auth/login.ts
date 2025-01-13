@@ -23,6 +23,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
+    if (!process.env.JWT_SECRET) {
+      return res.status(500).json({ error: 'JWT_SECRET is not defined' });
+    }
     const token = sign({ email: user.email, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
     res.setHeader(
