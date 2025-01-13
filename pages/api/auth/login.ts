@@ -1,5 +1,5 @@
 import { sign } from 'jsonwebtoken';
-import cookie from 'cookie';
+import { serialize } from 'cookie';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -26,16 +26,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       const token = sign({ email: process.env.ADMIN_EMAIL, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-      res.setHeader(
-        'Set-Cookie',
-        cookie.serialize('authToken', token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === 'production',
-          maxAge: 3600,
-          sameSite: 'strict',
-          path: '/',
-        })
-      );
+      try {
+        res.setHeader(
+          'Set-Cookie',
+          serialize('authToken', token, {
+            httpOnly: true,
+            secure: Boolean(process.env.NODE_ENV === 'production'),
+            maxAge: 3600,
+            sameSite: 'strict',
+            path: '/',
+          })
+        );
+      } catch (err) {
+        console.error('Error setting cookie:', err);
+        return res.status(500).json({ error: 'Failed to set cookie' });
+      }
 
       return res.status(200).json({ message: 'Login successful' });
     } catch (error) {
