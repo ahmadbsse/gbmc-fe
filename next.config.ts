@@ -1,8 +1,10 @@
-import type { NextConfig } from "next";
+/** @type {import('next').NextConfig} */
+import dotenv from "dotenv";
 
-const nextConfig: NextConfig = {
-  /* config options here */
+dotenv.config();
+const nextConfig = {
   reactStrictMode: true,
+
 };
 
-export default nextConfig;
+module.exports = nextConfig;
