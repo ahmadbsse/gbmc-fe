@@ -3,30 +3,28 @@ import cookie from 'cookie';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-const users = [
-  { email: 'admin@admin.com', password: 'admin123' }, // Replace with your hashed password
-];
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     const { email, password } = req.body;
-
-    const user = users.find((u) => u.email === email);
-
-    if (!user) {
-      return res.status(401).json({ error: 'Invalid email or password' });
+    if (email == '' || password == '') {
+      return res.status(400).json({
+        error: "Request body incomplete",
+      });
+    }
+    if (!process.env.JWT_SECRET || !process.env.ADMIN_EMAIL || !process.env.ADMIN_PASSWORD) {
+      return res.status(500).json({ error: 'ENV SECRETS missing' });
+    }
+    if (process.env.ADMIN_EMAIL !== email) {
+      return res.status(401).json({ error: 'Invalid email' });
     }
 
-    const isPasswordCorrect = (password === user.password ? true : false);
+    const isPasswordCorrect = (password === process.env.ADMIN_PASSWORD ? true : false);
 
     if (!isPasswordCorrect) {
-      return res.status(401).json({ error: 'Invalid email or password' });
+      return res.status(401).json({ error: 'Invalid password' });
     }
 
-    if (!process.env.JWT_SECRET) {
-      return res.status(500).json({ error: 'JWT_SECRET is not defined' });
-    }
-    const token = sign({ email: user.email, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = sign({ email: process.env.ADMIN_EMAIL, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
     res.setHeader(
       'Set-Cookie',
