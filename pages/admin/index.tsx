@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { Plus } from "lucide-react";
@@ -55,7 +56,7 @@ const AdminDashboard = () => {
             const key = category.key;
             groupedCategories[key] = groupCategoryByKey(res.data, key);
           });
-
+          // @ts-expect-error Not Required
           setCategories(groupedCategories);
 
           setIsLoading(false);
@@ -77,7 +78,7 @@ const AdminDashboard = () => {
       setData(categories[activeTab.key]);
       setIsLoading(false);
     }
-  }, [activeTab]);
+  }, [activeTab, categories]);
 
   return (
     <>
