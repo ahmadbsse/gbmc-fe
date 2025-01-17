@@ -8,6 +8,7 @@ import ScrollingMarquee from "@/components/common/Marquee";
 
 import { adminRoutes, userRoutes } from "@/data";
 import { appData } from "@/constants";
+import apiClient from "@/utils/apiClient";
 
 const Navbar = ({ isAdmin = false, showSearchbar = false }) => {
   const router = useRouter();
@@ -17,8 +18,12 @@ const Navbar = ({ isAdmin = false, showSearchbar = false }) => {
     setIsOpen(!isOpen);
   };
   const handleLogout = async () => {
-    await fetch("/api/auth/logout");
-    window.location.href = "/auth/login";
+    await fetch("/api/auth/logout").then(() => {
+      localStorage.removeItem("username");
+      localStorage.removeItem("email");
+      apiClient.setAuthToken(null);
+      window.location.href = "/admin";
+    });
   };
   return (
     <>

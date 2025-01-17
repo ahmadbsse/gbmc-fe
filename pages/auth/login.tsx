@@ -3,34 +3,47 @@ import { useState, FormEvent } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 
+import apiClient from "@/utils/apiClient";
 import { appData } from "@/constants";
 import { BaseButton } from "@/components/common";
 
 const Login = () => {
   const router = useRouter();
-  const [email, setEmail] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     setIsLoading(true);
     e.preventDefault();
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-    if (res.ok) {
-      setIsLoading(false);
-      router.push("/admin");
-    } else {
-      const data = await res.json();
-      setError(data.error);
+    try {
+      const response = await apiClient.POST("/auth/local", { identifier, password });
+
+      if (response && response.jwt) {
+        const jwt = response.jwt;
+        const email = response.user.email;
+        const userName = response.user.username;
+        await apiClient
+          .POST(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`, { jwt })
+          .then(async (res) => {
+            if (res.message == "Login successful") {
+              localStorage.setItem("username", userName);
+              localStorage.setItem("email", email);
+              apiClient.setAuthToken(jwt);
+              setIsLoading(false);
+              router.push("/admin");
+            }
+          });
+      }
+    } catch (error) {
+      const message = (error as Error).message;
+      setError(message);
       setTimeout(() => {
         setError(null);
       }, 3500);
       setIsLoading(false);
+      console.error("Error in POST request:", message);
     }
   };
   return (
@@ -64,18 +77,18 @@ const Login = () => {
               </h1>
               <form className="space-y-2 md:space-y-3" action="#" onSubmit={handleSubmit}>
                 <div>
-                  <label htmlFor="email" className="mb-2 block text-sm font-medium">
-                    Your email
+                  <label htmlFor="identifier" className="mb-2 block text-sm font-medium">
+                    Your Admin Identifier
                   </label>
                   <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    value={email}
+                    type="text"
+                    name="text"
+                    id="identifier"
+                    value={identifier}
                     className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 outline-none focus:border-primary focus:ring-primary"
                     placeholder="name@company.com"
                     required
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => setIdentifier(e.target.value)}
                   />
                 </div>
                 <div>
