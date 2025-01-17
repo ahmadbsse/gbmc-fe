@@ -51,3 +51,19 @@ export interface EngineeringCardProps {
   description: string;
   image: string;
 }
+
+export type Category = {
+  id: number;
+  documentId: string;
+  name: string;
+  type: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+};
+export type Categories = {
+  tractors: Category[];
+  tractor_parts: Category[];
+  sub_assemblies: Category[];
+} | null;

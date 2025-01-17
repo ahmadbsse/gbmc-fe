@@ -1,16 +1,83 @@
-import React, { useState } from "react";
-import { Settings, Folder, Plus, Eye, EyeOff, Star } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
+import { Plus } from "lucide-react";
 
 import { AdminTabs, AdminModal } from "@/components/admin";
-import { adminCategories } from "@/data";
 import { Navbar, BaseButton } from "@/components/common";
+import ListCategories from "@/components/admin/ListCategories";
+import { BaseLoader } from "@/components/common";
 
 import { appData } from "@/constants";
+import apiClient from "@/utils/apiClient";
 
+import type { Category, Categories } from "@/types";
+
+type tab = {
+  name: string;
+  key: string;
+};
 const AdminDashboard = () => {
-  const [activeTab, setActiveTab] = useState("categories");
+  const [tabs, setTabs] = useState<tab[]>([]);
+  const [activeTab, setActiveTab] = useState<tab>();
   const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [categories, setCategories] = useState<Categories>(null);
+  const [data, setData] = useState<Category[]>([]);
+
+  function groupCategoryByKey(array: Category[], keyValue: string) {
+    return array.filter((item) => item.type === keyValue);
+  }
+
+  const getCategories = async () => {
+    try {
+      setIsLoading(true);
+      await apiClient.GET("/categories").then(async (res) => {
+        if (res) {
+          const groupedData = [
+            ...new Map(
+              res.data.map((item: Category) => [
+                item.type,
+                { name: formatName(item.type), key: item.type },
+              ])
+            ).values(),
+          ] as tab[];
+
+          function formatName(type: string) {
+            return type
+              .split("_")
+              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(" ");
+          }
+          const groupedCategories = {};
+          setTabs(groupedData);
+          setActiveTab(groupedData[0]);
+          groupedData.forEach((category) => {
+            const key = category.key;
+            groupedCategories[key] = groupCategoryByKey(res.data, key);
+          });
+
+          setCategories(groupedCategories);
+
+          setIsLoading(false);
+        }
+      });
+    } catch (error) {
+      const message = (error as Error).message;
+      setIsLoading(false);
+      console.error("Error in POST request:", message);
+    }
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+  useEffect(() => {
+    if (categories) {
+      setIsLoading(true);
+      setData(categories[activeTab.key]);
+      setIsLoading(false);
+    }
+  }, [activeTab]);
 
   return (
     <>
@@ -33,12 +100,9 @@ const AdminDashboard = () => {
         <meta name="keywords" content="tractor,spare parts,machinary" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <div className="min-h-screen bg-gray-50">
-        <AdminModal
-          isOpen={showModal}
-          onClose={() => setShowModal(false)}
-          type="product" // or "category"
-        />
+        <AdminModal isOpen={showModal} onClose={() => setShowModal(false)} type="product" />
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">
           {/* Header */}
@@ -62,77 +126,29 @@ const AdminDashboard = () => {
           </div>
 
           {/* Tabs */}
-          <div className="mb-6 flex gap-4">
-            <AdminTabs
-              active={activeTab === "categories"}
-              onClick={() => setActiveTab("categories")}
-            >
-              Categories
-            </AdminTabs>
-            <AdminTabs active={activeTab === "parts"} onClick={() => setActiveTab("parts")}>
-              Parts
-            </AdminTabs>
-            <AdminTabs
-              active={activeTab === "engineering"}
-              onClick={() => setActiveTab("engineering")}
-            >
-              Engineering
-            </AdminTabs>
-          </div>
-
+          {tabs ? (
+            <div className="mb-6 flex gap-4">
+              {tabs.map((tab) => (
+                <AdminTabs
+                  key={tab.key}
+                  active={activeTab.name === tab.name}
+                  onClick={() => setActiveTab(tab)}
+                >
+                  {tab.name}
+                </AdminTabs>
+              ))}
+            </div>
+          ) : null}
           {/* Content */}
-          <div className="rounded-lg bg-white shadow">
-            <div className="border-b border-gray-200 px-6 py-4">
-              <h2 className="text-lg font-medium">
-                {activeTab === "categories" ? "Categories" : "Parts"}
-              </h2>
+          {isLoading ? (
+            <div className="mx-auto mt-10 w-fit">
+              <BaseLoader width={40} height={40} />
             </div>
-
-            <div className="p-6">
-              <div className="grid gap-4">
-                {adminCategories.map((category) => (
-                  <div
-                    key={category.id}
-                    className="flex items-center justify-between rounded-lg bg-gray-50 p-4"
-                  >
-                    <div className="flex items-center gap-4">
-                      <Folder className="h-5 w-5" />
-                      <div>
-                        <h3 className="font-medium">{category.name}</h3>
-                        <span className="text-sm">{category.type}</span>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-4">
-                      <i
-                        className={`rounded-lg p-2 ${
-                          category.status === "active"
-                            ? "bg-green-50 text-green-600"
-                            : "bg-gray-100"
-                        }`}
-                      >
-                        {category.status === "active" ? (
-                          <Eye className="h-4 w-4" />
-                        ) : (
-                          <EyeOff className="h-4 w-4" />
-                        )}
-                      </i>
-                      <i
-                        className={`rounded-lg p-2 ${
-                          category.featured ? "bg-yellow-50 text-yellow-600" : "bg-gray-100"
-                        }`}
-                      >
-                        <Star className="h-4 w-4" />
-                      </i>
-                      <i className="">
-                        <Settings className="h-4 w-4" />
-                      </i>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          ) : categories ? (
+            <ListCategories categories={data} activeTab={activeTab} />
+          ) : (
+            <p className="mx-auto w-fit">No Data Found</p>
+          )}
         </main>
       </div>
     </>
