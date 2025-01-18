@@ -66,11 +66,10 @@ const AdminModal: React.FC<AdminModalProps> = ({
         : "Category";
   };
   const categoryTypeOptions = [
-    { label: "Parts", value: "parts" },
+    { label: "Tractors", value: "tractors" },
     { label: "Tractor Parts", value: "tractor_parts" },
     { label: "Sub Assemblies", value: "sub_assemblies" },
   ];
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="relative w-full max-w-md rounded-lg bg-white p-6">

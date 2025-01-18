@@ -3,7 +3,7 @@ import Head from "next/head";
 
 import { AdminTabs } from "@/components/admin";
 import { Navbar } from "@/components/common";
-import ListCategories from "@/components/admin/ListCategories";
+import ListDashboardData from "@/components/admin/ListDashboardData";
 import { BaseLoader } from "@/components/common";
 
 import { appData } from "@/constants";
@@ -103,7 +103,7 @@ const AdminDashboard = () => {
               <BaseLoader width={40} height={40} />
             </div>
           ) : (
-            <ListCategories
+            <ListDashboardData
               data={
                 activeTab.key == "categories"
                   ? categories
@@ -112,7 +112,7 @@ const AdminDashboard = () => {
                     : parts
               }
               activeTab={activeTab}
-              getDate={
+              getData={
                 activeTab.key == "categories"
                   ? getCategories
                   : activeTab.key == "engineering"
