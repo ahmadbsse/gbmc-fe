@@ -28,9 +28,14 @@ export type AdminModalProps = {
       | React.FormEvent<HTMLFormElement>
       | React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void;
-  type: string;
+  activeTab: tab;
+  currentTab: string;
+  getData: () => void;
 };
-
+type tab = {
+  name: string;
+  key: string;
+};
 export type ButtonProps = {
   handleClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   children?: ReactNode;

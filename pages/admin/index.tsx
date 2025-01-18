@@ -1,65 +1,42 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
-import { Plus } from "lucide-react";
 
-import { AdminTabs, AdminModal } from "@/components/admin";
-import { Navbar, BaseButton } from "@/components/common";
+import { AdminTabs } from "@/components/admin";
+import { Navbar } from "@/components/common";
 import ListCategories from "@/components/admin/ListCategories";
 import { BaseLoader } from "@/components/common";
 
 import { appData } from "@/constants";
 import apiClient from "@/utils/apiClient";
 
-import type { Category, Categories } from "@/types";
+import type { Categories } from "@/types";
 
 type tab = {
   name: string;
   key: string;
 };
 const AdminDashboard = () => {
-  const [tabs, setTabs] = useState<tab[]>([]);
-  const [activeTab, setActiveTab] = useState<tab>();
-  const [showModal, setShowModal] = useState(false);
+  const tabsKey = [
+    { name: "Categories", key: "categories" },
+    { name: "Engineering", key: "engineering" },
+    { name: "Parts", key: "parts" },
+  ];
+  const [activeTab, setActiveTab] = useState<tab>(tabsKey[0]);
   const [isLoading, setIsLoading] = useState(false);
   const [categories, setCategories] = useState<Categories>(null);
-  const [data, setData] = useState<Category[]>([]);
-
-  function groupCategoryByKey(array: Category[], keyValue: string) {
-    return array.filter((item) => item.type === keyValue);
-  }
+  const [parts, setParts] = useState(null);
+  const [engineering, setEngineering] = useState(null);
 
   const getCategories = async () => {
     try {
       setIsLoading(true);
       await apiClient.GET("/categories").then(async (res) => {
-        if (res) {
-          const groupedData = [
-            ...new Map(
-              res.data.map((item: Category) => [
-                item.type,
-                { name: formatName(item.type), key: item.type },
-              ])
-            ).values(),
-          ] as tab[];
-
-          function formatName(type: string) {
-            return type
-              .split("_")
-              .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-              .join(" ");
-          }
-          const groupedCategories = {};
-          setTabs(groupedData);
-          setActiveTab(groupedData[0]);
-          groupedData.forEach((category) => {
-            const key = category.key;
-            groupedCategories[key] = groupCategoryByKey(res.data, key);
-          });
-          // @ts-expect-error Not Required
-          setCategories(groupedCategories);
-
+        if (res && res.data.length > 0) {
+          setCategories(res.data);
           setIsLoading(false);
+        } else {
+          setIsLoading(false);
+          setCategories(null);
         }
       });
     } catch (error) {
@@ -68,17 +45,15 @@ const AdminDashboard = () => {
       console.error("Error in POST request:", message);
     }
   };
-
+  const getParts = async () => {
+    setParts(null);
+  };
+  const getEngineering = async () => {
+    setEngineering(null);
+  };
   useEffect(() => {
     getCategories();
   }, []);
-  useEffect(() => {
-    if (categories) {
-      setIsLoading(true);
-      setData(categories[activeTab.key]);
-      setIsLoading(false);
-    }
-  }, [activeTab, categories]);
 
   return (
     <>
@@ -103,52 +78,48 @@ const AdminDashboard = () => {
       </Head>
 
       <div className="min-h-screen bg-gray-50">
-        <AdminModal isOpen={showModal} onClose={() => setShowModal(false)} type="product" />
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">
           {/* Header */}
-          <div className="mb-8 flex items-center justify-between">
-            <h1 className="text-2xl font-bold">Dashboard</h1>
-            <div className="w-fit">
-              <BaseButton
-                loading={false}
-                id="viewDetailsButton"
-                type="submit"
-                handleClick={() => {
-                  setShowModal(true);
-                }}
-              >
-                <p className="mx-auto flex w-fit px-3">
-                  <Plus className="mt-0.5 h-4 w-4" />
-                  Add New
-                </p>
-              </BaseButton>
-            </div>
-          </div>
+          <h1 className="mb-8 text-2xl font-bold">Dashboard</h1>
 
           {/* Tabs */}
-          {tabs ? (
-            <div className="mb-6 flex gap-4">
-              {tabs.map((tab) => (
-                <AdminTabs
-                  key={tab.key}
-                  active={activeTab.name === tab.name}
-                  onClick={() => setActiveTab(tab)}
-                >
-                  {tab.name}
-                </AdminTabs>
-              ))}
-            </div>
-          ) : null}
+
+          <div className="mb-6 flex gap-4">
+            {tabsKey.map((tab) => (
+              <AdminTabs
+                key={tab.key}
+                active={activeTab.name === tab.name}
+                onClick={() => setActiveTab(tab)}
+              >
+                {tab.name}
+              </AdminTabs>
+            ))}
+          </div>
+
           {/* Content */}
           {isLoading ? (
             <div className="mx-auto mt-10 w-fit">
               <BaseLoader width={40} height={40} />
             </div>
-          ) : categories ? (
-            <ListCategories categories={data} activeTab={activeTab} getCategories="getCategories" />
           ) : (
-            <p className="mx-auto w-fit">No Data Found</p>
+            <ListCategories
+              data={
+                activeTab.key == "categories"
+                  ? categories
+                  : activeTab.key == "engineering"
+                    ? engineering
+                    : parts
+              }
+              activeTab={activeTab}
+              getDate={
+                activeTab.key == "categories"
+                  ? getCategories
+                  : activeTab.key == "engineering"
+                    ? getEngineering
+                    : getParts
+              }
+            />
           )}
         </main>
       </div>
