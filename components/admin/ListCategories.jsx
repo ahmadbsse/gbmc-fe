@@ -3,9 +3,8 @@ import apiClient from "@/utils/apiClient";
 
 const ListCategories = ({ categories, activeTab, getCategories }) => {
   const toggleActivation = async (category) => {
-    console.log(category);
     try {
-      const url = `/categories/1`; // API endpoint where the PUT request is sent
+      const url = `/categories/${category.id}`; // API endpoint where the PUT request is sent
       const data = JSON.parse(JSON.stringify(category));
       delete data.id;
       delete data.documentId;

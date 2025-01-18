@@ -9,7 +9,7 @@ class ApiClient {
         "Content-Type": "application/json",
       },
     });
-
+    this.client.defaults.withCredentials = true;
     // Add a response interceptor
     this.client.interceptors.response.use(
       (response) => response,
@@ -28,8 +28,7 @@ class ApiClient {
 
   setAuthToken(token) {
     if (token) {
-      const cleanedToken = token.replace(/['"]+/g, "").trim();
-      this.client.defaults.headers.common["Authorization"] = `Bearer ${cleanedToken}`;
+      this.client.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     } else {
       delete this.client.defaults.headers.common["Authorization"];
     }
