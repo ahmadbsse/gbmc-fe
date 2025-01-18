@@ -13,6 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
       const token = sign({ jwt: jwt, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1h' });
       try {
+        res.setHeader('Access-Control-Allow-Credentials', 'true');
         res.setHeader(
           'Set-Cookie',
           serialize('authToken', token, {

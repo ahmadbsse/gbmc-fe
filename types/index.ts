@@ -60,6 +60,8 @@ export type Category = {
   description: string;
   createdAt: string;
   updatedAt: string;
+  active: boolean;
+  featured: boolean;
   publishedAt: string;
 };
 export type Categories = {

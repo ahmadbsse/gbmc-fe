@@ -19,13 +19,16 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await apiClient.POST("/auth/local", { identifier, password });
-
       if (response && response.jwt) {
         const jwt = response.jwt;
         const email = response.user.email;
         const userName = response.user.username;
         await apiClient
-          .POST(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`, { jwt })
+          .POST(
+            `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`,
+            { jwt },
+            { withCredentials: true }
+          )
           .then(async (res) => {
             if (res.message == "Login successful") {
               localStorage.setItem("username", userName);

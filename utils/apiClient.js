@@ -28,7 +28,8 @@ class ApiClient {
 
   setAuthToken(token) {
     if (token) {
-      this.client.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      const cleanedToken = token.replace(/['"]+/g, "").trim();
+      this.client.defaults.headers.common["Authorization"] = `Bearer ${cleanedToken}`;
     } else {
       delete this.client.defaults.headers.common["Authorization"];
     }
@@ -43,18 +44,18 @@ class ApiClient {
     }
   }
 
-  async POST(url, data = {}, config = {}) {
+  async POST(url, payload = {}, config = {}) {
     try {
-      const response = await this.client.post(url, data, config);
+      const response = await this.client.post(url, payload, config);
       return response.data;
     } catch (error) {
       this.handleError(error);
     }
   }
 
-  async PUT(url, data = {}, config = {}) {
+  async PUT(url, payload = {}, config = {}) {
     try {
-      const response = await this.client.put(url, data, config);
+      const response = await this.client.put(url, payload, config);
       return response.data;
     } catch (error) {
       this.handleError(error);

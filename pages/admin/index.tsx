@@ -146,7 +146,7 @@ const AdminDashboard = () => {
               <BaseLoader width={40} height={40} />
             </div>
           ) : categories ? (
-            <ListCategories categories={data} activeTab={activeTab} />
+            <ListCategories categories={data} activeTab={activeTab} getCategories="getCategories" />
           ) : (
             <p className="mx-auto w-fit">No Data Found</p>
           )}

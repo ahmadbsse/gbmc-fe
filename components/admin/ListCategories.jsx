@@ -1,5 +1,27 @@
-import { Settings, Folder, Eye, EyeOff, Star } from "lucide-react";
-const ListCategories = ({ categories, activeTab }) => {
+import { Folder, Eye, EyeOff, Star, Pencil, Trash } from "lucide-react";
+import apiClient from "@/utils/apiClient";
+
+const ListCategories = ({ categories, activeTab, getCategories }) => {
+  const toggleActivation = async (category) => {
+    console.log(category);
+    try {
+      const url = `/categories/1`; // API endpoint where the PUT request is sent
+      const data = JSON.parse(JSON.stringify(category));
+      delete data.id;
+      delete data.documentId;
+      delete data.createdAt;
+      delete data.updatedAt;
+      delete data.publishedAt;
+      data.active = !data.active;
+
+      await apiClient.PUT(url, { data: data }).then((res) => {
+        getCategories();
+        console.log("Resource updated successfully:", res);
+      });
+    } catch (error) {
+      console.error("Error updating resource:", error.message);
+    }
+  };
   return (
     <div className="rounded-lg bg-white shadow">
       <div className="border-b border-gray-200 px-6 py-4">
@@ -13,6 +35,7 @@ const ListCategories = ({ categories, activeTab }) => {
               key={category.id}
               className="flex items-center justify-between rounded-lg bg-gray-50 p-4"
             >
+              {JSON.stringify(category)}
               <div className="flex items-center gap-4">
                 <Folder className="h-5 w-5" />
                 <div>
@@ -22,27 +45,33 @@ const ListCategories = ({ categories, activeTab }) => {
               </div>
 
               <div className="flex items-center gap-4">
-                {/* <i
+                <i
+                  onClick={() => toggleActivation(category)}
                   className={`rounded-lg p-2 ${
-                    category.status === "active" ? "bg-green-50 text-green-600" : "bg-gray-100"
+                    category.active
+                      ? "bg-green-50 text-green-600 hover:bg-yellow-50"
+                      : "bg-gray-100 hover:bg-yellow-50 hover:text-yellow-600"
                   }`}
                 >
-                  {category.status === "active" ? (
-                    <Eye className="h-4 w-4" />
-                  ) : (
-                    <EyeOff className="h-4 w-4" />
-                  )}
-                </i> */}
-                {/* <i
+                  {category.active ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+                </i>
+                <i
                   className={`rounded-lg p-2 ${
-                    category.featured ? "bg-yellow-50 text-yellow-600" : "bg-gray-100"
+                    category.featured
+                      ? "bg-yellow-50 text-yellow-600 hover:bg-yellow-50"
+                      : "bg-gray-100 hover:bg-yellow-50 hover:text-yellow-600"
                   }`}
                 >
                   <Star className="h-4 w-4" />
                 </i>
-                <i className="">
-                  <Settings className="h-4 w-4" />
-                </i> */}
+                <i
+                  className={`rounded-lg bg-gray-100 p-2 hover:bg-yellow-50 hover:text-yellow-600`}
+                >
+                  <Pencil className="h-4 w-4" />
+                </i>
+                <i className="rounded-lg bg-gray-100 p-2 hover:bg-yellow-50 hover:text-yellow-600">
+                  <Trash className="h-4 w-4" />
+                </i>
               </div>
             </div>
           ))}
