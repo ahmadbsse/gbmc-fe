@@ -34,7 +34,6 @@ const ListCategories = ({ categories, activeTab, getCategories }) => {
               key={category.id}
               className="flex items-center justify-between rounded-lg bg-gray-50 p-4"
             >
-              {JSON.stringify(category)}
               <div className="flex items-center gap-4">
                 <Folder className="h-5 w-5" />
                 <div>
