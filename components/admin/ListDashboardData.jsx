@@ -1,13 +1,15 @@
 import { Eye, EyeOff, Star, Pencil, Trash, Plus } from "lucide-react";
 import { useState } from "react";
 
-import { AdminModal } from "@/components/admin";
+import { AdminModal, DeleteConfirmationModal } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
 import { BaseButton, BaseImage } from "@/components/common";
 import { convertToReadableDate } from "@/utils";
 
 const ListDashboardData = ({ data, activeTab, getData }) => {
   const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [activeID, setActiveID] = useState(null);
   const currentTab = activeTab.key == "engineering" ? "engineering-components" : activeTab.key;
 
   const toggleActivation = async (item) => {
@@ -46,10 +48,12 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
       console.error("Error updating resource:", error.message);
     }
   };
-  const deleteItem = async (itemId) => {
+  const deleteItem = async () => {
     try {
-      const url = `/${currentTab}/${itemId}`;
+      const url = `/${currentTab}/${activeID}`;
       await apiClient.DELETE(url).then((res) => {
+        setShowDeleteModal(false);
+        setActiveID(null);
         getData();
       });
     } catch (error) {
@@ -66,6 +70,11 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
         type="product"
         currentTab={currentTab}
         getData={getData}
+      />
+      <DeleteConfirmationModal
+        handleDelete={deleteItem}
+        isOpen={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
       />
       <div className="rounded-lg bg-white shadow">
         <div className="border-b border-gray-200 px-6 py-4">
@@ -147,7 +156,10 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                         <Pencil className="h-4 w-4" />
                       </i>
                       <i
-                        onClick={() => deleteItem(item.documentId)}
+                        onClick={() => {
+                          setActiveID(item.documentId);
+                          setShowDeleteModal(true);
+                        }}
                         className="rounded-lg bg-gray-100 p-2 hover:bg-yellow-50 hover:text-yellow-600"
                       >
                         <Trash className="h-4 w-4" />
