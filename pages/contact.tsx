@@ -69,12 +69,7 @@ const ContactPage = () => {
                   </div>
 
                   <div className="mx-auto mt-4 w-fit">
-                    <BaseButton
-                      loading={false}
-                      id="viewDetailsButton"
-                      type="submit"
-                      handleClick={() => {}}
-                    >
+                    <BaseButton loading={false} type="submit" handleClick={() => {}}>
                       Send Message
                     </BaseButton>
                   </div>

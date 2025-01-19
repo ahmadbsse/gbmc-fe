@@ -8,6 +8,7 @@ import { BaseLoader } from "@/components/common";
 
 import { appData } from "@/constants";
 import apiClient from "@/utils/apiClient";
+import { transformMedia } from "@/utils";
 
 import type { Categories } from "@/types";
 
@@ -27,34 +28,6 @@ const AdminDashboard = () => {
   const [parts, setParts] = useState(null);
   const [engineering, setEngineering] = useState(null);
 
-  function transformMedia(response) {
-    response.forEach((item) => {
-      const media = item.media;
-      item.media = {
-        id: media.id,
-        documentId: media.documentId,
-        name: media.name,
-        formats: {
-          small: media.formats?.small
-            ? {
-                url: media.formats.small.url,
-                width: media.formats.small.width,
-                height: media.formats.small.height,
-              }
-            : undefined,
-          thumbnail: media.formats?.thumbnail
-            ? {
-                url: media.formats.thumbnail.url,
-                width: media.formats.thumbnail.width,
-                height: media.formats.thumbnail.height,
-              }
-            : undefined,
-          actual: { url: media.url, width: media.width, height: media.height },
-        },
-      };
-    });
-    return response;
-  }
   const getCategories = async () => {
     try {
       setIsLoading(true);

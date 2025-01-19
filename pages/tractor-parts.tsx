@@ -146,7 +146,6 @@ const TractorPartsHome = () => {
                     <h3 className="mb-4 mt-2 text-xl font-semibold">{part.name}</h3>
                     <BaseButton
                       loading={false}
-                      id="viewDetailsButton"
                       type="submit"
                       rounded
                       handleClick={redirectToDetails}

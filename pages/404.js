@@ -14,7 +14,7 @@ export default function FourOhFour() {
             </h2>
             <p className="z-10 text-lg md:text-2xl">Oops! It looks like you got lost.</p>
             <div>
-              <BaseButton loading={false} btnStyle id="viewDetailsButton" type="submit">
+              <BaseButton loading={false} btnStyle type="submit">
                 <Link href="/">Go Back</Link>
               </BaseButton>
             </div>

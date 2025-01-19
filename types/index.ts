@@ -21,8 +21,8 @@ export type TabProps = {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   children: ReactNode;
 };
-export type AdminModalProps = {
-  isOpen: boolean;
+export type AdminAddItemModalProps = {
+
   onClose: (
     event:
       | React.FormEvent<HTMLFormElement>

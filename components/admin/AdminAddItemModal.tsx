@@ -3,11 +3,12 @@ import { X } from "lucide-react";
 
 import { BaseButton } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
-import type { AdminModalProps } from "@/types";
+import type { AdminAddItemModalProps } from "@/types";
 import apiClient from "@/utils/apiClient";
+import { modifyAdminTabname } from "@/utils";
+import { categoryTypeOptions } from "@/data";
 
-const AdminModal: React.FC<AdminModalProps> = ({
-  isOpen,
+const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
   onClose,
   activeTab,
   currentTab,
@@ -24,19 +25,19 @@ const AdminModal: React.FC<AdminModalProps> = ({
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState("");
   const [dataFilesIds, setDataFilesIds] = useState<string | string[]>([]);
-  if (!isOpen) return null;
+
   const validateForm = () => {
     if (currentTab == "categories") {
       if (formData.name == "") {
-        setError(`Please enter ${modifyTabname()} name`);
+        setError(`Please enter ${modifyAdminTabname(activeTab)} name`);
         return false;
       }
       if (formData.description == "") {
-        setError(`Please enter ${modifyTabname()} description`);
+        setError(`Please enter ${modifyAdminTabname(activeTab)} description`);
         return false;
       }
       if (formData.type == "") {
-        setError(`Please select ${modifyTabname()} type`);
+        setError(`Please select ${modifyAdminTabname(activeTab)} type`);
         return false;
       }
       if (typeof dataFilesIds === "string" && dataFilesIds == "") {
@@ -47,6 +48,7 @@ const AdminModal: React.FC<AdminModalProps> = ({
         setError(`Please upload an image`);
         return false;
       }
+      delete formData.featured;
       return true;
     }
   };
@@ -70,26 +72,15 @@ const AdminModal: React.FC<AdminModalProps> = ({
       }
     }
   };
-  const modifyTabname = () => {
-    return activeTab.name == "Parts"
-      ? "Part"
-      : activeTab.name == "Engineering"
-        ? "Component"
-        : "Category";
-  };
-  const categoryTypeOptions = [
-    { label: "Tractors", value: "tractors" },
-    { label: "Tractor Parts", value: "tractor_parts" },
-    { label: "Sub Assemblies", value: "sub_assemblies" },
-  ];
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="relative max-h-[500px] w-full max-w-2xl overflow-y-auto rounded-lg bg-white p-6">
+      <div className="relative max-h-[500px] w-full max-w-4xl overflow-y-auto rounded-lg bg-white p-6">
         <button onClick={onClose} className="absolute right-4 top-6">
           <X className="h-6 w-6" />
         </button>
 
-        <h2 className="mb-6 text-2xl font-bold">Add New {modifyTabname()}</h2>
+        <h2 className="mb-6 text-2xl font-bold">Add New {modifyAdminTabname(activeTab)}</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -142,35 +133,30 @@ const AdminModal: React.FC<AdminModalProps> = ({
               Mark as active
             </label>
           </div>
-
-          <div className="mt-4 flex items-center gap-2">
-            <input
-              type="checkbox"
-              id="featured"
-              checked={formData.featured}
-              onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
-              className="rounded border-gray-300 outline-none focus:border-primary focus:ring-primary"
-            />
-            <label htmlFor="featured" className="text-sm">
-              Mark as featured
-            </label>
-          </div>
+          {activeTab.key !== "categories" ? (
+            <div className="mt-4 flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="featured"
+                checked={formData.featured}
+                onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
+                className="rounded border-gray-300 outline-none focus:border-primary focus:ring-primary"
+              />
+              <label htmlFor="featured" className="text-sm">
+                Mark as featured
+              </label>
+            </div>
+          ) : null}
           <p className="mx-auto w-fit text-sm capitalize text-error">{error}</p>
           <div className="mt-6 flex gap-4">
             <div className="basis-1/2">
-              <BaseButton
-                loading={false}
-                id="viewDetailsButton"
-                btnStyle
-                type="button"
-                handleClick={onClose}
-              >
+              <BaseButton loading={false} btnStyle type="button" handleClick={onClose}>
                 Cancel
               </BaseButton>
             </div>
             <div className="basis-1/2">
-              <BaseButton loading={false} id="viewDetailsButton" type="submit">
-                Add {modifyTabname()}
+              <BaseButton loading={false} type="submit">
+                Add {modifyAdminTabname(activeTab)}
               </BaseButton>
             </div>
           </div>
@@ -180,4 +166,4 @@ const AdminModal: React.FC<AdminModalProps> = ({
   );
 };
 
-export default AdminModal;
+export default AdminAddItemModal;

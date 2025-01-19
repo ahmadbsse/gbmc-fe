@@ -1,14 +1,15 @@
 import { Eye, EyeOff, Star, Pencil, Trash, Plus } from "lucide-react";
 import { useState } from "react";
 
-import { AdminModal, DeleteConfirmationModal } from "@/components/admin";
+import { AdminAddItemModal, DeleteConfirmationModal, AdminEditItemModal } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
 import { BaseButton, BaseImage } from "@/components/common";
 import { convertToReadableDate } from "@/utils";
 
 const ListDashboardData = ({ data, activeTab, getData }) => {
-  const [showModal, setShowModal] = useState(false);
+  const [showAddItemModal, setShowAddItemModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [activeID, setActiveID] = useState(null);
   const currentTab = activeTab.key == "engineering" ? "engineering-components" : activeTab.key;
 
@@ -63,19 +64,31 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
 
   return (
     <>
-      <AdminModal
-        isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        activeTab={activeTab}
-        type="product"
-        currentTab={currentTab}
-        getData={getData}
-      />
-      <DeleteConfirmationModal
-        handleDelete={deleteItem}
-        isOpen={showDeleteModal}
-        onClose={() => setShowDeleteModal(false)}
-      />
+      {showAddItemModal ? (
+        <AdminAddItemModal
+          onClose={() => setShowAddItemModal(false)}
+          activeTab={activeTab}
+          type="product"
+          currentTab={currentTab}
+          getData={getData}
+        />
+      ) : null}
+      {showDeleteModal ? (
+        <DeleteConfirmationModal
+          handleDelete={deleteItem}
+          currentTab={currentTab}
+          onClose={() => setShowDeleteModal(false)}
+        />
+      ) : null}
+      {showEditModal ? (
+        <AdminEditItemModal
+          activeTab={activeTab}
+          activeID={activeID}
+          currentTab={currentTab}
+          onClose={() => setShowEditModal(false)}
+          getData={getData}
+        />
+      ) : null}
       <div className="rounded-lg bg-white shadow">
         <div className="border-b border-gray-200 px-6 py-4">
           <div className="mb-8 flex items-center justify-between">
@@ -83,10 +96,9 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
             <div className="w-fit">
               <BaseButton
                 loading={false}
-                id="viewDetailsButton"
                 type="submit"
                 handleClick={() => {
-                  setShowModal(true);
+                  setShowAddItemModal(true);
                 }}
               >
                 <p className="mx-auto flex w-fit px-3">
@@ -151,6 +163,10 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                         </i>
                       ) : null}
                       <i
+                        onClick={() => {
+                          setActiveID(item.documentId);
+                          setShowEditModal(true);
+                        }}
                         className={`rounded-lg bg-gray-100 p-2 hover:bg-yellow-50 hover:text-yellow-600`}
                       >
                         <Pencil className="h-4 w-4" />
