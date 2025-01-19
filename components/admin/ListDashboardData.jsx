@@ -1,5 +1,6 @@
 import { Eye, EyeOff, Star, Pencil, Trash, Plus } from "lucide-react";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 import { AdminAddItemModal, DeleteConfirmationModal, AdminEditItemModal } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
@@ -12,6 +13,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [activeID, setActiveID] = useState(null);
   const currentTab = activeTab.key == "engineering" ? "engineering-components" : activeTab.key;
+  const router = useRouter();
 
   const toggleActivation = async (item) => {
     try {
@@ -61,7 +63,14 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
       console.error("Error updating resource:", error.message);
     }
   };
-
+  const addNewItem = () => {
+    if (currentTab == "categories") {
+      setShowAddItemModal(true);
+    }
+    if (currentTab == "parts") {
+      router.push(`/admin/${currentTab}/create`);
+    }
+  };
   return (
     <>
       {showAddItemModal ? (
@@ -94,13 +103,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
           <div className="mb-8 flex items-center justify-between">
             <h2 className="text-lg font-medium">{activeTab.name}</h2>
             <div className="w-fit">
-              <BaseButton
-                loading={false}
-                type="submit"
-                handleClick={() => {
-                  setShowAddItemModal(true);
-                }}
-              >
+              <BaseButton loading={false} type="submit" handleClick={addNewItem}>
                 <p className="mx-auto flex w-fit px-3">
                   <Plus className="mt-0.5 h-4 w-4" />
                   Add New

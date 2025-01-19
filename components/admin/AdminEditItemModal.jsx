@@ -34,29 +34,27 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
     if (activeID) getCategoryDetails();
   }, []);
   const validateForm = () => {
-    if (currentTab == "categories") {
-      if (data.name == "") {
-        setError(`Please enter ${modifyAdminTabname(activeTab)} name`);
-        return false;
-      }
-      if (data.description == "") {
-        setError(`Please enter ${modifyAdminTabname(activeTab)} description`);
-        return false;
-      }
-      if (data.type == "") {
-        setError(`Please select ${modifyAdminTabname(activeTab)} type`);
-        return false;
-      }
-      if (typeof dataFilesIds === "string" && dataFilesIds == "") {
-        setError(`Please upload an image`);
-        return false;
-      }
-      if (typeof dataFilesIds === "object" && dataFilesIds.length == 0) {
-        setError(`Please upload an image`);
-        return false;
-      }
-      return true;
+    if (data.name == "") {
+      setError(`Please enter ${modifyAdminTabname(activeTab)} name`);
+      return false;
     }
+    if (data.description == "") {
+      setError(`Please enter ${modifyAdminTabname(activeTab)} description`);
+      return false;
+    }
+    if (data.type == "") {
+      setError(`Please select ${modifyAdminTabname(activeTab)} type`);
+      return false;
+    }
+    if (typeof dataFilesIds === "string" && dataFilesIds == "") {
+      setError(`Please upload an image`);
+      return false;
+    }
+    if (typeof dataFilesIds === "object" && dataFilesIds.length == 0) {
+      setError(`Please upload an image`);
+      return false;
+    }
+    return true;
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -92,11 +90,13 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
   }
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="relative max-h-[500px] w-full max-w-4xl overflow-y-auto rounded-lg bg-white p-6">
+      <div className="relative max-h-[600px] w-full max-w-4xl overflow-y-auto rounded-lg bg-white p-6">
         <button onClick={onClose} className="absolute right-4 top-6">
           <X className="h-6 w-6" />
         </button>
-        <h2 className="mb-6 text-2xl font-bold">Edit {modifyAdminTabname(activeTab)}</h2>
+        <h2 className="mb-6 text-2xl font-bold">
+          Edit {modifyAdminTabname(activeTab)} - {data?.name}
+        </h2>
         {data ? (
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
@@ -139,49 +139,51 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
                 </div>
               ))}
             </div>
-            <div>
-              <label className="mb-1 block text-sm font-medium">Category</label>
+            <div className="flex flex-col lg:flex-row lg:gap-8">
+              <div className="basis-1/2">
+                <label className="mb-1 block text-sm font-medium">Category</label>
 
-              <select
-                className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                value={JSON.stringify(data.type)}
-                onChange={(e) => setData({ ...data, type: JSON.parse(e.target.value) })}
-              >
-                <option value="">Select a category</option>
-                {categoryTypeOptions.map((option) => (
-                  <option key={option.value} value={JSON.stringify(option.value)}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </div>
+                <select
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                  value={JSON.stringify(data.type)}
+                  onChange={(e) => setData({ ...data, type: JSON.parse(e.target.value) })}
+                >
+                  <option value="">Select a category</option>
+                  {categoryTypeOptions.map((option) => (
+                    <option key={option.value} value={JSON.stringify(option.value)}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-            <div className="mt-4 flex items-center gap-2">
-              <input
-                type="checkbox"
-                id="active"
-                checked={data.active}
-                onChange={(e) => setData({ ...data, active: e.target.checked })}
-                className="rounded border-gray-300 outline-none focus:border-primary focus:ring-primary"
-              />
-              <label htmlFor="active" className="text-sm">
-                Mark as active
-              </label>
-            </div>
-            {activeTab.key !== "categories" ? (
               <div className="mt-4 flex items-center gap-2">
                 <input
                   type="checkbox"
-                  id="featured"
-                  checked={data.featured}
-                  onChange={(e) => setData({ ...data, featured: e.target.checked })}
+                  id="active"
+                  checked={data.active}
+                  onChange={(e) => setData({ ...data, active: e.target.checked })}
                   className="rounded border-gray-300 outline-none focus:border-primary focus:ring-primary"
                 />
-                <label htmlFor="featured" className="text-sm">
-                  Mark as featured
+                <label htmlFor="active" className="text-sm">
+                  Mark as active
                 </label>
               </div>
-            ) : null}
+              {activeTab.key !== "categories" ? (
+                <div className="mt-4 flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    id="featured"
+                    checked={data.featured}
+                    onChange={(e) => setData({ ...data, featured: e.target.checked })}
+                    className="rounded border-gray-300 outline-none focus:border-primary focus:ring-primary"
+                  />
+                  <label htmlFor="featured" className="text-sm">
+                    Mark as featured
+                  </label>
+                </div>
+              ) : null}
+            </div>
             <p className="mx-auto w-fit text-sm capitalize text-error">{error}</p>
             <div className="mt-6 flex gap-4">
               <div className="basis-1/2">
@@ -191,7 +193,7 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
               </div>
               <div className="basis-1/2">
                 <BaseButton loading={false} type="submit">
-                  Add {modifyAdminTabname(activeTab)}
+                  Edit {modifyAdminTabname(activeTab)}
                 </BaseButton>
               </div>
             </div>
