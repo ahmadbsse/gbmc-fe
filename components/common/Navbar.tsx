@@ -42,27 +42,9 @@ const Navbar = ({ isAdmin = false, showSearchbar = false }) => {
                 className="text-xl font-extrabold text-primary md:text-2xl"
               >
                 {appData.name}
+                {isAdmin ? " - Admin" : ""}
               </Link>
-              {isAdmin ? (
-                <>
-                  <div className="hidden items-center gap-6 md:flex">
-                    {adminRoutes.map((item, index) => (
-                      <Link
-                        key={index}
-                        href={item.href}
-                        className={`hover:text-black ${
-                          item.routeName.toLowerCase() === router.route.toLowerCase() ||
-                          router.route.toLowerCase().includes(item.routeName.toLowerCase())
-                            ? "border-b font-semibold text-black"
-                            : ""
-                        }`}
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
-                  </div>
-                </>
-              ) : (
+              {isAdmin ? null : (
                 <>
                   <div className="hidden items-center gap-6 md:flex">
                     {userRoutes.map((item, index) => (

@@ -19,9 +19,10 @@ type tab = {
 const AdminDashboard = () => {
   const tabsKey = [
     { name: "Categories", key: "categories" },
-    { name: "Engineering", key: "engineering" },
-    { name: "Parts", key: "parts" },
     { name: "Suppliers", key: "suppliers" },
+    { name: "Sub Assemblies", key: "sub-assemblies" },
+    { name: "Parts", key: "parts" },
+    { name: "Engineering", key: "engineering" },
   ];
   const [activeTab, setActiveTab] = useState<tab>(tabsKey[0]);
   const [isLoading, setIsLoading] = useState(false);
@@ -29,6 +30,7 @@ const AdminDashboard = () => {
   const [parts, setParts] = useState(null);
   const [engineering, setEngineering] = useState(null);
   const [suppliers, setSuppliers] = useState(null);
+  const [subAssemblies, setSubAssemblies] = useState(null);
 
   const getCategories = async () => {
     try {
@@ -71,6 +73,9 @@ const AdminDashboard = () => {
   const getEngineering = async () => {
     setEngineering(null);
   };
+  const getSubAssemblies = async () => {
+    setSubAssemblies(null);
+  };
   const getSuppliers = async () => {
     try {
       setIsLoading(true);
@@ -103,6 +108,9 @@ const AdminDashboard = () => {
     }
     if (activeTab.key == "parts") {
       getParts();
+    }
+    if (activeTab.key == "sub-assemblies") {
+      getSubAssemblies();
     }
   }, [activeTab]);
 
@@ -158,7 +166,9 @@ const AdminDashboard = () => {
                     ? engineering
                     : activeTab.key == "suppliers"
                       ? suppliers
-                      : parts
+                      : activeTab.key == "sub-assemblies"
+                        ? subAssemblies
+                        : parts
               }
               activeTab={activeTab}
               getData={
@@ -168,7 +178,9 @@ const AdminDashboard = () => {
                     ? getEngineering
                     : activeTab.key == "suppliers"
                       ? getSuppliers
-                      : getParts
+                      : activeTab.key == "sub-assemblies"
+                        ? getSubAssemblies
+                        : getParts
               }
             />
           )}
