@@ -69,7 +69,21 @@ class ApiClient {
       this.handleError(error);
     }
   }
-
+  async UPLOAD(url, formData, config = {}) {
+    try {
+      const response = await this.client.post(url, formData, {
+        ...config,
+        headers: {
+          ...config.headers,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      this.handleError(error);
+      throw error; // Re-throw for further handling
+    }
+  }
   handleError(error) {
     const message =
       error.response?.data?.error?.message || error.message || "An unknown error occurred";
@@ -78,6 +92,6 @@ class ApiClient {
   }
 }
 
-const apiClient = new ApiClient(process.env.NEXT_PUBLIC_API_BASE_URL || "");
+const apiClient = new ApiClient(process.env.NEXT_PUBLIC_API_BASE_URL + "/api" || "");
 
 export default apiClient;

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { X } from "lucide-react";
 
 import { BaseButton } from "@/components/common";
+import { BaseFileUploader } from "@/components/admin";
 import type { AdminModalProps } from "@/types";
 import apiClient from "@/utils/apiClient";
 
@@ -18,9 +19,11 @@ const AdminModal: React.FC<AdminModalProps> = ({
     type: "",
     active: false,
     featured: false,
+    media: "",
   };
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState("");
+  const [dataFilesIds, setDataFilesIds] = useState<string | string[]>([]);
   if (!isOpen) return null;
   const validateForm = () => {
     if (currentTab == "categories") {
@@ -36,12 +39,21 @@ const AdminModal: React.FC<AdminModalProps> = ({
         setError(`Please select ${modifyTabname()} type`);
         return false;
       }
+      if (typeof dataFilesIds === "string" && dataFilesIds == "") {
+        setError(`Please upload an image`);
+        return false;
+      }
+      if (typeof dataFilesIds === "object" && dataFilesIds.length == 0) {
+        setError(`Please upload an image`);
+        return false;
+      }
       return true;
     }
   };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validateForm()) {
+      formData.media = dataFilesIds;
       try {
         apiClient
           .POST(`/${currentTab}`, { data: formData })
@@ -72,7 +84,7 @@ const AdminModal: React.FC<AdminModalProps> = ({
   ];
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="relative w-full max-w-md rounded-lg bg-white p-6">
+      <div className="relative max-h-[500px] w-full max-w-2xl overflow-y-auto rounded-lg bg-white p-6">
         <button onClick={onClose} className="absolute right-4 top-6">
           <X className="h-6 w-6" />
         </button>
@@ -101,7 +113,7 @@ const AdminModal: React.FC<AdminModalProps> = ({
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
             />
           </div>
-
+          <BaseFileUploader setDataFilesIds={setDataFilesIds} />
           <div>
             <label className="mb-1 block text-sm font-medium">Category</label>
             <select

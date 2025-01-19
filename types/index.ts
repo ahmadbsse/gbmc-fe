@@ -62,6 +62,7 @@ export type Category = {
   documentId: string;
   name: string;
   type: string;
+  media: Media;
   description: string;
   createdAt: string;
   updatedAt: string;
@@ -69,6 +70,18 @@ export type Category = {
   featured: boolean;
   publishedAt: string;
 };
+export type Media = {
+  id: number,
+  documentId: string,
+  name: string,
+  formats: ImageFormats,
+};
+export type ImageFormats = {
+  small: Format,
+  thumbnail: Format;
+  actual: Format;
+};
+export type Format = { url: string, width: number, height: number; };
 export type Categories = {
   tractors: Category[];
   tractor_parts: Category[];

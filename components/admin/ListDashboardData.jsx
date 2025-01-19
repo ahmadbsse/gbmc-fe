@@ -1,9 +1,10 @@
-import { Folder, Eye, EyeOff, Star, Pencil, Trash, Plus } from "lucide-react";
+import { Eye, EyeOff, Star, Pencil, Trash, Plus } from "lucide-react";
 import { useState } from "react";
 
 import { AdminModal } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
-import { BaseButton } from "@/components/common";
+import { BaseButton, BaseImage } from "@/components/common";
+import { convertToReadableDate } from "@/utils";
 
 const ListDashboardData = ({ data, activeTab, getData }) => {
   const [showModal, setShowModal] = useState(false);
@@ -55,9 +56,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
       console.error("Error updating resource:", error.message);
     }
   };
-  const modifyTypeName = (name) => {
-    return name.replace("_", " ");
-  };
+
   return (
     <>
       <AdminModal
@@ -93,16 +92,29 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
           {data && data.length > 0 ? (
             <div className="grid gap-4">
               {data &&
-                data.map((item) => (
+                data.map((item, index) => (
                   <div
                     key={item.documentId}
                     className="flex items-center justify-between rounded-lg bg-gray-50 p-4"
                   >
-                    <div className="flex items-center gap-4">
-                      <Folder className="h-5 w-5" />
-                      <div>
-                        <h3 className="font-medium">{item.name}</h3>
-                        <span className="text-sm capitalize">{modifyTypeName(item.type)}</span>
+                    <div className="flex gap-4">
+                      <span>{index + 1}.</span>
+                      <div className="w-44">
+                        <BaseImage
+                          width={item.media.formats.thumbnail.width}
+                          height={item.media.formats.thumbnail.height}
+                          src={item.media.formats.thumbnail.url}
+                          alt={item.name}
+                        />
+                      </div>
+                      <div className="flex flex-col justify-between">
+                        <div>
+                          <h3 className="font-medium capitalize">{item.name}</h3>
+                          <span className="text-sm">{item.description}</span>
+                        </div>
+                        <span className="text-xs text-solidGray/50">
+                          {convertToReadableDate(item.publishedAt)}
+                        </span>
                       </div>
                     </div>
 
@@ -117,16 +129,18 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                       >
                         {item.active ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
                       </i>
-                      <i
-                        className={`rounded-lg p-2 ${
-                          item.featured
-                            ? "bg-yellow-50 text-yellow-600 hover:bg-yellow-50"
-                            : "bg-gray-100 hover:bg-yellow-50 hover:text-yellow-600"
-                        }`}
-                        onClick={() => toggleFeatured(item)}
-                      >
-                        <Star className="h-4 w-4" />
-                      </i>
+                      {currentTab != "categories" ? (
+                        <i
+                          className={`rounded-lg p-2 ${
+                            item.featured
+                              ? "bg-yellow-50 text-yellow-600 hover:bg-yellow-50"
+                              : "bg-gray-100 hover:bg-yellow-50 hover:text-yellow-600"
+                          }`}
+                          onClick={() => toggleFeatured(item)}
+                        >
+                          <Star className="h-4 w-4" />
+                        </i>
+                      ) : null}
                       <i
                         className={`rounded-lg bg-gray-100 p-2 hover:bg-yellow-50 hover:text-yellow-600`}
                       >

@@ -27,12 +27,41 @@ const AdminDashboard = () => {
   const [parts, setParts] = useState(null);
   const [engineering, setEngineering] = useState(null);
 
+  function transformMedia(response) {
+    response.forEach((item) => {
+      const media = item.media;
+      item.media = {
+        id: media.id,
+        documentId: media.documentId,
+        name: media.name,
+        formats: {
+          small: media.formats?.small
+            ? {
+                url: media.formats.small.url,
+                width: media.formats.small.width,
+                height: media.formats.small.height,
+              }
+            : undefined,
+          thumbnail: media.formats?.thumbnail
+            ? {
+                url: media.formats.thumbnail.url,
+                width: media.formats.thumbnail.width,
+                height: media.formats.thumbnail.height,
+              }
+            : undefined,
+          actual: { url: media.url, width: media.width, height: media.height },
+        },
+      };
+    });
+    return response;
+  }
   const getCategories = async () => {
     try {
       setIsLoading(true);
-      await apiClient.GET("/categories").then(async (res) => {
+      await apiClient.GET("/categories?populate=*").then(async (res) => {
         if (res && res.data.length > 0) {
-          setCategories(res.data);
+          const transformedData = transformMedia(res.data);
+          setCategories(transformedData);
           setIsLoading(false);
         } else {
           setIsLoading(false);
@@ -80,10 +109,7 @@ const AdminDashboard = () => {
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">
-          {/* Header */}
           <h1 className="mb-8 text-2xl font-bold">Dashboard</h1>
-
-          {/* Tabs */}
 
           <div className="mb-6 flex gap-4">
             {tabsKey.map((tab) => (
@@ -97,7 +123,6 @@ const AdminDashboard = () => {
             ))}
           </div>
 
-          {/* Content */}
           {isLoading ? (
             <div className="mx-auto mt-10 w-fit">
               <BaseLoader width={40} height={40} />
