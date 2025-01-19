@@ -21,12 +21,14 @@ const AdminDashboard = () => {
     { name: "Categories", key: "categories" },
     { name: "Engineering", key: "engineering" },
     { name: "Parts", key: "parts" },
+    { name: "Suppliers", key: "suppliers" },
   ];
   const [activeTab, setActiveTab] = useState<tab>(tabsKey[0]);
   const [isLoading, setIsLoading] = useState(false);
   const [categories, setCategories] = useState<Categories>(null);
   const [parts, setParts] = useState(null);
   const [engineering, setEngineering] = useState(null);
+  const [suppliers, setSuppliers] = useState(null);
 
   const getCategories = async () => {
     try {
@@ -53,9 +55,37 @@ const AdminDashboard = () => {
   const getEngineering = async () => {
     setEngineering(null);
   };
+  const getSuppliers = async () => {
+    try {
+      setIsLoading(true);
+      await apiClient.GET("/suppliers?populate=*").then(async (res) => {
+        if (res && res.data.length > 0) {
+          const transformedData = transformMedia(res.data);
+          setSuppliers(transformedData);
+          setIsLoading(false);
+        } else {
+          setIsLoading(false);
+          setSuppliers(null);
+        }
+      });
+    } catch (error) {
+      const message = (error as Error).message;
+      setIsLoading(false);
+      console.error("Error in POST request:", message);
+    }
+  };
   useEffect(() => {
     getCategories();
   }, []);
+
+  useEffect(() => {
+    if (activeTab.key == "categories") {
+      getCategories();
+    }
+    if (activeTab.key == "suppliers") {
+      getSuppliers();
+    }
+  }, [activeTab]);
 
   return (
     <>
@@ -107,7 +137,9 @@ const AdminDashboard = () => {
                   ? categories
                   : activeTab.key == "engineering"
                     ? engineering
-                    : parts
+                    : activeTab.key == "suppliers"
+                      ? suppliers
+                      : parts
               }
               activeTab={activeTab}
               getData={
@@ -115,7 +147,9 @@ const AdminDashboard = () => {
                   ? getCategories
                   : activeTab.key == "engineering"
                     ? getEngineering
-                    : getParts
+                    : activeTab.key == "suppliers"
+                      ? getSuppliers
+                      : getParts
               }
             />
           )}

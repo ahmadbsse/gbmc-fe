@@ -14,7 +14,7 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
 
   const getCategoryDetails = async () => {
     try {
-      const url = `/categories/${activeID}?populate=*`;
+      const url = `/${currentTab}/${activeID}?populate=*`;
       await apiClient.GET(url).then((res) => {
         const respose = transformMedia(res.data);
         delete respose.id;
@@ -42,15 +42,15 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
       setError(`Please enter ${modifyAdminTabname(activeTab)} description`);
       return false;
     }
-    if (data.type == "") {
+    if (currentTab == "categories" && data.type == "") {
       setError(`Please select ${modifyAdminTabname(activeTab)} type`);
       return false;
     }
-    if (typeof dataFilesIds === "string" && dataFilesIds == "") {
+    if (typeof dataFilesIds === "string" && data.media.length == 0 && dataFilesIds == "") {
       setError(`Please upload an image`);
       return false;
     }
-    if (typeof dataFilesIds === "object" && dataFilesIds.length == 0) {
+    if (typeof dataFilesIds === "object" && data.media.length == 0 && dataFilesIds.length == 0) {
       setError(`Please upload an image`);
       return false;
     }
@@ -140,22 +140,24 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
               ))}
             </div>
             <div className="flex flex-col lg:flex-row lg:gap-8">
-              <div className="basis-1/2">
-                <label className="mb-1 block text-sm font-medium">Category</label>
+              {currentTab == "categories" ? (
+                <div className="basis-1/2">
+                  <label className="mb-1 block text-sm font-medium">Category</label>
 
-                <select
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                  value={JSON.stringify(data.type)}
-                  onChange={(e) => setData({ ...data, type: JSON.parse(e.target.value) })}
-                >
-                  <option value="">Select a category</option>
-                  {categoryTypeOptions.map((option) => (
-                    <option key={option.value} value={JSON.stringify(option.value)}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
+                  <select
+                    className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                    value={JSON.stringify(data.type)}
+                    onChange={(e) => setData({ ...data, type: JSON.parse(e.target.value) })}
+                  >
+                    <option value="">Select a category</option>
+                    {categoryTypeOptions.map((option) => (
+                      <option key={option.value} value={JSON.stringify(option.value)}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : null}
 
               <div className="mt-4 flex items-center gap-2">
                 <input
@@ -169,7 +171,7 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
                   Mark as active
                 </label>
               </div>
-              {activeTab.key !== "categories" ? (
+              {activeTab.key !== "categories" && activeTab.key !== "suppliers" ? (
                 <div className="mt-4 flex items-center gap-2">
                   <input
                     type="checkbox"

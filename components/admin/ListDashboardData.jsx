@@ -24,8 +24,13 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
       delete data.createdAt;
       delete data.updatedAt;
       delete data.publishedAt;
+      if (Array.isArray(data.media)) {
+        data.media = data.media.map((item) => item.id);
+      } else {
+        data.media = data.media.id;
+      }
       data.active = !data.active;
-
+      console.log(data);
       await apiClient.PUT(url, { data: data }).then((res) => {
         getData();
       });
@@ -64,7 +69,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
     }
   };
   const addNewItem = () => {
-    if (currentTab == "categories") {
+    if (currentTab == "categories" || currentTab == "suppliers") {
       setShowAddItemModal(true);
     }
     if (currentTab == "parts") {
@@ -153,7 +158,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                       >
                         {item.active ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
                       </i>
-                      {currentTab != "categories" ? (
+                      {currentTab != "categories" && currentTab != "suppliers" ? (
                         <i
                           className={`rounded-lg p-2 ${
                             item.featured
