@@ -132,20 +132,6 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
                 Mark as active
               </label>
             </div>
-            {activeTab.key !== "categories" ? (
-              <div className="mt-4 flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  id="featured"
-                  checked={formData.featured}
-                  onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
-                  className="rounded border-gray-300 outline-none focus:border-primary focus:ring-primary"
-                />
-                <label htmlFor="featured" className="text-sm">
-                  Mark as featured
-                </label>
-              </div>
-            ) : null}
           </div>
           <p className="mx-auto w-fit text-sm capitalize text-error">{error}</p>
           <div className="mt-6 flex gap-4">
