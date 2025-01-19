@@ -30,7 +30,6 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
         data.media = data.media.id;
       }
       data.active = !data.active;
-      console.log(data);
       await apiClient.PUT(url, { data: data }).then((res) => {
         getData();
       });
@@ -47,6 +46,11 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
       delete data.createdAt;
       delete data.updatedAt;
       delete data.publishedAt;
+      if (Array.isArray(data.media)) {
+        data.media = data.media.map((item) => item.id);
+      } else {
+        data.media = data.media.id;
+      }
       data.featured = !data.featured;
 
       await apiClient.PUT(url, { data: data }).then((res) => {
@@ -74,6 +78,11 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
     }
     if (currentTab == "parts") {
       router.push(`/admin/${currentTab}/create`);
+    }
+  };
+  const viewDetails = (documentId) => {
+    if (currentTab == "parts") {
+      router.push(`/admin/${currentTab}/detail?id=${documentId}`);
     }
   };
   return (
@@ -124,21 +133,35 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                 data.map((item, index) => (
                   <div
                     key={item.documentId}
-                    className="flex items-center justify-between rounded-lg bg-gray-50 p-4"
+                    className={`flex items-center justify-between rounded-lg bg-gray-50 p-4`}
                   >
                     <div className="flex gap-4">
                       <span>{index + 1}.</span>
-                      <div className="w-44">
-                        <BaseImage
-                          width={item.media.formats.thumbnail.width}
-                          height={item.media.formats.thumbnail.height}
-                          src={item.media.formats.thumbnail.url}
-                          alt={item.name}
-                        />
+                      <div className="max-w-44">
+                        {Array.isArray(item?.media) ? (
+                          <BaseImage
+                            width={item.media[0]?.formats.thumbnail.width}
+                            height={item.media[0]?.formats.thumbnail.height}
+                            src={item.media[0]?.formats.thumbnail.url}
+                            alt={item.name}
+                          />
+                        ) : (
+                          <BaseImage
+                            width={item.media?.formats.thumbnail.width}
+                            height={item.media?.formats.thumbnail.height}
+                            src={item.media?.formats.thumbnail.url}
+                            alt={item.name}
+                          />
+                        )}
                       </div>
                       <div className="flex flex-col justify-between">
                         <div>
-                          <h3 className="font-medium capitalize">{item.name}</h3>
+                          <h3
+                            onClick={() => viewDetails(item.documentId)}
+                            className={`font-medium capitalize ${currentTab == "parts" ? "cursor-pointer" : ""}`}
+                          >
+                            {item.name}
+                          </h3>
                           <span className="text-sm">{item.description}</span>
                         </div>
                         <span className="text-xs text-solidGray/50">
@@ -172,8 +195,12 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                       ) : null}
                       <i
                         onClick={() => {
-                          setActiveID(item.documentId);
-                          setShowEditModal(true);
+                          if (currentTab == "parts") {
+                            router.push(`/admin/${currentTab}/edit?id=${item.documentId}`);
+                          } else {
+                            setActiveID(item.documentId);
+                            setShowEditModal(true);
+                          }
                         }}
                         className={`rounded-lg bg-gray-100 p-2 hover:bg-yellow-50 hover:text-yellow-600`}
                       >

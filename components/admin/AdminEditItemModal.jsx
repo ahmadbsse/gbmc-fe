@@ -59,7 +59,15 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      data.media = dataFilesIds;
+      if (dataFilesIds.length == 0) {
+        if (Array.isArray(data.media)) {
+          data.media = data.media.map((item) => item.id);
+        } else {
+          data.media = data.media.id;
+        }
+      } else {
+        data.media = [...data.media.map((item) => item.id), ...dataFilesIds];
+      }
       delete data.documentId;
       try {
         apiClient
@@ -121,11 +129,14 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
               />
             </div>
             <BaseFileUploader setDataFilesIds={setDataFilesIds} />
-            <div className="flex gap-4">
+            <div className="flex items-center gap-4">
               {data?.media?.map((item) => (
                 <div className="relative w-44" key={item.documentId}>
                   <button
-                    onClick={() => deletePreviousImage(item.id)}
+                    onClick={(e) => {
+                      e.preventDefault(); // Prevent form submission
+                      deletePreviousImage(item.id);
+                    }}
                     className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
                   >
                     <X className="h-4 w-4 text-white" />
@@ -139,7 +150,7 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
                 </div>
               ))}
             </div>
-            <div className="flex flex-col lg:flex-row lg:gap-8">
+            <div className="flex flex-col md:flex-row md:gap-8">
               {currentTab == "categories" ? (
                 <div className="basis-1/2">
                   <label className="mb-1 block text-sm font-medium">Category</label>

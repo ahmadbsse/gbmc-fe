@@ -102,7 +102,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
             />
           </div>
           <BaseFileUploader setDataFilesIds={setDataFilesIds} />
-          <div className="flex flex-col lg:flex-row lg:gap-8">
+          <div className="flex flex-col md:flex-row md:gap-8">
             {currentTab == "categories" ? (
               <div className="basis-1/2">
                 <label className="mb-1 block text-sm font-medium">Category</label>

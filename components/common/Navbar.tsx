@@ -37,7 +37,10 @@ const Navbar = ({ isAdmin = false, showSearchbar = false }) => {
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             <div className="flex w-full items-center justify-between gap-8">
-              <Link href="/" className="text-xl font-extrabold text-primary md:text-2xl">
+              <Link
+                href={`${isAdmin ? "/admin" : "/"}`}
+                className="text-xl font-extrabold text-primary md:text-2xl"
+              >
                 {appData.name}
               </Link>
               {isAdmin ? (

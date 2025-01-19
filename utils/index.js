@@ -15,8 +15,7 @@ export function convertToReadableDate(isoString) {
 export function transformMedia(response) {
   const transform = (item) => {
     if (!item.media) return;
-    const media = item.media;
-    item.media = {
+    const transformMediaObject = (media) => ({
       id: media.id,
       documentId: media.documentId,
       name: media.name,
@@ -37,7 +36,14 @@ export function transformMedia(response) {
           : undefined,
         actual: { url: media.url, width: media.width, height: media.height },
       },
-    };
+    });
+
+    // Check if media is an array or a single object
+    if (Array.isArray(item.media)) {
+      item.media = item.media.map(transformMediaObject);
+    } else {
+      item.media = transformMediaObject(item.media);
+    }
   };
 
   if (Array.isArray(response)) {

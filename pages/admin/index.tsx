@@ -50,7 +50,23 @@ const AdminDashboard = () => {
     }
   };
   const getParts = async () => {
-    setParts(null);
+    try {
+      setIsLoading(true);
+      await apiClient.GET("/parts?populate=*").then(async (res) => {
+        if (res && res.data.length > 0) {
+          const transformedData = transformMedia(res.data);
+          setParts(transformedData);
+          setIsLoading(false);
+        } else {
+          setIsLoading(false);
+          setParts(null);
+        }
+      });
+    } catch (error) {
+      const message = (error as Error).message;
+      setIsLoading(false);
+      console.error("Error in POST request:", message);
+    }
   };
   const getEngineering = async () => {
     setEngineering(null);
@@ -84,6 +100,9 @@ const AdminDashboard = () => {
     }
     if (activeTab.key == "suppliers") {
       getSuppliers();
+    }
+    if (activeTab.key == "parts") {
+      getParts();
     }
   }, [activeTab]);
 
