@@ -39,16 +39,15 @@ const AdminDashboard = () => {
         if (res && res.data.length > 0) {
           const transformedData = transformMedia(res.data);
           setCategories(transformedData);
-          setIsLoading(false);
         } else {
-          setIsLoading(false);
           setCategories(null);
         }
       });
     } catch (error) {
       const message = (error as Error).message;
-      setIsLoading(false);
       console.error("Error in POST request:", message);
+    } finally {
+      setIsLoading(false);
     }
   };
   const getParts = async () => {
@@ -58,23 +57,39 @@ const AdminDashboard = () => {
         if (res && res.data.length > 0) {
           const transformedData = transformMedia(res.data);
           setParts(transformedData);
-          setIsLoading(false);
         } else {
-          setIsLoading(false);
           setParts(null);
         }
       });
     } catch (error) {
       const message = (error as Error).message;
-      setIsLoading(false);
+
       console.error("Error in POST request:", message);
+    } finally {
+      setIsLoading(false);
     }
   };
   const getEngineering = async () => {
     setEngineering(null);
   };
   const getSubAssemblies = async () => {
-    setSubAssemblies(null);
+    try {
+      setIsLoading(true);
+      await apiClient.GET("/sub-assemblies?populate=*").then(async (res) => {
+        if (res && res.data.length > 0) {
+          const transformedData = transformMedia(res.data);
+          setSubAssemblies(transformedData);
+        } else {
+          setSuppliers(null);
+        }
+      });
+    } catch (error) {
+      const message = (error as Error).message;
+
+      console.error("Error in POST request:", message);
+    } finally {
+      setIsLoading(false);
+    }
   };
   const getSuppliers = async () => {
     try {
@@ -83,21 +98,19 @@ const AdminDashboard = () => {
         if (res && res.data.length > 0) {
           const transformedData = transformMedia(res.data);
           setSuppliers(transformedData);
-          setIsLoading(false);
         } else {
-          setIsLoading(false);
           setSuppliers(null);
         }
+        setIsLoading(false);
       });
     } catch (error) {
       const message = (error as Error).message;
       setIsLoading(false);
       console.error("Error in POST request:", message);
+    } finally {
+      setIsLoading(false);
     }
   };
-  useEffect(() => {
-    getCategories();
-  }, []);
 
   useEffect(() => {
     if (activeTab.key == "categories") {

@@ -76,12 +76,12 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
     if (currentTab == "categories" || currentTab == "suppliers") {
       setShowAddItemModal(true);
     }
-    if (currentTab == "parts") {
+    if (currentTab == "parts" || currentTab == "sub-assemblies") {
       router.push(`/admin/${currentTab}/create`);
     }
   };
   const viewDetails = (documentId) => {
-    if (currentTab == "parts") {
+    if (currentTab == "parts" || currentTab == "sub-assemblies") {
       router.push(`/admin/${currentTab}/detail?id=${documentId}`);
     }
   };
@@ -158,7 +158,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                         <div>
                           <h3
                             onClick={() => viewDetails(item.documentId)}
-                            className={`font-medium capitalize ${currentTab == "parts" ? "cursor-pointer" : ""}`}
+                            className={`font-medium capitalize ${currentTab == "parts" || currentTab == "sub-assemblies" ? "cursor-pointer" : ""}`}
                           >
                             {item.name}
                           </h3>
@@ -195,7 +195,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                       ) : null}
                       <i
                         onClick={() => {
-                          if (currentTab == "parts") {
+                          if (currentTab == "parts" || currentTab == "sub-assemblies") {
                             router.push(`/admin/${currentTab}/edit?id=${item.documentId}`);
                           } else {
                             setActiveID(item.documentId);

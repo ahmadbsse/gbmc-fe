@@ -5,13 +5,13 @@ import apiClient from "@/utils/apiClient";
 
 import { Navbar, BaseLoader, BaseImage } from "@/components/common";
 
-const ViewPartDetails = () => {
+const ViewSubAssemblyDetails = () => {
   const router = useRouter();
   const { id } = router.query;
   const [formData, setFormData] = useState(null);
-  const getPartDetails = async () => {
+  const getSubAssemblyDetails = async () => {
     try {
-      const url = `/parts/${id}?populate=*`;
+      const url = `/sub-assemblies/${id}?populate=*`;
       await apiClient.GET(url).then((res) => {
         const response = res.data;
         if (!Array.isArray(response.media)) {
@@ -25,7 +25,7 @@ const ViewPartDetails = () => {
   };
 
   useEffect(() => {
-    if (id) getPartDetails();
+    if (id) getSubAssemblyDetails();
   }, [id]);
   return (
     <>
@@ -63,12 +63,6 @@ const ViewPartDetails = () => {
                     {formData.weight}
                   </div>
                 </div>
-                <div className="w-full">
-                  <label className="mb-1 block text-sm font-medium">Supplier</label>
-                  <div className="w-full rounded-lg border border-gray-300 px-4 py-2">
-                    {formData.supplier}
-                  </div>
-                </div>
               </div>
 
               <div>
@@ -85,7 +79,6 @@ const ViewPartDetails = () => {
                     {formData.category}
                   </div>
                 </div>
-
                 <div className="mt-4 flex w-full items-center gap-2">
                   <input
                     type="checkbox"
@@ -151,4 +144,4 @@ const ViewPartDetails = () => {
   );
 };
 
-export default ViewPartDetails;
+export default ViewSubAssemblyDetails;

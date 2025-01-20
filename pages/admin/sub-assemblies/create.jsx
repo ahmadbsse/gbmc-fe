@@ -8,14 +8,13 @@ import { BaseFileUploader } from "@/components/admin";
 import { appData } from "@/constants";
 import apiClient from "@/utils/apiClient";
 
-const CreatePart = () => {
+const CreateSubAssembly = () => {
   const router = useRouter();
   const initialFormData = {
     name: "",
     number: "",
     material: "",
     weight: "",
-    supplier: "",
     description: "",
     category: "",
     active: false,
@@ -25,36 +24,32 @@ const CreatePart = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState("");
   const [dataFilesIds, setDataFilesIds] = useState([]);
-  const [suppliers, setSuppliers] = useState([]);
   const [categories, setCategories] = useState([]);
 
   const validateForm = () => {
     if (formData.name == "") {
-      setError(`Please enter part name`);
+      setError(`Please enter sub assembly name`);
       return false;
     }
     if (formData.material == "") {
-      setError(`Please enter part material`);
+      setError(`Please enter sub assembly material`);
       return false;
     }
     if (formData.weight == "") {
-      setError(`Please enter part weight`);
+      setError(`Please enter sub assembly weight`);
       return false;
     }
-    if (formData.supplier == "") {
-      setError(`Please enter part supplier`);
-      return false;
-    }
+
     if (formData.number == "") {
-      setError(`Please enter part SKU`);
+      setError(`Please enter sub assembly SKU`);
       return false;
     }
     if (formData.description == "") {
-      setError(`Please enter part description`);
+      setError(`Please enter sub assembly description`);
       return false;
     }
     if (formData.category == "") {
-      setError(`Please select part category`);
+      setError(`Please select sub assembly category`);
       return false;
     }
     if (typeof dataFilesIds === "string" && dataFilesIds == "") {
@@ -74,7 +69,7 @@ const CreatePart = () => {
       formData.media = dataFilesIds;
       try {
         apiClient
-          .POST(`/parts`, { data: formData })
+          .POST(`/sub-assemblies`, { data: formData })
           .then(() => {
             setFormData(initialFormData);
             router.push("/admin");
@@ -87,17 +82,7 @@ const CreatePart = () => {
       }
     }
   };
-  const getSuppliers = async () => {
-    try {
-      const url = `/suppliers?fields=name`;
-      await apiClient.GET(url).then((res) => {
-        const data = res.data.map((item) => item.name);
-        setSuppliers(data);
-      });
-    } catch (error) {
-      console.error("Error fetching resource:", error.message);
-    }
-  };
+
   const getCategories = async () => {
     try {
       const url = `/categories?fields=name`;
@@ -110,7 +95,6 @@ const CreatePart = () => {
     }
   };
   useEffect(() => {
-    getSuppliers();
     getCategories();
   }, []);
   return (
@@ -138,7 +122,7 @@ const CreatePart = () => {
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">
-          <h1 className="mx-auto mb-8 w-fit text-2xl font-bold">Create Part</h1>
+          <h1 className="mx-auto mb-8 w-fit text-2xl font-bold">Create Sub Assembly</h1>
 
           <form onSubmit={handleSubmit} className="mx-auto max-w-[1000px] space-y-3">
             <div className="flex flex-col md:flex-row md:gap-4">
@@ -184,21 +168,6 @@ const CreatePart = () => {
                   value={formData.weight}
                   onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
                 />
-              </div>
-              <div className="w-full">
-                <label className="mb-1 block text-sm font-medium">Supplier</label>
-                <select
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                  value={formData.supplier}
-                  onChange={(e) => setFormData({ ...formData, supplier: e.target.value })}
-                >
-                  <option value="">Select a supplier</option>
-                  {suppliers.map((supplier) => (
-                    <option key={supplier} value={supplier}>
-                      {supplier}
-                    </option>
-                  ))}
-                </select>
               </div>
             </div>
 
@@ -261,7 +230,7 @@ const CreatePart = () => {
 
             <div className="mx-auto w-[300px]">
               <BaseButton loading={false} type="submit">
-                Add Part
+                Add Sub Assembly
               </BaseButton>
             </div>
           </form>
@@ -270,4 +239,4 @@ const CreatePart = () => {
     </>
   );
 };
-export default CreatePart;
+export default CreateSubAssembly;
