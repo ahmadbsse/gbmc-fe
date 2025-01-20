@@ -8,6 +8,13 @@ import apiClient from "@/utils/apiClient";
 import { modifyAdminTabname } from "@/utils";
 import { categoryTypeOptions } from "@/data";
 
+type FormDataTypes = {
+  name: string;
+  description: string;
+  active: boolean;
+  media: string | string[];
+  type: string;
+};
 const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
   onClose,
   activeTab,
@@ -19,10 +26,9 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
     description: "",
     active: false,
     media: "",
-  };
-  if (currentTab == "categories") {
-    initialFormData["type"] = "";
-  }
+    type: "",
+  } as FormDataTypes;
+
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState("");
   const [dataFilesIds, setDataFilesIds] = useState<string | string[]>([]);
@@ -54,6 +60,9 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
     e.preventDefault();
     if (validateForm()) {
       formData.media = dataFilesIds;
+      if (currentTab == "suppliers") {
+        delete formData.type;
+      }
       try {
         apiClient
           .POST(`/${currentTab}`, { data: formData })

@@ -87,3 +87,10 @@ export type Categories = {
   tractor_parts: Category[];
   sub_assemblies: Category[];
 } | null;
+
+export type DecodedToken = {
+  jwt: string;
+  role: string;
+  iat: number;
+  exp: number;
+};

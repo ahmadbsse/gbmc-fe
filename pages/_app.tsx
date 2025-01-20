@@ -1,10 +1,13 @@
 import "@/styles/globals.css";
+
 import type { AppProps } from "next/app";
 import App, { AppContext } from "next/app";
 import { parse } from "cookie";
 import { useEffect } from "react";
 import jwt from "jsonwebtoken";
+
 import apiClient from "@/utils/apiClient";
+import type { DecodedToken } from "@/types";
 
 MyApp.getInitialProps = async (appContext: AppContext) => {
   const { ctx } = appContext; // Extract the context
@@ -29,8 +32,8 @@ function MyApp({ Component, pageProps, authToken }: AppProps & { authToken?: str
     const initializeConfig = () => {
       if (authToken) {
         try {
-          const decodedToken = jwt.decode(authToken);
-
+          const decodedToken = jwt.decode(authToken) as DecodedToken;
+          console.log(decodedToken);
           // You can also use this decoded info to set any global state or config
           apiClient.setAuthToken(decodedToken.jwt);
         } catch (error) {
