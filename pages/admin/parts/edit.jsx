@@ -6,6 +6,7 @@ import apiClient from "@/utils/apiClient";
 import { transformMedia } from "@/utils";
 import { Navbar, BaseLoader, BaseImage, BaseButton } from "@/components/common";
 import BaseFileUploader from "@/components/admin/BaseFileUploader";
+import showToast from "@/utils/toast";
 
 const EditPart = () => {
   const router = useRouter();
@@ -116,13 +117,16 @@ const EditPart = () => {
         apiClient
           .PUT(`/parts/${id}`, { data: formData })
           .then(() => {
+            showToast("Edited Successfully", "success");
             router.push("/admin");
           })
           .catch((error) => {
             console.log(error);
+            showToast(error.message, "error");
           });
       } catch (error) {
         console.log(error);
+        showToast(error.message, "error");
       }
     }
   };

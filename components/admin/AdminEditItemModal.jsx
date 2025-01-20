@@ -1,6 +1,7 @@
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 
+import showToast from "@/utils/toast";
 import { transformMedia, modifyAdminTabname } from "@/utils";
 import apiClient from "@/utils/apiClient";
 import { BaseButton, BaseLoader, BaseImage } from "@/components/common";
@@ -73,14 +74,17 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
         apiClient
           .PUT(`/${currentTab}/${activeID}`, { data: data })
           .then(() => {
+            showToast(`${currentTab} edited successfully`, "success");
             getData();
             onClose(e);
           })
           .catch((error) => {
             console.log(error);
+            showToast(error.message, "error");
           });
       } catch (error) {
         console.log(error);
+        showToast(error.message, "error");
       }
     }
   };

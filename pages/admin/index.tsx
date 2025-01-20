@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
-import { ToastContainer } from "react-toastify";
 
 import { AdminTabs } from "@/components/admin";
 import { Navbar } from "@/components/common";
@@ -149,7 +148,7 @@ const AdminDashboard = () => {
         <meta name="keywords" content="tractor,spare parts,machinary" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ToastContainer />
+
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">

@@ -5,7 +5,16 @@ dotenv.config();
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: [process.env.NEXT_PUBLIC_API_BASE_URL, 'localhost'], // Replace with your server's base URL
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: process.env.NEXT_PUBLIC_API_BASE_URL,
+      }, {
+        protocol: "http",
+        hostname: 'localhost',
+      },
+    ],
+    // domains: [process.env.NEXT_PUBLIC_API_BASE_URL, 'localhost'], // Replace with your server's base URL
   },
 
 };

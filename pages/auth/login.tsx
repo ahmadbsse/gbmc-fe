@@ -3,6 +3,7 @@ import { useState, FormEvent } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 
+import showToast from "@/utils/toast";
 import apiClient from "@/utils/apiClient";
 import { appData } from "@/constants";
 import { BaseButton } from "@/components/common";
@@ -31,6 +32,7 @@ const Login = () => {
           )
           .then(async (res) => {
             if (res.message == "Login successful") {
+              showToast("Logged In Successfully", "success");
               localStorage.setItem("username", userName);
               localStorage.setItem("email", email);
               apiClient.setAuthToken(jwt);
@@ -42,6 +44,7 @@ const Login = () => {
     } catch (error) {
       const message = (error as Error).message;
       setError(message);
+      showToast(message, "error");
       setTimeout(() => {
         setError(null);
       }, 3500);

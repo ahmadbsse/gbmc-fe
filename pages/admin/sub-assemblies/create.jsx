@@ -7,6 +7,7 @@ import { BaseButton } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
 import { appData } from "@/constants";
 import apiClient from "@/utils/apiClient";
+import showToast from "@/utils/toast";
 
 const CreateSubAssembly = () => {
   const router = useRouter();
@@ -72,13 +73,16 @@ const CreateSubAssembly = () => {
           .POST(`/sub-assemblies`, { data: formData })
           .then(() => {
             setFormData(initialFormData);
+            showToast("Created Successfully", "success");
             router.push("/admin");
           })
           .catch((error) => {
             console.log(error);
+            showToast(error.message, "error");
           });
       } catch (error) {
         console.log(error);
+        showToast(error.message, "error");
       }
     }
   };

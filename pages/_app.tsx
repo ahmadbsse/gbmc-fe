@@ -1,5 +1,6 @@
 import "@/styles/globals.css";
 
+import { ToastContainer } from "react-toastify";
 import type { AppProps } from "next/app";
 import App, { AppContext } from "next/app";
 import { parse } from "cookie";
@@ -33,7 +34,6 @@ function MyApp({ Component, pageProps, authToken }: AppProps & { authToken?: str
       if (authToken) {
         try {
           const decodedToken = jwt.decode(authToken) as DecodedToken;
-          console.log(decodedToken);
           // You can also use this decoded info to set any global state or config
           apiClient.setAuthToken(decodedToken.jwt);
         } catch (error) {
@@ -44,6 +44,11 @@ function MyApp({ Component, pageProps, authToken }: AppProps & { authToken?: str
 
     initializeConfig();
   }, []);
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <ToastContainer />
+      <Component {...pageProps} />;
+    </>
+  );
 }
 export default MyApp;

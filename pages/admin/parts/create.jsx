@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { Navbar } from "@/components/common";
 
+import showToast from "@/utils/toast";
 import { BaseButton } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
 import { appData } from "@/constants";
@@ -77,12 +78,15 @@ const CreatePart = () => {
           .POST(`/parts`, { data: formData })
           .then(() => {
             setFormData(initialFormData);
+            showToast(` created successfully`, "success");
             router.push("/admin");
           })
           .catch((error) => {
             console.log(error);
+            showToast(error.message, "error");
           });
       } catch (error) {
+        showToast(error.message, "error");
         console.log(error);
       }
     }

@@ -69,15 +69,17 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
           .POST(`/${currentTab}`, { data: formData })
           .then(() => {
             setFormData(initialFormData);
+            showToast(`${currentTab} added successfully`, "success");
             getData();
             onClose(e);
           })
           .catch((error) => {
-            console.log(error, "1");
+            console.log(error);
             showToast(error.message, "error");
           });
       } catch (error) {
-        console.log(error, "2");
+        console.log(error);
+        showToast(error.message, "error");
       }
     }
   };
