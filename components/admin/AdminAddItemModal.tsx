@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { X } from "lucide-react";
 
+import showToast from "@/utils/toast";
 import { BaseButton } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
 import type { AdminAddItemModalProps } from "@/types";
@@ -72,10 +73,11 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
             onClose(e);
           })
           .catch((error) => {
-            console.log(error);
+            console.log(error, "1");
+            showToast(error.message, "error");
           });
       } catch (error) {
-        console.log(error);
+        console.log(error, "2");
       }
     }
   };

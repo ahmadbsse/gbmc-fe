@@ -85,10 +85,11 @@ class ApiClient {
     }
   }
   handleError(error) {
-    const message =
-      error.response?.data?.error?.message || error.message || "An unknown error occurred";
-    console.error("API Error:", message);
-    throw new Error(message);
+    const err = error.response?.data?.error;
+    // console.error("API Error:", message);
+    // throw new Error(message);
+    console.error("API Error:", err); // Logs the full error object
+    throw err;
   }
 }
 
