@@ -107,57 +107,59 @@ const BaseFileUploader = ({ setDataFilesIds, multiple = false }) => {
       </div>
 
       {/* File List */}
-      <div className="mt-6 space-y-4">
-        {files.map((file) => (
-          <div
-            key={file.name}
-            className="flex items-center space-x-4 rounded-lg bg-white p-4 shadow"
-          >
-            {/* File Preview */}
-            <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg bg-gray-100">
-              {file.preview ? (
-                <img src={file.preview} alt={file.name} className="h-full w-full object-cover" />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center bg-gray-200">
-                  <span className="text-xs text-gray-500">No preview</span>
-                </div>
-              )}
-            </div>
-
-            {/* File Info */}
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium text-gray-900">{file.name}</p>
-
-              {/* Progress Bar */}
-              <div className="mt-2 h-2.5 w-full rounded-full bg-gray-200">
-                <div
-                  className={`h-2.5 rounded-full transition-all duration-500 ${
-                    file.status === "error" ? "bg-red-500" : "bg-blue-500"
-                  }`}
-                  style={{ width: `${file.progress}%` }}
-                />
-              </div>
-            </div>
-
-            {/* Status Icon */}
-            <div className="flex-shrink-0">
-              {file.status === "success" && <CheckCircle className="h-6 w-6 text-green-500" />}
-              {file.status === "error" && <AlertCircle className="h-6 w-6 text-red-500" />}
-              {file.status === "uploading" && (
-                <div className="h-6 w-6 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
-              )}
-            </div>
-
-            {/* Remove Button */}
-            <button
-              onClick={() => handleRemoveFile(file.name)}
-              className="flex-shrink-0 text-gray-400 hover:text-gray-500"
+      {files.length ? (
+        <div className="mt-6 space-y-4">
+          {files.map((file) => (
+            <div
+              key={file.name}
+              className="flex items-center space-x-4 rounded-lg bg-white p-4 shadow"
             >
-              <X className="h-5 w-5" />
-            </button>
-          </div>
-        ))}
-      </div>
+              {/* File Preview */}
+              <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg bg-gray-100">
+                {file.preview ? (
+                  <img src={file.preview} alt={file.name} className="h-full w-full object-cover" />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center bg-gray-200">
+                    <span className="text-xs text-gray-500">No preview</span>
+                  </div>
+                )}
+              </div>
+
+              {/* File Info */}
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium text-gray-900">{file.name}</p>
+
+                {/* Progress Bar */}
+                <div className="mt-2 h-2.5 w-full rounded-full bg-gray-200">
+                  <div
+                    className={`h-2.5 rounded-full transition-all duration-500 ${
+                      file.status === "error" ? "bg-red-500" : "bg-blue-500"
+                    }`}
+                    style={{ width: `${file.progress}%` }}
+                  />
+                </div>
+              </div>
+
+              {/* Status Icon */}
+              <div className="flex-shrink-0">
+                {file.status === "success" && <CheckCircle className="h-6 w-6 text-green-500" />}
+                {file.status === "error" && <AlertCircle className="h-6 w-6 text-red-500" />}
+                {file.status === "uploading" && (
+                  <div className="h-6 w-6 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
+                )}
+              </div>
+
+              {/* Remove Button */}
+              <button
+                onClick={() => handleRemoveFile(file.name)}
+                className="flex-shrink-0 text-gray-400 hover:text-gray-500"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 };

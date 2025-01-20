@@ -73,15 +73,15 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="relative max-h-[600px] w-full max-w-4xl overflow-y-auto rounded-lg bg-white p-6">
+      <div className="custom-scrollbar relative max-h-[600px] w-full max-w-4xl overflow-y-auto rounded-lg bg-white p-6">
         <button onClick={onClose} className="absolute right-4 top-6">
           <X className="h-6 w-6" />
         </button>
-        <h2 className="mb-4 text-2xl font-bold">Add New {modifyAdminTabname(activeTab)}</h2>
+        <h2 className="mb-3 text-2xl font-bold">Add New {modifyAdminTabname(activeTab)}</h2>
 
         <form onSubmit={handleSubmit} className="space-y-3">
           <div>
-            <label className="mb-1 block text-sm font-medium">Name</label>
+            <label className="block text-sm font-medium">Name</label>
             <input
               type="text"
               className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -92,7 +92,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium">Description</label>
+            <label className="block text-sm font-medium">Description</label>
             <textarea
               rows={3}
               className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -105,7 +105,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
           <div className="flex flex-col md:flex-row md:gap-8">
             {currentTab == "categories" ? (
               <div className="basis-1/2">
-                <label className="mb-1 block text-sm font-medium">Category</label>
+                <label className="block text-sm font-medium">Category</label>
                 <select
                   className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   value={JSON.stringify(formData.type)}
