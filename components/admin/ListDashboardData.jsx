@@ -162,6 +162,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                             height={item.media[0]?.formats.thumbnail.height}
                             src={item.media[0]?.formats.thumbnail.url}
                             alt={item.name}
+                            priority={true}
                           />
                         ) : (
                           <BaseImage
@@ -169,6 +170,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                             height={item.media?.formats.thumbnail.height}
                             src={item.media?.formats.thumbnail.url}
                             alt={item.name}
+                            priority={true}
                           />
                         )}
                       </div>
@@ -180,7 +182,9 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                           >
                             {item.name}
                           </h3>
-                          <span className="text-sm">{item.description}</span>
+                          {currentTab == "parts" || currentTab == "sub-assemblies" ? null : (
+                            <span className="text-sm">{item.description}</span>
+                          )}
                         </div>
                         <span className="text-xs text-solidGray/50">
                           {convertToReadableDate(item.publishedAt)}

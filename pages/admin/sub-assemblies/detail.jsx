@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import apiClient from "@/utils/apiClient";
 
 import { Navbar, BaseLoader, BaseImage } from "@/components/common";
+import RichTextEditor from "../../../components/common/RichTextEditor";
 
 const ViewSubAssemblyDetails = () => {
   const router = useRouter();
@@ -65,12 +66,11 @@ const ViewSubAssemblyDetails = () => {
                 </div>
               </div>
 
-              <div>
-                <label className="mb-1 block text-sm font-medium">Description</label>
-                <div className="w-full rounded-lg border border-gray-300 px-4 py-2">
-                  {formData.description}
-                </div>
-              </div>
+              <RichTextEditor
+                onSave={() => {}}
+                defaultValue={formData.description}
+                readOnly={true}
+              />
 
               <div className="flex flex-col md:flex-row md:gap-5">
                 <div className="w-full">

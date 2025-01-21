@@ -44,6 +44,7 @@ export type ButtonProps = {
   rounded?: boolean;
   id?: string;
   loading: boolean;
+  disabled?: boolean;
 };
 
 export interface ScrollingMarqueeProps {

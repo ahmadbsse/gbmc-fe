@@ -7,7 +7,7 @@ import { transformMedia } from "@/utils";
 import { Navbar, BaseLoader, BaseImage, BaseButton } from "@/components/common";
 import BaseFileUploader from "@/components/admin/BaseFileUploader";
 import showToast from "@/utils/toast";
-
+import RichTextEditor from "@/components/common/RichTextEditor";
 import { editPartValidator } from "@/utils/validators";
 
 const EditPart = () => {
@@ -118,6 +118,9 @@ const EditPart = () => {
       getCategories();
     }
   }, [id]);
+  const handleSave = (content) => {
+    setFormData({ ...formData, description: content });
+  };
   return (
     <>
       <div className="min-h-screen bg-gray-50">
@@ -186,17 +189,7 @@ const EditPart = () => {
                   </select>
                 </div>
               </div>
-
-              <div>
-                <label className="mb-1 block text-sm font-medium">Description</label>
-                <textarea
-                  rows={3}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                  placeholder={`Enter description`}
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                />
-              </div>
+              <RichTextEditor onSave={handleSave} defaultValue={formData.description} />
 
               <div className="flex flex-col md:flex-row md:gap-8">
                 <div className="w-full">

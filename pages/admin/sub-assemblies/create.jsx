@@ -9,6 +9,7 @@ import { appData } from "@/constants";
 import apiClient from "@/utils/apiClient";
 import showToast from "@/utils/toast";
 import { createSubAssemblyValidator } from "@/utils/validators";
+import RichTextEditor from "@/components/common/RichTextEditor";
 
 const CreateSubAssembly = () => {
   const router = useRouter();
@@ -67,6 +68,9 @@ const CreateSubAssembly = () => {
   useEffect(() => {
     getCategories();
   }, []);
+  const handleSave = (content) => {
+    setFormData({ ...formData, description: content });
+  };
   return (
     <>
       <Head>
@@ -141,16 +145,7 @@ const CreateSubAssembly = () => {
               </div>
             </div>
 
-            <div>
-              <label className="mb-1 block text-sm font-medium">Description</label>
-              <textarea
-                rows={3}
-                className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                placeholder={`Enter description`}
-                value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              />
-            </div>
+            <RichTextEditor onSave={handleSave} defaultValue={formData.description} />
 
             <div className="flex flex-col md:flex-row md:gap-8">
               <div className="w-full">

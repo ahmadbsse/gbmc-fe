@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import apiClient from "@/utils/apiClient";
 
+import RichTextEditor from "@/components/common/RichTextEditor";
 import { Navbar, BaseLoader, BaseImage } from "@/components/common";
 
 const ViewPartDetails = () => {
@@ -71,12 +72,11 @@ const ViewPartDetails = () => {
                 </div>
               </div>
 
-              <div>
-                <label className="mb-1 block text-sm font-medium">Description</label>
-                <div className="w-full rounded-lg border border-gray-300 px-4 py-2">
-                  {formData.description}
-                </div>
-              </div>
+              <RichTextEditor
+                onSave={() => {}}
+                defaultValue={formData.description}
+                readOnly={true}
+              />
 
               <div className="flex flex-col md:flex-row md:gap-5">
                 <div className="w-full">
@@ -118,7 +118,7 @@ const ViewPartDetails = () => {
               <div className="flex flex-wrap items-center gap-4">
                 {Array.isArray(formData.media) ? (
                   formData.media.map((item, index) => (
-                    <div className="max-w-44">
+                    <div className="max-w-44" key={index}>
                       <BaseImage
                         key={index} // Add a unique key for each item
                         width={item.formats.thumbnail.width}

@@ -86,8 +86,7 @@ class ApiClient {
   }
   handleError(error) {
     const err = error.response?.data?.error;
-    // console.error("API Error:", message);
-    // throw new Error(message);
+    console.log(err, "-------");
     console.error("API Error:", err); // Logs the full error object
     throw err;
   }
