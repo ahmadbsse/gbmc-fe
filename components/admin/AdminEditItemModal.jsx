@@ -35,15 +35,15 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
   }, []);
   const validateForm = () => {
     if (data.name == "") {
-      showToast(`Please enter ${modifyAdminTabname(activeTab)} name`, "error");
+      showToast(`Please enter name`, "error");
       return false;
     }
     if (data.description == "") {
-      showToast(`Please enter ${modifyAdminTabname(activeTab)} description`, "error");
+      showToast(`Please enter description`, "error");
       return false;
     }
     if (currentTab == "categories" && data.type == "") {
-      showToast(`Please select ${modifyAdminTabname(activeTab)} type`, "error");
+      showToast(`Please select type`, "error");
       return false;
     }
     if (typeof dataFilesIds === "string" && data.media.length == 0 && dataFilesIds == "") {

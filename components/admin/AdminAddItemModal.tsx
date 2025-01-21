@@ -35,15 +35,15 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
 
   const validateForm = () => {
     if (formData.name == "") {
-      showToast(`Please enter ${modifyAdminTabname(activeTab)} name`, "error");
+      showToast(`Please enter name`, "error");
       return false;
     }
     if (formData.description == "") {
-      showToast(`Please enter ${modifyAdminTabname(activeTab)} description`, "error");
+      showToast(`Please enter description`, "error");
       return false;
     }
     if (currentTab == "categories" && formData.type == "") {
-      showToast(`Please select ${modifyAdminTabname(activeTab)} type`, "error");
+      showToast(`Please select type`, "error");
       return false;
     }
     if (typeof dataFilesIds === "string" && dataFilesIds == "") {
