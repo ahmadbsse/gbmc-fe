@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
-
-import { ToastContainer } from "react-toastify";
+import { Trash } from "lucide-react";
+import { ToastContainer, CloseButtonProps } from "react-toastify";
 import type { AppProps } from "next/app";
 import App, { AppContext } from "next/app";
 import { parse } from "cookie";
@@ -44,9 +44,24 @@ function MyApp({ Component, pageProps, authToken }: AppProps & { authToken?: str
 
     initializeConfig();
   }, []);
+
+  const CustomCloseButton = ({ closeToast }: CloseButtonProps) => {
+    return (
+      <button
+        aria-label="remove"
+        type="button"
+        className="absolute right-4 top-6"
+        onClick={() => {
+          closeToast(true);
+        }}
+      >
+        <Trash className="h-4 w-4" />
+      </button>
+    );
+  };
   return (
     <>
-      <ToastContainer />
+      <ToastContainer closeButton={CustomCloseButton} />
       <Component {...pageProps} />;
     </>
   );
