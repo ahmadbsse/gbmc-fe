@@ -14,7 +14,6 @@ const EditSubAssembly = () => {
   const [formData, setFormData] = useState(null);
   const [dataFilesIds, setDataFilesIds] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [error, setError] = useState("");
 
   const getSubAssemblyDetails = async () => {
     try {
@@ -41,6 +40,9 @@ const EditSubAssembly = () => {
       await apiClient.GET(url).then((res) => {
         const data = res.data.map((item) => item.name);
         setCategories(data);
+        if (data.length == 0) {
+          showToast("Please add categories first", "warning");
+        }
       });
     } catch (error) {
       console.error("Error fetching resource:", error.message);
@@ -48,33 +50,33 @@ const EditSubAssembly = () => {
   };
   const validateForm = () => {
     if (formData.name == "") {
-      setError(`Please enter sub assembly name`);
+      showToast(`Please enter sub assembly name`, "error");
       return false;
     }
     if (formData.material == "") {
-      setError(`Please enter sub assembly material`);
+      showToast(`Please enter sub assembly material`, "error");
       return false;
     }
     if (formData.weight == "") {
-      setError(`Please enter sub assembly weight`);
+      showToast(`Please enter sub assembly weight`, "error");
       return false;
     }
 
     if (formData.number == "") {
-      setError(`Please enter sub assembly SKU`);
+      showToast(`Please enter sub assembly SKU`, "error");
       return false;
     }
     if (formData.description == "") {
-      setError(`Please enter sub assembly description`);
+      showToast(`Please enter sub assembly description`, "error");
       return false;
     }
     if (formData.category == "") {
-      setError(`Please select sub assembly category`);
+      showToast(`Please select sub assembly category`, "error");
       return false;
     }
 
     if (typeof dataFilesIds === "string" && formData.media.length == 0 && dataFilesIds == "") {
-      setError(`Please upload an image`);
+      showToast(`Please upload an image`, "error");
       return false;
     }
     if (
@@ -82,7 +84,7 @@ const EditSubAssembly = () => {
       formData.media.length == 0 &&
       dataFilesIds.length == 0
     ) {
-      setError(`Please upload an image`);
+      showToast(`Please upload an image`, "error");
       return false;
     }
     return true;
@@ -104,12 +106,15 @@ const EditSubAssembly = () => {
         apiClient
           .PUT(`/sub-assemblies/${id}`, { data: formData })
           .then(() => {
+            showToast("Editted Successfully", "success");
             router.push("/admin");
           })
           .catch((error) => {
+            showToast(error.message, "error");
             console.log(error);
           });
       } catch (error) {
+        showToast(error.message, "error");
         console.log(error);
       }
     }
@@ -266,7 +271,6 @@ const EditSubAssembly = () => {
                   </div>
                 ))}
               </div>
-              <p className="mx-auto w-fit text-sm capitalize text-error">{error}</p>
 
               <div className="mx-auto w-[300px]">
                 <BaseButton loading={false} type="submit">

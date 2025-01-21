@@ -31,28 +31,27 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
   } as FormDataTypes;
 
   const [formData, setFormData] = useState(initialFormData);
-  const [error, setError] = useState("");
   const [dataFilesIds, setDataFilesIds] = useState<string | string[]>([]);
 
   const validateForm = () => {
     if (formData.name == "") {
-      setError(`Please enter ${modifyAdminTabname(activeTab)} name`);
+      showToast(`Please enter ${modifyAdminTabname(activeTab)} name`, "error");
       return false;
     }
     if (formData.description == "") {
-      setError(`Please enter ${modifyAdminTabname(activeTab)} description`);
+      showToast(`Please enter ${modifyAdminTabname(activeTab)} description`, "error");
       return false;
     }
     if (currentTab == "categories" && formData.type == "") {
-      setError(`Please select ${modifyAdminTabname(activeTab)} type`);
+      showToast(`Please select ${modifyAdminTabname(activeTab)} type`, "error");
       return false;
     }
     if (typeof dataFilesIds === "string" && dataFilesIds == "") {
-      setError(`Please upload an image`);
+      showToast(`Please upload an image`, "error");
       return false;
     }
     if (typeof dataFilesIds === "object" && dataFilesIds.length == 0) {
-      setError(`Please upload an image`);
+      showToast(`Please upload an image`, "error");
       return false;
     }
     return true;
@@ -147,7 +146,6 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
               </label>
             </div>
           </div>
-          <p className="mx-auto w-fit text-sm capitalize text-error">{error}</p>
           <div className="mt-6 flex gap-4">
             <div className="basis-1/2">
               <BaseButton loading={false} btnStyle type="button" handleClick={onClose}>

@@ -12,7 +12,6 @@ const Login = () => {
   const router = useRouter();
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -43,11 +42,9 @@ const Login = () => {
       }
     } catch (error) {
       const message = (error as Error).message;
-      setError(message);
+
       showToast(message, "error");
-      setTimeout(() => {
-        setError(null);
-      }, 3500);
+
       setIsLoading(false);
       console.error("Error in POST request:", message);
     }
@@ -132,7 +129,6 @@ const Login = () => {
                 </p>
               </form>
             </div>
-            {error && <p className="mx-auto w-fit py-1 text-error">{error}</p>}
           </div>
         </div>
       </section>

@@ -24,46 +24,46 @@ const CreatePart = () => {
     media: "",
   };
   const [formData, setFormData] = useState(initialFormData);
-  const [error, setError] = useState("");
+
   const [dataFilesIds, setDataFilesIds] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
   const [categories, setCategories] = useState([]);
 
   const validateForm = () => {
     if (formData.name == "") {
-      setError(`Please enter part name`);
+      showToast(`Please enter part name`, "error");
       return false;
     }
     if (formData.material == "") {
-      setError(`Please enter part material`);
+      showToast(`Please enter part material`, "error");
       return false;
     }
     if (formData.weight == "") {
-      setError(`Please enter part weight`);
+      showToast(`Please enter part weight`, "error");
       return false;
     }
     if (formData.supplier == "") {
-      setError(`Please enter part supplier`);
+      showToast(`Please enter part supplier`, "error");
       return false;
     }
     if (formData.number == "") {
-      setError(`Please enter part SKU`);
+      showToast(`Please enter part SKU`, "error");
       return false;
     }
     if (formData.description == "") {
-      setError(`Please enter part description`);
+      showToast(`Please enter part description`, "error");
       return false;
     }
     if (formData.category == "") {
-      setError(`Please select part category`);
+      showToast(`Please select part category`, "error");
       return false;
     }
     if (typeof dataFilesIds === "string" && dataFilesIds == "") {
-      setError(`Please upload an image`);
+      showToast(`Please upload an image`, "error");
       return false;
     }
     if (typeof dataFilesIds === "object" && dataFilesIds.length == 0) {
-      setError(`Please upload an image`);
+      showToast(`Please upload an image`, "error");
       return false;
     }
 
@@ -97,6 +97,9 @@ const CreatePart = () => {
       await apiClient.GET(url).then((res) => {
         const data = res.data.map((item) => item.name);
         setSuppliers(data);
+        if (data.length == 0) {
+          showToast("Please add suppliers first", "warning");
+        }
       });
     } catch (error) {
       console.error("Error fetching resource:", error.message);
@@ -108,6 +111,9 @@ const CreatePart = () => {
       await apiClient.GET(url).then((res) => {
         const data = res.data.map((item) => item.name);
         setCategories(data);
+        if (data.length == 0) {
+          showToast("Please add categories first", "warning");
+        }
       });
     } catch (error) {
       console.error("Error fetching resource:", error.message);
@@ -261,7 +267,6 @@ const CreatePart = () => {
               </div>
             </div>
             <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
-            <p className="mx-auto w-fit text-sm capitalize text-error">{error}</p>
 
             <div className="mx-auto w-[300px]">
               <BaseButton loading={false} type="submit">

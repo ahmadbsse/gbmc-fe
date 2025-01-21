@@ -23,42 +23,41 @@ const CreateSubAssembly = () => {
     media: "",
   };
   const [formData, setFormData] = useState(initialFormData);
-  const [error, setError] = useState("");
   const [dataFilesIds, setDataFilesIds] = useState([]);
   const [categories, setCategories] = useState([]);
 
   const validateForm = () => {
     if (formData.name == "") {
-      setError(`Please enter sub assembly name`);
+      showToast(`Please enter sub assembly name`, "error");
       return false;
     }
     if (formData.material == "") {
-      setError(`Please enter sub assembly material`);
+      showToast(`Please enter sub assembly material`, "error");
       return false;
     }
     if (formData.weight == "") {
-      setError(`Please enter sub assembly weight`);
+      showToast(`Please enter sub assembly weight`, "error");
       return false;
     }
 
     if (formData.number == "") {
-      setError(`Please enter sub assembly SKU`);
+      showToast(`Please enter sub assembly SKU`, "error");
       return false;
     }
     if (formData.description == "") {
-      setError(`Please enter sub assembly description`);
+      showToast(`Please enter sub assembly description`, "error");
       return false;
     }
     if (formData.category == "") {
-      setError(`Please select sub assembly category`);
+      showToast(`Please select sub assembly category`, "error");
       return false;
     }
     if (typeof dataFilesIds === "string" && dataFilesIds == "") {
-      setError(`Please upload an image`);
+      showToast(`Please upload an image`, "error");
       return false;
     }
     if (typeof dataFilesIds === "object" && dataFilesIds.length == 0) {
-      setError(`Please upload an image`);
+      showToast(`Please upload an image`, "error");
       return false;
     }
 
@@ -93,6 +92,9 @@ const CreateSubAssembly = () => {
       await apiClient.GET(url).then((res) => {
         const data = res.data.map((item) => item.name);
         setCategories(data);
+        if (data.length == 0) {
+          showToast("Please add categories first", "warning");
+        }
       });
     } catch (error) {
       console.error("Error fetching resource:", error.message);
@@ -230,7 +232,6 @@ const CreateSubAssembly = () => {
               </div>
             </div>
             <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
-            <p className="mx-auto w-fit text-sm capitalize text-error">{error}</p>
 
             <div className="mx-auto w-[300px]">
               <BaseButton loading={false} type="submit">

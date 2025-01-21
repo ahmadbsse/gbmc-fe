@@ -11,7 +11,6 @@ import { categoryTypeOptions } from "@/data";
 const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData }) => {
   const [data, setData] = useState(null);
   const [dataFilesIds, setDataFilesIds] = useState([]);
-  const [error, setError] = useState("");
 
   const getCategoryDetails = async () => {
     try {
@@ -36,23 +35,23 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
   }, []);
   const validateForm = () => {
     if (data.name == "") {
-      setError(`Please enter ${modifyAdminTabname(activeTab)} name`);
+      showToast(`Please enter ${modifyAdminTabname(activeTab)} name`, "error");
       return false;
     }
     if (data.description == "") {
-      setError(`Please enter ${modifyAdminTabname(activeTab)} description`);
+      showToast(`Please enter ${modifyAdminTabname(activeTab)} description`, "error");
       return false;
     }
     if (currentTab == "categories" && data.type == "") {
-      setError(`Please select ${modifyAdminTabname(activeTab)} type`);
+      showToast(`Please select ${modifyAdminTabname(activeTab)} type`, "error");
       return false;
     }
     if (typeof dataFilesIds === "string" && data.media.length == 0 && dataFilesIds == "") {
-      setError(`Please upload an image`);
+      showToast(`Please upload an image`, "error");
       return false;
     }
     if (typeof dataFilesIds === "object" && data.media.length == 0 && dataFilesIds.length == 0) {
-      setError(`Please upload an image`);
+      showToast(`Please upload an image`, "error");
       return false;
     }
     return true;
@@ -201,7 +200,6 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
                 </div>
               ) : null}
             </div>
-            <p className="mx-auto w-fit text-sm capitalize text-error">{error}</p>
             <div className="mt-6 flex gap-4">
               <div className="basis-1/2">
                 <BaseButton loading={false} btnStyle type="button" handleClick={onClose}>
