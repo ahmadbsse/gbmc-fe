@@ -7,6 +7,7 @@ import { transformMedia } from "@/utils";
 import { Navbar, BaseLoader, BaseImage, BaseButton } from "@/components/common";
 import BaseFileUploader from "@/components/admin/BaseFileUploader";
 import showToast from "@/utils/toast";
+import { editSubAssemblyValidator } from "@/utils/validators";
 
 const EditSubAssembly = () => {
   const router = useRouter();
@@ -48,50 +49,10 @@ const EditSubAssembly = () => {
       console.error("Error fetching resource:", error.message);
     }
   };
-  const validateForm = () => {
-    if (formData.name == "") {
-      showToast(`Please enter sub assembly name`, "error");
-      return false;
-    }
-    if (formData.material == "") {
-      showToast(`Please enter sub assembly material`, "error");
-      return false;
-    }
-    if (formData.weight == "") {
-      showToast(`Please enter sub assembly weight`, "error");
-      return false;
-    }
 
-    if (formData.number == "") {
-      showToast(`Please enter sub assembly SKU`, "error");
-      return false;
-    }
-    if (formData.description == "") {
-      showToast(`Please enter sub assembly description`, "error");
-      return false;
-    }
-    if (formData.category == "") {
-      showToast(`Please select sub assembly category`, "error");
-      return false;
-    }
-
-    if (typeof dataFilesIds === "string" && formData.media.length == 0 && dataFilesIds == "") {
-      showToast(`Please upload an image`, "error");
-      return false;
-    }
-    if (
-      typeof dataFilesIds === "object" &&
-      formData.media.length == 0 &&
-      dataFilesIds.length == 0
-    ) {
-      showToast(`Please upload an image`, "error");
-      return false;
-    }
-    return true;
-  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validateForm()) {
+    if (editSubAssemblyValidator(formData, dataFilesIds)) {
       if (dataFilesIds.length === 0) {
         if (Array.isArray(formData.media)) {
           formData.media = formData.media.map((item) => item.id);

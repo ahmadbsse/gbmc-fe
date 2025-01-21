@@ -8,6 +8,8 @@ import { Navbar, BaseLoader, BaseImage, BaseButton } from "@/components/common";
 import BaseFileUploader from "@/components/admin/BaseFileUploader";
 import showToast from "@/utils/toast";
 
+import { editPartValidator } from "@/utils/validators";
+
 const EditPart = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -62,53 +64,10 @@ const EditPart = () => {
       console.error("Error fetching resource:", error.message);
     }
   };
-  const validateForm = () => {
-    if (formData.name == "") {
-      showToast(`Please enter part name`, "error");
-      return false;
-    }
-    if (formData.material == "") {
-      showToast(`Please enter part material`, "error");
-      return false;
-    }
-    if (formData.weight == "") {
-      showToast(`Please enter part weight`, "error");
-      return false;
-    }
-    if (formData.supplier == "") {
-      showToast(`Please enter part supplier`, "error");
-      return false;
-    }
-    if (formData.number == "") {
-      showToast(`Please enter part SKU`, "error");
-      return false;
-    }
-    if (formData.description == "") {
-      showToast(`Please enter part description`, "error");
-      return false;
-    }
-    if (formData.category == "") {
-      showToast(`Please select part category`, "error");
-      return false;
-    }
 
-    if (typeof dataFilesIds === "string" && formData.media.length == 0 && dataFilesIds == "") {
-      showToast(`Please upload an image`, "error");
-      return false;
-    }
-    if (
-      typeof dataFilesIds === "object" &&
-      formData.media.length == 0 &&
-      dataFilesIds.length == 0
-    ) {
-      showToast(`Please upload an image`, "error");
-      return false;
-    }
-    return true;
-  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validateForm()) {
+    if (editPartValidator(formData, dataFilesIds)) {
       if (dataFilesIds.length === 0) {
         if (Array.isArray(formData.media)) {
           formData.media = formData.media.map((item) => item.id);

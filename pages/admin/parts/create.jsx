@@ -8,6 +8,7 @@ import { BaseButton } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
 import { appData } from "@/constants";
 import apiClient from "@/utils/apiClient";
+import { createPartValidator } from "@/utils/validators";
 
 const CreatePart = () => {
   const router = useRouter();
@@ -24,54 +25,13 @@ const CreatePart = () => {
     media: "",
   };
   const [formData, setFormData] = useState(initialFormData);
-
   const [dataFilesIds, setDataFilesIds] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
   const [categories, setCategories] = useState([]);
 
-  const validateForm = () => {
-    if (formData.name == "") {
-      showToast(`Please enter part name`, "error");
-      return false;
-    }
-    if (formData.material == "") {
-      showToast(`Please enter part material`, "error");
-      return false;
-    }
-    if (formData.weight == "") {
-      showToast(`Please enter part weight`, "error");
-      return false;
-    }
-    if (formData.supplier == "") {
-      showToast(`Please enter part supplier`, "error");
-      return false;
-    }
-    if (formData.number == "") {
-      showToast(`Please enter part SKU`, "error");
-      return false;
-    }
-    if (formData.description == "") {
-      showToast(`Please enter part description`, "error");
-      return false;
-    }
-    if (formData.category == "") {
-      showToast(`Please select part category`, "error");
-      return false;
-    }
-    if (typeof dataFilesIds === "string" && dataFilesIds == "") {
-      showToast(`Please upload an image`, "error");
-      return false;
-    }
-    if (typeof dataFilesIds === "object" && dataFilesIds.length == 0) {
-      showToast(`Please upload an image`, "error");
-      return false;
-    }
-
-    return true;
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
+    if (createPartValidator(formData, dataFilesIds)) {
       formData.media = dataFilesIds;
       try {
         apiClient

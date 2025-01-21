@@ -4,10 +4,13 @@ import { X } from "lucide-react";
 import showToast from "@/utils/toast";
 import { BaseButton } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
-import type { AdminAddItemModalProps } from "@/types";
+
 import apiClient from "@/utils/apiClient";
 import { modifyAdminTabname } from "@/utils";
 import { categoryTypeOptions } from "@/data";
+import { addCategoryAndSupplierValidator } from "@/utils/validators";
+
+import type { AdminAddItemModalProps } from "@/types";
 
 type FormDataTypes = {
   name: string;
@@ -33,32 +36,9 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
   const [formData, setFormData] = useState(initialFormData);
   const [dataFilesIds, setDataFilesIds] = useState<string | string[]>([]);
 
-  const validateForm = () => {
-    if (formData.name == "") {
-      showToast(`Please enter name`, "error");
-      return false;
-    }
-    if (formData.description == "") {
-      showToast(`Please enter description`, "error");
-      return false;
-    }
-    if (currentTab == "categories" && formData.type == "") {
-      showToast(`Please select type`, "error");
-      return false;
-    }
-    if (typeof dataFilesIds === "string" && dataFilesIds == "") {
-      showToast(`Please upload an image`, "error");
-      return false;
-    }
-    if (typeof dataFilesIds === "object" && dataFilesIds.length == 0) {
-      showToast(`Please upload an image`, "error");
-      return false;
-    }
-    return true;
-  };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (validateForm()) {
+    if (addCategoryAndSupplierValidator(formData, currentTab, dataFilesIds)) {
       formData.media = dataFilesIds;
       if (currentTab == "suppliers") {
         delete formData.type;

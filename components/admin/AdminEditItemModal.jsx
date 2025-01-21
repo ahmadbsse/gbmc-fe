@@ -7,6 +7,7 @@ import apiClient from "@/utils/apiClient";
 import { BaseButton, BaseLoader, BaseImage } from "@/components/common";
 import BaseFileUploader from "./BaseFileUploader";
 import { categoryTypeOptions } from "@/data";
+import { editCategoryAndSupplierValidator } from "@/utils/validators";
 
 const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData }) => {
   const [data, setData] = useState(null);
@@ -33,32 +34,10 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
   useEffect(() => {
     if (activeID) getCategoryDetails();
   }, []);
-  const validateForm = () => {
-    if (data.name == "") {
-      showToast(`Please enter name`, "error");
-      return false;
-    }
-    if (data.description == "") {
-      showToast(`Please enter description`, "error");
-      return false;
-    }
-    if (currentTab == "categories" && data.type == "") {
-      showToast(`Please select type`, "error");
-      return false;
-    }
-    if (typeof dataFilesIds === "string" && data.media.length == 0 && dataFilesIds == "") {
-      showToast(`Please upload an image`, "error");
-      return false;
-    }
-    if (typeof dataFilesIds === "object" && data.media.length == 0 && dataFilesIds.length == 0) {
-      showToast(`Please upload an image`, "error");
-      return false;
-    }
-    return true;
-  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validateForm()) {
+    if (editCategoryAndSupplierValidator(data, currentTab, dataFilesIds)) {
       if (dataFilesIds.length == 0) {
         if (Array.isArray(data.media)) {
           data.media = data.media.map((item) => item.id);
@@ -115,7 +94,7 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
               <input
                 type="text"
                 className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                placeholder={`Enter ${activeTab} name`}
+                placeholder={`Enter name`}
                 value={data.name}
                 onChange={(e) => setData({ ...data, name: e.target.value })}
               />
@@ -126,7 +105,7 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
               <textarea
                 rows={3}
                 className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                placeholder={`Enter ${activeTab} description`}
+                placeholder={`Enter description`}
                 value={data.description}
                 onChange={(e) => setData({ ...data, description: e.target.value })}
               />

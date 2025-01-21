@@ -8,6 +8,7 @@ import { BaseFileUploader } from "@/components/admin";
 import { appData } from "@/constants";
 import apiClient from "@/utils/apiClient";
 import showToast from "@/utils/toast";
+import { createSubAssemblyValidator } from "@/utils/validators";
 
 const CreateSubAssembly = () => {
   const router = useRouter();
@@ -26,46 +27,9 @@ const CreateSubAssembly = () => {
   const [dataFilesIds, setDataFilesIds] = useState([]);
   const [categories, setCategories] = useState([]);
 
-  const validateForm = () => {
-    if (formData.name == "") {
-      showToast(`Please enter sub assembly name`, "error");
-      return false;
-    }
-    if (formData.material == "") {
-      showToast(`Please enter sub assembly material`, "error");
-      return false;
-    }
-    if (formData.weight == "") {
-      showToast(`Please enter sub assembly weight`, "error");
-      return false;
-    }
-
-    if (formData.number == "") {
-      showToast(`Please enter sub assembly SKU`, "error");
-      return false;
-    }
-    if (formData.description == "") {
-      showToast(`Please enter sub assembly description`, "error");
-      return false;
-    }
-    if (formData.category == "") {
-      showToast(`Please select sub assembly category`, "error");
-      return false;
-    }
-    if (typeof dataFilesIds === "string" && dataFilesIds == "") {
-      showToast(`Please upload an image`, "error");
-      return false;
-    }
-    if (typeof dataFilesIds === "object" && dataFilesIds.length == 0) {
-      showToast(`Please upload an image`, "error");
-      return false;
-    }
-
-    return true;
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
+    if (createSubAssemblyValidator(formData, dataFilesIds)) {
       formData.media = dataFilesIds;
       try {
         apiClient
