@@ -2,6 +2,7 @@ import { Eye, EyeOff, Star, Pencil, Trash, Plus } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
+import showToast from "@/utils/toast";
 import { AdminAddItemModal, DeleteConfirmationModal, AdminEditItemModal } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
 import { BaseButton, BaseImage } from "@/components/common";
@@ -31,6 +32,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
       }
       data.active = !data.active;
       await apiClient.PUT(url, { data: data }).then((res) => {
+        showToast(`${data.active ? "activated" : "deactivated"} successfully`, "success");
         getData();
       });
     } catch (error) {
@@ -53,22 +55,38 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
       }
       data.featured = !data.featured;
 
-      await apiClient.PUT(url, { data: data }).then((res) => {
-        getData();
-      });
+      await apiClient
+        .PUT(url, { data: data })
+        .then((res) => {
+          showToast(`${!data.featured ? "unfeatured" : "featured"} successfully`, "success");
+          getData();
+        })
+        .catch((error) => {
+          showToast(error.message, "error");
+          console.error(error.message);
+        });
     } catch (error) {
+      showToast(error.message, "error");
       console.error("Error updating resource:", error.message);
     }
   };
   const deleteItem = async () => {
     try {
       const url = `/${currentTab}/${activeID}`;
-      await apiClient.DELETE(url).then((res) => {
-        setShowDeleteModal(false);
-        setActiveID(null);
-        getData();
-      });
+      await apiClient
+        .DELETE(url)
+        .then((res) => {
+          setShowDeleteModal(false);
+          showToast(`deleted succussfully`, "success");
+          setActiveID(null);
+          getData();
+        })
+        .catch((error) => {
+          console.log(error);
+          showToast(error.message, "error");
+        });
     } catch (error) {
+      showToast(error.message, "error");
       console.error("Error updating resource:", error.message);
     }
   };
