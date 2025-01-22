@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-import { Trash } from "lucide-react";
+import { X } from "lucide-react";
 import { ToastContainer, CloseButtonProps } from "react-toastify";
 import type { AppProps } from "next/app";
 import App, { AppContext } from "next/app";
@@ -55,7 +55,7 @@ function MyApp({ Component, pageProps, authToken }: AppProps & { authToken?: str
           closeToast(true);
         }}
       >
-        <Trash className="h-4 w-4" />
+        <X className="h-4 w-4" />
       </button>
     );
   };

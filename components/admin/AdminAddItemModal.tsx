@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
 import showToast from "@/utils/toast";
@@ -19,6 +19,7 @@ type FormDataTypes = {
   media: string | string[];
   type: string;
 };
+
 const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
   onClose,
   activeTab,
@@ -35,7 +36,25 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
 
   const [formData, setFormData] = useState(initialFormData);
   const [dataFilesIds, setDataFilesIds] = useState<string | string[]>([]);
+  const [categories, setCategories] = useState([]);
 
+  const getCategories = async () => {
+    try {
+      const url = `/categories?fields=name`;
+      await apiClient.GET(url).then((res) => {
+        const data = res.data.map((item) => item.name);
+        if (data.length !== 0) {
+          const cat = categoryTypeOptions.filter((item) => !data.includes(item.label));
+          setCategories(cat);
+        }
+      });
+    } catch (error) {
+      console.error("Error fetching resource:", error.message);
+    }
+  };
+  useEffect(() => {
+    getCategories();
+  }, []);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (addCategoryAndSupplierValidator(formData, currentTab, dataFilesIds)) {
@@ -104,7 +123,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
                   onChange={(e) => setFormData({ ...formData, type: JSON.parse(e.target.value) })}
                 >
                   <option value="">Select a category</option>
-                  {categoryTypeOptions.map((option) => (
+                  {categories.map((option) => (
                     <option key={option.value} value={JSON.stringify(option.value)}>
                       {option.label}
                     </option>
