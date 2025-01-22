@@ -150,7 +150,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                 </p>
               </BaseButton>
             </div>
-            <div className="mg:hidden w-fit">
+            <div className="w-fit md:hidden">
               <div onClick={addNewItem}>
                 <Plus className="h-5 w-5" />
               </div>
