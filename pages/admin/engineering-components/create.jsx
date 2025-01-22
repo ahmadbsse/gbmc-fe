@@ -8,16 +8,13 @@ import { BaseFileUploader } from "@/components/admin";
 import { appData } from "@/constants";
 import apiClient from "@/utils/apiClient";
 import showToast from "@/utils/toast";
-import { createSubAssemblyValidator } from "@/utils/validators";
+import { createEngineeringComponentValidator } from "@/utils/validators";
 import RichTextEditor from "@/components/common/RichTextEditor";
 
-const CreateSubAssembly = () => {
+const CreateEngineeringComponent = () => {
   const router = useRouter();
   const initialFormData = {
     name: "",
-    number: "",
-    material: "",
-    weight: "",
     description: "",
     active: false,
     featured: false,
@@ -28,11 +25,11 @@ const CreateSubAssembly = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (createSubAssemblyValidator(formData, dataFilesIds)) {
+    if (createEngineeringComponentValidator(formData, dataFilesIds)) {
       formData.media = dataFilesIds;
       try {
         apiClient
-          .POST(`/sub-assemblies`, { data: formData })
+          .POST(`/engineering-components`, { data: formData })
           .then(() => {
             setFormData(initialFormData);
             showToast("Created Successfully", "success");
@@ -77,7 +74,7 @@ const CreateSubAssembly = () => {
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">
-          <h1 className="mx-auto mb-8 w-fit text-2xl font-bold">Create Sub Assembly</h1>
+          <h1 className="mx-auto mb-8 w-fit text-2xl font-bold">Create Component</h1>
 
           <form onSubmit={handleSubmit} className="mx-auto max-w-[1000px] space-y-3">
             <div className="flex flex-col md:flex-row md:gap-4">
@@ -89,39 +86,6 @@ const CreateSubAssembly = () => {
                   placeholder={`Enter name`}
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                />
-              </div>
-              <div className="w-full">
-                <label className="mb-1 block text-sm font-medium">SKU Number</label>
-                <input
-                  type="text"
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                  placeholder={`Enter number`}
-                  value={formData.number}
-                  onChange={(e) => setFormData({ ...formData, number: e.target.value })}
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-col md:flex-row md:gap-4">
-              <div className="w-full">
-                <label className="mb-1 block text-sm font-medium">Material</label>
-                <input
-                  type="text"
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                  placeholder={`Enter material name`}
-                  value={formData.material}
-                  onChange={(e) => setFormData({ ...formData, material: e.target.value })}
-                />
-              </div>
-              <div className="w-full">
-                <label className="mb-1 block text-sm font-medium"> Weight</label>
-                <input
-                  type="text"
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                  placeholder={`Enter weight`}
-                  value={formData.weight}
-                  onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
                 />
               </div>
             </div>
@@ -159,7 +123,7 @@ const CreateSubAssembly = () => {
 
             <div className="mx-auto w-[300px]">
               <BaseButton loading={false} type="submit">
-                Add Sub Assembly
+                Add Component
               </BaseButton>
             </div>
           </form>
@@ -168,4 +132,4 @@ const CreateSubAssembly = () => {
     </>
   );
 };
-export default CreateSubAssembly;
+export default CreateEngineeringComponent;

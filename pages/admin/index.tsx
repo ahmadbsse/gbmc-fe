@@ -70,7 +70,22 @@ const AdminDashboard = () => {
     }
   };
   const getEngineering = async () => {
-    setEngineering(null);
+    try {
+      setIsLoading(true);
+      await apiClient.GET("/engineering-components?populate=*").then(async (res) => {
+        if (res && res.data.length > 0) {
+          const transformedData = transformMedia(res.data);
+          setEngineering(transformedData);
+        } else {
+          setEngineering(null);
+        }
+      });
+    } catch (error) {
+      const message = (error as Error).message;
+      console.error("Error in POST request:", message);
+    } finally {
+      setIsLoading(false);
+    }
   };
   const getSubAssemblies = async () => {
     try {
@@ -124,6 +139,9 @@ const AdminDashboard = () => {
     }
     if (activeTab.key == "sub-assemblies") {
       getSubAssemblies();
+    }
+    if (activeTab.key == "engineering") {
+      getEngineering();
     }
   }, [activeTab]);
 

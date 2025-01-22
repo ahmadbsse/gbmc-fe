@@ -94,12 +94,20 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
     if (currentTab == "categories" || currentTab == "suppliers") {
       setShowAddItemModal(true);
     }
-    if (currentTab == "parts" || currentTab == "sub-assemblies") {
+    if (
+      currentTab == "parts" ||
+      currentTab == "sub-assemblies" ||
+      currentTab == "engineering-components"
+    ) {
       router.push(`/admin/${currentTab}/create`);
     }
   };
   const viewDetails = (documentId) => {
-    if (currentTab == "parts" || currentTab == "sub-assemblies") {
+    if (
+      currentTab == "parts" ||
+      currentTab == "sub-assemblies" ||
+      currentTab == "engineering-components"
+    ) {
       router.push(`/admin/${currentTab}/detail?id=${documentId}`);
     }
   };
@@ -178,11 +186,13 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                         <div>
                           <h3
                             onClick={() => viewDetails(item.documentId)}
-                            className={`font-medium capitalize ${currentTab == "parts" || currentTab == "sub-assemblies" ? "cursor-pointer" : ""}`}
+                            className={`font-medium capitalize ${currentTab == "parts" || currentTab == "sub-assemblies" || currentTab == "engineering-components" ? "cursor-pointer" : ""}`}
                           >
                             {item.name}
                           </h3>
-                          {currentTab == "parts" || currentTab == "sub-assemblies" ? null : (
+                          {currentTab == "parts" ||
+                          currentTab == "sub-assemblies" ||
+                          currentTab == "engineering-components" ? null : (
                             <span className="text-sm">{item.description}</span>
                           )}
                         </div>
@@ -217,7 +227,11 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                       ) : null}
                       <i
                         onClick={() => {
-                          if (currentTab == "parts" || currentTab == "sub-assemblies") {
+                          if (
+                            currentTab == "parts" ||
+                            currentTab == "sub-assemblies" ||
+                            currentTab == "engineering-components"
+                          ) {
                             router.push(`/admin/${currentTab}/edit?id=${item.documentId}`);
                           } else {
                             setActiveID(item.documentId);

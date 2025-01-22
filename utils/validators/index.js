@@ -36,7 +36,6 @@ export const createPartValidator = (formData, dataFilesIds) => {
   }
   return true;
 };
-
 export const editPartValidator = (formData, dataFilesIds) => {
   if (formData.name == "") {
     showToast(`Please enter name`, "error");
@@ -73,7 +72,6 @@ export const editPartValidator = (formData, dataFilesIds) => {
   }
   return true;
 };
-
 export const createSubAssemblyValidator = (formData, dataFilesIds) => {
   if (formData.name == "") {
     showToast(`Please enter name`, "error");
@@ -105,7 +103,44 @@ export const createSubAssemblyValidator = (formData, dataFilesIds) => {
   }
   return true;
 };
-
+export const createEngineeringComponentValidator = (formData, dataFilesIds) => {
+  if (formData.name == "") {
+    showToast(`Please enter name`, "error");
+    return false;
+  }
+  if (formData.description == "") {
+    showToast(`Please enter description`, "error");
+    return false;
+  }
+  if (typeof dataFilesIds === "string" && dataFilesIds == "") {
+    showToast(`Please upload an image`, "error");
+    return false;
+  }
+  if (typeof dataFilesIds === "object" && dataFilesIds.length == 0) {
+    showToast(`Please upload an image`, "error");
+    return false;
+  }
+  return true;
+};
+export const editEngineeringComponentValidator = (formData, dataFilesIds) => {
+  if (formData.name == "") {
+    showToast(`Please enter name`, "error");
+    return false;
+  }
+  if (formData.description == "") {
+    showToast(`Please enter description`, "error");
+    return false;
+  }
+  if (typeof dataFilesIds === "string" && formData.media.length == 0 && dataFilesIds == "") {
+    showToast(`Please upload an image`, "error");
+    return false;
+  }
+  if (typeof dataFilesIds === "object" && formData.media.length == 0 && dataFilesIds.length == 0) {
+    showToast(`Please upload an image`, "error");
+    return false;
+  }
+  return true;
+};
 export const editSubAssemblyValidator = (formData, dataFilesIds) => {
   if (formData.name == "") {
     showToast(`Please enter name`, "error");
@@ -138,7 +173,6 @@ export const editSubAssemblyValidator = (formData, dataFilesIds) => {
   }
   return true;
 };
-
 export const addCategoryAndSupplierValidator = (formData, currentTab, dataFilesIds) => {
   if (formData.name == "") {
     showToast(`Please enter name`, "error");
@@ -162,7 +196,6 @@ export const addCategoryAndSupplierValidator = (formData, currentTab, dataFilesI
   }
   return true;
 };
-
 export const editCategoryAndSupplierValidator = (data, currentTab, dataFilesIds) => {
   if (data.name == "") {
     showToast(`Please enter name`, "error");
