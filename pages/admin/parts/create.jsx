@@ -21,7 +21,6 @@ const CreatePart = () => {
     weight: "",
     supplier: "",
     description: "",
-    category: "",
     active: false,
     featured: false,
     media: "",
@@ -29,7 +28,6 @@ const CreatePart = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [dataFilesIds, setDataFilesIds] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
-  const [categories, setCategories] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,9 +55,8 @@ const CreatePart = () => {
     try {
       const url = `/suppliers?fields=name`;
       await apiClient.GET(url).then((res) => {
-        const data = res.data.map((item) => item.name);
-        setSuppliers(data);
-        if (data.length == 0) {
+        setSuppliers(res.data);
+        if (res.data.length == 0) {
           showToast("Please add suppliers first", "warning");
         }
       });
@@ -67,23 +64,9 @@ const CreatePart = () => {
       console.error("Error fetching resource:", error.message);
     }
   };
-  const getCategories = async () => {
-    try {
-      const url = `/categories?fields=name`;
-      await apiClient.GET(url).then((res) => {
-        const data = res.data.map((item) => item.name);
-        setCategories(data);
-        if (data.length == 0) {
-          showToast("Please add categories first", "warning");
-        }
-      });
-    } catch (error) {
-      console.error("Error fetching resource:", error.message);
-    }
-  };
+
   useEffect(() => {
     getSuppliers();
-    getCategories();
   }, []);
   const handleSave = (content) => {
     setFormData({ ...formData, description: content });
@@ -169,8 +152,8 @@ const CreatePart = () => {
                 >
                   <option value="">Select a supplier</option>
                   {suppliers.map((supplier) => (
-                    <option key={supplier} value={supplier}>
-                      {supplier}
+                    <option key={supplier.id} value={supplier.documentId}>
+                      {supplier.name}
                     </option>
                   ))}
                 </select>
@@ -179,22 +162,6 @@ const CreatePart = () => {
             <RichTextEditor onSave={handleSave} defaultValue={formData.description} />
 
             <div className="flex flex-col md:flex-row md:gap-8">
-              <div className="w-full">
-                <label className="mb-1 block text-sm font-medium">Category</label>
-                <select
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                  value={formData.category}
-                  onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                >
-                  <option value="">Select a category</option>
-                  {categories.map((category) => (
-                    <option key={category} value={category}>
-                      {category}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
               <div className="mt-4 flex w-full items-center gap-2">
                 <input
                   type="checkbox"

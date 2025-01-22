@@ -19,14 +19,12 @@ const CreateSubAssembly = () => {
     material: "",
     weight: "",
     description: "",
-    category: "",
     active: false,
     featured: false,
     media: "",
   };
   const [formData, setFormData] = useState(initialFormData);
   const [dataFilesIds, setDataFilesIds] = useState([]);
-  const [categories, setCategories] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,23 +49,6 @@ const CreateSubAssembly = () => {
     }
   };
 
-  const getCategories = async () => {
-    try {
-      const url = `/categories?fields=name`;
-      await apiClient.GET(url).then((res) => {
-        const data = res.data.map((item) => item.name);
-        setCategories(data);
-        if (data.length == 0) {
-          showToast("Please add categories first", "warning");
-        }
-      });
-    } catch (error) {
-      console.error("Error fetching resource:", error.message);
-    }
-  };
-  useEffect(() => {
-    getCategories();
-  }, []);
   const handleSave = (content) => {
     setFormData({ ...formData, description: content });
   };
@@ -148,22 +129,6 @@ const CreateSubAssembly = () => {
             <RichTextEditor onSave={handleSave} defaultValue={formData.description} />
 
             <div className="flex flex-col md:flex-row md:gap-8">
-              <div className="w-full">
-                <label className="mb-1 block text-sm font-medium">Category</label>
-                <select
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                  value={formData.category}
-                  onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                >
-                  <option value="">Select a category</option>
-                  {categories.map((category) => (
-                    <option key={category} value={category}>
-                      {category}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
               <div className="mt-4 flex w-full items-center gap-2">
                 <input
                   type="checkbox"

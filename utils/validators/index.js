@@ -25,10 +25,7 @@ export const createPartValidator = (formData, dataFilesIds) => {
     showToast(`Please enter description`, "error");
     return false;
   }
-  if (formData.category == "") {
-    showToast(`Please select category`, "error");
-    return false;
-  }
+
   if (typeof dataFilesIds === "string" && dataFilesIds == "") {
     showToast(`Please upload an image`, "error");
     return false;
@@ -65,10 +62,6 @@ export const editPartValidator = (formData, dataFilesIds) => {
     showToast(`Please enter description`, "error");
     return false;
   }
-  if (formData.category == "") {
-    showToast(`Please select category`, "error");
-    return false;
-  }
 
   if (typeof dataFilesIds === "string" && formData.media.length == 0 && dataFilesIds == "") {
     showToast(`Please upload an image`, "error");
@@ -100,10 +93,6 @@ export const createSubAssemblyValidator = (formData, dataFilesIds) => {
   }
   if (formData.description == "") {
     showToast(`Please enter description`, "error");
-    return false;
-  }
-  if (formData.category == "") {
-    showToast(`Please select category`, "error");
     return false;
   }
   if (typeof dataFilesIds === "string" && dataFilesIds == "") {
@@ -139,11 +128,6 @@ export const editSubAssemblyValidator = (formData, dataFilesIds) => {
     showToast(`Please enter description`, "error");
     return false;
   }
-  if (formData.category == "") {
-    showToast(`Please select category`, "error");
-    return false;
-  }
-
   if (typeof dataFilesIds === "string" && formData.media.length == 0 && dataFilesIds == "") {
     showToast(`Please upload an image`, "error");
     return false;

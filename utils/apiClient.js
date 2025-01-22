@@ -87,6 +87,9 @@ class ApiClient {
   handleError(error) {
     const err = error.response?.data?.error;
     console.log(err, "-------");
+    if (err.status === 403) {
+      this.setAuthToken(null);
+    }
     console.error("API Error:", err); // Logs the full error object
     throw err;
   }

@@ -16,7 +16,6 @@ const EditPart = () => {
   const [formData, setFormData] = useState(null);
   const [dataFilesIds, setDataFilesIds] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
-  const [categories, setCategories] = useState([]);
 
   const getPartDetails = async () => {
     try {
@@ -40,24 +39,9 @@ const EditPart = () => {
     try {
       const url = `/suppliers?fields=name`;
       await apiClient.GET(url).then((res) => {
-        const data = res.data.map((item) => item.name);
-        setSuppliers(data);
-        if (data.length == 0) {
+        setSuppliers(res.data);
+        if (res.data.length == 0) {
           showToast("Please add suppliers first", "warning");
-        }
-      });
-    } catch (error) {
-      console.error("Error fetching resource:", error.message);
-    }
-  };
-  const getCategories = async () => {
-    try {
-      const url = `/categories?fields=name`;
-      await apiClient.GET(url).then((res) => {
-        const data = res.data.map((item) => item.name);
-        setCategories(data);
-        if (data.length == 0) {
-          showToast("Please add categories first", "warning");
         }
       });
     } catch (error) {
@@ -115,7 +99,6 @@ const EditPart = () => {
     if (id) {
       getPartDetails();
       getSuppliers();
-      getCategories();
     }
   }, [id]);
   const handleSave = (content) => {
@@ -177,13 +160,18 @@ const EditPart = () => {
                   <label className="mb-1 block text-sm font-medium">Supplier</label>
                   <select
                     className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                    value={formData.supplier}
-                    onChange={(e) => setFormData({ ...formData, supplier: e.target.value })}
+                    value={JSON.stringify(formData.supplier.name)}
+                    onChange={(e) => {
+                      setFormData({
+                        ...formData,
+                        supplier: JSON.parse(e.target.value), // Assign only documentId here
+                      });
+                    }}
                   >
                     <option value="">Select a supplier</option>
                     {suppliers.map((supplier) => (
-                      <option key={supplier} value={supplier}>
-                        {supplier}
+                      <option key={supplier.id} value={JSON.stringify(supplier.documentId)}>
+                        {supplier.name}
                       </option>
                     ))}
                   </select>
@@ -192,22 +180,6 @@ const EditPart = () => {
               <RichTextEditor onSave={handleSave} defaultValue={formData.description} />
 
               <div className="flex flex-col md:flex-row md:gap-8">
-                <div className="w-full">
-                  <label className="mb-1 block text-sm font-medium">Category</label>
-                  <select
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                    value={formData.category}
-                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                  >
-                    <option value="">Select a category</option>
-                    {categories.map((category) => (
-                      <option key={category} value={category}>
-                        {category}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
                 <div className="mt-4 flex w-full items-center gap-2">
                   <input
                     type="checkbox"
@@ -248,9 +220,9 @@ const EditPart = () => {
                       <X className="h-4 w-4 text-white" />
                     </button>
                     <BaseImage
-                      width={item.formats.thumbnail.width}
-                      height={item.formats.thumbnail.height}
-                      src={item.formats.thumbnail.url}
+                      width={item.formats?.thumbnail?.width}
+                      height={item.formats?.thumbnail?.height}
+                      src={item.formats?.thumbnail?.url}
                       alt={item.name}
                     />
                   </div>
