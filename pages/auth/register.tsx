@@ -25,7 +25,7 @@ const Register = () => (
       <meta name="keywords" content="tractor,spare parts,machinary" />
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <section className="bg-gray-50">
+    <section className="h-screen bg-gray-50">
       <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
         <p className="mb-10 text-3xl font-bold">{appData.name}</p>
         <div className="w-full rounded-lg bg-white shadow sm:max-w-md md:mt-0 xl:p-0">

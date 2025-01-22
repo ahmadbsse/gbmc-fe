@@ -11,12 +11,18 @@ import apiClient from "@/utils/apiClient";
 import { transformMedia } from "@/utils";
 
 import type { Categories } from "@/types";
+import { Menu, X } from "lucide-react";
 
 type tab = {
   name: string;
   key: string;
 };
 const AdminDashboard = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
   const tabsKey = [
     { name: "Categories", key: "categories" },
     { name: "Suppliers", key: "suppliers" },
@@ -170,9 +176,14 @@ const AdminDashboard = () => {
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">
-          <h1 className="mb-8 text-2xl font-bold">Dashboard</h1>
-
-          <div className="mb-6 flex gap-4">
+          <div className="mb-8 flex items-center justify-between">
+            <h1 className="text-2xl font-bold">Dashboard</h1>
+            <button onClick={toggleMenu} className="z-50 ml-auto w-fit p-2 md:hidden">
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+          {/* Desktop */}
+          <div className="md-flex mb-6 hidden gap-4">
             {tabsKey.map((tab) => (
               <AdminTabs
                 key={tab.key}
@@ -184,6 +195,38 @@ const AdminDashboard = () => {
             ))}
           </div>
 
+          {/* Mobile */}
+          <>
+            {/* Sliding menu */}
+            <div
+              className={`ease-inmb-8-out fixed left-0 top-0 z-30 h-full w-full max-w-sm transform bg-white shadow-lg transition-transform duration-300 ${
+                isOpen ? "translate-x-0" : "-translate-x-full"
+              }`}
+            >
+              <div className="flex h-full flex-col p-6">
+                {/* Menu header */}
+                <div className="mb-8 flex justify-between pt-8">
+                  <h2 className="text-2xl font-bold">Menu</h2>
+                  <button onClick={toggleMenu} className="w-ift z-50 ml-auto p-2 md:hidden">
+                    {isOpen ? <X size={24} /> : <Menu size={24} />}
+                  </button>
+                </div>
+
+                {/* Menu items */}
+                <nav className="flex flex-col gap-7">
+                  {tabsKey.map((tab) => (
+                    <AdminTabs
+                      key={tab.key}
+                      active={activeTab.name === tab.name}
+                      onClick={() => setActiveTab(tab)}
+                    >
+                      {tab.name}
+                    </AdminTabs>
+                  ))}
+                </nav>
+              </div>
+            </div>
+          </>
           {isLoading ? (
             <div className="mx-auto mt-10 w-fit">
               <BaseLoader width={40} height={40} />
