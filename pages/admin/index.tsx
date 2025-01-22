@@ -183,7 +183,7 @@ const AdminDashboard = () => {
             </button>
           </div>
           {/* Desktop */}
-          <div className="md-flex mb-6 hidden gap-4">
+          <div className="mb-6 hidden gap-4 md:flex">
             {tabsKey.map((tab) => (
               <AdminTabs
                 key={tab.key}
@@ -199,26 +199,21 @@ const AdminDashboard = () => {
           <>
             {/* Sliding menu */}
             <div
-              className={`ease-inmb-8-out fixed left-0 top-0 z-30 h-full w-full max-w-sm transform bg-white shadow-lg transition-transform duration-300 ${
-                isOpen ? "translate-x-0" : "-translate-x-full"
+              className={`ease-inmb-8-out fixed bottom-0 left-0 z-30 h-fit w-[100vw] transform bg-white shadow-lg transition-transform duration-300 ${
+                isOpen ? "translate-y-0" : "translate-y-full"
               }`}
             >
-              <div className="flex h-full flex-col p-6">
-                {/* Menu header */}
-                <div className="mb-8 flex justify-between pt-8">
-                  <h2 className="text-2xl font-bold">Menu</h2>
-                  <button onClick={toggleMenu} className="w-ift z-50 ml-auto p-2 md:hidden">
-                    {isOpen ? <X size={24} /> : <Menu size={24} />}
-                  </button>
-                </div>
-
+              <div className="flex flex-col p-6">
                 {/* Menu items */}
-                <nav className="flex flex-col gap-7">
+                <nav className="flex flex-col gap-5">
                   {tabsKey.map((tab) => (
                     <AdminTabs
                       key={tab.key}
                       active={activeTab.name === tab.name}
-                      onClick={() => setActiveTab(tab)}
+                      onClick={() => {
+                        if (isOpen) setIsOpen(!isOpen);
+                        setActiveTab(tab);
+                      }}
                     >
                       {tab.name}
                     </AdminTabs>

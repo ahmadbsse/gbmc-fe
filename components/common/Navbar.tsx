@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { SearchBar } from "@/components/user";
 import ScrollingMarquee from "@/components/common/Marquee";
 
-import { adminRoutes, userRoutes } from "@/data";
+import { userRoutes } from "@/data";
 import { appData } from "@/constants";
 import apiClient from "@/utils/apiClient";
 
@@ -70,7 +70,7 @@ const Navbar = ({ isAdmin = false, showSearchbar = false }) => {
 
                     {/* Sliding menu */}
                     <div
-                      className={`fixed left-0 top-0 z-30 h-full w-full max-w-sm transform bg-white shadow-lg transition-transform duration-300 ease-in-out ${
+                      className={`fixed left-0 top-0 z-30 h-full w-full transform bg-white shadow-lg transition-transform duration-300 ease-in-out ${
                         isOpen ? "translate-x-0" : "-translate-x-full"
                       }`}
                     >
@@ -113,46 +113,6 @@ const Navbar = ({ isAdmin = false, showSearchbar = false }) => {
                       onClick={handleLogout}
                     />
                     {/* Mobile menu */}
-                    <>
-                      <button
-                        onClick={toggleMenu}
-                        className="left-4 top-4 z-50 rounded-lg p-2 hover:bg-gray-100 md:hidden"
-                      >
-                        {isOpen ? <X size={24} /> : <Menu size={24} />}
-                      </button>
-
-                      {/* Sliding menu */}
-                      <div
-                        className={`fixed left-0 top-0 z-30 h-full w-full max-w-sm transform bg-white shadow-lg transition-transform duration-300 ease-in-out ${
-                          isOpen ? "translate-x-0" : "-translate-x-full"
-                        }`}
-                      >
-                        <div className="flex h-full flex-col p-6">
-                          {/* Menu header */}
-                          <div className="mb-8 pt-8">
-                            <h2 className="text-2xl font-bold">Menu</h2>
-                          </div>
-
-                          {/* Menu items */}
-                          <nav className="flex flex-col gap-7">
-                            {adminRoutes.map((item, index) => (
-                              <Link
-                                key={index}
-                                href={item.href}
-                                className={`hover:text-black ${
-                                  item.routeName.toLowerCase() === router.route.toLowerCase() ||
-                                  router.route.toLowerCase().includes(item.routeName.toLowerCase())
-                                    ? "font-medium text-black"
-                                    : ""
-                                }`}
-                              >
-                                {item.name}
-                              </Link>
-                            ))}
-                          </nav>
-                        </div>
-                      </div>
-                    </>
                   </div>
                 )}
               </div>

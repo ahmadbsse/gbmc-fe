@@ -142,28 +142,33 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
         <div className="border-b border-gray-200 px-6 py-4">
           <div className="mb-8 flex items-center justify-between">
             <h2 className="text-lg font-medium">{activeTab.name}</h2>
-            <div className="w-fit">
+            <div className="hidden w-fit md:flex">
               <BaseButton loading={false} type="submit" handleClick={addNewItem}>
-                <p className="mx-auto flex w-fit px-3">
+                <p className="mx-auto flex w-fit md:px-3">
                   <Plus className="mt-0.5 h-4 w-4" />
                   Add New
                 </p>
               </BaseButton>
             </div>
+            <div className="mg:hidden w-fit">
+              <div onClick={addNewItem}>
+                <Plus className="h-5 w-5" />
+              </div>
+            </div>
           </div>
         </div>
-        <div className="p-6">
+        <div className="p-3 md:p-6">
           {data && data.length > 0 ? (
             <div className="grid gap-4">
               {data &&
                 data.map((item, index) => (
                   <div
                     key={item.documentId}
-                    className={`flex items-center justify-between rounded-lg bg-gray-50 p-4`}
+                    className={`flex flex-col justify-between rounded-lg bg-gray-50 p-4 md:flex-row md:items-center`}
                   >
                     <div className="flex gap-4">
                       <span>{index + 1}.</span>
-                      <div className="max-w-44">
+                      <div className="hidden max-w-44 md:block">
                         {Array.isArray(item?.media) ? (
                           <BaseImage
                             width={item.media[0]?.formats.thumbnail.width}
@@ -202,7 +207,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-4">
+                    <div className="ml-auto mt-2 flex w-fit items-center gap-2 md:ml-0 md:mt-0 md:gap-4">
                       <i
                         onClick={() => toggleActivation(item)}
                         className={`rounded-lg p-2 ${
