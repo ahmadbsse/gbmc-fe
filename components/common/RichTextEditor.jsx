@@ -1,16 +1,32 @@
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 import { useState, useEffect, useMemo } from "react";
-
+import { BaseLoader } from "@/components/common";
 import BaseButton from "./BaseButton";
 
-// Dynamically import QuillEditor for SSR compatibility
-const QuillEditor = dynamic(() => import("react-quill"), { ssr: false });
+// Dynamically import QuillEditor with error handling for SSR compatibility
+const QuillEditor = dynamic(
+  () =>
+    import("react-quill").catch((error) => {
+      console.error("Failed to load QuillEditor:", error);
+      return null;
+    }),
+  { ssr: false }
+);
 
 const RichTextEditor = ({ onSave, defaultValue = "", label = "Description", readOnly = false }) => {
   // Editor state
   const [value, setValue] = useState(defaultValue);
   const [disabled, setDisabled] = useState(false);
+  const [isQuillLoaded, setIsQuillLoaded] = useState(false);
+
+  // Check if QuillEditor is loaded
+  useEffect(() => {
+    if (QuillEditor) {
+      setIsQuillLoaded(true);
+    }
+  }, []);
+
   // Update the editor value when defaultValue changes
   useEffect(() => {
     setValue(defaultValue);
@@ -54,7 +70,16 @@ const RichTextEditor = ({ onSave, defaultValue = "", label = "Description", read
       setDisabled(true);
     }
   };
-  if (!QuillEditor) return null;
+
+  // Return a fallback UI if QuillEditor fails to load
+  if (!isQuillLoaded) {
+    return (
+      <p className="mx-auto mt-3 w-fit">
+        <BaseLoader />
+      </p>
+    );
+  }
+
   return (
     <div
       className={`rich-text-editor-wrapper ${readOnly ? "pointer-events-none cursor-not-allowed" : ""}`}
