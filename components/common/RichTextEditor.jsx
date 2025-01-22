@@ -1,13 +1,12 @@
 import dynamic from "next/dynamic";
-import "react-quill/dist/quill.snow.css";
+import "react-quill-new/dist/quill.snow.css";
 import { useState, useEffect, useMemo } from "react";
 import { BaseLoader } from "@/components/common";
 import BaseButton from "./BaseButton";
-
 // Dynamically import QuillEditor with error handling for SSR compatibility
 const QuillEditor = dynamic(
   () =>
-    import("react-quill").catch((error) => {
+    import("react-quill-new").catch((error) => {
       console.error("Failed to load QuillEditor:", error);
       return null;
     }),
@@ -59,7 +58,6 @@ const RichTextEditor = ({ onSave, defaultValue = "", label = "Description", read
     "strike",
     "blockquote",
     "list",
-    "bullet",
     "indent",
     "link",
   ];
