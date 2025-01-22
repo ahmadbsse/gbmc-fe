@@ -14,7 +14,6 @@ const nextConfig = {
         hostname: 'localhost',
       },
     ],
-    // domains: [process.env.NEXT_PUBLIC_API_BASE_URL, 'localhost'], // Replace with your server's base URL
   },
 
 };
