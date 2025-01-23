@@ -46,7 +46,7 @@ const CreateEngineeringComponent = () => {
     }
   };
 
-  const handleSave = (content) => {
+  const handleChange = (content) => {
     setFormData({ ...formData, description: content });
   };
   return (
@@ -89,11 +89,10 @@ const CreateEngineeringComponent = () => {
                 />
               </div>
             </div>
+            <RichTextEditor handleChange={handleChange} defaultValue={formData.description} />
 
-            <RichTextEditor onSave={handleSave} defaultValue={formData.description} />
-
-            <div className="flex flex-col md:flex-row md:gap-8">
-              <div className="mt-4 flex w-full items-center gap-2">
+            <div className="flex flex-col gap-2">
+              <div className="flex w-full items-center gap-2">
                 <input
                   type="checkbox"
                   id="active"
@@ -106,7 +105,7 @@ const CreateEngineeringComponent = () => {
                 </label>
               </div>
 
-              <div className="mt-4 flex w-full items-center gap-2">
+              <div className="flex w-full items-center gap-2">
                 <input
                   type="checkbox"
                   id="featured"

@@ -49,13 +49,13 @@ const ViewComponentDetails = () => {
               <div className="w-full">
                 <label className="mb-1 block text-sm font-medium">Description</label>
                 <div
-                  className="product-description text-justify"
+                  className="product-description rounded-lg border border-gray-300 px-4 py-2 text-justify"
                   dangerouslySetInnerHTML={{ __html: formData.description }}
                 />
               </div>
 
-              <div className="flex flex-col md:flex-row md:gap-5">
-                <div className="mt-4 flex w-full items-center gap-2">
+              <div className="flex flex-col gap-2">
+                <div className="flex w-full items-center gap-2">
                   <input
                     type="checkbox"
                     id="active"
@@ -69,7 +69,7 @@ const ViewComponentDetails = () => {
                   </label>
                 </div>
 
-                <div className="mt-4 flex w-full items-center gap-2">
+                <div className="flex w-full items-center gap-2">
                   <input
                     type="checkbox"
                     id="featured"

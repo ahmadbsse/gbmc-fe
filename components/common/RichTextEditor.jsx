@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import "react-quill-new/dist/quill.snow.css";
 import { useState, useEffect, useMemo } from "react";
 import { BaseLoader } from "@/components/common";
-import BaseButton from "./BaseButton";
+
 // Dynamically import QuillEditor with error handling for SSR compatibility
 const QuillEditor = dynamic(
   () =>
@@ -13,10 +13,8 @@ const QuillEditor = dynamic(
   { ssr: false }
 );
 
-const RichTextEditor = ({ onSave, defaultValue = "", label = "Description", readOnly = false }) => {
+const RichTextEditor = ({ handleChange, defaultValue, label = "Description" }) => {
   // Editor state
-  const [value, setValue] = useState(defaultValue);
-  const [disabled, setDisabled] = useState(false);
   const [isQuillLoaded, setIsQuillLoaded] = useState(false);
 
   // Check if QuillEditor is loaded
@@ -25,11 +23,6 @@ const RichTextEditor = ({ onSave, defaultValue = "", label = "Description", read
       setIsQuillLoaded(true);
     }
   }, []);
-
-  // Update the editor value when defaultValue changes
-  useEffect(() => {
-    setValue(defaultValue);
-  }, [defaultValue]);
 
   // Memoized editor modules
   const modules = useMemo(
@@ -62,13 +55,6 @@ const RichTextEditor = ({ onSave, defaultValue = "", label = "Description", read
     "link",
   ];
 
-  const handleSave = () => {
-    if (onSave) {
-      onSave(value);
-      setDisabled(true);
-    }
-  };
-
   // Return a fallback UI if QuillEditor fails to load
   if (!isQuillLoaded) {
     return (
@@ -79,34 +65,19 @@ const RichTextEditor = ({ onSave, defaultValue = "", label = "Description", read
   }
 
   return (
-    <div
-      className={`rich-text-editor-wrapper ${readOnly ? "pointer-events-none cursor-not-allowed" : ""}`}
-    >
+    <div className={`rich-text-editor-wrapper`}>
       <label className="mb-1 block text-sm font-medium">{label}</label>
-      <div onClick={() => setDisabled(false)}>
+      <div>
         <QuillEditor
           className="quill-editor"
           theme="snow"
-          value={value}
+          value={defaultValue}
           formats={formats}
           modules={modules}
-          onChange={setValue}
+          onChange={handleChange}
           placeholder={`Enter ${label}`}
         />
       </div>
-      {!readOnly ? (
-        <div className="m-2 ml-auto w-fit">
-          <BaseButton
-            loading={false}
-            btnStyle="primary"
-            type="button"
-            disabled={disabled}
-            handleClick={handleSave}
-          >
-            Save
-          </BaseButton>
-        </div>
-      ) : null}
     </div>
   );
 };
