@@ -50,7 +50,7 @@ const Article = () => {
       <Navbar />
       <div className="mt-1 lg:px-16">
         <div className="relative">
-          <video className="h-auto w-full" autoPlay muted loop>
+          <video className="h-auto w-full rounded-lg" autoPlay muted loop>
             <source src="/assets/eng-detail.mp4" />
             Your browser does not support the video tag.
           </video>
