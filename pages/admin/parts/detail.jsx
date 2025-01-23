@@ -35,7 +35,7 @@ const ViewPartDetails = () => {
         <main className="container mx-auto px-4 py-8">
           {formData ? (
             <div className="mx-auto max-w-[1000px] space-y-3">
-              <h1 className="mx-auto mb-8 w-fit text-2xl font-bold">Sub Assembly - Details</h1>
+              <h1 className="mx-auto mb-8 w-fit text-2xl font-bold">Part - Details</h1>
               <div className="flex flex-col md:flex-row md:gap-5">
                 <div className="w-full">
                   <label className="mb-1 block text-sm font-medium">Name</label>
@@ -71,12 +71,13 @@ const ViewPartDetails = () => {
                   </div>
                 </div>
               </div>
-
-              <RichTextEditor
-                onSave={() => {}}
-                defaultValue={formData.description}
-                readOnly={true}
-              />
+              <div className="w-full">
+                <label className="mb-1 block text-sm font-medium">Description</label>
+                <div
+                  className="product-description text-justify"
+                  dangerouslySetInnerHTML={{ __html: formData.description }}
+                />
+              </div>
 
               <div className="flex flex-col md:flex-row md:gap-5">
                 <div className="mt-4 flex w-full items-center gap-2">
