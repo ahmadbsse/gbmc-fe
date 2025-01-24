@@ -120,6 +120,10 @@ export const createEngineeringComponentValidator = (formData, dataFilesIds) => {
     showToast(`Please upload an image`, "error");
     return false;
   }
+  if (formData.summary == "") {
+    showToast(`Please enter summary`, "error");
+    return false;
+  }
   return true;
 };
 export const editEngineeringComponentValidator = (formData, dataFilesIds) => {
@@ -137,6 +141,10 @@ export const editEngineeringComponentValidator = (formData, dataFilesIds) => {
   }
   if (typeof dataFilesIds === "object" && formData.media.length == 0 && dataFilesIds.length == 0) {
     showToast(`Please upload an image`, "error");
+    return false;
+  }
+  if (formData.summary == "") {
+    showToast(`Please enter summary`, "error");
     return false;
   }
   return true;

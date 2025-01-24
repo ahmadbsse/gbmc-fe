@@ -177,3 +177,11 @@ body::-webkit-scrollbar-track {
 .product-description li {
   @apply text-base mb-1;
 }
+
+input[type="checkbox"]:checked {
+  @apply accent-primary;
+}
+
+input[type="checkbox"] {
+  @apply h-4 w-4;
+}

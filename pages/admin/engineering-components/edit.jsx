@@ -86,8 +86,11 @@ const EditComponent = () => {
       getComponentDetails();
     }
   }, [id]);
-  const handleChange = (content) => {
+  const handleChangeDescription = (content) => {
     setFormData({ ...formData, description: content });
+  };
+  const handleChangeSummary = (content) => {
+    setFormData({ ...formData, summary: content });
   };
   return (
     <>
@@ -107,8 +110,15 @@ const EditComponent = () => {
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 />
               </div>
-
-              <RichTextEditor handleChange={handleChange} defaultValue={formData.description} />
+              <RichTextEditor
+                handleChange={handleChangeSummary}
+                defaultValue={formData.summary}
+                label="summary"
+              />
+              <RichTextEditor
+                handleChange={handleChangeDescription}
+                defaultValue={formData.description}
+              />
 
               <div className="flex flex-col gap-2">
                 <div className="flex w-full items-center gap-2">
