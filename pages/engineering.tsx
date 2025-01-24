@@ -1,30 +1,11 @@
 import React from "react";
-import { PenTool, Cog, Activity } from "lucide-react";
 import Head from "next/head";
 
-import { PageLayout, FeatureCard } from "../components/user";
+import { PageLayout } from "../components/user";
 import { Navbar } from "@/components/common";
 import EngineeringListingCard from "@/components/user/EngineeringListingCard";
 
 const EngineeringHome = () => {
-  const procedures = [
-    {
-      title: "Precision Machining",
-      description: "High-precision CNC machining for complex components",
-      icon: PenTool,
-    },
-    {
-      title: "Quality Testing",
-      description: "Rigorous quality control and testing procedures",
-      icon: Activity,
-    },
-    {
-      title: "Custom Engineering",
-      description: "Tailored engineering solutions for specific needs",
-      icon: Cog,
-    },
-  ];
-
   const featuredComponents = [
     {
       title: "Component 1",
@@ -76,25 +57,9 @@ const EngineeringHome = () => {
           { text: "Engineering", href: "/engineering" },
         ]}
       >
-        <div className="grid gap-8">
-          {/* Procedures Section */}
-          <section>
-            <div className="grid gap-6 md:grid-cols-3">
-              {procedures.map((procedure, index) => (
-                <FeatureCard
-                  key={index}
-                  title={procedure.title}
-                  description={procedure.description}
-                  icon={procedure.icon}
-                  featured={index === 0}
-                />
-              ))}
-            </div>
-          </section>
-
+        <div className="grid h-screen gap-8">
           {/* Featured Components Section */}
           <section>
-            <h2 className="mb-6 text-2xl font-bold">Featured Components</h2>
             <div className="grid gap-4 md:grid-cols-4">
               {featuredComponents.map((component, index) => (
                 <EngineeringListingCard

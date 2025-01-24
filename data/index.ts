@@ -5,8 +5,8 @@ export const adminRoutes = [
 
 ];
 export const userRoutes = [
-    { name: "Engineering", href: "/engineering", routeName: "/engineering" },
-    { name: "Tractor Parts", href: "/tractor-parts", routeName: "/tractor-parts" },
+    // { name: "Engineering", href: "/engineering", routeName: "/engineering" },
+    // { name: "Tractor Parts", href: "/tractor-parts", routeName: "/tractor-parts" },
     { name: "About", href: "/about", routeName: "/about" },
     { name: "Contact", href: "/contact", routeName: "/contact" },
 ];
