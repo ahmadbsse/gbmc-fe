@@ -6,7 +6,7 @@ import { Star } from "lucide-react";
 const EngineeringListingCard: React.FC<EngineeringCardProps> = ({ id, title, image, featured }) => {
   return (
     <Link href={`/engineering/${id}`}>
-      <div className="relative cursor-pointer shadow-md hover:shadow-lg">
+      <div className="group relative cursor-pointer shadow-md hover:shadow-lg">
         <BaseImage
           height={160}
           width={240}
@@ -22,6 +22,11 @@ const EngineeringListingCard: React.FC<EngineeringCardProps> = ({ id, title, ima
             <Star className="h-4 w-4 fill-current text-yellow-400" />
           </div>
         ) : null}
+        <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black bg-opacity-50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <p className="absolute bottom-4 left-2 text-sm font-semibold text-white lg:left-4 lg:text-xl">
+            {title}
+          </p>
+        </div>
       </div>
     </Link>
   );
