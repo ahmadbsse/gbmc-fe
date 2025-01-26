@@ -33,7 +33,7 @@ const Navbar = ({ isAdmin = false, showSearchbar = false }) => {
                     nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
         speed={30}
       /> */}
-      <nav className="border-b bg-[#222222] shadow-sm lg:mr-0">
+      <nav className="bg-[#222222] shadow-sm lg:mr-0">
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             <div className="flex w-full items-center justify-between gap-8">
