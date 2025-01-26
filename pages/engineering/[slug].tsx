@@ -5,6 +5,7 @@ import { BaseImage, BaseLoader, BaseVideo, Navbar } from "@/components/common";
 import apiClient from "@/utils/apiClient";
 import { transformHeroVideo, transformMedia } from "@/utils";
 import type { EngineeringComponent } from "@/types";
+import Link from "next/link";
 
 const Article = () => {
   const router = useRouter();
@@ -37,10 +38,15 @@ const Article = () => {
   useEffect(() => {
     if (router.query.slug) getComponentDetails();
   }, [router.query.slug]);
+  const breadcrumbs = [
+    { text: "Home", href: "/" },
+    { text: "Engineering", href: "/engineering" },
+    { text: data?.name, href: `/engineering/${router.query.slug}` },
+  ];
   return (
     <>
       <Head>
-        <title>Engineering Articles</title>
+        <title>Article - {data?.name}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
           property="og:title"
@@ -59,8 +65,21 @@ const Article = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
+
       {data ? (
         <div className="mx-auto max-w-7xl">
+          <div className="my-4">
+            <div className="mb-2 flex items-center gap-2 text-sm text-black">
+              {breadcrumbs.map((crumb, index) => (
+                <p key={index}>
+                  <Link href={crumb.href} className="pr-2 hover:text-secondary">
+                    {crumb.text}
+                  </Link>
+                  {index < breadcrumbs.length - 1 && <span>/</span>}
+                </p>
+              ))}
+            </div>
+          </div>
           <div className="mt-2 px-2 lg:px-16">
             <div className="relative">
               {data.hero_image.type && data.hero_image.type == "video" ? (
@@ -100,7 +119,6 @@ const Article = () => {
                     classes="my-2 h-[500px] rounded-lg lg:z-10 lg:col-span-4 lg:my-20 lg:rounded-lg"
                     height={1100}
                     width={1100}
-                    priority
                     src={data?.media[selectedImage].formats.actual.url}
                     alt="Engineering Images"
                   />
