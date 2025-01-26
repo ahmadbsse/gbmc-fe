@@ -14,17 +14,14 @@ const QuillEditor = dynamic(
 );
 
 const RichTextEditor = ({ handleChange, defaultValue, label = "Description" }) => {
-  // Editor state
   const [isQuillLoaded, setIsQuillLoaded] = useState(false);
 
-  // Check if QuillEditor is loaded
   useEffect(() => {
     if (QuillEditor) {
       setIsQuillLoaded(true);
     }
   }, []);
 
-  // Memoized editor modules
   const modules = useMemo(
     () => ({
       toolbar: {

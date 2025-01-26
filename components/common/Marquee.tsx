@@ -14,14 +14,11 @@ const ScrollingMarquee: React.FC<ScrollingMarqueeProps> = ({
   const contentRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    // Convert speed (1-100) to interval (1-50ms)
-    // Lower interval = faster animation
     const intervalTime = Math.max(1, Math.floor(50 - speed * 0.45));
 
     const animate = () => {
       setPosition((prevPosition) => {
-        // Increase the pixel movement for higher speeds
-        const pixelMove = Math.ceil(speed / 20); // More pixels per step at higher speeds
+        const pixelMove = Math.ceil(speed / 20);
         const newPosition = prevPosition - pixelMove;
 
         if (contentRef.current && containerRef.current) {

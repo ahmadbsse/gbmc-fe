@@ -20,14 +20,18 @@ const CreateEngineeringComponent = () => {
     featured: false,
     media: "",
     summary: "",
+    hero_image: "",
   };
   const [formData, setFormData] = useState(initialFormData);
   const [dataFilesIds, setDataFilesIds] = useState([]);
+  const [heroFileId, setHeroFileId] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (createEngineeringComponentValidator(formData, dataFilesIds)) {
-      formData.media = dataFilesIds;
+    console.log(dataFilesIds);
+    formData.media = dataFilesIds;
+    formData.hero_image = heroFileId;
+    if (createEngineeringComponentValidator(formData)) {
       try {
         apiClient
           .POST(`/engineering-components`, { data: formData })
@@ -130,7 +134,16 @@ const CreateEngineeringComponent = () => {
                 </label>
               </div>
             </div>
-            <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
+            <div className="flex gap-2">
+              <div className="w-full">
+                <label className="text-sm">Hero Image</label>
+                <BaseFileUploader setDataFilesIds={setHeroFileId} />
+              </div>
+              <div className="w-full">
+                <label className="text-sm">Detail Images</label>
+                <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
+              </div>
+            </div>
 
             <div className="mx-auto w-[300px]">
               <BaseButton loading={false} type="submit">

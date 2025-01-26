@@ -178,7 +178,7 @@ const EditSubAssembly = () => {
                   <div className="relative w-44" key={item.documentId}>
                     <button
                       onClick={(e) => {
-                        e.preventDefault(); // Prevent form submission
+                        e.preventDefault();
                         deletePreviousImage(item.id);
                       }}
                       className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"

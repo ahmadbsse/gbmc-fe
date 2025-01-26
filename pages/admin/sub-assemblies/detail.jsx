@@ -109,7 +109,7 @@ const ViewSubAssemblyDetails = () => {
                   formData.media.map((item, index) => (
                     <div className="max-w-44" key={index}>
                       <BaseImage
-                        key={index} // Add a unique key for each item
+                        key={index}
                         width={item.formats.thumbnail.width}
                         height={item.formats.thumbnail.height}
                         src={item.formats.thumbnail.url}

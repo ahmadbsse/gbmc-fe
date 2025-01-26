@@ -103,7 +103,7 @@ export const createSubAssemblyValidator = (formData, dataFilesIds) => {
   }
   return true;
 };
-export const createEngineeringComponentValidator = (formData, dataFilesIds) => {
+export const createEngineeringComponentValidator = (formData) => {
   if (formData.name == "") {
     showToast(`Please enter name`, "error");
     return false;
@@ -112,12 +112,12 @@ export const createEngineeringComponentValidator = (formData, dataFilesIds) => {
     showToast(`Please enter description`, "error");
     return false;
   }
-  if (typeof dataFilesIds === "string" && dataFilesIds == "") {
+  if (formData.media == "") {
     showToast(`Please upload an image`, "error");
     return false;
   }
-  if (typeof dataFilesIds === "object" && dataFilesIds.length == 0) {
-    showToast(`Please upload an image`, "error");
+  if (formData.hero_image == "") {
+    showToast(`Please upload a hero image`, "error");
     return false;
   }
   if (formData.summary == "") {
@@ -126,7 +126,7 @@ export const createEngineeringComponentValidator = (formData, dataFilesIds) => {
   }
   return true;
 };
-export const editEngineeringComponentValidator = (formData, dataFilesIds) => {
+export const editEngineeringComponentValidator = (formData) => {
   if (formData.name == "") {
     showToast(`Please enter name`, "error");
     return false;
@@ -135,12 +135,12 @@ export const editEngineeringComponentValidator = (formData, dataFilesIds) => {
     showToast(`Please enter description`, "error");
     return false;
   }
-  if (typeof dataFilesIds === "string" && formData.media.length == 0 && dataFilesIds == "") {
-    showToast(`Please upload an image`, "error");
+  if (!formData.media || formData.media.length == 0) {
+    showToast(`Please upload detail images`, "error");
     return false;
   }
-  if (typeof dataFilesIds === "object" && formData.media.length == 0 && dataFilesIds.length == 0) {
-    showToast(`Please upload an image`, "error");
+  if (formData.hero_image == "") {
+    showToast(`Please upload a hero image`, "error");
     return false;
   }
   if (formData.summary == "") {

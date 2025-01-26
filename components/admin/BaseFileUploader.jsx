@@ -11,7 +11,6 @@ const BaseFileUploader = ({ setDataFilesIds, multiple = false }) => {
   const handleFileUpload = async (filesToUpload) => {
     try {
       const formData = new FormData();
-      setDataFilesIds(filesToUpload);
       filesToUpload.forEach((file) => {
         formData.append("files", file.file); // Use the correct file object
       });

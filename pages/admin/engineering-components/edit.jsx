@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
 import apiClient from "@/utils/apiClient";
-import { transformMedia } from "@/utils";
-import { Navbar, BaseLoader, BaseImage, BaseButton } from "@/components/common";
+import { transformMedia, transformHeroVideo } from "@/utils";
+import { Navbar, BaseLoader, BaseImage, BaseButton, BaseVideo } from "@/components/common";
 import BaseFileUploader from "@/components/admin/BaseFileUploader";
 import showToast from "@/utils/toast";
 import { editEngineeringComponentValidator } from "@/utils/validators";
@@ -15,6 +15,7 @@ const EditComponent = () => {
   const { id } = router.query;
   const [formData, setFormData] = useState(null);
   const [dataFilesIds, setDataFilesIds] = useState([]);
+  const [heroFileId, setHeroFileId] = useState([]);
 
   const getComponentDetails = async () => {
     try {
@@ -28,6 +29,9 @@ const EditComponent = () => {
         if (!Array.isArray(response.media)) {
           response.media = [response.media];
         }
+        if (response.hero_image.mime?.includes("video")) {
+          response.hero_image = transformHeroVideo(response.hero_image);
+        }
         setFormData(response);
       });
     } catch (error) {
@@ -37,16 +41,21 @@ const EditComponent = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (editEngineeringComponentValidator(formData, dataFilesIds)) {
-      if (dataFilesIds.length === 0) {
-        if (Array.isArray(formData.media)) {
-          formData.media = formData.media.map((item) => item.id);
-        } else {
-          formData.media = formData.media.id;
-        }
+    if (heroFileId.length === 0) {
+      formData.hero_image = formData.hero_image.id;
+    } else {
+      formData.hero_image = heroFileId[0];
+    }
+    if (dataFilesIds.length === 0) {
+      if (Array.isArray(formData.media)) {
+        formData.media = formData.media.map((item) => item.id);
       } else {
-        formData.media = [...formData.media.map((item) => item.id), ...dataFilesIds];
+        formData.media = formData.media.id;
       }
+    } else {
+      formData.media = [...formData.media.map((item) => item.id), ...dataFilesIds];
+    }
+    if (editEngineeringComponentValidator(formData)) {
       delete formData.documentId;
       try {
         apiClient
@@ -65,21 +74,27 @@ const EditComponent = () => {
       }
     }
   };
-  const deletePreviousImage = async (id) => {
+  const deletePreviousImage = async (id, key) => {
     try {
       await apiClient.DELETE(`/upload/files/${id}`).then((res) => {
-        const newData = removeMediaById(id);
+        const newData = removeMediaById(id, key);
         setFormData(newData);
       });
     } catch (error) {
       console.error("Error deleting resource:", error.message);
     }
   };
-  function removeMediaById(idToRemove) {
-    return {
-      ...formData,
-      media: formData?.media?.filter((mediaItem) => mediaItem.id !== idToRemove),
-    };
+  function removeMediaById(idToRemove, key) {
+    if (key == "media")
+      return {
+        ...formData,
+        media: formData.media.filter((mediaItem) => mediaItem.id !== idToRemove),
+      };
+    else
+      return {
+        ...formData,
+        hero_image: {},
+      };
   }
   useEffect(() => {
     if (id) {
@@ -147,27 +162,66 @@ const EditComponent = () => {
                   </label>
                 </div>
               </div>
-              <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
-              <div className="flex items-center gap-4">
-                {formData?.media?.map((item) => (
-                  <div className="relative w-44" key={item.documentId}>
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault(); // Prevent form submission
-                        deletePreviousImage(item.id);
-                      }}
-                      className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
-                    >
-                      <X className="h-4 w-4 text-white" />
-                    </button>
-                    <BaseImage
-                      width={item.formats.thumbnail.width}
-                      height={item.formats.thumbnail.height}
-                      src={item.formats.thumbnail.url}
-                      alt={item.name}
-                    />
-                  </div>
-                ))}
+              <div className="flex gap-2">
+                <div className="w-full">
+                  <label className="text-sm">Detail Images</label>
+                  <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
+                  {formData.media ? (
+                    <div className="flex flex-wrap items-center gap-4">
+                      {formData?.media?.map((item) => (
+                        <div className="relative mt-2 max-w-48" key={item.documentId}>
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              deletePreviousImage(item.id, "media");
+                            }}
+                            className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
+                          >
+                            <X className="h-4 w-4 text-white" />
+                          </button>
+                          <BaseImage
+                            width={item.formats?.thumbnail.width}
+                            height={item.formats?.thumbnail.height}
+                            src={item.formats?.thumbnail.url}
+                            alt={item.name}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+                <div className="w-full">
+                  <label className="text-sm">Hero Image</label>
+                  <BaseFileUploader setDataFilesIds={setHeroFileId} />
+                  {formData.hero_image && Object.keys(formData.hero_image).length != 0 ? (
+                    <div className="relative mt-2 w-48">
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          deletePreviousImage(formData.hero_image.id, "hero_image");
+                        }}
+                        className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
+                      >
+                        <X className="h-4 w-4 text-white" />
+                      </button>
+                      {formData.hero_image.type === "video" ? (
+                        <BaseVideo
+                          src={formData.hero_image.url}
+                          autoPlay={true}
+                          muted={true}
+                          loop={true}
+                        />
+                      ) : (
+                        <BaseImage
+                          width={formData.hero_image.formats?.thumbnail?.width}
+                          height={formData.hero_image.formats?.thumbnail?.height}
+                          src={formData.hero_image.formats?.thumbnail?.url}
+                          alt={formData.hero_image.name}
+                        />
+                      )}
+                    </div>
+                  ) : null}
+                </div>
               </div>
 
               <div className="mx-auto w-[300px]">

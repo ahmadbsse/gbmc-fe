@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 
 import apiClient from "@/utils/apiClient";
 
-import { Navbar, BaseLoader, BaseImage } from "@/components/common";
-import RichTextEditor from "@/components/common/RichTextEditor";
+import { Navbar, BaseLoader, BaseImage, BaseVideo } from "@/components/common";
+import { transformHeroVideo } from "@/utils";
 
 const ViewComponentDetails = () => {
   const router = useRouter();
@@ -18,6 +18,9 @@ const ViewComponentDetails = () => {
         const response = res.data;
         if (!Array.isArray(response.media)) {
           response.media = [response.media];
+        }
+        if (response.hero_image.mime && response.hero_image.mime.includes("video")) {
+          response.hero_image = transformHeroVideo(response.hero_image);
         }
         setFormData(response);
       });
@@ -45,7 +48,13 @@ const ViewComponentDetails = () => {
                   {formData.name}
                 </div>
               </div>
-
+              <div className="w-full">
+                <label className="mb-1 block text-sm font-medium">Summary</label>
+                <div
+                  className="product-description rounded-lg border border-gray-300 px-4 py-2 text-justify"
+                  dangerouslySetInnerHTML={{ __html: formData.summary }}
+                />
+              </div>
               <div className="w-full">
                 <label className="mb-1 block text-sm font-medium">Description</label>
                 <div
@@ -83,30 +92,52 @@ const ViewComponentDetails = () => {
                   </label>
                 </div>
               </div>
-              <label className="mb-1 block text-sm font-medium">Media</label>
-              <div className="flex flex-wrap items-center gap-4">
-                {Array.isArray(formData.media) ? (
-                  formData.media.map((item, index) => (
-                    <div className="max-w-44" key={index}>
+              <div>
+                <label className="mb-1 block text-sm font-medium">Hero Image</label>
+                <div className="max-w-44">
+                  {formData.hero_image.type === "video" ? (
+                    <BaseVideo
+                      src={formData.hero_image.url}
+                      autoPlay={true}
+                      muted={true}
+                      loop={true}
+                    />
+                  ) : (
+                    <BaseImage
+                      width={formData.hero_image.formats.thumbnail.width}
+                      height={formData.hero_image.formats.thumbnail.height}
+                      src={formData.hero_image.formats.thumbnail.url}
+                      alt={formData.hero_image.name}
+                    />
+                  )}
+                </div>
+              </div>
+              <div>
+                <label className="mb-1 block text-sm font-medium">Media</label>
+                <div className="flex flex-wrap items-center gap-4">
+                  {Array.isArray(formData.media) ? (
+                    formData.media.map((item, index) => (
+                      <div className="max-w-44" key={index}>
+                        <BaseImage
+                          key={index}
+                          width={item.formats.thumbnail.width}
+                          height={item.formats.thumbnail.height}
+                          src={item.formats.thumbnail.url}
+                          alt={item.name}
+                        />
+                      </div>
+                    ))
+                  ) : (
+                    <div className="max-w-44">
                       <BaseImage
-                        key={index} // Add a unique key for each item
-                        width={item.formats.thumbnail.width}
-                        height={item.formats.thumbnail.height}
-                        src={item.formats.thumbnail.url}
-                        alt={item.name}
+                        width={formData.media.formats.thumbnail.width}
+                        height={formData.media.formats.thumbnail.height}
+                        src={formData.media.formats.thumbnail.url}
+                        alt={formData.name}
                       />
                     </div>
-                  ))
-                ) : (
-                  <div className="max-w-44">
-                    <BaseImage
-                      width={formData.media.formats.thumbnail.width}
-                      height={formData.media.formats.thumbnail.height}
-                      src={formData.media.formats.thumbnail.url}
-                      alt={formData.name}
-                    />
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </div>
           ) : (

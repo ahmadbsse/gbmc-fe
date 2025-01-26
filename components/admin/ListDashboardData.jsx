@@ -18,7 +18,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
 
   const toggleActivation = async (item) => {
     try {
-      const url = `/${currentTab}/${item.documentId}`; // API endpoint where the PUT request is sent
+      const url = `/${currentTab}/${item.documentId}`;
       const data = JSON.parse(JSON.stringify(item));
       delete data.id;
       delete data.documentId;
@@ -41,7 +41,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
   };
   const toggleFeatured = async (item) => {
     try {
-      const url = `/${currentTab}/${item.documentId}`; // API endpoint where the PUT request is sent
+      const url = `/${currentTab}/${item.documentId}`;
       const data = JSON.parse(JSON.stringify(item));
       delete data.id;
       delete data.documentId;

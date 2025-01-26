@@ -15,9 +15,11 @@ export function convertToReadableDate(isoString) {
 export function transformMedia(response) {
   const transform = (item) => {
     if (!item.media) return;
+
     const transformMediaObject = (media) => ({
-      id: media.id,
-      documentId: media.documentId,
+      type: "image",
+      id: media?.id,
+      documentId: media?.documentId,
       name: media.name,
       formats: {
         small: media.formats?.small
@@ -59,6 +61,17 @@ export function transformMedia(response) {
   return response;
 }
 
+export function transformHeroVideo(hero_image) {
+  return {
+    type: "video",
+    id: hero_image.id,
+    name: hero_image.name,
+    documentId: hero_image.documentId,
+    url: hero_image.url,
+    width: hero_image.width,
+    height: hero_image.height,
+  };
+}
 export const modifyAdminTabname = (activeTab) => {
   return activeTab.name == "Parts"
     ? "Part"
