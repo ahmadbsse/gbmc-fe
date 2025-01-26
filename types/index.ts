@@ -56,6 +56,7 @@ export interface EngineeringCardProps {
   id: string;
   title: string;
   image: string;
+  featured: boolean;
 }
 
 export type Category = {
@@ -96,7 +97,7 @@ export type DecodedToken = {
   exp: number;
 };
 
-type Format = {
+type FormatSec = {
   ext: string | null;
   url: string;
   hash: string;
@@ -110,11 +111,11 @@ type Format = {
 };
 
 type MediaFormats = {
-  small: Format;
-  thumbnail: Format;
-  actual?: Format; // Optional for certain media items
-  large?: Format; // Optional for hero image
-  medium?: Format; // Optional for hero image
+  small: FormatSec;
+  thumbnail: FormatSec;
+  actual?: FormatSec; // Optional for certain media items
+  large?: FormatSec; // Optional for hero image
+  medium?: FormatSec; // Optional for hero image
 };
 
 type MediaItem = {

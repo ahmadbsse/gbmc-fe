@@ -80,6 +80,7 @@ const EngineeringHome = () => {
                       id={component.documentId}
                       image={component.media[0].formats.thumbnail.url}
                       title={component.name}
+                      featured={component.featured}
                     />
                   ))}
                 </div>

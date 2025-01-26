@@ -47,24 +47,26 @@ const Home = () => {
               priority
               className="absolute inset-0 h-full w-full object-cover"
             />
-            <div className="relative z-20 flex h-full flex-col items-center justify-center p-8 text-secondary">
-              <Settings size={64} className="mb-6" />
-              <h2 className="mb-4 text-center text-2xl font-bold lg:text-4xl">
-                Engineering Components
-              </h2>
-              <p className="mb-8 max-w-md text-center text-lg">
-                Precision-engineered components for industrial applications. Built to your exact
-                specifications.
-              </p>
+            <div className="relative z-20 flex h-full flex-col items-center justify-center p-8 text-black">
+              <div className="flex flex-col items-center bg-gray-50 bg-opacity-70 p-3">
+                <Settings size={64} className="mb-6" />
+                <h2 className="mb-4 text-center text-2xl font-bold lg:text-4xl">
+                  Engineering Components
+                </h2>
+                <p className="mb-8 max-w-md text-center text-lg">
+                  Precision-engineered components for industrial applications. Built to your exact
+                  specifications.
+                </p>
 
-              <Link href="/engineering">
-                <BaseButton loading={false} type="submit" rounded handleClick={() => {}}>
-                  <p className="flex items-center gap-2 px-7 py-3">
-                    Explore Components
-                    <ChevronRight size={20} />
-                  </p>
-                </BaseButton>
-              </Link>
+                <Link href="/engineering">
+                  <BaseButton loading={false} type="submit" rounded handleClick={() => {}}>
+                    <p className="flex items-center gap-2 px-7 py-3">
+                      Explore Components
+                      <ChevronRight size={20} />
+                    </p>
+                  </BaseButton>
+                </Link>
+              </div>
             </div>
           </div>
 

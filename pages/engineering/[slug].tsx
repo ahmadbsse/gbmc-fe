@@ -68,7 +68,7 @@ const Article = () => {
 
       {data ? (
         <div className="mx-auto max-w-7xl">
-          <div className="my-4">
+          <div className="my-4 px-2">
             <div className="mb-2 flex items-center gap-2 text-sm text-black">
               {breadcrumbs.map((crumb, index) => (
                 <p key={index}>

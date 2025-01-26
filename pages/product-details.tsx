@@ -84,152 +84,142 @@ const ProductPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <div className="bg-gray-50">
-        <div className="mx-auto max-w-7xl">
-          <PageLayout title="Product Details" breadcrumbs={breadcrumbs}>
-            <div className="px-2">
-              <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-                {/* Product Images Section */}
-                <div className="space-y-4">
-                  {/* Main Image */}
-                  <div className="relative overflow-hidden rounded-lg shadow-md">
-                    <div className="absolute right-4 top-4 z-10">
-                      <span className="rounded-full bg-primary px-4 py-2 text-white">30% OFF</span>
-                    </div>
-                    <div
-                      className="relative w-full cursor-crosshair lg:h-[400px]"
-                      onMouseEnter={handleMouseEnter}
-                      onMouseLeave={handleMouseLeave}
-                      onMouseMove={handleMouseMove}
-                    >
-                      <Image
-                        height={400}
-                        width={800}
-                        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
-                        src={images[selectedImage]}
-                        alt="Product Main View"
-                        className="h-[350px] w-full object-cover lg:h-[500px]"
-                        priority
-                      />
-                      {isHovering && (
-                        <>
-                          {/* Magnifier Square */}
-                          <div
-                            className="pointer-events-none absolute hidden border-2 border-primary/50 bg-white bg-opacity-10 xl:block"
-                            style={{
-                              width: `${magnifierSize}px`,
-                              height: `${magnifierSize}px`,
-                              top: mousePosition.y,
-                              left: mousePosition.x,
-                              transform: "translate(-50%, -50%)",
-                            }}
-                          ></div>
-                        </>
-                      )}
-                    </div>
-                    {/* Zoomed Image Container */}
-                  </div>
-                  {isHovering ? (
-                    <div className="absolute left-1/2 right-1/2 top-40 z-20 ml-4 hidden h-[200px] w-[200px] overflow-hidden border border-gray-200 xl:block">
+
+      <PageLayout title="Product Details" breadcrumbs={breadcrumbs}>
+        <div className="px-2">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+            {/* Product Images Section */}
+            <div className="space-y-4">
+              {/* Main Image */}
+              <div className="relative overflow-hidden rounded-lg shadow-md">
+                <div className="absolute right-4 top-4 z-10">
+                  <span className="rounded-full bg-primary px-4 py-2 text-white">30% OFF</span>
+                </div>
+                <div
+                  className="relative w-full cursor-crosshair lg:h-[400px]"
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                  onMouseMove={handleMouseMove}
+                >
+                  <Image
+                    height={400}
+                    width={800}
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+                    src={images[selectedImage]}
+                    alt="Product Main View"
+                    className="h-[350px] w-full object-cover lg:h-[500px]"
+                    priority
+                  />
+                  {isHovering && (
+                    <>
+                      {/* Magnifier Square */}
                       <div
-                        className="relative h-full w-full"
+                        className="pointer-events-none absolute hidden border-2 border-primary/50 bg-white bg-opacity-10 xl:block"
                         style={{
-                          transform: `scale(${zoomLevel})`,
-                          transformOrigin: `${mousePosition.boundedX}% ${mousePosition.boundedY}%`,
+                          width: `${magnifierSize}px`,
+                          height: `${magnifierSize}px`,
+                          top: mousePosition.y,
+                          left: mousePosition.x,
+                          transform: "translate(-50%, -50%)",
                         }}
-                      >
-                        <Image
-                          fill
-                          src={images[selectedImage]}
-                          alt="Zoomed view"
-                          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
-                          className="object-cover"
-                          quality={100}
-                        />
-                      </div>
-                    </div>
-                  ) : null}
-
-                  {/* Thumbnail Images */}
-                  <div className="flex gap-4">
-                    {images.map((img, index) => (
-                      <button
-                        key={index}
-                        className={`relative h-24 w-24 overflow-hidden rounded-lg shadow-sm ${
-                          selectedImage === index
-                            ? "ring-4 ring-primary/50"
-                            : "ring-1 ring-gray-200"
-                        }`}
-                        onClick={() => setSelectedImage(index)}
-                      >
-                        <Image
-                          height={96}
-                          width={96}
-                          src={img}
-                          alt={`Product view ${index + 1}`}
-                          className="h-full w-full object-cover"
-                        />
-                      </button>
-                    ))}
-                  </div>
+                      ></div>
+                    </>
+                  )}
                 </div>
-
-                {/* Product Details Section */}
-                <div className="space-y-6">
-                  <div className="space-y-2">
-                    <p className="text-sm lg:text-base">
-                      PRODUCT CODE: {specifications.product_code}
-                    </p>
-
-                    <h1 className="text-xl font-bold text-primary lg:text-3xl">
-                      Engine Head Cover- Genuine
-                    </h1>
-
-                    <span className="text-xs italic">SKU: {specifications.SKU}</span>
-
-                    <div className="flex items-center space-x-2">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="text-fill-primary/40 fill-secondary" size={16} />
-                      ))}
-                      <span className="">({specifications.rating} reviews)</span>
-                    </div>
-                  </div>
-
-                  <p className="">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                    nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.
-                  </p>
-                </div>
+                {/* Zoomed Image Container */}
               </div>
-              <div className="mt-8 max-w-3xl">
-                <h2 className="mb-3 font-semibold lg:text-xl">Specifications</h2>
-                <table className="product-specification-table product-specification-table-striped">
-                  <tbody>
-                    {Object.keys(specifications).map((key, index) => {
-                      const value = (
-                        specifications as unknown as Record<
-                          string,
-                          number | [] | string | undefined
-                        >
-                      )[key];
-                      return (
-                        <tr key={index}>
-                          <td className="capitalize">{replaceSpecialCharacterWithSpaced(key)}:</td>
-                          <td>{Array.isArray(value) ? value.join(", ") : value}</td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+              {isHovering ? (
+                <div className="absolute left-1/2 right-1/2 top-40 z-20 ml-4 hidden h-[200px] w-[200px] overflow-hidden border border-gray-200 xl:block">
+                  <div
+                    className="relative h-full w-full"
+                    style={{
+                      transform: `scale(${zoomLevel})`,
+                      transformOrigin: `${mousePosition.boundedX}% ${mousePosition.boundedY}%`,
+                    }}
+                  >
+                    <Image
+                      fill
+                      src={images[selectedImage]}
+                      alt="Zoomed view"
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+                      className="object-cover"
+                      quality={100}
+                    />
+                  </div>
+                </div>
+              ) : null}
+
+              {/* Thumbnail Images */}
+              <div className="flex gap-4">
+                {images.map((img, index) => (
+                  <button
+                    key={index}
+                    className={`relative h-24 w-24 overflow-hidden rounded-lg shadow-sm ${
+                      selectedImage === index ? "ring-4 ring-primary/50" : "ring-1 ring-gray-200"
+                    }`}
+                    onClick={() => setSelectedImage(index)}
+                  >
+                    <Image
+                      height={96}
+                      width={96}
+                      src={img}
+                      alt={`Product view ${index + 1}`}
+                      className="h-full w-full object-cover"
+                    />
+                  </button>
+                ))}
               </div>
             </div>
-          </PageLayout>
+
+            {/* Product Details Section */}
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <p className="text-sm lg:text-base">PRODUCT CODE: {specifications.product_code}</p>
+
+                <h1 className="text-xl font-bold text-primary lg:text-3xl">
+                  Engine Head Cover- Genuine
+                </h1>
+
+                <span className="text-xs italic">SKU: {specifications.SKU}</span>
+
+                <div className="flex items-center space-x-2">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="text-fill-primary/40 fill-secondary" size={16} />
+                  ))}
+                  <span className="">({specifications.rating} reviews)</span>
+                </div>
+              </div>
+
+              <p className="">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum.
+              </p>
+            </div>
+          </div>
+          <div className="mt-8 max-w-3xl">
+            <h2 className="mb-3 font-semibold lg:text-xl">Specifications</h2>
+            <table className="product-specification-table product-specification-table-striped">
+              <tbody>
+                {Object.keys(specifications).map((key, index) => {
+                  const value = (
+                    specifications as unknown as Record<string, number | [] | string | undefined>
+                  )[key];
+                  return (
+                    <tr key={index}>
+                      <td className="capitalize">{replaceSpecialCharacterWithSpaced(key)}:</td>
+                      <td>{Array.isArray(value) ? value.join(", ") : value}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      </PageLayout>
     </>
   );
 };
