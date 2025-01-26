@@ -5,6 +5,7 @@ import { BaseImage, BaseLoader, BaseVideo, Navbar } from "@/components/common";
 import apiClient from "@/utils/apiClient";
 import { transformHeroVideo, transformMedia } from "@/utils";
 import type { EngineeringComponent } from "@/types";
+
 const Article = () => {
   const router = useRouter();
   const [selectedImage, setSelectedImage] = useState(0);

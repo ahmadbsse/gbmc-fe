@@ -37,7 +37,7 @@ const EditPart = () => {
   };
   const getSuppliers = async () => {
     try {
-      const url = `/suppliers?fields=name`;
+      const url = `/suppliers?fields=name&filters[active]=true`;
       await apiClient.GET(url).then((res) => {
         setSuppliers(res.data);
         if (res.data.length == 0) {
