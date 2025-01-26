@@ -1,29 +1,23 @@
-import { useRouter } from "next/router";
-import Image from "next/image";
-
 import type { EngineeringCardProps } from "@/types";
+import Link from "next/link";
+import { BaseImage } from "../common";
 
-const EngineeringListingCard: React.FC<EngineeringCardProps> = ({ title, description, image }) => {
-  const router = useRouter();
+const EngineeringListingCard: React.FC<EngineeringCardProps> = ({ id, title, image }) => {
   return (
-    <div
-      className="cursor-pointer overflow-hidden rounded-lg bg-white shadow-md hover:shadow-lg"
-      onClick={() => {
-        router.push("/engineering-article");
-      }}
-    >
-      <Image
-        height={160}
-        width={240}
-        src={image}
-        alt={title}
-        className="h-40 w-full object-cover"
-      />
-      <div className="p-4">
-        <h3 className="font-semibold">{title}</h3>
-        <p className="text-sm">{description}</p>
+    <Link href={`/engineering/${id}`}>
+      <div className="relative cursor-pointer shadow-md hover:shadow-lg">
+        <BaseImage
+          height={160}
+          width={240}
+          src={image}
+          alt={title}
+          classes="h-40 w-full object-cover rounded-lg"
+        />
+        <p className="absolute bottom-2 left-2 text-sm font-semibold text-white lg:bottom-4 lg:left-4 lg:text-xl">
+          {title}
+        </p>
       </div>
-    </div>
+    </Link>
   );
 };
 export default EngineeringListingCard;

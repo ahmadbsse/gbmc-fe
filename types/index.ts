@@ -53,8 +53,8 @@ export interface ScrollingMarqueeProps {
 }
 
 export interface EngineeringCardProps {
+  id: string;
   title: string;
-  description: string;
   image: string;
 }
 
@@ -94,4 +94,67 @@ export type DecodedToken = {
   role: string;
   iat: number;
   exp: number;
+};
+
+type Format = {
+  ext: string | null;
+  url: string;
+  hash: string;
+  mime: string;
+  name: string;
+  path: string | null;
+  size: number;
+  width: number;
+  height: number;
+  sizeInBytes?: number; // Optional since not all formats have this field
+};
+
+type MediaFormats = {
+  small: Format;
+  thumbnail: Format;
+  actual?: Format; // Optional for certain media items
+  large?: Format; // Optional for hero image
+  medium?: Format; // Optional for hero image
+};
+
+type MediaItem = {
+  type: string; // e.g., "image"
+  id: number;
+  documentId: string;
+  name: string;
+  formats: MediaFormats;
+};
+
+type HeroImage = {
+  type?: string;
+  id: number;
+  documentId: string;
+  name: string;
+  alternativeText: string | null;
+  caption: string | null;
+  width: number;
+  height: number;
+  formats: MediaFormats;
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  url: string;
+  previewUrl: string | null;
+  provider: string;
+  provider_metadata: null; // Adjust this type if you know the structure
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
+  publishedAt: string; // ISO date string
+};
+
+export type EngineeringComponent = {
+  documentId: string;
+  name: string;
+  description: string; // HTML string
+  active: boolean;
+  featured: boolean;
+  summary: string; // HTML string
+  media: MediaItem[];
+  hero_image: HeroImage;
 };

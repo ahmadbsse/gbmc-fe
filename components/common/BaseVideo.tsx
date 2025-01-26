@@ -1,19 +1,16 @@
 interface CustomVideoProps {
   src: string;
-  width: number;
-  height: number;
   muted?: boolean;
   autoPlay?: boolean;
   loop?: boolean;
+  classes?: string;
 }
 
-const BaseVideo = ({ src, width, height, autoPlay, muted, loop }: CustomVideoProps) => {
+const BaseVideo = ({ src, autoPlay, muted, loop, classes = "" }: CustomVideoProps) => {
   const fullUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}${src}`;
   return (
     <video
-      className="h-auto w-full rounded-lg"
-      width={width}
-      height={height}
+      className={`${classes} h-auto w-full rounded-lg`}
       autoPlay={autoPlay}
       muted={muted}
       loop={loop}
