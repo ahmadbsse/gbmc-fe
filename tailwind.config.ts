@@ -21,8 +21,8 @@ export default {
       },
     },
     fontFamily: {
-      'primary-font': 'Space Grotesk, sans-serif',
-      'secondary-font': 'BioRhyme, serif',
+      'primary-font': ['Albert Sans', 'sans-serif'],
+      'secondary-font': ['Roboto', 'sans-serif'],
     },
   },
   plugins: [],

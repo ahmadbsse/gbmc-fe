@@ -12,7 +12,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "BioRhyme";
+  font-family: "Roboto";
 }
 
 p,
@@ -20,7 +20,7 @@ a,
 button,
 input,
 label {
-  font-family: "Space Grotesk";
+  font-family: "Albert Sans";
 }
 
 .btn-sec-anim:hover::after {
@@ -130,19 +130,6 @@ label {
     z-index: 10;
   }
 }
-
-/* body::-webkit-scrollbar {
-  width: 5px;
-}
-
-body::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-
-body::-webkit-scrollbar-thumb {
-  background-color: red;
-  outline: 1px solid slategrey;
-} */
 
 .custom-scrollbar::-webkit-scrollbar,
 body::-webkit-scrollbar {

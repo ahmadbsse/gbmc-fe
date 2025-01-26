@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 
 import apiClient from "@/utils/apiClient";
 
-import RichTextEditor from "@/components/common/RichTextEditor";
 import { Navbar, BaseLoader, BaseImage } from "@/components/common";
 
 const ViewPartDetails = () => {

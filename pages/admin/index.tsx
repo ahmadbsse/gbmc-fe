@@ -8,7 +8,7 @@ import { BaseLoader } from "@/components/common";
 
 import { appData } from "@/constants";
 import apiClient from "@/utils/apiClient";
-import { transformMedia, transformHeroVideo } from "@/utils";
+import { transformMedia } from "@/utils";
 
 import type { Categories } from "@/types";
 import { Menu, X } from "lucide-react";

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import apiClient from "@/utils/apiClient";
 
 import { Navbar, BaseLoader, BaseImage } from "@/components/common";
-import RichTextEditor from "../../../components/common/RichTextEditor";
 
 const ViewSubAssemblyDetails = () => {
   const router = useRouter();
