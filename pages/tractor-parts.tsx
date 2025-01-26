@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { Tractor, Star, ChevronRight } from "lucide-react";
+import { Tractor, Star } from "lucide-react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 
@@ -9,21 +9,10 @@ import { PageLayout } from "@/components/user";
 import { Navbar, BaseButton } from "@/components/common";
 
 const TractorPartsHome = () => {
-  const brandCategories = [
-    "Ursus",
-    "New Holland",
-    "Massey Ferguson",
-    "John Deere",
-    "CNH Fiat",
-    "Ford",
-  ];
-  const [selectedCategory, setSelectedCategory] = useState(brandCategories[0]);
-  const router = useRouter();
-
   const categories = [
     {
-      title: "Parts",
-      key: "parts",
+      title: "Tractor Parts",
+      key: "tractor-parts",
       description: "Complete range of engine components",
       featured: true,
     },
@@ -40,6 +29,9 @@ const TractorPartsHome = () => {
       featured: false,
     },
   ];
+  const suppliers = ["Ursus", "New Holland", "Massey Ferguson", "John Deere", "CNH Fiat", "Ford"];
+  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const router = useRouter();
 
   const featuredParts = [
     {
@@ -60,7 +52,7 @@ const TractorPartsHome = () => {
   ];
   const breadcrumbs = [
     { text: "Home", href: "/" },
-    { text: "Tractor Parts", href: "/tractor-parts" },
+    { text: selectedCategory.title, href: selectedCategory.key },
   ];
   const redirectToDetails = () => {
     router.push("/product-details");
@@ -69,7 +61,7 @@ const TractorPartsHome = () => {
   return (
     <>
       <Head>
-        <title>Parts</title>
+        <title>{selectedCategory.title}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
           property="og:title"
@@ -88,39 +80,29 @@ const TractorPartsHome = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar showSearchbar />
-      <div className="flex flex-wrap justify-start bg-primary text-xs lg:justify-center lg:gap-5 lg:text-base">
-        {brandCategories.map((brand, index) => (
-          <span
-            className={`cursor-pointer p-2 font-medium uppercase hover:text-black md:p-4 ${selectedCategory == brand ? "text-black" : ""}`}
-            onClick={() => setSelectedCategory(brand)}
-            key={index}
-          >
-            {brand}
-          </span>
-        ))}
-      </div>
-      <PageLayout title={`${selectedCategory} - Tractor Parts`} breadcrumbs={breadcrumbs}>
+
+      <PageLayout title={`${selectedCategory.title}`} breadcrumbs={breadcrumbs}>
         <div className="grid gap-8">
           {/* Categories Section */}
           <section>
-            <h2 className="mb-6 text-lg font-bold xl:text-2xl">Part Categories</h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {categories.map((category, index) => (
                 <div
+                  onClick={() => setSelectedCategory(category)}
                   key={index}
                   className={`cursor-pointer rounded-lg p-6 shadow-md transition-all duration-300 hover:shadow-lg ${
-                    category.featured ? "border-2 border-secondary/50 bg-secondary/20" : "bg-white"
+                    category.title == selectedCategory.title
+                      ? "border-2 border-secondary/50 bg-secondary/20"
+                      : "bg-white"
                   } `}
                 >
                   <div className="mb-4 flex items-center justify-between">
-                    <Tractor className={`h-8 w-8 ${category.featured ? "text-secondary" : ""}`} />
-                    {category.featured && <Star className="h-5 w-5 fill-current text-secondary" />}
+                    <Tractor
+                      className={`h-8 w-8 ${category.title == selectedCategory.title ? "text-secondary" : ""}`}
+                    />
                   </div>
                   <h3 className="mb-2 text-lg font-semibold">{category.title}</h3>
                   <p className="mb-4">{category.description}</p>
-                  <div className="flex items-center font-bold">
-                    View Parts <ChevronRight className="ml-1 h-4 w-4" />
-                  </div>
                 </div>
               ))}
             </div>
@@ -128,6 +110,18 @@ const TractorPartsHome = () => {
 
           {/* Featured Parts Section */}
           <section>
+            {selectedCategory.key == "parts" ? (
+              <div className="flex flex-wrap justify-start text-xs lg:justify-center lg:gap-5 lg:text-base">
+                {suppliers.map((brand, index) => (
+                  <span
+                    className={`cursor-pointer p-2 font-medium uppercase hover:text-black md:p-4`}
+                    key={index}
+                  >
+                    {brand}
+                  </span>
+                ))}
+              </div>
+            ) : null}
             <h2 className="mb-6 text-2xl font-bold">Featured Parts</h2>
             <div className="grid gap-6 md:grid-cols-3">
               {featuredParts.map((part, index) => (
