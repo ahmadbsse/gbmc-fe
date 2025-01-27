@@ -49,6 +49,11 @@ const TractorPartsHome = () => {
       category: "Hydraulic Systems",
       image: "/assets/1.JPG",
     },
+    {
+      name: "Hydraulic Pump",
+      category: "Hydraulic Systems",
+      image: "/assets/1.JPG",
+    },
   ];
   const breadcrumbs = [
     { text: "Home", href: "/" },
@@ -123,7 +128,7 @@ const TractorPartsHome = () => {
               </div>
             ) : null}
             <h2 className="mb-6 text-2xl font-bold">Featured Parts</h2>
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {featuredParts.map((part, index) => (
                 <div key={index} className="overflow-hidden rounded-lg bg-white shadow-md">
                   <div className="relative">
@@ -132,7 +137,7 @@ const TractorPartsHome = () => {
                       alt={part.name}
                       height={256}
                       width={256}
-                      className="h-64 w-full object-cover"
+                      className="h-44 w-full object-cover"
                     />
                     <div className="absolute right-4 top-4">
                       <Star className="h-6 w-6 fill-current text-yellow-400" />
