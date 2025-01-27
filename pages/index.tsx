@@ -83,12 +83,16 @@ const Home = () => {
               </p>
 
               <Link href="/tractor-parts">
-                <BaseButton loading={false} btnStyle type="submit" rounded handleClick={() => {}}>
-                  <p className="flex items-center gap-2 px-7 py-3">
+                <button
+                  type="submit"
+                  className="group relative z-10 h-[42px] w-full overflow-hidden rounded-lg bg-[#363633] px-10 text-sm font-bold uppercase text-white transition-all duration-300 hover:bg-[#4a4a46] md:min-w-[7rem] lg:min-w-[8rem]"
+                >
+                  <p className="flex items-center justify-center gap-2 px-7 py-3">
                     View Parts Catalog
                     <ChevronRight size={20} />
                   </p>
-                </BaseButton>
+                  <div className="absolute inset-0 -z-10 translate-x-[-200%] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 group-hover:translate-x-[200%]" />
+                </button>
               </Link>
             </div>
           </div>

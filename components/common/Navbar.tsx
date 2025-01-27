@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import { Menu, LogOut, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-
+import Image from "next/image";
 import { SearchBar } from "@/components/user";
 // import ScrollingMarquee from "@/components/common/Marquee";
 
 import { userRoutes } from "@/data";
-import { appData } from "@/constants";
 import apiClient from "@/utils/apiClient";
 
 const Navbar = ({ isAdmin = false, showSearchbar = false }) => {
@@ -33,28 +32,27 @@ const Navbar = ({ isAdmin = false, showSearchbar = false }) => {
                     nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
         speed={30}
       /> */}
-      <nav className="bg-[#222222] shadow-sm lg:mr-0">
+      <nav className="bg-white shadow-lg drop-shadow-lg lg:mr-0">
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             <div className="flex w-full items-center justify-between gap-8">
               <Link
                 href={`${isAdmin ? "/admin" : "/"}`}
-                className="text-xl font-extrabold text-white md:text-2xl"
+                className="text-xl font-extrabold text-black md:text-2xl"
               >
-                {appData.name}
-                {isAdmin ? " - Admin" : ""}
+                <Image height={70} width={150} src="/assets/logo.svg" alt="logo" priority />
               </Link>
               {isAdmin ? null : (
                 <>
-                  <div className="hidden items-center gap-6 text-white md:flex">
+                  <div className="hidden items-center gap-6 text-black md:flex">
                     {userRoutes.map((item, index) => (
                       <Link
                         key={index}
                         href={item.href}
-                        className={`hover:text-white ${
+                        className={`hover:text-solidGray ${
                           item.routeName.toLowerCase() === router.route.toLowerCase() ||
                           router.route.toLowerCase().includes(item.routeName.toLowerCase())
-                            ? "border-b border-primary-color font-medium text-white"
+                            ? "border-b border-primary-color font-medium text-black"
                             : ""
                         }`}
                       >
@@ -86,10 +84,10 @@ const Navbar = ({ isAdmin = false, showSearchbar = false }) => {
                             <Link
                               key={index}
                               href={item.href}
-                              className={`hover:text-white ${
+                              className={`hover:text-solidGray ${
                                 item.routeName.toLowerCase() === router.route.toLowerCase() ||
                                 router.route.toLowerCase().includes(item.routeName.toLowerCase())
-                                  ? "font-medium text-white"
+                                  ? "font-medium text-black"
                                   : ""
                               }`}
                             >
