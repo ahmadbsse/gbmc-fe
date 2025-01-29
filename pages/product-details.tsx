@@ -3,8 +3,7 @@ import { Star } from "lucide-react";
 import Image from "next/image";
 import Head from "next/head";
 
-import { PageLayout } from "@/components/user";
-import { Navbar } from "@/components/common";
+import { Navbar, PageLayout } from "@/components/common";
 
 const ProductPage = () => {
   const [selectedImage, setSelectedImage] = useState(0);

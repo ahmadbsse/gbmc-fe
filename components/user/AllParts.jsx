@@ -5,12 +5,12 @@ import { useState, useEffect } from "react";
 import apiClient from "@/utils/apiClient";
 import { transformMedia } from "@/utils";
 
-const PAGE_SIZE = 4;
-const FeaturedParts = ({ selectedSupplier }) => {
+const PAGE_SIZE = 8;
+const AllParts = ({ selectedSupplier }) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
-  const [featuredParts, setFeaturedParts] = useState([]);
+  const [allParts, setAllParts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
@@ -29,13 +29,14 @@ const FeaturedParts = ({ selectedSupplier }) => {
       if (selectedSupplier) {
         url = `/parts?populate=*&filters[active]=true&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&filters[supplier][documentId]=${selectedSupplier}`;
       } else {
-        url = `/parts?populate=*&filters[active]=true&filters[featured]=true&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}`;
+        url = `/parts?populate=*&filters[active]=true&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}`;
       }
       const res = await apiClient.GET(url);
 
       if (res && res.data.length > 0) {
         const transformedData = transformMedia(res.data);
-        setFeaturedParts((prev) => [...prev, ...transformedData.filter((part) => part.featured)]);
+        setAllParts((prev) => [...prev, ...transformedData]);
+
         setTotal(res.meta.pagination.total);
       }
     } catch (error) {
@@ -54,7 +55,7 @@ const FeaturedParts = ({ selectedSupplier }) => {
   }, []);
   useEffect(() => {
     if (selectedSupplier) {
-      setFeaturedParts([]);
+      setAllParts([]);
       setPage(1);
       getParts(1);
     }
@@ -71,12 +72,12 @@ const FeaturedParts = ({ selectedSupplier }) => {
         <p className="mx-auto w-fit">
           <BaseLoader />
         </p>
-      ) : featuredParts?.length ? (
+      ) : allParts?.length ? (
         <div>
-          <h2 className="my-4 text-lg font-bold md:text-3xl">Featured Parts</h2>
+          <h2 className="my-4 text-lg font-bold md:text-3xl">All Parts</h2>
           <div className="custom-scrollbar flex max-w-7xl flex-col gap-3 overflow-x-auto pb-2 lg:flex-row">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {featuredParts.map((part, index) => (
+              {allParts.map((part, index) => (
                 <div
                   key={part.id + index}
                   className="rounded-xl bg-white transition hover:shadow-lg"
@@ -111,7 +112,7 @@ const FeaturedParts = ({ selectedSupplier }) => {
               ))}
             </div>
           </div>
-          {featuredParts.length < total && (
+          {allParts.length < total && (
             <div className="flex justify-center md:justify-end">
               <p
                 className="w-fit cursor-pointer text-sm underline hover:text-black"
@@ -127,4 +128,4 @@ const FeaturedParts = ({ selectedSupplier }) => {
   );
 };
 
-export default FeaturedParts;
+export default AllParts;

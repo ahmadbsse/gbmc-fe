@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 
-import { PageLayout } from "@/components/user";
-import { BaseLoader, Navbar } from "@/components/common";
+import { BaseLoader, Navbar, PageLayout } from "@/components/common";
 import EngineeringListingCard from "@/components/user/EngineeringListingCard";
 import apiClient from "@/utils/apiClient";
 import { transformMedia } from "@/utils";

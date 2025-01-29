@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Tractor } from "lucide-react";
 import Head from "next/head";
 
-import { PageLayout, FeaturedParts } from "@/components/user";
+import { FeaturedParts, AllParts } from "@/components/user";
 
-import { Navbar } from "@/components/common";
+import { Navbar, PageLayout } from "@/components/common";
 import apiClient from "@/utils/apiClient";
 
 const TractorPartsHome = () => {
@@ -29,7 +29,6 @@ const TractorPartsHome = () => {
     },
   ];
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
-  const [parts, setParts] = useState([]);
   const [selectedSupplier, setSelectedSupplier] = useState("");
   const [suppliers, setSuppliers] = useState([]);
 
@@ -121,6 +120,7 @@ const TractorPartsHome = () => {
               </div>
             ) : null}
             <FeaturedParts selectedSupplier={selectedSupplier} />
+            <AllParts selectedSupplier={selectedSupplier} />
           </section>
         </div>
       </PageLayout>
