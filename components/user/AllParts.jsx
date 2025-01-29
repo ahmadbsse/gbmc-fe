@@ -1,22 +1,17 @@
 import { Star } from "lucide-react";
-import { useRouter } from "next/router";
 import { BaseButton, BaseImage, BaseLoader } from "@/components/common";
 import { useState, useEffect } from "react";
 import apiClient from "@/utils/apiClient";
 import { transformMedia } from "@/utils";
+import Link from "next/link";
 
 const PAGE_SIZE = 8;
 const AllParts = ({ selectedSupplier }) => {
-  const router = useRouter();
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [allParts, setAllParts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-
-  const redirectToDetails = () => {
-    router.push("/product-details");
-  };
 
   const getParts = async (pageNum, isLoadMore = false) => {
     try {
@@ -99,14 +94,11 @@ const AllParts = ({ selectedSupplier }) => {
                   </div>
                   <div className="p-4">
                     <h3 className="text-lg font-semibold">{part.name}</h3>
-                    <BaseButton
-                      loading={false}
-                      type="submit"
-                      rounded
-                      handleClick={redirectToDetails}
-                    >
-                      <span className="px-3 text-xs">View Details</span>
-                    </BaseButton>
+                    <Link href={`/tractor-parts/${part.documentId}`}>
+                      <BaseButton loading={false} type="submit" rounded handleClick={() => {}}>
+                        <span className="px-3 text-xs">View Details</span>
+                      </BaseButton>
+                    </Link>
                   </div>
                 </div>
               ))}

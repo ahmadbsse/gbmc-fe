@@ -3,10 +3,11 @@ import Image from "next/image";
 interface CustomImageProps {
   src: string;
   alt: string;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
   classes?: string;
   priority?: boolean;
+  fill?: boolean;
 }
 
 const BaseImage = ({
@@ -16,6 +17,7 @@ const BaseImage = ({
   height,
   classes = "",
   priority = false,
+  fill = false,
 }: CustomImageProps) => {
   const fullUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}${src}`;
   return (
@@ -26,6 +28,7 @@ const BaseImage = ({
       width={width}
       height={height}
       priority={priority}
+      fill={fill}
     />
   );
 };
