@@ -134,6 +134,7 @@ label {
 .custom-scrollbar::-webkit-scrollbar,
 body::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb,

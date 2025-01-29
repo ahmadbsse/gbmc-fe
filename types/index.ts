@@ -9,13 +9,6 @@ export interface PageLayoutProps {
   title: string;
   breadcrumbs?: Breadcrumb[];
 }
-export interface FeatureCardProps {
-  title: string;
-  description: string;
-  icon: React.ElementType;
-  featured: boolean;
-}
-
 export type TabProps = {
   active: boolean;
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
