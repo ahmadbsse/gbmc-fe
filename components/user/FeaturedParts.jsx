@@ -1,11 +1,17 @@
-import { BaseButton, BaseImage, BaseLoader } from "@/components/common";
+import { BaseImage, BaseLoader } from "@/components/common";
 import { useState, useEffect } from "react";
 import apiClient from "@/utils/apiClient";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Mousewheel } from "swiper/modules";
 import { transformMedia } from "@/utils";
 import Link from "next/link";
 
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
 const FeaturedParts = () => {
-  const [total, setTotal] = useState(0);
   const [featuredParts, setFeaturedParts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -39,27 +45,46 @@ const FeaturedParts = () => {
         <div>
           <h2 className="my-4 text-lg font-bold md:text-3xl">Featured Parts</h2>
           <div className="custom-scrollbar flex max-w-7xl flex-col gap-3 overflow-x-auto pb-2 lg:flex-row">
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <Swiper
+              modules={[Navigation, Pagination, Mousewheel]}
+              spaceBetween={20}
+              slidesPerView={1}
+              navigation
+              mousewheel={true}
+              direction={"horizontal"}
+              pagination={{ clickable: true }}
+              breakpoints={{
+                640: {
+                  slidesPerView: 2,
+                },
+                1024: {
+                  slidesPerView: 4,
+                },
+              }}
+              className="w-full"
+            >
               {featuredParts.map((part, index) => (
-                <Link href={`/tractor-parts/${part.documentId}`} key={part.id + index}>
-                  <div className="rounded-lg border border-gray-200 bg-white shadow-sm transition">
-                    <div className="relative h-[200px] w-full">
-                      <BaseImage
-                        width={part.media[0].formats?.actual?.width}
-                        height={part.media[0].formats?.actual?.height}
-                        src={part.media[0].formats?.actual?.url}
-                        alt={part.name}
-                        priority={true}
-                        classes="h-full w-full object-cover rounded-t-lg"
-                      />
+                <SwiperSlide key={part.id + index}>
+                  <Link href={`/tractor-parts/${part.documentId}`}>
+                    <div className="rounded-lg border border-gray-200 bg-white shadow-sm transition">
+                      <div className="relative h-[200px] w-full">
+                        <BaseImage
+                          width={part.media[0].formats?.actual?.width}
+                          height={part.media[0].formats?.actual?.height}
+                          src={part.media[0].formats?.actual?.url}
+                          alt={part.name}
+                          priority={true}
+                          classes="h-full w-full object-cover rounded-t-lg"
+                        />
+                      </div>
+                      <div className="p-4">
+                        <h3 className="text-lg font-semibold">{part.name}</h3>
+                      </div>
                     </div>
-                    <div className="p-4">
-                      <h3 className="text-lg font-semibold">{part.name}</h3>
-                    </div>
-                  </div>
-                </Link>
+                  </Link>
+                </SwiperSlide>
               ))}
-            </div>
+            </Swiper>
           </div>
         </div>
       ) : null}
