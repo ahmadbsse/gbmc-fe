@@ -4,7 +4,7 @@ import apiClient from "@/utils/apiClient";
 import Head from "next/head";
 import { transformMedia } from "@/utils";
 import { Navbar, PageLayout, BaseImage, BaseLoader } from "@/components/common";
-import { Star, Check, X } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { convertToReadableDate } from "@/utils";
 
 const PartDetails = () => {
@@ -99,7 +99,7 @@ const PartDetails = () => {
   return (
     <>
       <Head>
-        <title>{data && data.name ? data.name : "Part Details"}</title>
+        <title>{data && data.name ? data.name : "Part Details"} | Global Meccanica</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
           property="og:title"
@@ -126,10 +126,7 @@ const PartDetails = () => {
               {/* Product Images Section */}
               <div className="space-y-4">
                 {/* Main Image */}
-                <div className="relative overflow-hidden rounded-lg shadow-md">
-                  <div className="absolute right-4 top-4 z-10">
-                    <span className="rounded-full bg-primary px-4 py-2 text-white">30% OFF</span>
-                  </div>
+                <div className="overflow-hidden rounded-lg shadow-md">
                   <div
                     className="relative w-full cursor-crosshair lg:h-[400px]"
                     onMouseEnter={handleMouseEnter}
@@ -207,17 +204,10 @@ const PartDetails = () => {
               <div className="space-y-6">
                 <div className="space-y-2">
                   <p className="text-sm lg:text-base">PRODUCT CODE: {data?.id}</p>
-
-                  <h1 className="text-xl font-bold text-primary lg:text-3xl">{data?.name}</h1>
-
+                  <h1 className="text-xl font-bold capitalize text-primary lg:text-3xl">
+                    {data?.name}
+                  </h1>
                   <span className="text-xs italic">SKU: {data?.number}</span>
-
-                  <div className="flex items-center space-x-2">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="text-fill-primary/40 fill-secondary" size={16} />
-                    ))}
-                    <span className="">({specifications.rating} reviews)</span>
-                  </div>
                 </div>
 
                 <p className="" dangerouslySetInnerHTML={{ __html: data?.description }}></p>

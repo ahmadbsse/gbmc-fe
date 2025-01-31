@@ -73,34 +73,26 @@ const AllParts = ({ selectedSupplier }) => {
           <div className="custom-scrollbar flex max-w-7xl flex-col gap-3 overflow-x-auto pb-2 lg:flex-row">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {allParts.map((part, index) => (
-                <div
-                  key={part.id + index}
-                  className="rounded-xl bg-white transition hover:shadow-lg"
-                >
-                  <div className="relative h-[200px] w-full">
-                    <BaseImage
-                      width={part.media[0].formats?.actual?.width}
-                      height={part.media[0].formats?.actual?.height}
-                      src={part.media[0].formats?.actual?.url}
-                      alt={part.name}
-                      priority={true}
-                      classes="h-full w-full object-cover"
-                    />
-                    {part.featured ? (
-                      <div className="absolute right-2 top-2 rounded-full bg-solidGray/40 p-1">
-                        <Star className="h-4 w-4 fill-current text-yellow-400" />
-                      </div>
-                    ) : null}
+                <Link href={`/tractor-parts/${part.documentId}`} key={part.id + index}>
+                  <div className="rounded-lg border border-gray-200 bg-white shadow-sm transition">
+                    <div className="relative h-[200px] w-full border-b border-gray-200">
+                      <BaseImage
+                        width={part.media[0].formats?.actual?.width}
+                        height={part.media[0].formats?.actual?.height}
+                        src={part.media[0].formats?.actual?.url}
+                        alt={part.name}
+                        priority={true}
+                        classes="h-full w-full object-cover rounded-t-lg"
+                      />
+                      {part.featured ? (
+                        <div className="absolute right-2 top-2 rounded-full bg-solidGray/40 p-1">
+                          <Star className="h-4 w-4 fill-current text-yellow-400" />
+                        </div>
+                      ) : null}
+                    </div>
+                    <h3 className="p-4 text-lg font-semibold">{part.name}</h3>
                   </div>
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold">{part.name}</h3>
-                    <Link href={`/tractor-parts/${part.documentId}`}>
-                      <BaseButton loading={false} type="submit" rounded handleClick={() => {}}>
-                        <span className="px-3 text-xs">View Details</span>
-                      </BaseButton>
-                    </Link>
-                  </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>

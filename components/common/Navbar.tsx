@@ -3,13 +3,12 @@ import { Menu, LogOut, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { SearchBar } from "@/components/user";
 // import ScrollingMarquee from "@/components/common/Marquee";
 
 import { userRoutes } from "@/data";
 import apiClient from "@/utils/apiClient";
 
-const Navbar = ({ isAdmin = false, showSearchbar = false }) => {
+const Navbar = ({ isAdmin = false }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -103,7 +102,6 @@ const Navbar = ({ isAdmin = false, showSearchbar = false }) => {
             </div>
             {router.route != "/" || isAdmin ? (
               <div className="flex items-center gap-4 pl-4">
-                {showSearchbar ? <SearchBar /> : null}
                 {isAdmin && (
                   <div className="flex items-center gap-4">
                     <LogOut

@@ -37,7 +37,7 @@ const EngineeringHome = () => {
   return (
     <>
       <Head>
-        <title>Engineering Components</title>
+        <title>Engineering Components | Global Meccanica</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
           property="og:title"
@@ -55,7 +55,7 @@ const EngineeringHome = () => {
         <meta name="keywords" content="tractor,spare parts,machinary" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar showSearchbar />
+      <Navbar />
       <PageLayout
         title="Engineering Procedures"
         breadcrumbs={[

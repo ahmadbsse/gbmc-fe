@@ -46,7 +46,7 @@ const Article = () => {
   return (
     <>
       <Head>
-        <title>Article - {data?.name}</title>
+        <title>Article - {data?.name} | Global Meccanica</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
           property="og:title"

@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <>
       <Head>
-        <title>{appData.name}</title>
+        <title>{appData.name} | Global Meccanica</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
           property="og:title"

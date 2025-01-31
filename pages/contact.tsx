@@ -8,7 +8,7 @@ const ContactPage = () => {
   return (
     <>
       <Head>
-        <title>Contact</title>
+        <title>Contact | Global Meccanica</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
           property="og:title"
