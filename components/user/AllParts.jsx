@@ -99,7 +99,7 @@ const AllParts = () => {
         </p>
       ) : allParts.length ? (
         <>
-          <div className="flex flex-wrap justify-start text-xs lg:justify-center lg:gap-5 lg:text-base">
+          <div className="mb-3 flex flex-wrap justify-start text-xs lg:justify-center lg:gap-5 lg:text-base">
             {suppliers.map((brand, index) => (
               <span
                 onClick={() => setSelectedSupplier(brand.documentId)}
