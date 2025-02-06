@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { X } from "lucide-react";
 
 import showToast from "@/utils/toast";
@@ -7,7 +7,6 @@ import { BaseFileUploader } from "@/components/admin";
 
 import apiClient from "@/utils/apiClient";
 import { modifyAdminTabname } from "@/utils";
-import { categoryTypeOptions } from "@/data";
 import { addCategoryAndSupplierValidator } from "@/utils/validators";
 
 import type { AdminAddItemModalProps } from "@/types";
@@ -36,25 +35,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
 
   const [formData, setFormData] = useState(initialFormData);
   const [dataFilesIds, setDataFilesIds] = useState<string | string[]>([]);
-  const [categories, setCategories] = useState([]);
 
-  const getCategories = async () => {
-    try {
-      const url = `/categories?fields=name`;
-      await apiClient.GET(url).then((res) => {
-        const data = res.data.map((item) => item.name);
-        if (data.length !== 0) {
-          const cat = categoryTypeOptions.filter((item) => !data.includes(item.label));
-          setCategories(cat);
-        }
-      });
-    } catch (error) {
-      console.error("Error fetching resource:", error.message);
-    }
-  };
-  useEffect(() => {
-    getCategories();
-  }, []);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (addCategoryAndSupplierValidator(formData, currentTab, dataFilesIds)) {
@@ -114,24 +95,6 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
           </div>
           <BaseFileUploader setDataFilesIds={setDataFilesIds} />
           <div className="flex flex-col md:flex-row md:gap-8">
-            {currentTab == "categories" ? (
-              <div className="basis-1/2">
-                <label className="block text-sm font-medium">Category</label>
-                <select
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                  value={JSON.stringify(formData.type)}
-                  onChange={(e) => setFormData({ ...formData, type: JSON.parse(e.target.value) })}
-                >
-                  <option value="">Select a category</option>
-                  {categories.map((option) => (
-                    <option key={option.value} value={JSON.stringify(option.value)}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            ) : null}
-
             <div className="mt-4 flex items-center gap-2">
               <input
                 type="checkbox"

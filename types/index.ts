@@ -77,11 +77,7 @@ export type ImageFormats = {
   actual: Format;
 };
 export type Format = { url: string, width: number, height: number; };
-export type Categories = {
-  tractors: Category[];
-  tractor_parts: Category[];
-  sub_assemblies: Category[];
-} | null;
+
 
 export type DecodedToken = {
   jwt: string;

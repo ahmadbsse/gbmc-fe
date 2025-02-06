@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Tractor } from "lucide-react";
 import Head from "next/head";
 import { appData } from "@/constants";
 import { FeaturedParts, AllParts } from "@/components/user";
 
 import { Navbar, PageLayout } from "@/components/common";
-import apiClient from "@/utils/apiClient";
 
 const TractorPartsHome = () => {
   const categories = [

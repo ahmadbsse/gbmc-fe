@@ -190,10 +190,7 @@ export const addCategoryAndSupplierValidator = (formData, currentTab, dataFilesI
     showToast(`Please enter description`, "error");
     return false;
   }
-  if (currentTab == "categories" && formData.type == "") {
-    showToast(`Please select type`, "error");
-    return false;
-  }
+
   if (typeof dataFilesIds === "string" && dataFilesIds == "") {
     showToast(`Please upload an image`, "error");
     return false;
@@ -211,10 +208,6 @@ export const editCategoryAndSupplierValidator = (data, currentTab, dataFilesIds)
   }
   if (data.description == "") {
     showToast(`Please enter description`, "error");
-    return false;
-  }
-  if (currentTab == "categories" && data.type == "") {
-    showToast(`Please select type`, "error");
     return false;
   }
   if (typeof dataFilesIds === "string" && data.media.length == 0 && dataFilesIds == "") {

@@ -91,7 +91,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
     }
   };
   const addNewItem = () => {
-    if (currentTab == "categories" || currentTab == "suppliers") {
+    if (currentTab == "suppliers") {
       setShowAddItemModal(true);
     }
     if (
@@ -218,7 +218,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                       >
                         {item.active ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
                       </i>
-                      {currentTab != "categories" && currentTab != "suppliers" ? (
+                      {currentTab != "suppliers" ? (
                         <i
                           className={`rounded-lg p-2 ${
                             item.featured

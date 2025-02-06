@@ -6,7 +6,6 @@ import { transformMedia, modifyAdminTabname } from "@/utils";
 import apiClient from "@/utils/apiClient";
 import { BaseButton, BaseLoader, BaseImage } from "@/components/common";
 import BaseFileUploader from "./BaseFileUploader";
-import { categoryTypeOptions } from "@/data";
 import { editCategoryAndSupplierValidator } from "@/utils/validators";
 
 const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData }) => {
@@ -133,25 +132,6 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
               ))}
             </div>
             <div className="flex flex-col md:flex-row md:gap-8">
-              {currentTab == "categories" ? (
-                <div className="basis-1/2">
-                  <label className="block text-sm font-medium">Category</label>
-
-                  <select
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                    value={JSON.stringify(data.type)}
-                    onChange={(e) => setData({ ...data, type: JSON.parse(e.target.value) })}
-                  >
-                    <option value="">Select a category</option>
-                    {categoryTypeOptions.map((option) => (
-                      <option key={option.value} value={JSON.stringify(option.value)}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              ) : null}
-
               <div className="mt-4 flex items-center gap-2">
                 <input
                   type="checkbox"
@@ -164,20 +144,6 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
                   Mark as active
                 </label>
               </div>
-              {activeTab.key !== "categories" && activeTab.key !== "suppliers" ? (
-                <div className="mt-4 flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    id="featured"
-                    checked={data.featured}
-                    onChange={(e) => setData({ ...data, featured: e.target.checked })}
-                    className="rounded border-gray-300 outline-none focus:border-primary focus:ring-primary"
-                  />
-                  <label htmlFor="featured" className="text-sm">
-                    Mark as featured
-                  </label>
-                </div>
-              ) : null}
             </div>
             <div className="mx-auto mt-6 w-1/3">
               <BaseButton loading={false} type="submit">
