@@ -51,6 +51,10 @@ const PartDetails = () => {
         if (!Array.isArray(response?.media)) {
           response.media = [response?.media];
         }
+        response.description = response.description.replace(
+          /\*\*(.*?)\*\*/g,
+          "<strong>$1</strong>"
+        );
         setData(response);
         setSpecifications({
           name: response.name,

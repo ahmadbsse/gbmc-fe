@@ -30,6 +30,11 @@ const Article = () => {
         } else {
           response.hero_image = transformMedia(response.hero_image);
         }
+        response.summary = response.summary.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+        response.description = response.description.replace(
+          /\*\*(.*?)\*\*/g,
+          "<strong>$1</strong>"
+        );
         setData(response);
       });
     } catch (error) {
@@ -113,7 +118,11 @@ const Article = () => {
                   <div className="card-details rounded-lg bg-[#707070] p-4 text-sm text-white lg:text-base">
                     <div className="flex flex-col gap-2 py-7 lg:w-[400px] lg:gap-5 lg:px-11">
                       <h2 className="text-xl font-bold lg:text-2xl">Description</h2>
-                      <div dangerouslySetInnerHTML={{ __html: data.description }}></div>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: data.description,
+                        }}
+                      ></div>
                     </div>
                   </div>
                   <BaseImage

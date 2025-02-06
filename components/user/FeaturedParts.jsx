@@ -76,7 +76,7 @@ const FeaturedParts = () => {
                           priority={true}
                           classes="h-full w-full object-cover rounded-t-lg"
                         />
-                        <div className="absolute right-3 top-2 rounded bg-primary px-1.5 py-0.5 text-xs">
+                        <div className="absolute right-2 top-2 rounded bg-primary px-1.5 py-0.5 text-xs">
                           {part.supplier.name}
                         </div>
                       </div>
