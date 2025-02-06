@@ -84,7 +84,7 @@ const Article = () => {
             </div>
           </div>
           <div className="mt-2 px-2 lg:px-16">
-            <div className="relative">
+            <div className="">
               {data.hero_image.type && data.hero_image.type == "video" ? (
                 <BaseVideo src={data.hero_image.url} autoPlay={true} muted={true} loop={true} />
               ) : (
@@ -96,19 +96,17 @@ const Article = () => {
                   classes="w-full max-h-[645px] rounded-lg"
                 />
               )}
-              <p className="absolute bottom-5 left-7 text-xl font-semibold text-white lg:bottom-0 lg:left-20 lg:top-20 lg:text-4xl">
-                {data?.name}
-              </p>
             </div>
           </div>
           <div className="mx-auto max-w-6xl px-4 pt-4 lg:py-8">
             <div className="container">
-              <h2 className="pb-3 font-semibold lg:text-2xl">Summary</h2>
-
+              <p className="text-xl font-semibold lg:bottom-0 lg:left-20 lg:top-20 lg:text-4xl">
+                {data?.name}
+              </p>
               <p
                 className="text-sm lg:text-base"
                 dangerouslySetInnerHTML={{ __html: data.summary }}
-              ></p>
+              />
 
               <section id="projects" className="pt-5 lg:py-8">
                 <article className="reverse grid grid-cols-1 md:grid-cols-10">

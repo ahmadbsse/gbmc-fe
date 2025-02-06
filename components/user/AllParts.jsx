@@ -6,13 +6,15 @@ import Link from "next/link";
 
 const PAGE_SIZE = 8;
 
-const AllParts = ({ selectedSupplier }) => {
+const AllParts = () => {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [allParts, setAllParts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [suppliers, setSuppliers] = useState([]);
+  const [selectedSupplier, setSelectedSupplier] = useState("");
 
   const getParts = async (pageNum, isLoadMore = false) => {
     try {
@@ -68,10 +70,26 @@ const AllParts = ({ selectedSupplier }) => {
       return newPage;
     });
   };
-
+  const getSuppliers = async () => {
+    try {
+      await apiClient.GET(`/suppliers?filters[active]=true`).then(async (res) => {
+        if (res && res.data.length > 0) {
+          setSuppliers(res.data);
+        } else {
+          setSuppliers([]);
+        }
+      });
+    } catch (error) {
+      const message = error.message;
+      console.error("Error in POST request:", message);
+    }
+  };
+  useEffect(() => {
+    getSuppliers();
+  }, []);
   return (
     <>
-      <div className="flex flex-col items-center justify-between gap-3 lg:flex-row">
+      <div className="mt-5 flex flex-col items-center justify-between gap-3 lg:flex-row">
         <h2 className="my-4 text-lg font-bold md:text-3xl">All Parts</h2>
         {allParts.length > 0 ? <BaseSearchbar setSearchQuery={setSearchQuery} /> : null}
       </div>
@@ -80,39 +98,52 @@ const AllParts = ({ selectedSupplier }) => {
           <BaseLoader />
         </p>
       ) : allParts.length ? (
-        <div>
-          <div className="custom-scrollbar flex max-w-7xl flex-col gap-3 overflow-x-auto pb-2 lg:flex-row">
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {allParts.map((part, index) => (
-                <Link href={`/tractor-parts/${part.documentId}`} key={part.id + index}>
-                  <div className="rounded-lg border border-gray-200 bg-white shadow-sm transition">
-                    <div className="relative h-[200px] w-full border-b border-gray-200">
-                      <BaseImage
-                        width={part.media[0].formats?.actual?.width}
-                        height={part.media[0].formats?.actual?.height}
-                        src={part.media[0].formats?.actual?.url}
-                        alt={part.name}
-                        priority={true}
-                        classes="h-full w-full object-cover rounded-t-lg"
-                      />
-                    </div>
-                    <h3 className="p-4 text-lg font-semibold">{part.name}</h3>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-          {allParts.length < total && (
-            <div className="flex justify-center md:justify-end">
-              <p
-                className="w-fit cursor-pointer text-sm underline hover:text-black"
-                onClick={loadMore}
+        <>
+          <div className="flex flex-wrap justify-start text-xs lg:justify-center lg:gap-5 lg:text-base">
+            {suppliers.map((brand, index) => (
+              <span
+                onClick={() => setSelectedSupplier(brand.documentId)}
+                className={`cursor-pointer p-2 font-medium uppercase hover:text-black md:p-4`}
+                key={index}
               >
-                {isLoadingMore ? "Loading..." : "Load More"}
-              </p>
+                {brand.name}
+              </span>
+            ))}
+          </div>
+          <div>
+            <div className="custom-scrollbar flex max-w-7xl flex-col gap-3 overflow-x-auto pb-2 lg:flex-row">
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                {allParts.map((part, index) => (
+                  <Link href={`/tractor-parts/${part.documentId}`} key={part.id + index}>
+                    <div className="rounded-lg border border-gray-200 bg-white shadow-sm transition">
+                      <div className="relative h-[200px] w-full border-b border-gray-200">
+                        <BaseImage
+                          width={part.media[0].formats?.actual?.width}
+                          height={part.media[0].formats?.actual?.height}
+                          src={part.media[0].formats?.actual?.url}
+                          alt={part.name}
+                          priority={true}
+                          classes="h-full w-full object-cover rounded-t-lg"
+                        />
+                      </div>
+                      <h3 className="p-4 text-lg font-semibold">{part.name}</h3>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
-          )}
-        </div>
+            {allParts.length < total && (
+              <div className="flex justify-center md:justify-end">
+                <p
+                  className="w-fit cursor-pointer text-sm underline hover:text-black"
+                  onClick={loadMore}
+                >
+                  {isLoadingMore ? "Loading..." : "Load More"}
+                </p>
+              </div>
+            )}
+          </div>
+        </>
       ) : (
         <p className="mt-10 text-center text-gray-500">No parts found.</p>
       )}

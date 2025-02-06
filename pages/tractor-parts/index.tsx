@@ -29,31 +29,12 @@ const TractorPartsHome = () => {
     },
   ];
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
-  const [selectedSupplier, setSelectedSupplier] = useState("");
-  const [suppliers, setSuppliers] = useState([]);
 
   const breadcrumbs = [
     { text: "Home", href: "/" },
     { text: selectedCategory.title, href: selectedCategory.key },
   ];
-  const getSuppliers = async () => {
-    try {
-      await apiClient.GET(`/suppliers?filters[active]=true`).then(async (res) => {
-        if (res && res.data.length > 0) {
-          setSuppliers(res.data);
-        } else {
-          setSuppliers([]);
-        }
-      });
-    } catch (error) {
-      const message = (error as Error).message;
 
-      console.error("Error in POST request:", message);
-    }
-  };
-  useEffect(() => {
-    getSuppliers();
-  }, []);
   return (
     <>
       <Head>
@@ -108,21 +89,8 @@ const TractorPartsHome = () => {
           {/* Featured Parts Section */}
 
           <section className="min-h-[300px]">
-            {selectedCategory.key == "tractor-parts" ? (
-              <div className="flex flex-wrap justify-start text-xs lg:justify-center lg:gap-5 lg:text-base">
-                {suppliers.map((brand, index) => (
-                  <span
-                    onClick={() => setSelectedSupplier(brand.documentId)}
-                    className={`cursor-pointer p-2 font-medium uppercase hover:text-black md:p-4`}
-                    key={index}
-                  >
-                    {brand.name}
-                  </span>
-                ))}
-              </div>
-            ) : null}
             <FeaturedParts />
-            <AllParts selectedSupplier={selectedSupplier} />
+            <AllParts />
           </section>
         </div>
       </PageLayout>
