@@ -4,11 +4,12 @@ import Head from "next/head";
 
 import { Navbar, BaseButton } from "@/components/common";
 import { appData } from "@/constants";
+
 const ContactPage = () => {
   return (
     <>
       <Head>
-        <title>Contact | Global Meccanica</title>
+        <title>Contact | {appData.name}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
           property="og:title"

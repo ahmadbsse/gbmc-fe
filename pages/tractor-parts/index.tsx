@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Tractor } from "lucide-react";
 import Head from "next/head";
-
+import { appData } from "@/constants";
 import { FeaturedParts, AllParts } from "@/components/user";
 
 import { Navbar, PageLayout } from "@/components/common";
@@ -57,7 +57,9 @@ const TractorPartsHome = () => {
   return (
     <>
       <Head>
-        <title>{selectedCategory.title} | Global Meccanica</title>
+        <title>
+          {selectedCategory.title} | {appData.name}
+        </title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
           property="og:title"
@@ -105,7 +107,7 @@ const TractorPartsHome = () => {
           </section>
           {/* Featured Parts Section */}
 
-          <section>
+          <section className="min-h-[300px]">
             {selectedCategory.key == "tractor-parts" ? (
               <div className="flex flex-wrap justify-start text-xs lg:justify-center lg:gap-5 lg:text-base">
                 {suppliers.map((brand, index) => (

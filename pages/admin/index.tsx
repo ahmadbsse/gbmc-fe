@@ -154,7 +154,7 @@ const AdminDashboard = () => {
   return (
     <>
       <Head>
-        <title>{`${appData.name} - Admin | Global Meccanica`}</title>
+        <title>Admin | {appData.name}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
           property="og:title"

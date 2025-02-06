@@ -73,7 +73,7 @@ const AllParts = ({ selectedSupplier }) => {
     <>
       <div className="flex flex-col items-center justify-between gap-3 lg:flex-row">
         <h2 className="my-4 text-lg font-bold md:text-3xl">All Parts</h2>
-        <BaseSearchbar setSearchQuery={setSearchQuery} />
+        {allParts.length > 0 ? <BaseSearchbar setSearchQuery={setSearchQuery} /> : null}
       </div>
       {isLoading ? (
         <p className="mx-auto w-fit">
@@ -114,7 +114,7 @@ const AllParts = ({ selectedSupplier }) => {
           )}
         </div>
       ) : (
-        <p className="text-center text-gray-500">No parts found.</p>
+        <p className="mt-10 text-center text-gray-500">No parts found.</p>
       )}
     </>
   );

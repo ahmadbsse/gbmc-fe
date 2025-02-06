@@ -226,7 +226,7 @@ const EditComponent = () => {
 
               <div className="mx-auto w-[300px]">
                 <BaseButton loading={false} type="submit">
-                  Edit Component
+                  save
                 </BaseButton>
               </div>
             </form>

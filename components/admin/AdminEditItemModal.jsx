@@ -179,17 +179,10 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
                 </div>
               ) : null}
             </div>
-            <div className="mt-6 flex gap-4">
-              <div className="basis-1/2">
-                <BaseButton loading={false} btnStyle type="button" handleClick={onClose}>
-                  Cancel
-                </BaseButton>
-              </div>
-              <div className="basis-1/2">
-                <BaseButton loading={false} type="submit">
-                  Edit {modifyAdminTabname(activeTab)}
-                </BaseButton>
-              </div>
+            <div className="mx-auto mt-6 w-1/3">
+              <BaseButton loading={false} type="submit">
+                Save
+              </BaseButton>
             </div>
           </form>
         ) : (

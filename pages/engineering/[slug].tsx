@@ -6,6 +6,7 @@ import apiClient from "@/utils/apiClient";
 import { transformHeroVideo, transformMedia } from "@/utils";
 import type { EngineeringComponent } from "@/types";
 import Link from "next/link";
+import { appData } from "@/constants";
 
 const Article = () => {
   const router = useRouter();
@@ -46,7 +47,9 @@ const Article = () => {
   return (
     <>
       <Head>
-        <title>Article - {data?.name} | Global Meccanica</title>
+        <title>
+          Article - {data?.name} | {appData.name}
+        </title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
           property="og:title"

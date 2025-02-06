@@ -55,7 +55,7 @@ const CreateSubAssembly = () => {
   return (
     <>
       <Head>
-        <title>{`${appData.name} - Admin | Global Meccanica`}</title>
+        <title>Admin | {appData.name}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
           property="og:title"
@@ -159,7 +159,7 @@ const CreateSubAssembly = () => {
 
             <div className="mx-auto w-[300px]">
               <BaseButton loading={false} type="submit">
-                Add Sub Assembly
+                Submit
               </BaseButton>
             </div>
           </form>

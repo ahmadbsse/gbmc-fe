@@ -168,7 +168,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                   >
                     <div className="flex gap-4">
                       <span>{index + 1}.</span>
-                      <div className="hidden max-w-44 md:block">
+                      <div className="hidden w-44 max-w-44 md:block">
                         {Array.isArray(item?.media) ? (
                           <BaseImage
                             width={item.media[0]?.formats.thumbnail.width}

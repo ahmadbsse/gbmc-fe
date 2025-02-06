@@ -145,17 +145,10 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
               </label>
             </div>
           </div>
-          <div className="mt-6 flex gap-4">
-            <div className="basis-1/2">
-              <BaseButton loading={false} btnStyle type="button" handleClick={onClose}>
-                Cancel
-              </BaseButton>
-            </div>
-            <div className="basis-1/2">
-              <BaseButton loading={false} type="submit">
-                Add {modifyAdminTabname(activeTab)}
-              </BaseButton>
-            </div>
+          <div className="mx-auto mt-6 w-1/3">
+            <BaseButton loading={false} type="submit">
+              Submit
+            </BaseButton>
           </div>
         </form>
       </div>

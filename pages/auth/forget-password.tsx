@@ -1,12 +1,13 @@
 import Link from "next/link";
-
-import { appData } from "@/constants";
+import Image from "next/image";
 import { BaseButton } from "@/components/common";
 
 const ForgetPassword = () => (
   <section className="h-screen bg-gray-50">
     <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
-      <p className="mb-10 text-3xl font-bold">{appData.name}</p>
+      <div className="mb-4 lg:mb-8">
+        <Image height={70} width={150} src="/assets/logo.svg" alt="logo" priority />
+      </div>
       <div className="w-full rounded-lg bg-white shadow sm:max-w-md md:mt-0 xl:p-0">
         <div className="space-y-4 p-6 sm:p-8 md:space-y-6">
           <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl">

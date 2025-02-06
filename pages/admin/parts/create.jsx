@@ -74,7 +74,7 @@ const CreatePart = () => {
   return (
     <>
       <Head>
-        <title>{`${appData.name} - Admin | Global Meccanica`}</title>
+        <title>Admin | {appData.name}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
           property="og:title"
@@ -192,7 +192,7 @@ const CreatePart = () => {
 
             <div className="mx-auto w-[300px]">
               <BaseButton loading={false} type="submit">
-                Add Part
+                Submit
               </BaseButton>
             </div>
           </form>

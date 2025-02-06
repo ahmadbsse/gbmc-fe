@@ -6,6 +6,7 @@ import { transformMedia } from "@/utils";
 import { Navbar, PageLayout, BaseImage, BaseLoader } from "@/components/common";
 import { Check, X } from "lucide-react";
 import { convertToReadableDate } from "@/utils";
+import { appData } from "@/constants";
 
 const PartDetails = () => {
   const router = useRouter();
@@ -99,7 +100,9 @@ const PartDetails = () => {
   return (
     <>
       <Head>
-        <title>{data && data.name ? data.name : "Part Details"} | Global Meccanica</title>
+        <title>
+          {data && data.name ? data.name : "Part Details"} | ${appData.name}
+        </title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
           property="og:title"
