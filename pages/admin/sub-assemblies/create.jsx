@@ -82,7 +82,7 @@ const CreateSubAssembly = () => {
           <form onSubmit={handleSubmit} className="mx-auto max-w-[1000px] space-y-3">
             <div className="flex flex-col md:flex-row md:gap-4">
               <div className="w-full">
-                <label className="mb-1 block text-sm font-medium">Name</label>
+                <label className="required mb-1 block text-sm font-medium">Name</label>
                 <input
                   type="text"
                   className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -92,7 +92,7 @@ const CreateSubAssembly = () => {
                 />
               </div>
               <div className="w-full">
-                <label className="mb-1 block text-sm font-medium">SKU Number</label>
+                <label className="required mb-1 block text-sm font-medium">SKU Number</label>
                 <input
                   type="text"
                   className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -105,7 +105,7 @@ const CreateSubAssembly = () => {
 
             <div className="flex flex-col md:flex-row md:gap-4">
               <div className="w-full">
-                <label className="mb-1 block text-sm font-medium">Material</label>
+                <label className="required mb-1 block text-sm font-medium">Material</label>
                 <input
                   type="text"
                   className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -115,7 +115,7 @@ const CreateSubAssembly = () => {
                 />
               </div>
               <div className="w-full">
-                <label className="mb-1 block text-sm font-medium"> Weight</label>
+                <label className="required mb-1 block text-sm font-medium"> Weight</label>
                 <input
                   type="text"
                   className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -154,6 +154,9 @@ const CreateSubAssembly = () => {
                   Mark as featured
                 </label>
               </div>
+            </div>
+            <div className="mx-auto max-w-2xl">
+              <label className="required mb-1 block text-sm font-medium"> Media</label>
             </div>
             <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
 

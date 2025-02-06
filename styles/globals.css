@@ -173,3 +173,8 @@ input[type="checkbox"]:checked {
 input[type="checkbox"] {
   @apply h-4 w-4;
 }
+
+.required:after {
+  content: " *";
+  color: red;
+}

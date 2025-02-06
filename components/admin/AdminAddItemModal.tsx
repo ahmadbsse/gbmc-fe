@@ -73,7 +73,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
 
         <form onSubmit={handleSubmit} className="space-y-3">
           <div>
-            <label className="block text-sm font-medium">Name</label>
+            <label className="required block text-sm font-medium">Name</label>
             <input
               type="text"
               className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -84,7 +84,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
           </div>
 
           <div>
-            <label className="block text-sm font-medium">Description</label>
+            <label className="required block text-sm font-medium">Description</label>
             <textarea
               rows={3}
               className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -92,6 +92,9 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
             />
+          </div>
+          <div className="mx-auto max-w-2xl">
+            <label className="required">Media</label>
           </div>
           <BaseFileUploader setDataFilesIds={setDataFilesIds} />
           <div className="flex flex-col md:flex-row md:gap-8">
