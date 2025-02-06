@@ -10,7 +10,6 @@ import { appData } from "@/constants";
 import apiClient from "@/utils/apiClient";
 import { transformMedia } from "@/utils";
 
-import type { Categories } from "@/types";
 import { Menu, X } from "lucide-react";
 
 type tab = {
@@ -24,7 +23,6 @@ const AdminDashboard = () => {
     setIsOpen(!isOpen);
   };
   const tabsKey = [
-    { name: "Categories", key: "categories" },
     { name: "Suppliers", key: "suppliers" },
     { name: "Sub Assemblies", key: "sub-assemblies" },
     { name: "Parts", key: "parts" },
@@ -32,30 +30,11 @@ const AdminDashboard = () => {
   ];
   const [activeTab, setActiveTab] = useState<tab>(tabsKey[0]);
   const [isLoading, setIsLoading] = useState(false);
-  const [categories, setCategories] = useState<Categories>(null);
   const [parts, setParts] = useState(null);
   const [engineering, setEngineering] = useState(null);
   const [suppliers, setSuppliers] = useState(null);
   const [subAssemblies, setSubAssemblies] = useState(null);
 
-  const getCategories = async () => {
-    try {
-      setIsLoading(true);
-      await apiClient.GET("/categories?populate=*").then(async (res) => {
-        if (res && res.data.length > 0) {
-          const transformedData = transformMedia(res.data);
-          setCategories(transformedData);
-        } else {
-          setCategories(null);
-        }
-      });
-    } catch (error) {
-      const message = (error as Error).message;
-      console.error("Error in POST request:", message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
   const getParts = async () => {
     try {
       setIsLoading(true);
@@ -134,9 +113,6 @@ const AdminDashboard = () => {
   };
 
   useEffect(() => {
-    if (activeTab.key == "categories") {
-      getCategories();
-    }
     if (activeTab.key == "suppliers") {
       getSuppliers();
     }
@@ -154,7 +130,7 @@ const AdminDashboard = () => {
   return (
     <>
       <Head>
-        <title>{`${appData.name} - Admin | Global Meccanica`}</title>
+        <title>Admin | {appData.name}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
           property="og:title"
@@ -229,27 +205,23 @@ const AdminDashboard = () => {
           ) : (
             <ListDashboardData
               data={
-                activeTab.key == "categories"
-                  ? categories
-                  : activeTab.key == "engineering"
-                    ? engineering
-                    : activeTab.key == "suppliers"
-                      ? suppliers
-                      : activeTab.key == "sub-assemblies"
-                        ? subAssemblies
-                        : parts
+                activeTab.key == "engineering"
+                  ? engineering
+                  : activeTab.key == "suppliers"
+                    ? suppliers
+                    : activeTab.key == "sub-assemblies"
+                      ? subAssemblies
+                      : parts
               }
               activeTab={activeTab}
               getData={
-                activeTab.key == "categories"
-                  ? getCategories
-                  : activeTab.key == "engineering"
-                    ? getEngineering
-                    : activeTab.key == "suppliers"
-                      ? getSuppliers
-                      : activeTab.key == "sub-assemblies"
-                        ? getSubAssemblies
-                        : getParts
+                activeTab.key == "engineering"
+                  ? getEngineering
+                  : activeTab.key == "suppliers"
+                    ? getSuppliers
+                    : activeTab.key == "sub-assemblies"
+                      ? getSubAssemblies
+                      : getParts
               }
             />
           )}

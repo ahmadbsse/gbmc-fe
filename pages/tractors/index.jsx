@@ -2,12 +2,11 @@ import React from "react";
 import { Tractor } from "lucide-react";
 import Head from "next/head";
 import { appData } from "@/constants";
-import { FeaturedParts, AllParts } from "@/components/user";
-
+import Image from "next/image";
 import { Navbar, PageLayout } from "@/components/common";
 import Link from "next/link";
 
-const TractorPartsHome = () => {
+const TractorPage = () => {
   const categories = [
     {
       title: "Tractor Parts",
@@ -31,14 +30,13 @@ const TractorPartsHome = () => {
 
   const breadcrumbs = [
     { text: "Home", href: "/" },
-    { text: categories[0].title, href: categories[0].key },
+    { text: categories[2].title, href: categories[2].key },
   ];
-
   return (
     <>
       <Head>
         <title>
-          {categories[0].title} | {appData.name}
+          {categories[2].title} | {appData.name}
         </title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
@@ -68,14 +66,14 @@ const TractorPartsHome = () => {
                 <Link key={index} href={category.key}>
                   <div
                     className={`cursor-pointer rounded-lg p-6 shadow-md transition-all duration-300 hover:shadow-lg ${
-                      category.title == categories[0].title
+                      category.title == categories[2].title
                         ? "border-2 border-secondary/50 bg-secondary/20"
                         : "bg-white"
                     } `}
                   >
                     <div className="mb-4 flex items-center justify-between">
                       <Tractor
-                        className={`h-8 w-8 ${category.title == categories[0].title ? "text-secondary" : ""}`}
+                        className={`h-8 w-8 ${category.title == categories[2].title ? "text-secondary" : ""}`}
                       />
                     </div>
                     <h3 className="mb-2 text-lg font-semibold">{category.title}</h3>
@@ -88,13 +86,11 @@ const TractorPartsHome = () => {
           {/* Featured Parts Section */}
 
           <section className="min-h-[300px]">
-            <FeaturedParts />
-            <AllParts />
+            <Image src="/assets/tractor.jpg" alt="Tractor Parts" width={1920} height={1080} />
           </section>
         </div>
       </PageLayout>
     </>
   );
 };
-
-export default TractorPartsHome;
+export default TractorPage;

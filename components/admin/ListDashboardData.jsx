@@ -91,7 +91,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
     }
   };
   const addNewItem = () => {
-    if (currentTab == "categories" || currentTab == "suppliers") {
+    if (currentTab == "suppliers") {
       setShowAddItemModal(true);
     }
     if (
@@ -168,7 +168,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                   >
                     <div className="flex gap-4">
                       <span>{index + 1}.</span>
-                      <div className="hidden max-w-44 md:block">
+                      <div className="hidden w-44 max-w-44 md:block">
                         {Array.isArray(item?.media) ? (
                           <BaseImage
                             width={item.media[0]?.formats.thumbnail.width}
@@ -218,7 +218,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                       >
                         {item.active ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
                       </i>
-                      {currentTab != "categories" && currentTab != "suppliers" ? (
+                      {currentTab != "suppliers" ? (
                         <i
                           className={`rounded-lg p-2 ${
                             item.featured

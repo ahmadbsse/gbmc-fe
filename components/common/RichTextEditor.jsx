@@ -63,7 +63,7 @@ const RichTextEditor = ({ handleChange, defaultValue, label = "Description" }) =
 
   return (
     <div className={`rich-text-editor-wrapper`}>
-      <label className="mb-1 block text-sm font-medium">{label}</label>
+      <label className="required mb-1 block text-sm font-medium">{label}</label>
       <div>
         <QuillEditor
           className="quill-editor"

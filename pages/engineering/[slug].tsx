@@ -6,6 +6,7 @@ import apiClient from "@/utils/apiClient";
 import { transformHeroVideo, transformMedia } from "@/utils";
 import type { EngineeringComponent } from "@/types";
 import Link from "next/link";
+import { appData } from "@/constants";
 
 const Article = () => {
   const router = useRouter();
@@ -29,6 +30,11 @@ const Article = () => {
         } else {
           response.hero_image = transformMedia(response.hero_image);
         }
+        response.summary = response.summary.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+        response.description = response.description.replace(
+          /\*\*(.*?)\*\*/g,
+          "<strong>$1</strong>"
+        );
         setData(response);
       });
     } catch (error) {
@@ -46,7 +52,9 @@ const Article = () => {
   return (
     <>
       <Head>
-        <title>Article - {data?.name} | Global Meccanica</title>
+        <title>
+          Article - {data?.name} | {appData.name}
+        </title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
           property="og:title"
@@ -69,7 +77,7 @@ const Article = () => {
       {data ? (
         <div className="mx-auto max-w-7xl">
           <div className="my-4 px-2">
-            <div className="mb-2 flex items-center gap-2 text-sm text-black">
+            <div className="mb-8 flex items-center gap-2 text-sm text-gray-500">
               {breadcrumbs.map((crumb, index) => (
                 <p key={index}>
                   <Link href={crumb.href} className="pr-2 hover:text-secondary">
@@ -81,7 +89,7 @@ const Article = () => {
             </div>
           </div>
           <div className="mt-2 px-2 lg:px-16">
-            <div className="relative">
+            <div className="">
               {data.hero_image.type && data.hero_image.type == "video" ? (
                 <BaseVideo src={data.hero_image.url} autoPlay={true} muted={true} loop={true} />
               ) : (
@@ -93,26 +101,28 @@ const Article = () => {
                   classes="w-full max-h-[645px] rounded-lg"
                 />
               )}
-              <p className="absolute bottom-5 left-7 text-xl font-semibold text-white lg:bottom-0 lg:left-20 lg:top-20 lg:text-4xl">
-                {data?.name}
-              </p>
             </div>
           </div>
           <div className="mx-auto max-w-6xl px-4 pt-4 lg:py-8">
             <div className="container">
-              <h2 className="pb-3 font-semibold lg:text-2xl">Summary</h2>
-
+              <p className="text-xl font-semibold lg:bottom-0 lg:left-20 lg:top-20 lg:text-4xl">
+                {data?.name}
+              </p>
               <p
                 className="text-sm lg:text-base"
                 dangerouslySetInnerHTML={{ __html: data.summary }}
-              ></p>
+              />
 
               <section id="projects" className="pt-5 lg:py-8">
                 <article className="reverse grid grid-cols-1 md:grid-cols-10">
                   <div className="card-details rounded-lg bg-[#707070] p-4 text-sm text-white lg:text-base">
                     <div className="flex flex-col gap-2 py-7 lg:w-[400px] lg:gap-5 lg:px-11">
                       <h2 className="text-xl font-bold lg:text-2xl">Description</h2>
-                      <div dangerouslySetInnerHTML={{ __html: data.description }}></div>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: data.description,
+                        }}
+                      ></div>
                     </div>
                   </div>
                   <BaseImage

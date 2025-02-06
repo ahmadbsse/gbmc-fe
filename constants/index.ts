@@ -1,5 +1,5 @@
 export const appData = {
-    name: "GBMC",
+    name: "Global Meccanica",
     contactEmail: "info@gbmc.com",
     conatcNumber: "+1 718 222 2222",
     address: {

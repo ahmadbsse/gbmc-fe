@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
-
+import { appData } from "@/constants";
 import { BaseLoader, Navbar, PageLayout } from "@/components/common";
 import EngineeringListingCard from "@/components/user/EngineeringListingCard";
 import apiClient from "@/utils/apiClient";
@@ -37,7 +37,7 @@ const EngineeringHome = () => {
   return (
     <>
       <Head>
-        <title>Engineering Components | Global Meccanica</title>
+        <title>Engineering Components | {appData.name}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
           property="og:title"

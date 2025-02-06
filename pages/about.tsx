@@ -2,14 +2,14 @@ import React from "react";
 import Image from "next/image";
 import { Users, Globe, Shield } from "lucide-react";
 import Head from "next/head";
-
+import { appData } from "@/constants";
 import { Navbar } from "../components/common";
 
 const AboutPage = () => {
   return (
     <>
       <Head>
-        <title>About | Global Meccanica</title>
+        <title>About | {appData.name}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
           property="og:title"

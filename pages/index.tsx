@@ -3,15 +3,14 @@ import { Settings, Tractor, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
-
+import { appData } from "@/constants";
 // import { Footer } from "../components/user";
 import { Navbar, BaseButton } from "@/components/common";
-import { appData } from "@/constants";
 const Home = () => {
   return (
     <>
       <Head>
-        <title>{appData.name} | Global Meccanica</title>
+        <title> {appData.name}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
           property="og:title"
