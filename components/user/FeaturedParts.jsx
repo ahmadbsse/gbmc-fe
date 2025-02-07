@@ -21,7 +21,8 @@ const FeaturedParts = () => {
       let url = `/parts?populate=*&filters[active]=true&filters[featured]=true`;
       const res = await apiClient.GET(url);
       if (res && res.data.length > 0) {
-        const transformedData = transformMedia(res.data);
+        const parts = res.data.filter((part) => part.supplier.active);
+        const transformedData = transformMedia(parts);
         setFeaturedParts(transformedData);
       }
     } catch (error) {
@@ -64,7 +65,7 @@ const FeaturedParts = () => {
               className="w-full"
             >
               {featuredParts.map((part, index) => (
-                <SwiperSlide key={part.id + index}>
+                <SwiperSlide key={part.id + index + part.documentId}>
                   <Link href={`/tractor-parts/${part.documentId}`}>
                     <div className="rounded-lg border border-gray-200 bg-white shadow-sm transition">
                       <div className="relative h-[200px] w-full border-b border-gray-200">
