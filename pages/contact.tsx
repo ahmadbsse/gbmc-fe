@@ -119,11 +119,11 @@ const ContactPage = () => {
                   <div className="space-y-2">
                     <p className="flex justify-between">
                       <span className="text-slate-600">Monday - Friday</span>
-                      <span className="font-medium">9:00 AM - 6:00 PM</span>
+                      <span className="font-medium">8:00 AM - 7:00 PM</span>
                     </p>
                     <p className="flex justify-between">
                       <span className="text-slate-600">Saturday</span>
-                      <span className="font-medium">10:00 AM - 4:00 PM</span>
+                      <span className="font-medium">8:00 AM - 2:00 PM</span>
                     </p>
                     <p className="flex justify-between">
                       <span className="text-slate-600">Sunday</span>

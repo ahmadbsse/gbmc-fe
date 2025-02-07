@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import { Users, Globe, Shield } from "lucide-react";
 import Head from "next/head";
 import { appData } from "@/constants";
 import { Navbar } from "../components/common";
@@ -50,74 +49,33 @@ const AboutPage = () => {
         </div>
 
         {/* Main Content */}
-        <div className="container mx-auto px-4 py-12">
-          {/* Mission & Vision */}
-          <div className="mb-16 grid gap-8 md:grid-cols-2">
-            <div className="rounded-lg bg-white p-8 shadow-md">
-              <h2 className="mb-4 text-2xl font-bold text-slate-800">Our Mission</h2>
-              <p className="text-slate-600">
-                To provide world-class engineering solutions and agricultural machinery parts that
-                empower businesses and farmers to achieve optimal performance and productivity.
-              </p>
-            </div>
-            <div className="rounded-lg bg-white p-8 shadow-md">
-              <h2 className="mb-4 text-2xl font-bold text-slate-800">Our Vision</h2>
-              <p className="text-slate-600">
-                To be the global leader in innovative engineering solutions and reliable tractor
-                parts, driving the future of industrial and agricultural advancement.
-              </p>
-            </div>
-          </div>
-
-          {/* Key Features */}
-          <div className="mb-16 grid gap-8 md:grid-cols-3">
-            <div className="rounded-lg bg-white p-6 shadow-md">
-              <Users className="mb-4 h-12 w-12 text-primary" />
-              <h3 className="mb-2 text-xl font-semibold text-slate-800">Expert Team</h3>
-              <p className="text-slate-600">
-                Our team of experienced engineers and technicians ensures the highest quality
-                standards in every product we deliver.
-              </p>
-            </div>
-            <div className="rounded-lg bg-white p-6 shadow-md">
-              <Globe className="mb-4 h-12 w-12 text-primary" />
-              <h3 className="mb-2 text-xl font-semibold text-slate-800">Global Reach</h3>
-              <p className="text-slate-600">
-                With a presence in multiple countries, we serve clients worldwide with efficient
-                distribution and support.
-              </p>
-            </div>
-            <div className="rounded-lg bg-white p-6 shadow-md">
-              <Shield className="mb-4 h-12 w-12 text-primary" />
-              <h3 className="mb-2 text-xl font-semibold text-slate-800">Quality Assured</h3>
-              <p className="text-slate-600">
-                Every product undergoes rigorous quality control to meet international standards and
-                specifications.
-              </p>
-            </div>
-          </div>
-
+        <div className="container mx-auto max-w-4xl px-4 py-12">
           {/* Company Stats */}
           <div className="rounded-lg bg-white p-8 shadow-md">
-            <h2 className="mb-8 text-center text-2xl font-bold text-slate-800">Our Impact</h2>
-            <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-              <div className="text-center">
-                <div className="mb-2 text-4xl font-bold text-primary">40+</div>
-                <div className="text-slate-600">Years Experience</div>
-              </div>
-              <div className="text-center">
-                <div className="mb-2 text-4xl font-bold text-primary">50+</div>
-                <div className="text-slate-600">Countries Served</div>
-              </div>
-              <div className="text-center">
-                <div className="mb-2 text-4xl font-bold text-primary">1000+</div>
-                <div className="text-slate-600">Products</div>
-              </div>
-              <div className="text-center">
-                <div className="mb-2 text-4xl font-bold text-primary">10k+</div>
-                <div className="text-slate-600">Happy Clients</div>
-              </div>
-            </div>
+            <h2 className="mb-8 text-center text-2xl font-bold text-slate-800">About Us</h2>
+            <ul className="flex list-inside list-disc flex-col gap-3">
+              <li>
+                <strong className="uppercase">{appData.name}</strong> is an industrial manufacturing
+                network specializing in wide variety of processes .Thus we manufacture and deliver
+                world-wide customer-specific and ready-to-install components such as Drop Forgings,
+                Gray Iron Castings, Gears, CNC turning and milling parts, Sheet Metal parts, Large
+                Diameter Turnings, Fabrication & Wire EDM for the most varied industrial sectors and
+                in all quantities.
+              </li>
+              <li>
+                Even with Small to Medium Quantities we can offer economical prices. Good Quality
+                and Competitive prices as compared to India & China. Our principle is highest
+                flexibility and Quality in combination with customized inspection procedures,
+                efficient communication, fast logistics and a comprehensive service. This way we
+                achieve highest reliability & this distinguishes us as a dynamic and ambitious
+                enterprise with continuous growth and development.
+              </li>
+              <li>
+                Take advantage of our performance & of our low cost-best quality manufacturing
+                network! Convince yourself of the excellent quality of our services while reducing
+                your total cost in the same time.
+              </li>
+            </ul>
           </div>
         </div>
       </div>

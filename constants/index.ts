@@ -1,12 +1,12 @@
 export const appData = {
     name: "Global Meccanica",
-    contactEmail: "info@gbmc.com",
-    conatcNumber: "+1 718 222 2222",
+    contactEmail: "info@globalmeccanica.com",
+    conatcNumber: "+92 42 36553030",
     address: {
-        street_address: "123 Main Street",
-        postal_code: "10001",
-        city: "New York",
-        district: "Pine Avenue",
-        country: "United States"
+        street_address: "Mominpura Road Darogawala",
+        postal_code: "54920",
+        city: "Lahore",
+        district: "Punjab",
+        country: "Pakistan"
     }
 };
