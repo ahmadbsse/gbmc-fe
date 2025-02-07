@@ -188,9 +188,8 @@ const CreatePart = () => {
                 </label>
               </div>
             </div>
-            <div className="mx-auto max-w-2xl">
-              <label className="required mb-1 block text-sm font-medium"> Media</label>
-            </div>
+
+            <label className="required mb-1 block text-sm font-medium"> Media</label>
             <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
 
             <div className="mx-auto w-[300px]">

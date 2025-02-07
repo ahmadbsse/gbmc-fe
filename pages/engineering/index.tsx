@@ -57,10 +57,10 @@ const EngineeringHome = () => {
       </Head>
       <Navbar />
       <PageLayout
-        title="Engineering Procedures"
+        title="Engineering Components"
         breadcrumbs={[
           { text: "Home", href: "/" },
-          { text: "Engineering", href: "/engineering" },
+          { text: "Engineering Components", href: "/engineering" },
         ]}
       >
         {isLoading ? (

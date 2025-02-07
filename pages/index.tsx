@@ -60,7 +60,7 @@ const Home = () => {
                 <Link href="/engineering">
                   <BaseButton loading={false} type="submit" rounded handleClick={() => {}}>
                     <p className="flex items-center gap-2 px-7 py-3">
-                      Explore Components
+                      Explore
                       <ChevronRight size={20} />
                     </p>
                   </BaseButton>

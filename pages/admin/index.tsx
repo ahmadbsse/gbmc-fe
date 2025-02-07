@@ -26,7 +26,7 @@ const AdminDashboard = () => {
     { name: "Suppliers", key: "suppliers" },
     { name: "Sub Assemblies", key: "sub-assemblies" },
     { name: "Parts", key: "parts" },
-    { name: "Engineering", key: "engineering" },
+    { name: "Engineering Component", key: "engineering" },
   ];
   const [activeTab, setActiveTab] = useState<tab>(tabsKey[0]);
   const [isLoading, setIsLoading] = useState(false);

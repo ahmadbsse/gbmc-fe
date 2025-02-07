@@ -83,13 +83,13 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
         <button onClick={onClose} className="absolute right-4 top-6">
           <X className="h-6 w-6" />
         </button>
-        <h2 className="mb-3 text-2xl font-bold">
+        <h2 className="mb-5 text-2xl font-bold">
           Edit {modifyAdminTabname(activeTab)} - {data?.name}
         </h2>
         {data ? (
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="required block text-sm font-medium">Name</label>
+              <label className="required mb-1 block text-sm font-medium">Name</label>
               <input
                 type="text"
                 className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -100,7 +100,7 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
             </div>
 
             <div>
-              <label className="required block text-sm font-medium">Description</label>
+              <label className="required mb-1 block text-sm font-medium">Description</label>
               <textarea
                 rows={3}
                 className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -109,9 +109,7 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
                 onChange={(e) => setData({ ...data, description: e.target.value })}
               />
             </div>
-            <div className="mx-auto max-w-2xl">
-              <label className="required">Media</label>
-            </div>
+            <label className="required mb-1 block text-sm font-medium"> Media</label>
             <BaseFileUploader setDataFilesIds={setDataFilesIds} />
             <div className="flex items-center gap-4">
               {data?.media?.map((item) => (
