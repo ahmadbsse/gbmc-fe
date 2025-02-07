@@ -169,7 +169,7 @@ const EditComponent = () => {
                   {formData.media ? (
                     <div className="flex flex-wrap items-center gap-4">
                       {formData?.media?.map((item) => (
-                        <div className="relative mt-2 max-w-48" key={item.documentId}>
+                        <div className="relative mt-2 h-32 w-48" key={item.documentId}>
                           <button
                             onClick={(e) => {
                               e.preventDefault();
@@ -184,6 +184,7 @@ const EditComponent = () => {
                             height={item.formats?.thumbnail.height}
                             src={item.formats?.thumbnail.url}
                             alt={item.name}
+                            classes="object-cover w-full h-full"
                           />
                         </div>
                       ))}
@@ -194,7 +195,7 @@ const EditComponent = () => {
                   <label className="required mb-1 block text-sm font-medium">Hero Image</label>
                   <BaseFileUploader setDataFilesIds={setHeroFileId} />
                   {formData.hero_image && Object.keys(formData.hero_image).length != 0 ? (
-                    <div className="relative mt-2 w-48">
+                    <div className="relative mt-2 h-32 w-48">
                       <button
                         onClick={(e) => {
                           e.preventDefault();
@@ -210,6 +211,7 @@ const EditComponent = () => {
                           autoPlay={true}
                           muted={true}
                           loop={true}
+                          classes="object-cover w-full h-full"
                         />
                       ) : (
                         <BaseImage
@@ -217,6 +219,7 @@ const EditComponent = () => {
                           height={formData.hero_image.formats?.thumbnail?.height}
                           src={formData.hero_image.formats?.thumbnail?.url}
                           alt={formData.hero_image.name}
+                          classes="object-cover w-full h-full"
                         />
                       )}
                     </div>

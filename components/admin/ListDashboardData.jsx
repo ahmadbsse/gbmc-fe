@@ -168,7 +168,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                   >
                     <div className="flex gap-4">
                       <span>{index + 1}.</span>
-                      <div className="hidden w-44 max-w-44 md:block">
+                      <div className="hidden h-28 w-40 max-w-44 md:block">
                         {Array.isArray(item?.media) ? (
                           <BaseImage
                             width={item.media[0]?.formats.thumbnail.width}
@@ -176,6 +176,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                             src={item.media[0]?.formats.thumbnail.url}
                             alt={item.name}
                             priority={true}
+                            classes="object-cover w-full h-full"
                           />
                         ) : (
                           <BaseImage
@@ -184,6 +185,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                             src={item.media?.formats.thumbnail.url}
                             alt={item.name}
                             priority={true}
+                            classes="object-cover w-full h-full"
                           />
                         )}
                       </div>

@@ -213,7 +213,7 @@ const EditPart = () => {
               <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
               <div className="flex items-center gap-4">
                 {formData?.media?.map((item) => (
-                  <div className="relative w-44" key={item.documentId}>
+                  <div className="relative h-32 w-44" key={item.documentId}>
                     <button
                       onClick={(e) => {
                         e.preventDefault();
@@ -228,6 +228,7 @@ const EditPart = () => {
                       height={item.formats?.thumbnail?.height}
                       src={item.formats?.thumbnail?.url}
                       alt={item.name}
+                      classes="object-cover w-full h-full"
                     />
                   </div>
                 ))}

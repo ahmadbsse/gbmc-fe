@@ -86,7 +86,13 @@ const TractorPage = () => {
           {/* Featured Parts Section */}
 
           <section className="min-h-[300px]">
-            <Image src="/assets/tractor.jpg" alt="Tractor Parts" width={1920} height={1080} />
+            <Image
+              className="mx-auto"
+              src="/assets/tractor.jpg"
+              alt="Tractor Parts"
+              width={1030}
+              height={771}
+            />
           </section>
         </div>
       </PageLayout>

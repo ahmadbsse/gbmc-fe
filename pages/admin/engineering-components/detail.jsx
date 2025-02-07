@@ -22,6 +22,11 @@ const ViewComponentDetails = () => {
         if (response.hero_image.mime && response.hero_image.mime.includes("video")) {
           response.hero_image = transformHeroVideo(response.hero_image);
         }
+        response.summary = response.summary.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+        response.description = response.description.replace(
+          /\*\*(.*?)\*\*/g,
+          "<strong>$1</strong>"
+        );
         setFormData(response);
       });
     } catch (error) {
@@ -94,13 +99,14 @@ const ViewComponentDetails = () => {
               </div>
               <div>
                 <label className="mb-1 block text-sm font-medium">Hero Image</label>
-                <div className="max-w-44">
+                <div className="h-28 w-44">
                   {formData.hero_image.type === "video" ? (
                     <BaseVideo
                       src={formData.hero_image.url}
                       autoPlay={true}
                       muted={true}
                       loop={true}
+                      classes="object-cover w-full h-full"
                     />
                   ) : (
                     <BaseImage
@@ -108,6 +114,7 @@ const ViewComponentDetails = () => {
                       height={formData.hero_image.formats.thumbnail.height}
                       src={formData.hero_image.formats.thumbnail.url}
                       alt={formData.hero_image.name}
+                      classes="object-cover w-full h-full"
                     />
                   )}
                 </div>
@@ -117,23 +124,25 @@ const ViewComponentDetails = () => {
                 <div className="flex flex-wrap items-center gap-4">
                   {Array.isArray(formData.media) ? (
                     formData.media.map((item, index) => (
-                      <div className="max-w-44" key={index}>
+                      <div className="h-28 w-44" key={index}>
                         <BaseImage
                           key={index}
                           width={item.formats.thumbnail.width}
                           height={item.formats.thumbnail.height}
                           src={item.formats.thumbnail.url}
                           alt={item.name}
+                          classes="object-cover w-full h-full"
                         />
                       </div>
                     ))
                   ) : (
-                    <div className="max-w-44">
+                    <div className="h-28 w-44">
                       <BaseImage
                         width={formData.media.formats.thumbnail.width}
                         height={formData.media.formats.thumbnail.height}
                         src={formData.media.formats.thumbnail.url}
                         alt={formData.name}
+                        classes="object-cover w-full h-full"
                       />
                     </div>
                   )}
