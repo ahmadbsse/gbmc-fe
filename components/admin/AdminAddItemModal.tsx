@@ -111,9 +111,9 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
               </label>
             </div>
           </div>
-          <div className="mx-auto mt-6 w-1/3">
+          <div className="ml-auto mt-6 w-1/3">
             <BaseButton loading={false} type="submit">
-              Submit
+              Save
             </BaseButton>
           </div>
         </form>

@@ -149,7 +149,7 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
                 </label>
               </div>
             </div>
-            <div className="mx-auto mt-6 w-1/3">
+            <div className="ml-auto mt-6 w-1/3">
               <BaseButton loading={false} type="submit">
                 Save
               </BaseButton>

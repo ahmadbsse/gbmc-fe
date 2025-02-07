@@ -195,7 +195,7 @@ const CreatePart = () => {
 
             <div className="mx-auto w-[300px]">
               <BaseButton loading={false} type="submit">
-                Submit
+                save
               </BaseButton>
             </div>
           </form>

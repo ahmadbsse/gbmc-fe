@@ -147,7 +147,7 @@ const CreateEngineeringComponent = () => {
 
             <div className="mx-auto w-[300px]">
               <BaseButton loading={false} type="submit">
-                submit
+                save
               </BaseButton>
             </div>
           </form>
