@@ -160,7 +160,7 @@ const EditPart = () => {
                 <div className="w-full">
                   <label className="required mb-1 block text-sm font-medium">Supplier</label>
                   <select
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                     value={JSON.stringify(formData.supplier.name)}
                     onChange={(e) => {
                       setFormData({
