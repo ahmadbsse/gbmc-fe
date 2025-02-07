@@ -65,7 +65,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="custom-scrollbar relative max-h-[600px] w-full max-w-4xl overflow-y-auto rounded-lg bg-white p-6">
+      <div className="custom-scrollbar relative max-h-[600px] w-full max-w-xl overflow-y-auto rounded-lg bg-white p-6">
         <button onClick={onClose} className="absolute right-4 top-6">
           <X className="h-6 w-6" />
         </button>

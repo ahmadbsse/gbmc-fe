@@ -79,7 +79,7 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
   }
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="custom-scrollbar relative max-h-[600px] w-full max-w-4xl overflow-y-auto rounded-lg bg-white p-6">
+      <div className="custom-scrollbar relative max-h-[600px] w-full max-w-xl overflow-y-auto rounded-lg bg-white p-6">
         <button onClick={onClose} className="absolute right-4 top-6">
           <X className="h-6 w-6" />
         </button>
@@ -115,7 +115,7 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
             <BaseFileUploader setDataFilesIds={setDataFilesIds} />
             <div className="flex items-center gap-4">
               {data?.media?.map((item) => (
-                <div className="relative w-44" key={item.documentId}>
+                <div className="relative h-32 w-44" key={item.documentId}>
                   <button
                     onClick={(e) => {
                       e.preventDefault();
@@ -130,6 +130,7 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
                     height={item.formats.thumbnail.height}
                     src={item.formats.thumbnail.url}
                     alt={item.name}
+                    classes="object-cover w-full h-full"
                   />
                 </div>
               ))}
