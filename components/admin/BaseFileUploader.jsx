@@ -85,7 +85,7 @@ const BaseFileUploader = ({ setDataFilesIds, multiple = false }) => {
     <div className="w-full">
       {/* Upload Area */}
       <div
-        className={`cursor-pointer rounded-lg border-2 border-dashed p-8 text-center transition-colors ${isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300 hover:border-gray-400"}`}
+        className={`cursor-pointer rounded-lg border-2 border-dashed bg-white p-8 text-center transition-colors ${isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300 hover:border-gray-400"}`}
         onDragEnter={handleDragEnter}
         onDragOver={handleDragEnter}
         onDragLeave={handleDragLeave}

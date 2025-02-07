@@ -107,6 +107,16 @@ const CreateEngineeringComponent = () => {
               defaultValue={formData.description}
             />
 
+            <div className="flex gap-2">
+              <div className="w-full">
+                <label className="required mb-1 block text-sm font-medium">Hero Image</label>
+                <BaseFileUploader setDataFilesIds={setHeroFileId} />
+              </div>
+              <div className="w-full">
+                <label className="required mb-1 block text-sm font-medium">Detail Images</label>
+                <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
+              </div>
+            </div>
             <div className="flex flex-col gap-2">
               <div className="flex w-full items-center gap-2">
                 <input
@@ -132,16 +142,6 @@ const CreateEngineeringComponent = () => {
                 <label htmlFor="featured" className="text-sm">
                   Mark as featured
                 </label>
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">Hero Image</label>
-                <BaseFileUploader setDataFilesIds={setHeroFileId} />
-              </div>
-              <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">Detail Images</label>
-                <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
               </div>
             </div>
 

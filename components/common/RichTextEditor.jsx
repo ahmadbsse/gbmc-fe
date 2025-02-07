@@ -66,7 +66,7 @@ const RichTextEditor = ({ handleChange, defaultValue, label = "Description" }) =
       <label className="required mb-1 block text-sm font-medium">{label}</label>
       <div>
         <QuillEditor
-          className="quill-editor"
+          className="quill-editor bg-white"
           theme="snow"
           value={defaultValue}
           formats={formats}

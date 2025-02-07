@@ -161,6 +161,8 @@ const CreatePart = () => {
             </div>
             <RichTextEditor handleChange={handleChange} defaultValue={formData.description} />
 
+            <label className="required mb-1 block text-sm font-medium"> Media</label>
+            <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
             <div className="flex flex-col gap-2">
               <div className="flex w-full items-center gap-2">
                 <input
@@ -188,10 +190,6 @@ const CreatePart = () => {
                 </label>
               </div>
             </div>
-
-            <label className="required mb-1 block text-sm font-medium"> Media</label>
-            <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
-
             <div className="mx-auto w-[300px]">
               <BaseButton loading={false} type="submit">
                 save

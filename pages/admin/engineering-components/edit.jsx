@@ -135,33 +135,6 @@ const EditComponent = () => {
                 defaultValue={formData.description}
               />
 
-              <div className="flex flex-col gap-2">
-                <div className="flex w-full items-center gap-2">
-                  <input
-                    type="checkbox"
-                    id="active"
-                    checked={formData.active}
-                    onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
-                    className="rounded border-gray-300 outline-none focus:border-primary focus:ring-primary"
-                  />
-                  <label htmlFor="active" className="text-sm">
-                    Mark as active
-                  </label>
-                </div>
-
-                <div className="flex w-full items-center gap-2">
-                  <input
-                    type="checkbox"
-                    id="featured"
-                    checked={formData.featured}
-                    onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
-                    className="rounded border-gray-300 outline-none focus:border-primary focus:ring-primary"
-                  />
-                  <label htmlFor="featured" className="text-sm">
-                    Mark as featured
-                  </label>
-                </div>
-              </div>
               <div className="flex gap-2">
                 <div className="w-full">
                   <label className="required mb-1 block text-sm font-medium">Detail Images</label>
@@ -226,7 +199,33 @@ const EditComponent = () => {
                   ) : null}
                 </div>
               </div>
+              <div className="flex flex-col gap-2">
+                <div className="flex w-full items-center gap-2">
+                  <input
+                    type="checkbox"
+                    id="active"
+                    checked={formData.active}
+                    onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
+                    className="rounded border-gray-300 outline-none focus:border-primary focus:ring-primary"
+                  />
+                  <label htmlFor="active" className="text-sm">
+                    Mark as active
+                  </label>
+                </div>
 
+                <div className="flex w-full items-center gap-2">
+                  <input
+                    type="checkbox"
+                    id="featured"
+                    checked={formData.featured}
+                    onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
+                    className="rounded border-gray-300 outline-none focus:border-primary focus:ring-primary"
+                  />
+                  <label htmlFor="featured" className="text-sm">
+                    Mark as featured
+                  </label>
+                </div>
+              </div>
               <div className="mx-auto w-[300px]">
                 <BaseButton loading={false} type="submit">
                   save
