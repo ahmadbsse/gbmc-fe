@@ -124,13 +124,13 @@ const EditSubAssembly = () => {
 
               <div className="flex flex-col md:flex-row md:gap-4">
                 <div className="w-full">
-                  <label className="required mb-1 block text-sm font-medium">Material</label>
+                  <label className="required mb-1 block text-sm font-medium">OEM Numbers</label>
                   <input
                     type="text"
                     className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                    placeholder={`Enter material name`}
-                    value={formData.material}
-                    onChange={(e) => setFormData({ ...formData, material: e.target.value })}
+                    placeholder={`Enter comma sepereated numbers..`}
+                    value={formData.oem_number}
+                    onChange={(e) => setFormData({ ...formData, oem_number: e.target.value })}
                   />
                 </div>
                 <div className="w-full">

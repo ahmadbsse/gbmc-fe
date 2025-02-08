@@ -84,16 +84,17 @@ export const createSubAssemblyValidator = (formData, dataFilesIds) => {
     showToast(`Please enter name`, "error");
     return false;
   }
-  if (formData.material == "") {
-    showToast(`Please enter material`, "error");
+  if (formData.number == "") {
+    showToast(`Please enter registration number`, "error");
     return false;
   }
+
   if (formData.weight == "") {
     showToast(`Please enter weight`, "error");
     return false;
   }
-  if (formData.number == "") {
-    showToast(`Please enter registration number`, "error");
+  if (formData.oem_number == "") {
+    showToast(`Please enter oem numbers`, "error");
     return false;
   }
   if (formData.description == "") {
@@ -161,17 +162,16 @@ export const editSubAssemblyValidator = (formData, dataFilesIds) => {
     showToast(`Please enter name`, "error");
     return false;
   }
-  if (formData.material == "") {
-    showToast(`Please enter material`, "error");
+  if (formData.number == "") {
+    showToast(`Please enter registration number`, "error");
     return false;
   }
   if (formData.weight == "") {
     showToast(`Please enter weight`, "error");
     return false;
   }
-
-  if (formData.number == "") {
-    showToast(`Please enter registration number`, "error");
+  if (formData.oem_number == "") {
+    showToast(`Please enter oem numbers`, "error");
     return false;
   }
   if (formData.description == "") {

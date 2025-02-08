@@ -52,9 +52,9 @@ const ViewSubAssemblyDetails = () => {
 
               <div className="flex flex-col md:flex-row md:gap-5">
                 <div className="w-full">
-                  <label className="mb-1 block text-sm font-medium">Material</label>
+                  <label className="mb-1 block text-sm font-medium">OEM Numbers</label>
                   <div className="w-full rounded-lg border border-gray-300 px-4 py-2">
-                    {formData.material}
+                    {formData.oem_number}
                   </div>
                 </div>
                 <div className="w-full">
