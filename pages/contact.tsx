@@ -143,8 +143,15 @@ const ContactPage = () => {
                     <div className="flex items-start gap-4">
                       <Phone className="h-6 w-6 text-primary" />
                       <div>
-                        <h3 className="font-medium text-slate-900">Phone</h3>
-                        <p className="text-slate-600">{appData.conatcNumber}</p>
+                        <h3 className="font-medium text-slate-900">Office Number</h3>
+                        <p className="text-slate-600">{appData.officeNumber}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <Phone className="h-6 w-6 text-primary" />
+                      <div>
+                        <h3 className="font-medium text-slate-900">Mobile Number</h3>
+                        <p className="text-slate-600">{appData.mobileNumber}</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-4">

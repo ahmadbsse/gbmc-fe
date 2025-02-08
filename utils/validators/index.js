@@ -18,7 +18,7 @@ export const createPartValidator = (formData, dataFilesIds) => {
     return false;
   }
   if (formData.number == "") {
-    showToast(`Please enter SKU`, "error");
+    showToast(`Please enter registration number`, "error");
     return false;
   }
   if (formData.description == "") {
@@ -54,7 +54,7 @@ export const editPartValidator = (formData, dataFilesIds) => {
     return false;
   }
   if (formData.number == "") {
-    showToast(`Please enter SKU`, "error");
+    showToast(`Please enter registration number`, "error");
     return false;
   }
   if (formData.description == "") {
@@ -86,7 +86,7 @@ export const createSubAssemblyValidator = (formData, dataFilesIds) => {
     return false;
   }
   if (formData.number == "") {
-    showToast(`Please enter SKU`, "error");
+    showToast(`Please enter registration number`, "error");
     return false;
   }
   if (formData.description == "") {
@@ -164,7 +164,7 @@ export const editSubAssemblyValidator = (formData, dataFilesIds) => {
   }
 
   if (formData.number == "") {
-    showToast(`Please enter SKU`, "error");
+    showToast(`Please enter registration number`, "error");
     return false;
   }
   if (formData.description == "") {

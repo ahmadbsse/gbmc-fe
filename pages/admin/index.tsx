@@ -23,7 +23,7 @@ const AdminDashboard = () => {
     setIsOpen(!isOpen);
   };
   const tabsKey = [
-    { name: "Suppliers", key: "suppliers" },
+    { name: "Make", key: "suppliers" },
     { name: "Sub Assemblies", key: "sub-assemblies" },
     { name: "Parts", key: "parts" },
     { name: "Engineering Component", key: "engineering" },

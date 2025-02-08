@@ -92,9 +92,9 @@ const CreateSubAssembly = () => {
                 />
               </div>
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">SKU Number</label>
+                <label className="required mb-1 block text-sm font-medium">Registered Number</label>
                 <input
-                  type="text"
+                  type="number"
                   className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder={`Enter number`}
                   value={formData.number}

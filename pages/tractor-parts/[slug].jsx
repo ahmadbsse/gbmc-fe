@@ -58,7 +58,7 @@ const PartDetails = () => {
         setData(response);
         setSpecifications({
           name: response.name,
-          SKU: `${response.id}`,
+          registered_number: `${response.id}`,
           material: response.material,
           weight: response.weight,
           published_at: response.publishedAt,
@@ -214,7 +214,7 @@ const PartDetails = () => {
                   <h1 className="text-xl font-bold capitalize text-primary lg:text-3xl">
                     {data?.name}
                   </h1>
-                  <span className="text-xs italic">SKU: {data?.number}</span>
+                  <span className="text-xs italic">Registered Number: {data?.number}</span>
                 </div>
 
                 <p className="" dangerouslySetInnerHTML={{ __html: data?.description }}></p>
