@@ -13,20 +13,17 @@ const TractorPartsHome = () => {
       title: "Tractor Parts",
       key: "tractor-parts",
       description: "Complete range of engine components",
-      featured: true,
     },
     {
       title: "TXL (Sub Assemblies)",
       key: "sub-assemblies",
       description: "Gearbox and transmission components",
-      featured: false,
     },
-    {
-      title: "Tractors",
-      key: "tractors",
-      description: "Pumps, valves, and hydraulic accessories",
-      featured: false,
-    },
+    // {
+    //   title: "Tractors",
+    //   key: "tractors",
+    //   description: "Pumps, valves, and hydraulic accessories",
+    // },
   ];
 
   const breadcrumbs = [

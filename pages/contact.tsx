@@ -75,7 +75,9 @@ const ContactPage = () => {
                 <h2 className="mb-6 text-2xl font-semibold text-slate-800">Send us an Email</h2>
                 <form ref={form} onSubmit={sendEmail} className="space-y-4">
                   <div>
-                    <label className="mb-1 block text-sm font-medium text-slate-700">Name</label>
+                    <label className="required mb-1 block text-sm font-medium text-slate-700">
+                      Name
+                    </label>
                     <input
                       name="from_name"
                       type="text"
@@ -85,7 +87,7 @@ const ContactPage = () => {
                     />
                   </div>
                   <div>
-                    <label className="mb-1 block text-sm font-medium text-slate-700">
+                    <label className="required mb-1 block text-sm font-medium text-slate-700">
                       Your Email
                     </label>
                     <input
@@ -97,7 +99,9 @@ const ContactPage = () => {
                     />
                   </div>
                   <div>
-                    <label className="mb-1 block text-sm font-medium text-slate-700">Message</label>
+                    <label className="required mb-1 block text-sm font-medium text-slate-700">
+                      Message
+                    </label>
                     <textarea
                       name="message"
                       rows={4}
@@ -159,7 +163,7 @@ const ContactPage = () => {
                   </div>
                 </div>
 
-                <div className="rounded-lg bg-white p-6 shadow-md">
+                {/* <div className="rounded-lg bg-white p-6 shadow-md">
                   <h2 className="mb-6 text-2xl font-semibold text-slate-800">Business Hours</h2>
                   <div className="space-y-2">
                     <p className="flex justify-between">
@@ -175,7 +179,7 @@ const ContactPage = () => {
                       <span className="font-medium">Closed</span>
                     </p>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
