@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Mail, Phone, MapPin, MailPlus } from "lucide-react";
 import Head from "next/head";
 import emailjs from "@emailjs/browser";
@@ -9,6 +9,12 @@ import showToast from "@/utils/toast";
 
 const ContactPage = () => {
   const [loading, setLoading] = useState(false);
+  const [formIsValid, setFormIsValid] = useState(false);
+  const [formValues, setFormValues] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
   const form = useRef<HTMLFormElement>(null);
   const sendEmail = (e) => {
     e.preventDefault();
@@ -40,8 +46,16 @@ const ContactPage = () => {
         }
       );
   };
+  useEffect(() => {
+    if (formValues.name && formValues.email && formValues.message) {
+      setFormIsValid(true);
+    } else {
+      setFormIsValid(false);
+    }
+  }, [formValues]);
   return (
     <>
+      {JSON.stringify(formIsValid)}
       <Head>
         <title>Contact | {appData.name}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -83,6 +97,9 @@ const ContactPage = () => {
                       type="text"
                       maxLength={100}
                       required
+                      onChange={(e) => {
+                        setFormValues({ ...formValues, name: e.target.value });
+                      }}
                       className="w-full rounded-lg border border-slate-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                     />
                   </div>
@@ -95,6 +112,9 @@ const ContactPage = () => {
                       type="email"
                       maxLength={100}
                       required
+                      onChange={(e) => {
+                        setFormValues({ ...formValues, email: e.target.value });
+                      }}
                       className="w-full rounded-lg border border-slate-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                     />
                   </div>
@@ -105,6 +125,9 @@ const ContactPage = () => {
                     <textarea
                       name="message"
                       rows={4}
+                      onChange={(e) => {
+                        setFormValues({ ...formValues, message: e.target.value });
+                      }}
                       maxLength={500}
                       required
                       className="w-full rounded-lg border border-slate-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -112,7 +135,7 @@ const ContactPage = () => {
                   </div>
 
                   <div className="mx-auto mt-4 w-fit">
-                    <BaseButton loading={false} type="submit" disabled={loading}>
+                    <BaseButton loading={false} type="submit" disabled={loading || !formIsValid}>
                       {loading ? (
                         "Loading...."
                       ) : (
