@@ -12,28 +12,36 @@ import { transformMedia } from "@/utils";
 
 import { Menu, X } from "lucide-react";
 
-type tab = {
+type Tab = {
   name: string;
   key: string;
 };
 const AdminDashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  const [isLoading, setIsLoading] = useState(false);
+  const [parts, setParts] = useState(null);
+  const [engineering, setEngineering] = useState(null);
+  const [suppliers, setSuppliers] = useState(null);
+  const [subAssemblies, setSubAssemblies] = useState(null);
   const tabsKey = [
     { name: "Make", key: "suppliers" },
     { name: "Sub Assemblies", key: "sub-assemblies" },
     { name: "Parts", key: "parts" },
     { name: "Engineering Component", key: "engineering" },
   ];
-  const [activeTab, setActiveTab] = useState<tab>(tabsKey[0]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [parts, setParts] = useState(null);
-  const [engineering, setEngineering] = useState(null);
-  const [suppliers, setSuppliers] = useState(null);
-  const [subAssemblies, setSubAssemblies] = useState(null);
+  const [activeTab, setActiveTab] = useState<Tab>(tabsKey[0]);
+  useEffect(() => {
+    const storedTab = localStorage.getItem("activeTab");
+    console.log(storedTab);
+    if (storedTab) {
+      setActiveTab(JSON.parse(storedTab));
+    } else {
+      setActiveTab(tabsKey[0]);
+    }
+  }, []);
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
   const getParts = async () => {
     try {
@@ -127,6 +135,11 @@ const AdminDashboard = () => {
     }
   }, [activeTab]);
 
+  const setTab = (tab: Tab) => {
+    //store tab object to local storage
+    localStorage.setItem("activeTab", JSON.stringify(tab));
+    setActiveTab(tab);
+  };
   return (
     <>
       <Head>
@@ -164,7 +177,7 @@ const AdminDashboard = () => {
               <AdminTabs
                 key={tab.key}
                 active={activeTab.name === tab.name}
-                onClick={() => setActiveTab(tab)}
+                onClick={() => setTab(tab)}
               >
                 {tab.name}
               </AdminTabs>
@@ -188,7 +201,7 @@ const AdminDashboard = () => {
                       active={activeTab.name === tab.name}
                       onClick={() => {
                         if (isOpen) setIsOpen(!isOpen);
-                        setActiveTab(tab);
+                        setTab(tab);
                       }}
                     >
                       {tab.name}

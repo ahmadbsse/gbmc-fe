@@ -146,7 +146,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
               <BaseButton loading={false} type="submit" handleClick={addNewItem}>
                 <p className="mx-auto flex w-fit md:px-3">
                   <Plus className="mt-0.5 h-4 w-4" />
-                  Add New
+                  Add {activeTab.name}
                 </p>
               </BaseButton>
             </div>
