@@ -96,7 +96,7 @@ const EditSubAssembly = () => {
         <main className="container mx-auto px-4 py-8">
           <h1 className="mx-auto mb-8 w-fit text-2xl font-bold">Edit Sub Assembly</h1>
           {formData ? (
-            <form onSubmit={handleSubmit} className="mx-auto max-w-[1000px] space-y-3">
+            <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3">
               <div className="flex flex-col md:flex-row md:gap-4">
                 <div className="w-full">
                   <label className="required mb-1 block text-sm font-medium">Name</label>
@@ -145,6 +145,30 @@ const EditSubAssembly = () => {
 
               <RichTextEditor handleChange={handleChange} defaultValue={formData.description} />
 
+              <label className="required mb-1 block text-sm font-medium"> Media</label>
+              <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
+              <div className="flex items-center gap-4">
+                {formData?.media?.map((item) => (
+                  <div className="relative h-32 w-44" key={item.documentId}>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        deletePreviousImage(item.id);
+                      }}
+                      className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
+                    >
+                      <X className="h-4 w-4 text-white" />
+                    </button>
+                    <BaseImage
+                      width={item.formats.thumbnail.width}
+                      height={item.formats.thumbnail.height}
+                      src={item.formats.thumbnail.url}
+                      alt={item.name}
+                      classes="object-cover w-full h-full"
+                    />
+                  </div>
+                ))}
+              </div>
               <div className="flex flex-col gap-2">
                 <div className="flex w-full items-center gap-2">
                   <input
@@ -172,32 +196,6 @@ const EditSubAssembly = () => {
                   </label>
                 </div>
               </div>
-              <div className="mx-auto max-w-2xl">
-                <label className="required">Media</label>
-              </div>
-              <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
-              <div className="flex items-center gap-4">
-                {formData?.media?.map((item) => (
-                  <div className="relative w-44" key={item.documentId}>
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        deletePreviousImage(item.id);
-                      }}
-                      className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
-                    >
-                      <X className="h-4 w-4 text-white" />
-                    </button>
-                    <BaseImage
-                      width={item.formats.thumbnail.width}
-                      height={item.formats.thumbnail.height}
-                      src={item.formats.thumbnail.url}
-                      alt={item.name}
-                    />
-                  </div>
-                ))}
-              </div>
-
               <div className="mx-auto w-[300px]">
                 <BaseButton loading={false} type="submit">
                   Save

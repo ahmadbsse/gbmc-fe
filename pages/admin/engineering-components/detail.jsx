@@ -22,6 +22,11 @@ const ViewComponentDetails = () => {
         if (response.hero_image.mime && response.hero_image.mime.includes("video")) {
           response.hero_image = transformHeroVideo(response.hero_image);
         }
+        response.summary = response.summary.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+        response.description = response.description.replace(
+          /\*\*(.*?)\*\*/g,
+          "<strong>$1</strong>"
+        );
         setFormData(response);
       });
     } catch (error) {
@@ -38,7 +43,7 @@ const ViewComponentDetails = () => {
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">
           {formData ? (
-            <div className="mx-auto max-w-[1000px] space-y-3">
+            <div className="mx-auto max-w-[810px] space-y-3">
               <h1 className="mx-auto mb-8 w-fit text-2xl font-bold">
                 Engineering Component - Details
               </h1>
@@ -63,6 +68,57 @@ const ViewComponentDetails = () => {
                 />
               </div>
 
+              <div>
+                <label className="mb-1 block text-sm font-medium">Hero Image</label>
+                <div className="h-28 w-44">
+                  {formData.hero_image.type === "video" ? (
+                    <BaseVideo
+                      src={formData.hero_image.url}
+                      autoPlay={true}
+                      muted={true}
+                      loop={true}
+                      classes="object-cover w-full h-full"
+                    />
+                  ) : (
+                    <BaseImage
+                      width={formData.hero_image.formats.thumbnail.width}
+                      height={formData.hero_image.formats.thumbnail.height}
+                      src={formData.hero_image.formats.thumbnail.url}
+                      alt={formData.hero_image.name}
+                      classes="object-cover w-full h-full"
+                    />
+                  )}
+                </div>
+              </div>
+              <div>
+                <label className="mb-1 block text-sm font-medium">Media</label>
+                <div className="flex flex-wrap items-center gap-4">
+                  {Array.isArray(formData.media) ? (
+                    formData.media.map((item, index) => (
+                      <div className="h-28 w-44" key={index}>
+                        <BaseImage
+                          key={index}
+                          width={item.formats.thumbnail.width}
+                          height={item.formats.thumbnail.height}
+                          src={item.formats.thumbnail.url}
+                          alt={item.name}
+                          classes="object-cover w-full h-full"
+                        />
+                      </div>
+                    ))
+                  ) : (
+                    <div className="h-28 w-44">
+                      <BaseImage
+                        width={formData.media.formats.thumbnail.width}
+                        height={formData.media.formats.thumbnail.height}
+                        src={formData.media.formats.thumbnail.url}
+                        alt={formData.name}
+                        classes="object-cover w-full h-full"
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
               <div className="flex flex-col gap-2">
                 <div className="flex w-full items-center gap-2">
                   <input
@@ -90,53 +146,6 @@ const ViewComponentDetails = () => {
                   <label htmlFor="featured" className="text-sm">
                     Mark as featured
                   </label>
-                </div>
-              </div>
-              <div>
-                <label className="mb-1 block text-sm font-medium">Hero Image</label>
-                <div className="max-w-44">
-                  {formData.hero_image.type === "video" ? (
-                    <BaseVideo
-                      src={formData.hero_image.url}
-                      autoPlay={true}
-                      muted={true}
-                      loop={true}
-                    />
-                  ) : (
-                    <BaseImage
-                      width={formData.hero_image.formats.thumbnail.width}
-                      height={formData.hero_image.formats.thumbnail.height}
-                      src={formData.hero_image.formats.thumbnail.url}
-                      alt={formData.hero_image.name}
-                    />
-                  )}
-                </div>
-              </div>
-              <div>
-                <label className="mb-1 block text-sm font-medium">Media</label>
-                <div className="flex flex-wrap items-center gap-4">
-                  {Array.isArray(formData.media) ? (
-                    formData.media.map((item, index) => (
-                      <div className="max-w-44" key={index}>
-                        <BaseImage
-                          key={index}
-                          width={item.formats.thumbnail.width}
-                          height={item.formats.thumbnail.height}
-                          src={item.formats.thumbnail.url}
-                          alt={item.name}
-                        />
-                      </div>
-                    ))
-                  ) : (
-                    <div className="max-w-44">
-                      <BaseImage
-                        width={formData.media.formats.thumbnail.width}
-                        height={formData.media.formats.thumbnail.height}
-                        src={formData.media.formats.thumbnail.url}
-                        alt={formData.name}
-                      />
-                    </div>
-                  )}
                 </div>
               </div>
             </div>

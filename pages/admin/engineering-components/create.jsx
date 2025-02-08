@@ -84,7 +84,7 @@ const CreateEngineeringComponent = () => {
         <main className="container mx-auto px-4 py-8">
           <h1 className="mx-auto mb-8 w-fit text-2xl font-bold">Create Engineering Component</h1>
 
-          <form onSubmit={handleSubmit} className="mx-auto max-w-[1000px] space-y-3">
+          <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3">
             <div className="flex flex-col md:flex-row md:gap-4">
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Name</label>
@@ -107,6 +107,16 @@ const CreateEngineeringComponent = () => {
               defaultValue={formData.description}
             />
 
+            <div className="flex gap-2">
+              <div className="w-full">
+                <label className="required mb-1 block text-sm font-medium">Hero Image</label>
+                <BaseFileUploader setDataFilesIds={setHeroFileId} />
+              </div>
+              <div className="w-full">
+                <label className="required mb-1 block text-sm font-medium">Detail Images</label>
+                <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
+              </div>
+            </div>
             <div className="flex flex-col gap-2">
               <div className="flex w-full items-center gap-2">
                 <input
@@ -134,20 +144,10 @@ const CreateEngineeringComponent = () => {
                 </label>
               </div>
             </div>
-            <div className="flex gap-2">
-              <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">Hero Image</label>
-                <BaseFileUploader setDataFilesIds={setHeroFileId} />
-              </div>
-              <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">Detail Images</label>
-                <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
-              </div>
-            </div>
 
             <div className="mx-auto w-[300px]">
               <BaseButton loading={false} type="submit">
-                submit
+                save
               </BaseButton>
             </div>
           </form>

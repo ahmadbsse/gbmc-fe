@@ -37,7 +37,8 @@ const AllParts = () => {
       const res = await apiClient.GET(url);
 
       if (res && res.data.length > 0) {
-        const transformedData = transformMedia(res.data);
+        const parts = res.data.filter((part) => part.supplier.active);
+        const transformedData = transformMedia(parts);
         setAllParts((prev) => (isLoadMore ? [...prev, ...transformedData] : transformedData));
         setTotal(res.meta.pagination.total);
       } else {
@@ -104,7 +105,7 @@ const AllParts = () => {
               <span
                 onClick={() => setSelectedSupplier(brand.documentId)}
                 className={`cursor-pointer p-2 font-medium uppercase hover:text-black md:p-4`}
-                key={index}
+                key={index + brand.name}
               >
                 {brand.name}
               </span>
@@ -114,7 +115,10 @@ const AllParts = () => {
             <div className="custom-scrollbar flex max-w-7xl flex-col gap-3 overflow-x-auto pb-2 lg:flex-row">
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
                 {allParts.map((part, index) => (
-                  <Link href={`/tractor-parts/${part.documentId}`} key={part.id + index}>
+                  <Link
+                    href={`/tractor-parts/${part.documentId}`}
+                    key={part.id + index + part.documentId}
+                  >
                     <div className="rounded-lg border border-gray-200 bg-white shadow-sm transition">
                       <div className="relative h-[200px] w-full border-b border-gray-200">
                         <BaseImage

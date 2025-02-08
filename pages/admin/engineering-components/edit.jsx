@@ -112,9 +112,9 @@ const EditComponent = () => {
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">
-          <h1 className="mx-auto mb-8 w-fit text-2xl font-bold">Edit Component</h1>
+          <h1 className="mx-auto mb-8 w-fit text-2xl font-bold">Edit Engineering Component</h1>
           {formData ? (
-            <form onSubmit={handleSubmit} className="mx-auto max-w-[1000px] space-y-3">
+            <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3">
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Name</label>
                 <input
@@ -128,13 +128,77 @@ const EditComponent = () => {
               <RichTextEditor
                 handleChange={handleChangeSummary}
                 defaultValue={formData.summary}
-                label="summary"
+                label="Summary"
               />
               <RichTextEditor
                 handleChange={handleChangeDescription}
                 defaultValue={formData.description}
               />
 
+              <div className="flex gap-2">
+                <div className="w-full">
+                  <label className="required mb-1 block text-sm font-medium">Detail Images</label>
+                  <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
+                  {formData.media ? (
+                    <div className="flex flex-wrap items-center gap-4">
+                      {formData?.media?.map((item) => (
+                        <div className="relative mt-2 h-32 w-48" key={item.documentId}>
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              deletePreviousImage(item.id, "media");
+                            }}
+                            className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
+                          >
+                            <X className="h-4 w-4 text-white" />
+                          </button>
+                          <BaseImage
+                            width={item.formats?.thumbnail.width}
+                            height={item.formats?.thumbnail.height}
+                            src={item.formats?.thumbnail.url}
+                            alt={item.name}
+                            classes="object-cover w-full h-full"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+                <div className="w-full">
+                  <label className="required mb-1 block text-sm font-medium">Hero Image</label>
+                  <BaseFileUploader setDataFilesIds={setHeroFileId} />
+                  {formData.hero_image && Object.keys(formData.hero_image).length != 0 ? (
+                    <div className="relative mt-2 h-32 w-48">
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          deletePreviousImage(formData.hero_image.id, "hero_image");
+                        }}
+                        className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
+                      >
+                        <X className="h-4 w-4 text-white" />
+                      </button>
+                      {formData.hero_image.type === "video" ? (
+                        <BaseVideo
+                          src={formData.hero_image.url}
+                          autoPlay={true}
+                          muted={true}
+                          loop={true}
+                          classes="object-cover w-full h-full"
+                        />
+                      ) : (
+                        <BaseImage
+                          width={formData.hero_image.formats?.thumbnail?.width}
+                          height={formData.hero_image.formats?.thumbnail?.height}
+                          src={formData.hero_image.formats?.thumbnail?.url}
+                          alt={formData.hero_image.name}
+                          classes="object-cover w-full h-full"
+                        />
+                      )}
+                    </div>
+                  ) : null}
+                </div>
+              </div>
               <div className="flex flex-col gap-2">
                 <div className="flex w-full items-center gap-2">
                   <input
@@ -162,68 +226,6 @@ const EditComponent = () => {
                   </label>
                 </div>
               </div>
-              <div className="flex gap-2">
-                <div className="w-full">
-                  <label className="required mb-1 block text-sm font-medium">Detail Images</label>
-                  <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
-                  {formData.media ? (
-                    <div className="flex flex-wrap items-center gap-4">
-                      {formData?.media?.map((item) => (
-                        <div className="relative mt-2 max-w-48" key={item.documentId}>
-                          <button
-                            onClick={(e) => {
-                              e.preventDefault();
-                              deletePreviousImage(item.id, "media");
-                            }}
-                            className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
-                          >
-                            <X className="h-4 w-4 text-white" />
-                          </button>
-                          <BaseImage
-                            width={item.formats?.thumbnail.width}
-                            height={item.formats?.thumbnail.height}
-                            src={item.formats?.thumbnail.url}
-                            alt={item.name}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  ) : null}
-                </div>
-                <div className="w-full">
-                  <label className="required mb-1 block text-sm font-medium">Hero Image</label>
-                  <BaseFileUploader setDataFilesIds={setHeroFileId} />
-                  {formData.hero_image && Object.keys(formData.hero_image).length != 0 ? (
-                    <div className="relative mt-2 w-48">
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          deletePreviousImage(formData.hero_image.id, "hero_image");
-                        }}
-                        className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
-                      >
-                        <X className="h-4 w-4 text-white" />
-                      </button>
-                      {formData.hero_image.type === "video" ? (
-                        <BaseVideo
-                          src={formData.hero_image.url}
-                          autoPlay={true}
-                          muted={true}
-                          loop={true}
-                        />
-                      ) : (
-                        <BaseImage
-                          width={formData.hero_image.formats?.thumbnail?.width}
-                          height={formData.hero_image.formats?.thumbnail?.height}
-                          src={formData.hero_image.formats?.thumbnail?.url}
-                          alt={formData.hero_image.name}
-                        />
-                      )}
-                    </div>
-                  ) : null}
-                </div>
-              </div>
-
               <div className="mx-auto w-[300px]">
                 <BaseButton loading={false} type="submit">
                   save

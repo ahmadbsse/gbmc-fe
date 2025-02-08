@@ -33,7 +33,7 @@ const ViewPartDetails = () => {
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">
           {formData ? (
-            <div className="mx-auto max-w-[1000px] space-y-3">
+            <div className="mx-auto max-w-[810px] space-y-3">
               <h1 className="mx-auto mb-8 w-fit text-2xl font-bold">Part - Details</h1>
               <div className="flex flex-col md:flex-row md:gap-5">
                 <div className="w-full">
@@ -78,6 +78,34 @@ const ViewPartDetails = () => {
                 />
               </div>
 
+              <label className="mb-1 block text-sm font-medium">Media</label>
+              <div className="flex flex-wrap items-center gap-4">
+                {Array.isArray(formData.media) ? (
+                  formData.media.map((item, index) => (
+                    <div className="h-32 w-40" key={index}>
+                      <BaseImage
+                        key={index}
+                        width={item.formats.thumbnail.width}
+                        height={item.formats.thumbnail.height}
+                        src={item.formats.thumbnail.url}
+                        alt={item.name}
+                        classes="object-cover w-full h-full"
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <div className="h-32 w-40">
+                    <BaseImage
+                      width={formData.media.formats.thumbnail.width}
+                      height={formData.media.formats.thumbnail.height}
+                      src={formData.media.formats.thumbnail.url}
+                      alt={formData.name}
+                      classes="object-cover w-full h-full"
+                    />
+                  </div>
+                )}
+              </div>
+
               <div className="flex flex-col gap-2">
                 <div className="flex w-full items-center gap-2">
                   <input
@@ -106,31 +134,6 @@ const ViewPartDetails = () => {
                     Mark as featured
                   </label>
                 </div>
-              </div>
-              <label className="mb-1 block text-sm font-medium">Media</label>
-              <div className="flex flex-wrap items-center gap-4">
-                {Array.isArray(formData.media) ? (
-                  formData.media.map((item, index) => (
-                    <div className="max-w-44" key={index}>
-                      <BaseImage
-                        key={index}
-                        width={item.formats.thumbnail.width}
-                        height={item.formats.thumbnail.height}
-                        src={item.formats.thumbnail.url}
-                        alt={item.name}
-                      />
-                    </div>
-                  ))
-                ) : (
-                  <div className="max-w-44">
-                    <BaseImage
-                      width={formData.media.formats.thumbnail.width}
-                      height={formData.media.formats.thumbnail.height}
-                      src={formData.media.formats.thumbnail.url}
-                      alt={formData.name}
-                    />
-                  </div>
-                )}
               </div>
             </div>
           ) : (
