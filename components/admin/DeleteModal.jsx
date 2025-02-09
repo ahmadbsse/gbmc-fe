@@ -8,7 +8,7 @@ const DeleteConfirmationModal = ({ onClose, handleDelete, currentTab }) => {
         <button onClick={onClose} className="absolute right-4 top-6">
           <X className="h-6 w-6" />
         </button>
-        <h1 className="text-lg font-bold">
+        <h1 className="mb-2 text-lg font-bold">
           Delete{" "}
           {currentTab == "engineering"
             ? "Engineering Component"

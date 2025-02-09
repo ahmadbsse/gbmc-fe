@@ -12,7 +12,7 @@ import {
 } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
 import { BaseButton, BaseImage } from "@/components/common";
-import { convertToReadableDate } from "@/utils";
+// import { convertToReadableDate } from "@/utils";
 
 const ListDashboardData = ({ data, activeTab, getData, total }) => {
   const [showAddItemModal, setShowAddItemModal] = useState(false);
@@ -231,9 +231,9 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                             <span className="text-sm">{item.description}</span>
                           )}
                         </div>
-                        <span className="text-xs text-solidGray/50">
+                        {/* <span className="text-xs text-solidGray/50">
                           {convertToReadableDate(item.publishedAt)}
-                        </span>
+                        </span> */}
                       </div>
                     </div>
 
