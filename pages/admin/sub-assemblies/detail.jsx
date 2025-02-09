@@ -100,7 +100,7 @@ const ViewSubAssemblyDetails = () => {
                   </div>
                 )}
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 pt-4">
                 <div className="flex w-full items-center gap-2">
                   <input
                     type="checkbox"

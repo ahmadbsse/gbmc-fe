@@ -137,34 +137,6 @@ const EditComponent = () => {
 
               <div className="flex gap-2">
                 <div className="w-full">
-                  <label className="required mb-1 block text-sm font-medium">Detail Images</label>
-                  <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
-                  {formData.media ? (
-                    <div className="flex flex-wrap items-center gap-4">
-                      {formData?.media?.map((item) => (
-                        <div className="relative mt-2 h-32 w-48" key={item.documentId}>
-                          <button
-                            onClick={(e) => {
-                              e.preventDefault();
-                              deletePreviousImage(item.id, "media");
-                            }}
-                            className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
-                          >
-                            <X className="h-4 w-4 text-white" />
-                          </button>
-                          <BaseImage
-                            width={item.formats?.thumbnail.width}
-                            height={item.formats?.thumbnail.height}
-                            src={item.formats?.thumbnail.url}
-                            alt={item.name}
-                            classes="object-cover w-full h-full"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  ) : null}
-                </div>
-                <div className="w-full">
                   <label className="required mb-1 block text-sm font-medium">Hero Image</label>
                   <BaseFileUploader setDataFilesIds={setHeroFileId} />
                   {formData.hero_image && Object.keys(formData.hero_image).length != 0 ? (
@@ -198,8 +170,36 @@ const EditComponent = () => {
                     </div>
                   ) : null}
                 </div>
+                <div className="w-full">
+                  <label className="required mb-1 block text-sm font-medium">Detail Images</label>
+                  <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
+                  {formData.media ? (
+                    <div className="flex flex-wrap items-center gap-4">
+                      {formData?.media?.map((item) => (
+                        <div className="relative mt-2 h-32 w-48" key={item.documentId}>
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              deletePreviousImage(item.id, "media");
+                            }}
+                            className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
+                          >
+                            <X className="h-4 w-4 text-white" />
+                          </button>
+                          <BaseImage
+                            width={item.formats?.thumbnail.width}
+                            height={item.formats?.thumbnail.height}
+                            src={item.formats?.thumbnail.url}
+                            alt={item.name}
+                            classes="object-cover w-full h-full"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 pt-3">
                 <div className="flex w-full items-center gap-2">
                   <input
                     type="checkbox"
@@ -226,7 +226,7 @@ const EditComponent = () => {
                   </label>
                 </div>
               </div>
-              <div className="mx-auto w-[300px]">
+              <div className="mx-auto w-[300px] py-4">
                 <BaseButton loading={false} type="submit">
                   save
                 </BaseButton>

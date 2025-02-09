@@ -117,7 +117,7 @@ const CreateEngineeringComponent = () => {
                 <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
               </div>
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 pt-3">
               <div className="flex w-full items-center gap-2">
                 <input
                   type="checkbox"
@@ -145,7 +145,7 @@ const CreateEngineeringComponent = () => {
               </div>
             </div>
 
-            <div className="mx-auto w-[300px]">
+            <div className="mx-auto w-[300px] py-4">
               <BaseButton loading={false} type="submit">
                 save
               </BaseButton>

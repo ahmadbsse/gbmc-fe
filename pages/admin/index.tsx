@@ -23,6 +23,10 @@ const AdminDashboard = () => {
   const [engineering, setEngineering] = useState(null);
   const [suppliers, setSuppliers] = useState(null);
   const [subAssemblies, setSubAssemblies] = useState(null);
+  const [totalParts, setTotalParts] = useState(0);
+  const [totalEngineering, setTotalEngineering] = useState(0);
+  const [totalSuppliers, setTotalSuppliers] = useState(0);
+  const [totalSubAssemblies, setTotalSubAssemblies] = useState(0);
   const tabsKey = [
     { name: "Make", key: "suppliers" },
     { name: "Sub Assemblies", key: "sub-assemblies" },
@@ -50,6 +54,7 @@ const AdminDashboard = () => {
         if (res && res.data.length > 0) {
           const transformedData = transformMedia(res.data);
           setParts(transformedData);
+          setTotalParts(res.meta.pagination.total);
         } else {
           setParts(null);
         }
@@ -69,6 +74,7 @@ const AdminDashboard = () => {
         if (res && res.data.length > 0) {
           const transformedData = transformMedia(res.data);
           setEngineering(transformedData);
+          setTotalEngineering(res.meta.pagination.total);
         } else {
           setEngineering(null);
         }
@@ -87,6 +93,7 @@ const AdminDashboard = () => {
         if (res && res.data.length > 0) {
           const transformedData = transformMedia(res.data);
           setSubAssemblies(transformedData);
+          setTotalSubAssemblies(res.meta.pagination.total);
         } else {
           setSuppliers(null);
         }
@@ -106,6 +113,7 @@ const AdminDashboard = () => {
         if (res && res.data.length > 0) {
           const transformedData = transformMedia(res.data);
           setSuppliers(transformedData);
+          setTotalSuppliers(res.meta.pagination.total);
         } else {
           setSuppliers(null);
         }
@@ -225,6 +233,15 @@ const AdminDashboard = () => {
                     : activeTab.key == "sub-assemblies"
                       ? subAssemblies
                       : parts
+              }
+              total={
+                activeTab.key == "engineering"
+                  ? totalEngineering
+                  : activeTab.key == "suppliers"
+                    ? totalSuppliers
+                    : activeTab.key == "sub-assemblies"
+                      ? totalSubAssemblies
+                      : totalParts
               }
               activeTab={activeTab}
               getData={

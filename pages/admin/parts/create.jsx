@@ -174,7 +174,7 @@ const CreatePart = () => {
 
             <label className="required mb-1 block text-sm font-medium"> Media</label>
             <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 pt-3">
               <div className="flex w-full items-center gap-2">
                 <input
                   type="checkbox"
@@ -201,7 +201,7 @@ const CreatePart = () => {
                 </label>
               </div>
             </div>
-            <div className="mx-auto w-[300px]">
+            <div className="mx-auto w-[300px] py-4">
               <BaseButton loading={false} type="submit">
                 save
               </BaseButton>

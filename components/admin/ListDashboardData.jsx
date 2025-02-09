@@ -8,7 +8,7 @@ import apiClient from "@/utils/apiClient";
 import { BaseButton, BaseImage } from "@/components/common";
 import { convertToReadableDate } from "@/utils";
 
-const ListDashboardData = ({ data, activeTab, getData }) => {
+const ListDashboardData = ({ data, activeTab, getData, total }) => {
   const [showAddItemModal, setShowAddItemModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -141,7 +141,9 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
       <div className="rounded-lg bg-white shadow">
         <div className="border-b border-gray-200 px-6 py-4">
           <div className="mb-8 flex items-center justify-between">
-            <h2 className="text-lg font-medium">{activeTab.name}</h2>
+            <h2 className="flex items-center gap-2 text-lg font-medium">
+              {activeTab.name} <span className="text-sm text-gray-500"> ({total})</span>
+            </h2>
             <div className="hidden w-fit md:flex">
               <BaseButton loading={false} type="submit" handleClick={addNewItem}>
                 <p className="mx-auto flex w-fit md:px-3">
@@ -167,7 +169,6 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                     className={`flex flex-col justify-between rounded-lg bg-gray-50 p-4 md:flex-row md:items-center`}
                   >
                     <div className="flex gap-4">
-                      <span>{index + 1}.</span>
                       <div className="hidden h-28 w-40 max-w-44 md:block">
                         {Array.isArray(item?.media) ? (
                           <BaseImage
@@ -211,6 +212,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
 
                     <div className="ml-auto mt-2 flex w-fit items-center gap-2 md:ml-0 md:mt-0 md:gap-4">
                       <i
+                        title={item.active ? "Unactivate" : "Activate"}
                         onClick={() => toggleActivation(item)}
                         className={`rounded-lg p-2 ${
                           item.active
@@ -222,6 +224,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                       </i>
                       {currentTab != "suppliers" ? (
                         <i
+                          title={item.featured ? "Unfeature" : "Feature"}
                           className={`rounded-lg p-2 ${
                             item.featured
                               ? "bg-yellow-50 text-yellow-600 hover:bg-yellow-50"
@@ -233,6 +236,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                         </i>
                       ) : null}
                       <i
+                        title="Edit"
                         onClick={() => {
                           if (
                             currentTab == "parts" ||
@@ -250,6 +254,7 @@ const ListDashboardData = ({ data, activeTab, getData }) => {
                         <Pencil className="h-4 w-4" />
                       </i>
                       <i
+                        title="Delete"
                         onClick={() => {
                           setActiveID(item.documentId);
                           setShowDeleteModal(true);
