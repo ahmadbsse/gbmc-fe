@@ -126,7 +126,10 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
             </div>
             <div>
               <label className="required mb-1 block text-sm font-medium"> Media</label>
-              <BaseFileUploader setDataFilesIds={setDataFilesIds} />
+              <BaseFileUploader
+                setDataFilesIds={setDataFilesIds}
+                disabled={dataFilesIds != "" || dataFilesIds.length > 1 || data.media.length}
+              />
             </div>
             <div className="flex items-center gap-4">
               {data?.media ? (

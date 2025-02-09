@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { Upload, X, CheckCircle, AlertCircle } from "lucide-react";
 import apiClient from "@/utils/apiClient";
 
-const BaseFileUploader = ({ setDataFilesIds, multiple = false }) => {
+const BaseFileUploader = ({ setDataFilesIds, multiple = false, disabled = false }) => {
   const [files, setFiles] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
@@ -85,7 +85,7 @@ const BaseFileUploader = ({ setDataFilesIds, multiple = false }) => {
     <div className="w-full">
       {/* Upload Area */}
       <div
-        className={`cursor-pointer rounded-lg border-2 border-dashed bg-white p-8 text-center transition-colors ${isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300 hover:border-gray-400"}`}
+        className={`cursor-pointer rounded-lg border-2 border-dashed bg-white p-8 text-center transition-colors ${isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300 hover:border-gray-400"} ${disabled ? "pointer-events-none opacity-50" : ""}`}
         onDragEnter={handleDragEnter}
         onDragOver={handleDragEnter}
         onDragLeave={handleDragLeave}
@@ -99,8 +99,9 @@ const BaseFileUploader = ({ setDataFilesIds, multiple = false }) => {
         <input
           ref={fileInputRef}
           type="file"
+          disabled={disabled}
           multiple
-          className="hidden"
+          className={`hidden`}
           onChange={(e) => handleFiles(e.target.files)}
         />
       </div>

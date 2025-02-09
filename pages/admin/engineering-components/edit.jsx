@@ -138,7 +138,14 @@ const EditComponent = () => {
               <div className="flex gap-2">
                 <div className="w-full">
                   <label className="required mb-1 block text-sm font-medium">Hero Image</label>
-                  <BaseFileUploader setDataFilesIds={setHeroFileId} />
+                  <BaseFileUploader
+                    setDataFilesIds={setHeroFileId}
+                    disabled={
+                      heroFileId != "" ||
+                      heroFileId.length > 1 ||
+                      (formData.hero_image && Object.keys(formData.hero_image).length)
+                    }
+                  />
                   {formData.hero_image && Object.keys(formData.hero_image).length != 0 ? (
                     <div className="relative mt-2 h-32 w-48">
                       <button

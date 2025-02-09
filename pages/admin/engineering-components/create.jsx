@@ -125,7 +125,10 @@ const CreateEngineeringComponent = () => {
             <div className="flex gap-2">
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Hero Image</label>
-                <BaseFileUploader setDataFilesIds={setHeroFileId} />
+                <BaseFileUploader
+                  setDataFilesIds={setHeroFileId}
+                  disabled={heroFileId != "" || heroFileId.length > 1}
+                />
               </div>
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Detail Images</label>

@@ -102,7 +102,10 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
 
           <div>
             <label className="required mb-1 block text-sm font-medium"> Media</label>
-            <BaseFileUploader setDataFilesIds={setDataFilesIds} />
+            <BaseFileUploader
+              setDataFilesIds={setDataFilesIds}
+              disabled={dataFilesIds != "" || dataFilesIds.length > 1}
+            />
           </div>
           <div className="flex flex-col md:flex-row md:gap-8">
             <div className="mt-4 flex items-center gap-2">
