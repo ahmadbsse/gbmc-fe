@@ -44,7 +44,7 @@ const ViewComponentDetails = () => {
         <main className="container mx-auto px-4 py-8">
           {formData ? (
             <div className="mx-auto max-w-[810px] space-y-3">
-              <h1 className="mx-auto mb-8 w-fit text-2xl font-bold">
+              <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">
                 Engineering Component - Details
               </h1>
               <div className="w-full">

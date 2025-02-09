@@ -69,7 +69,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
         <button onClick={onClose} className="absolute right-4 top-6">
           <X className="h-6 w-6" />
         </button>
-        <h2 className="mb-5 text-2xl font-bold">Add New {modifyAdminTabname(activeTab)}</h2>
+        <h2 className="mb-8 text-2xl font-bold">Add New {modifyAdminTabname(activeTab)}</h2>
 
         <form onSubmit={handleSubmit} className="space-y-3">
           <div>

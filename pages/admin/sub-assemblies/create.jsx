@@ -77,7 +77,7 @@ const CreateSubAssembly = () => {
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">
-          <h1 className="mx-auto mb-8 w-fit text-2xl font-bold">Create Sub Assembly</h1>
+          <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">Create Sub Assembly</h1>
 
           <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3">
             <div className="flex flex-col md:flex-row md:gap-4">
