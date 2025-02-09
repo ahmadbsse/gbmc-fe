@@ -71,51 +71,57 @@ const ViewComponentDetails = () => {
               <div>
                 <label className="mb-1 block text-sm font-medium">Hero Image</label>
                 <div className="h-28 w-44">
-                  {formData.hero_image.type === "video" ? (
-                    <BaseVideo
-                      src={formData.hero_image.url}
-                      autoPlay={true}
-                      muted={true}
-                      loop={true}
-                      classes="object-cover w-full h-full"
-                    />
-                  ) : (
-                    <BaseImage
-                      width={formData.hero_image.formats.thumbnail.width}
-                      height={formData.hero_image.formats.thumbnail.height}
-                      src={formData.hero_image.formats.thumbnail.url}
-                      alt={formData.hero_image.name}
-                      classes="object-cover w-full h-full"
-                    />
-                  )}
+                  {formData.hero_image ? (
+                    formData.hero_image.type === "video" ? (
+                      <BaseVideo
+                        src={formData.hero_image.url}
+                        autoPlay={true}
+                        muted={true}
+                        loop={true}
+                        classes="object-cover w-full h-full"
+                      />
+                    ) : (
+                      <BaseImage
+                        width={formData.hero_image.formats.thumbnail.width}
+                        height={formData.hero_image.formats.thumbnail.height}
+                        src={formData.hero_image.formats.thumbnail.url}
+                        alt={formData.hero_image.name}
+                        classes="object-cover w-full h-full"
+                      />
+                    )
+                  ) : null}
                 </div>
               </div>
               <div>
                 <label className="mb-1 block text-sm font-medium">Media</label>
                 <div className="flex flex-wrap items-center gap-4">
-                  {Array.isArray(formData.media) ? (
-                    formData.media.map((item, index) => (
-                      <div className="h-28 w-44" key={index}>
+                  {formData.media ? (
+                    Array.isArray(formData.media) ? (
+                      formData.media.map((item, index) => (
+                        <div className="h-28 w-44" key={index}>
+                          <BaseImage
+                            key={index}
+                            width={item.formats.thumbnail.width}
+                            height={item.formats.thumbnail.height}
+                            src={item.formats.thumbnail.url}
+                            alt={item.name}
+                            classes="object-cover w-full h-full"
+                          />
+                        </div>
+                      ))
+                    ) : (
+                      <div className="h-28 w-44">
                         <BaseImage
-                          key={index}
-                          width={item.formats.thumbnail.width}
-                          height={item.formats.thumbnail.height}
-                          src={item.formats.thumbnail.url}
-                          alt={item.name}
+                          width={formData.media.formats.thumbnail.width}
+                          height={formData.media.formats.thumbnail.height}
+                          src={formData.media.formats.thumbnail.url}
+                          alt={formData.name}
                           classes="object-cover w-full h-full"
                         />
                       </div>
-                    ))
+                    )
                   ) : (
-                    <div className="h-28 w-44">
-                      <BaseImage
-                        width={formData.media.formats.thumbnail.width}
-                        height={formData.media.formats.thumbnail.height}
-                        src={formData.media.formats.thumbnail.url}
-                        alt={formData.name}
-                        classes="object-cover w-full h-full"
-                      />
-                    </div>
+                    <div className="h-28 w-44"></div>
                   )}
                 </div>
               </div>
