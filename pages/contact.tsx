@@ -4,7 +4,7 @@ import Head from "next/head";
 import emailjs from "@emailjs/browser";
 import { Navbar, BaseButton } from "@/components/common";
 import { appData } from "@/constants";
-
+import { GoogleMap } from "@/components/user";
 import showToast from "@/utils/toast";
 
 const ContactPage = () => {
@@ -78,15 +78,19 @@ const ContactPage = () => {
         {/* Navigation */}
         <Navbar />
 
-        <div className="container mx-auto p-4 pt-7">
+        <div className="container mx-auto p-4 pt-6">
           <div className="mx-auto max-w-4xl">
             <h1 className="mb-4 text-3xl font-bold text-slate-900">Contact Us</h1>
 
-            <div className="grid gap-12 md:grid-cols-2">
+            <div className="grid gap-4 md:grid-cols-2 lg:gap-8 xl:gap-12">
               {/* Contact Form */}
               <div className="rounded-lg bg-white p-6 shadow-md">
-                <h2 className="mb-6 text-2xl font-semibold text-slate-800">Send us an Email</h2>
-                <form ref={form} onSubmit={sendEmail} className="space-y-4">
+                <h2 className="text-2xl font-semibold text-slate-800">Send us an Email</h2>
+                <p className="my-3 text-sm">
+                  Please contact us for unmatched quality services for your industrial needs. Our
+                  representative will get in touch with you very soon.
+                </p>
+                <form ref={form} onSubmit={sendEmail} className="space-y-5">
                   <div>
                     <label className="required mb-1 block text-sm font-medium text-slate-700">
                       Name
@@ -133,7 +137,7 @@ const ContactPage = () => {
                     />
                   </div>
 
-                  <div className="mx-auto mt-4 w-fit">
+                  <div className="mx-auto w-fit pt-6">
                     <BaseButton loading={false} type="submit" disabled={loading || !formIsValid}>
                       {loading ? (
                         "Loading...."
@@ -149,12 +153,12 @@ const ContactPage = () => {
               </div>
 
               {/* Contact Information */}
-              <div className="space-y-8">
+              <div className="space-y-2">
                 <div className="rounded-lg bg-white p-6 shadow-md">
-                  <h2 className="mb-6 text-2xl font-semibold text-slate-800">
+                  <h2 className="mb-3 text-2xl font-semibold text-slate-800">
                     Contact Information
                   </h2>
-                  <div className="space-y-4">
+                  <div className="space-y-2">
                     <div className="flex items-start gap-4">
                       <Mail className="h-6 w-6 text-primary" />
                       <div>
@@ -191,7 +195,9 @@ const ContactPage = () => {
                     </div>
                   </div>
                 </div>
-
+                <div className="rounded-xl bg-white shadow-lg">
+                  <GoogleMap />
+                </div>
                 {/* <div className="rounded-lg bg-white p-6 shadow-md">
                   <h2 className="mb-6 text-2xl font-semibold text-slate-800">Business Hours</h2>
                   <div className="space-y-2">
