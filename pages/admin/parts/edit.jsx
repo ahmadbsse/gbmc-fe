@@ -16,7 +16,26 @@ const EditPart = () => {
   const [formData, setFormData] = useState(null);
   const [dataFilesIds, setDataFilesIds] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
+  const [isFormValid, setIsFormValid] = useState(false);
 
+  useEffect(() => {
+    if (formData) {
+      if (
+        formData.name === "" ||
+        formData.number === "" ||
+        formData.material === "" ||
+        formData.supplier === "" ||
+        formData.oem_number === "" ||
+        formData.weight === "" ||
+        formData.description === "" ||
+        (dataFilesIds.length === 0 && formData.media.length === 0)
+      ) {
+        setIsFormValid(false);
+      } else {
+        setIsFormValid(true);
+      }
+    }
+  }, [formData, dataFilesIds]);
   const getPartDetails = async () => {
     try {
       const url = `/parts/${id}?populate=*`;
@@ -244,7 +263,7 @@ const EditPart = () => {
                 </div>
               </div>
               <div className="mx-auto w-[300px] py-4">
-                <BaseButton loading={false} type="submit">
+                <BaseButton loading={false} type="submit" disabled={!isFormValid}>
                   Save
                 </BaseButton>
               </div>

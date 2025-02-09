@@ -15,7 +15,25 @@ const EditSubAssembly = () => {
   const { id } = router.query;
   const [formData, setFormData] = useState(null);
   const [dataFilesIds, setDataFilesIds] = useState([]);
+  const [isFormValid, setIsFormValid] = useState(false);
 
+  useEffect(() => {
+    if (formData) {
+      if (
+        formData.name === "" ||
+        formData.number === "" ||
+        formData.oem_number === "" ||
+        formData.weight === "" ||
+        formData.description === "" ||
+        formData.summary === "" ||
+        (dataFilesIds.length === 0 && formData.media.length === 0)
+      ) {
+        setIsFormValid(false);
+      } else {
+        setIsFormValid(true);
+      }
+    }
+  }, [formData, dataFilesIds]);
   const getSubAssemblyDetails = async () => {
     try {
       const url = `/sub-assemblies/${id}?populate=*`;
@@ -200,7 +218,7 @@ const EditSubAssembly = () => {
                 </div>
               </div>
               <div className="mx-auto w-[300px] py-4">
-                <BaseButton loading={false} type="submit">
+                <BaseButton loading={false} type="submit" disabled={!isFormValid}>
                   Save
                 </BaseButton>
               </div>

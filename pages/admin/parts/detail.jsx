@@ -85,29 +85,33 @@ const ViewPartDetails = () => {
 
               <label className="mb-1 block text-sm font-medium">Media</label>
               <div className="flex flex-wrap items-center gap-4">
-                {Array.isArray(formData.media) ? (
-                  formData.media.map((item, index) => (
-                    <div className="h-32 w-40" key={index}>
+                {formData.media ? (
+                  Array.isArray(formData.media) ? (
+                    formData.media.map((item, index) => (
+                      <div className="h-32 w-40" key={index}>
+                        <BaseImage
+                          key={index}
+                          width={item.formats.thumbnail.width}
+                          height={item.formats.thumbnail.height}
+                          src={item.formats.thumbnail.url}
+                          alt={item.name}
+                          classes="object-cover w-full h-full"
+                        />
+                      </div>
+                    ))
+                  ) : (
+                    <div className="h-32 w-44">
                       <BaseImage
-                        key={index}
-                        width={item.formats.thumbnail.width}
-                        height={item.formats.thumbnail.height}
-                        src={item.formats.thumbnail.url}
-                        alt={item.name}
+                        width={formData.media.formats.thumbnail.width}
+                        height={formData.media.formats.thumbnail.height}
+                        src={formData.media.formats.thumbnail.url}
+                        alt={formData.name}
                         classes="object-cover w-full h-full"
                       />
                     </div>
-                  ))
+                  )
                 ) : (
-                  <div className="h-32 w-40">
-                    <BaseImage
-                      width={formData.media.formats.thumbnail.width}
-                      height={formData.media.formats.thumbnail.height}
-                      src={formData.media.formats.thumbnail.url}
-                      alt={formData.name}
-                      classes="object-cover w-full h-full"
-                    />
-                  </div>
+                  <div className="h-32 w-44"></div>
                 )}
               </div>
 
