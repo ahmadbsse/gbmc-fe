@@ -99,7 +99,7 @@ const ContactPage = () => {
                       onChange={(e) => {
                         setFormValues({ ...formValues, name: e.target.value });
                       }}
-                      className="w-full rounded-lg border border-slate-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                      className="w-full text-ellipsis rounded-lg border border-slate-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                     />
                   </div>
                   <div>
@@ -114,7 +114,7 @@ const ContactPage = () => {
                       onChange={(e) => {
                         setFormValues({ ...formValues, email: e.target.value });
                       }}
-                      className="w-full rounded-lg border border-slate-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                      className="w-full text-ellipsis rounded-lg border border-slate-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                     />
                   </div>
                   <div>

@@ -76,7 +76,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
             <label className="required mb-1 block text-sm font-medium">Name</label>
             <input
               type="text"
-              className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+              className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
               placeholder={`Enter name`}
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -87,7 +87,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
             <label className="required mb-1 block text-sm font-medium">Description</label>
             <textarea
               rows={3}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+              className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
               placeholder={`Enter description`}
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
