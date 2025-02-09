@@ -3,7 +3,13 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 
 import showToast from "@/utils/toast";
-import { AdminAddItemModal, DeleteConfirmationModal, AdminEditItemModal } from "@/components/admin";
+import {
+  AdminAddItemModal,
+  DeleteConfirmationModal,
+  AdminEditItemModal,
+  FeatureConfirmationModal,
+  ActiveConfirmationModal,
+} from "@/components/admin";
 import apiClient from "@/utils/apiClient";
 import { BaseButton, BaseImage } from "@/components/common";
 import { convertToReadableDate } from "@/utils";
@@ -11,12 +17,16 @@ import { convertToReadableDate } from "@/utils";
 const ListDashboardData = ({ data, activeTab, getData, total }) => {
   const [showAddItemModal, setShowAddItemModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showActiveModal, setShowActiveModal] = useState(false);
+  const [showFeatureModal, setShowFeatureModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [activeID, setActiveID] = useState(null);
+  const [activeItem, setActiveItem] = useState(null);
   const currentTab = activeTab.key == "engineering" ? "engineering-components" : activeTab.key;
   const router = useRouter();
 
-  const toggleActivation = async (item) => {
+  const toggleActivation = async () => {
+    const item = activeItem;
     try {
       const url = `/${currentTab}/${item.documentId}`;
       const data = JSON.parse(JSON.stringify(item));
@@ -39,7 +49,8 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
       console.error("Error updating resource:", error.message);
     }
   };
-  const toggleFeatured = async (item) => {
+  const toggleFeatured = async () => {
+    const item = activeItem;
     try {
       const url = `/${currentTab}/${item.documentId}`;
       const data = JSON.parse(JSON.stringify(item));
@@ -129,6 +140,22 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
           onClose={() => setShowDeleteModal(false)}
         />
       ) : null}
+      {showActiveModal ? (
+        <ActiveConfirmationModal
+          handleToggle={toggleActivation}
+          status={activeItem?.active}
+          currentTab={currentTab}
+          onClose={() => setShowActiveModal(false)}
+        />
+      ) : null}
+      {showFeatureModal ? (
+        <FeatureConfirmationModal
+          handleToggle={toggleFeatured}
+          status={activeItem?.featured}
+          currentTab={currentTab}
+          onClose={() => setShowFeatureModal(false)}
+        />
+      ) : null}
       {showEditModal ? (
         <AdminEditItemModal
           activeTab={activeTab}
@@ -212,8 +239,11 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
 
                     <div className="ml-auto mt-2 flex w-fit items-center gap-2 md:ml-0 md:mt-0 md:gap-4">
                       <i
-                        title={item.active ? "Unactivate" : "Activate"}
-                        onClick={() => toggleActivation(item)}
+                        title={item.active ? "Deactivate" : "Activate"}
+                        onClick={() => {
+                          setActiveItem(item);
+                          setShowActiveModal(true);
+                        }}
                         className={`rounded-lg p-2 ${
                           item.active
                             ? "bg-green-50 text-green-600 hover:bg-yellow-50"
@@ -230,7 +260,10 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                               ? "bg-yellow-50 text-yellow-600 hover:bg-yellow-50"
                               : "bg-gray-100 hover:bg-yellow-50 hover:text-yellow-600"
                           }`}
-                          onClick={() => toggleFeatured(item)}
+                          onClick={() => {
+                            setActiveItem(item);
+                            setShowFeatureModal(true);
+                          }}
                         >
                           <Star className="h-4 w-4" />
                         </i>
