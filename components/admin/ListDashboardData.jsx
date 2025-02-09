@@ -197,15 +197,26 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                   >
                     <div className="flex gap-4">
                       <div className="hidden h-28 w-40 max-w-44 md:block">
-                        {item?.media ? (
-                          <BaseImage
-                            width={item.media?.formats?.thumbnail?.width}
-                            height={item.media?.formats?.thumbnail?.height}
-                            src={item?.media?.formats.thumbnail?.url}
-                            alt={item?.name}
-                            priority={true}
-                            classes="object-cover w-full h-full"
-                          />
+                        {item.media ? (
+                          Array.isArray(item.media) ? (
+                            <BaseImage
+                              width={item.media[0]?.formats?.thumbnail?.width}
+                              height={item.media[0]?.formats?.thumbnail?.height}
+                              src={item?.media[0]?.formats.thumbnail?.url}
+                              alt={item?.name}
+                              priority={true}
+                              classes="object-cover w-full h-full"
+                            />
+                          ) : (
+                            <BaseImage
+                              width={item.media?.formats?.thumbnail?.width}
+                              height={item.media?.formats?.thumbnail?.height}
+                              src={item?.media?.formats.thumbnail?.url}
+                              alt={item?.name}
+                              priority={true}
+                              classes="object-cover w-full h-full"
+                            />
+                          )
                         ) : null}
                       </div>
                       <div className="flex flex-col justify-between">
