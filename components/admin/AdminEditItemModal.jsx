@@ -11,7 +11,21 @@ import { editCategoryAndSupplierValidator } from "@/utils/validators";
 const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData }) => {
   const [data, setData] = useState(null);
   const [dataFilesIds, setDataFilesIds] = useState([]);
+  const [isFormValid, setIsFormValid] = useState(false);
 
+  useEffect(() => {
+    if (data) {
+      if (
+        data.name === "" ||
+        data.description === "" ||
+        (dataFilesIds.length === 0 && data.media.length === 0)
+      ) {
+        setIsFormValid(false);
+      } else {
+        setIsFormValid(true);
+      }
+    }
+  }, [data, dataFilesIds]);
   const getCategoryDetails = async () => {
     try {
       const url = `/${currentTab}/${activeID}?populate=*`;
@@ -37,6 +51,7 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (editCategoryAndSupplierValidator(data, currentTab, dataFilesIds)) {
+      console.log(dataFilesIds);
       if (dataFilesIds.length == 0) {
         if (Array.isArray(data.media)) {
           data.media = data.media.map((item) => item.id);
@@ -44,7 +59,7 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
           data.media = data.media.id;
         }
       } else {
-        data.media = [...data.media.map((item) => item.id), ...dataFilesIds];
+        data.media = [...data.media.map((item) => item.id), dataFilesIds];
       }
       delete data.documentId;
       try {
@@ -114,26 +129,30 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
               <BaseFileUploader setDataFilesIds={setDataFilesIds} />
             </div>
             <div className="flex items-center gap-4">
-              {data?.media?.map((item) => (
-                <div className="relative h-32 w-44" key={item.documentId}>
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      deletePreviousImage(item.id);
-                    }}
-                    className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
-                  >
-                    <X className="h-4 w-4 text-white" />
-                  </button>
-                  <BaseImage
-                    width={item.formats.thumbnail.width}
-                    height={item.formats.thumbnail.height}
-                    src={item.formats.thumbnail.url}
-                    alt={item.name}
-                    classes="object-cover w-full h-full"
-                  />
-                </div>
-              ))}
+              {data?.media ? (
+                data?.media?.map((item) => (
+                  <div className="relative h-32 w-44" key={item.documentId}>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        deletePreviousImage(item.id);
+                      }}
+                      className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
+                    >
+                      <X className="h-4 w-4 text-white" />
+                    </button>
+                    <BaseImage
+                      width={item.formats.thumbnail.width}
+                      height={item.formats.thumbnail.height}
+                      src={item.formats.thumbnail.url}
+                      alt={item.name}
+                      classes="object-cover w-full h-full"
+                    />
+                  </div>
+                ))
+              ) : (
+                <div className="relative h-32 w-44"></div>
+              )}
             </div>
             <div className="flex flex-col md:flex-row md:gap-8">
               <div className="mt-4 flex items-center gap-2">
@@ -150,7 +169,7 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
               </div>
             </div>
             <div className="ml-auto mt-6 w-1/3">
-              <BaseButton loading={false} type="submit">
+              <BaseButton loading={false} type="submit" disabled={!isFormValid}>
                 Save
               </BaseButton>
             </div>

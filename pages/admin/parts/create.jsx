@@ -29,7 +29,24 @@ const CreatePart = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [dataFilesIds, setDataFilesIds] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
-
+  const [isFormValid, setIsFormValid] = useState(false);
+  useEffect(() => {
+    formData.media = dataFilesIds;
+    if (
+      formData.name === "" ||
+      formData.number === "" ||
+      formData.material === "" ||
+      formData.supplier === "" ||
+      formData.oem_number === "" ||
+      formData.weight === "" ||
+      formData.description === "" ||
+      dataFilesIds.length === 0
+    ) {
+      setIsFormValid(false);
+    } else {
+      setIsFormValid(true);
+    }
+  }, [formData, dataFilesIds]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (createPartValidator(formData, dataFilesIds)) {
@@ -203,7 +220,7 @@ const CreatePart = () => {
               </div>
             </div>
             <div className="mx-auto w-[300px] py-4">
-              <BaseButton loading={false} type="submit">
+              <BaseButton loading={false} type="submit" disabled={!isFormValid}>
                 save
               </BaseButton>
             </div>

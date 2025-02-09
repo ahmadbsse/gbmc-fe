@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { X } from "lucide-react";
 
 import showToast from "@/utils/toast";
@@ -16,7 +16,6 @@ type FormDataTypes = {
   description: string;
   active: boolean;
   media: string | string[];
-  type: string;
 };
 
 const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
@@ -30,19 +29,26 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
     description: "",
     active: false,
     media: "",
-    type: "",
   } as FormDataTypes;
 
   const [formData, setFormData] = useState(initialFormData);
   const [dataFilesIds, setDataFilesIds] = useState<string | string[]>([]);
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  useEffect(() => {
+    formData.media = dataFilesIds;
+    if (formData.name === "" || formData.description === "" || dataFilesIds.length === 0) {
+      setIsFormValid(false);
+    } else {
+      setIsFormValid(true);
+    }
+  }, [formData, dataFilesIds]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (addCategoryAndSupplierValidator(formData, currentTab, dataFilesIds)) {
       formData.media = dataFilesIds;
-      if (currentTab == "suppliers") {
-        delete formData.type;
-      }
+
       try {
         apiClient
           .POST(`/${currentTab}`, { data: formData })
@@ -93,6 +99,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
             />
           </div>
+
           <div>
             <label className="required mb-1 block text-sm font-medium"> Media</label>
             <BaseFileUploader setDataFilesIds={setDataFilesIds} />
@@ -112,7 +119,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
             </div>
           </div>
           <div className="ml-auto mt-6 w-1/3">
-            <BaseButton loading={false} type="submit">
+            <BaseButton loading={false} type="submit" disabled={!isFormValid}>
               Save
             </BaseButton>
           </div>

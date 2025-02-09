@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { Navbar } from "@/components/common";
@@ -25,7 +25,23 @@ const CreateEngineeringComponent = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [dataFilesIds, setDataFilesIds] = useState([]);
   const [heroFileId, setHeroFileId] = useState([]);
+  const [isFormValid, setIsFormValid] = useState(false);
 
+  useEffect(() => {
+    formData.media = dataFilesIds;
+    formData.hero_image = heroFileId;
+    if (
+      formData.name === "" ||
+      formData.description === "" ||
+      formData.summary === "" ||
+      dataFilesIds.length === 0 ||
+      heroFileId.length === 0
+    ) {
+      setIsFormValid(false);
+    } else {
+      setIsFormValid(true);
+    }
+  }, [formData, dataFilesIds, heroFileId]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     formData.media = dataFilesIds;
@@ -145,7 +161,7 @@ const CreateEngineeringComponent = () => {
             </div>
 
             <div className="mx-auto w-[300px] py-4">
-              <BaseButton loading={false} type="submit">
+              <BaseButton loading={false} type="submit" disabled={!isFormValid}>
                 save
               </BaseButton>
             </div>
