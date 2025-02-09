@@ -28,7 +28,6 @@ const CreateEngineeringComponent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(dataFilesIds);
     formData.media = dataFilesIds;
     formData.hero_image = heroFileId;
     if (createEngineeringComponentValidator(formData)) {

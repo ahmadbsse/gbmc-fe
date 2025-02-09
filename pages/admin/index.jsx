@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Head from "next/head";
 
 import { AdminTabs } from "@/components/admin";
-import { Navbar } from "@/components/common";
+import { Navbar, BaseSearchbar } from "@/components/common";
 import ListDashboardData from "@/components/admin/ListDashboardData";
 import { BaseLoader } from "@/components/common";
 
@@ -12,7 +12,7 @@ import { transformMedia } from "@/utils";
 
 import { Menu, X } from "lucide-react";
 
-const PAGE_SIZE = 1;
+const PAGE_SIZE = 6;
 const AdminDashboard = () => {
   const [page, setPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
@@ -157,15 +157,12 @@ const AdminDashboard = () => {
   };
 
   const getSuppliers = async (pageNum, isLoadMore) => {
-    console.log("Getting suppliers");
     try {
       if (isLoadMore) {
         setIsLoadingMore(true);
       } else {
         setIsLoading(true);
       }
-      console.log(pageNum, "pageNum");
-      console.log(isLoadMore, "isLoadMore");
       let url = "";
       if (searchQuery == "") {
         url = `/suppliers?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}`;
@@ -175,7 +172,6 @@ const AdminDashboard = () => {
       await apiClient.GET(url).then(async (res) => {
         if (res && res.data.length > 0) {
           const transformedData = transformMedia(res.data);
-          console.log(transformedData, "transformedData");
           setSuppliers((prev) => (isLoadMore ? [...prev, ...transformedData] : transformedData));
           setTotalSuppliers(res.meta.pagination.total);
           setTotal(res.meta.pagination.total);
@@ -214,7 +210,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     setPage(1);
     apiCalls(1, false);
-  }, [activeTab]);
+  }, [activeTab, searchQuery]);
 
   useEffect(() => {
     if (page > 1) apiCalls(page, true);
@@ -266,9 +262,14 @@ const AdminDashboard = () => {
         <main className="container mx-auto px-4 py-8">
           <div className="mb-8 flex items-center justify-between">
             <h1 className="text-2xl font-bold">Dashboard</h1>
-            <button onClick={toggleMenu} className="z-50 ml-auto w-fit p-2 md:hidden">
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+            <div>
+              {tabData[activeTab.key] > 0 ? (
+                <BaseSearchbar setSearchQuery={setSearchQuery} />
+              ) : null}
+              <button onClick={toggleMenu} className="z-50 ml-auto w-fit p-2 md:hidden">
+                {isOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
           </div>
           {/* Desktop */}
           <div className="mb-6 hidden gap-4 md:flex">
@@ -346,7 +347,6 @@ const AdminDashboard = () => {
                         : () => getParts(1, false)
                 }
               />
-
               {tabData[activeTab.key] < total ? (
                 <div className="flex justify-center md:justify-end">
                   <p
