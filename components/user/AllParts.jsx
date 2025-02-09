@@ -121,14 +121,16 @@ const AllParts = () => {
                   >
                     <div className="rounded-lg border border-gray-200 bg-white shadow-sm transition">
                       <div className="relative h-[200px] w-full border-b border-gray-200">
-                        <BaseImage
-                          width={part.media[0].formats?.actual?.width}
-                          height={part.media[0].formats?.actual?.height}
-                          src={part.media[0].formats?.actual?.url}
-                          alt={part.name}
-                          priority={true}
-                          classes="h-full w-full object-cover rounded-t-lg"
-                        />
+                        {part.media ? (
+                          <BaseImage
+                            width={part.media[0].formats?.actual?.width}
+                            height={part.media[0].formats?.actual?.height}
+                            src={part.media[0].formats?.actual?.url}
+                            alt={part.name}
+                            priority={true}
+                            classes="h-full w-full object-cover rounded-t-lg"
+                          />
+                        ) : null}
                       </div>
                       <h3 className="p-4 text-lg font-semibold">{part.name}</h3>
                     </div>

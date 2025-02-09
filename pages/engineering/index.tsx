@@ -38,7 +38,7 @@ const EngineeringHome = () => {
   return (
     <>
       <Head>
-        <title>Engineering Components | {appData.name}</title>
+        <title>Engineering Components | {appData?.name}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
           property="og:title"
@@ -89,16 +89,16 @@ const EngineeringHome = () => {
         ) : (
           <div className="grid h-screen gap-8">
             {/* Featured Components Section */}
-            {engineeringComponents.length != 0 ? (
+            {engineeringComponents?.length != 0 ? (
               <section>
                 <div className="grid gap-4 md:grid-cols-4">
-                  {engineeringComponents.map((component, index) => (
+                  {engineeringComponents?.map((component, index) => (
                     <EngineeringListingCard
                       key={index}
-                      id={component.documentId}
-                      image={component.media[0].formats.thumbnail.url}
-                      title={component.name}
-                      featured={component.featured}
+                      id={component?.documentId}
+                      image={component?.media[0]?.formats?.thumbnail?.url}
+                      title={component?.name}
+                      featured={component?.featured}
                     />
                   ))}
                 </div>

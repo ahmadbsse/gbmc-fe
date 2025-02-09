@@ -69,14 +69,16 @@ const FeaturedParts = () => {
                   <Link href={`/tractor-parts/${part.documentId}`}>
                     <div className="rounded-lg border border-gray-200 bg-white shadow-sm transition">
                       <div className="relative h-[200px] w-full border-b border-gray-200">
-                        <BaseImage
-                          width={part.media[0].formats?.actual?.width}
-                          height={part.media[0].formats?.actual?.height}
-                          src={part.media[0].formats?.actual?.url}
-                          alt={part.name}
-                          priority={true}
-                          classes="h-full w-full object-cover rounded-t-lg"
-                        />
+                        {part.media ? (
+                          <BaseImage
+                            width={part.media[0].formats?.actual?.width}
+                            height={part.media[0].formats?.actual?.height}
+                            src={part.media[0].formats?.actual?.url}
+                            alt={part.name}
+                            priority={true}
+                            classes="h-full w-full object-cover rounded-t-lg"
+                          />
+                        ) : null}
                         <div className="absolute right-2 top-2 rounded bg-primary px-1.5 py-0.5 text-xs">
                           {part.supplier.name}
                         </div>

@@ -80,8 +80,8 @@ const Article = () => {
             <div className="mb-8 flex items-center gap-2 text-sm text-gray-500">
               {breadcrumbs.map((crumb, index) => (
                 <p key={index}>
-                  <Link href={crumb.href} className="pr-2 hover:text-secondary">
-                    {crumb.text}
+                  <Link href={crumb?.href} className="pr-2 hover:text-secondary">
+                    {crumb?.text}
                   </Link>
                   {index < breadcrumbs.length - 1 && <span>/</span>}
                 </p>
@@ -90,16 +90,20 @@ const Article = () => {
           </div>
           <div className="mt-2 px-2 lg:px-16">
             <div className="">
-              {data.hero_image.type && data.hero_image.type == "video" ? (
-                <BaseVideo src={data.hero_image.url} autoPlay={true} muted={true} loop={true} />
+              {data?.hero_image ? (
+                data?.hero_image?.type && data?.hero_image?.type == "video" ? (
+                  <BaseVideo src={data?.hero_image.url} autoPlay={true} muted={true} loop={true} />
+                ) : (
+                  <BaseImage
+                    width={data?.hero_image?.formats?.large?.width}
+                    height={data?.hero_image?.formats?.large?.height}
+                    src={data?.hero_image?.formats?.large?.url}
+                    alt={data?.hero_image?.name}
+                    classes="w-full max-h-[645px] rounded-lg"
+                  />
+                )
               ) : (
-                <BaseImage
-                  width={data.hero_image.formats.large.width}
-                  height={data.hero_image.formats.large.height}
-                  src={data.hero_image.formats.large.url}
-                  alt={data.hero_image.name}
-                  classes="w-full max-h-[645px] rounded-lg"
-                />
+                <div className="max-h-[645px] w-full rounded-lg"></div>
               )}
             </div>
           </div>
@@ -110,7 +114,7 @@ const Article = () => {
               </p>
               <p
                 className="text-sm lg:text-base"
-                dangerouslySetInnerHTML={{ __html: data.summary }}
+                dangerouslySetInnerHTML={{ __html: data?.summary }}
               />
 
               <section id="projects" className="pt-5 lg:py-8">
@@ -120,18 +124,22 @@ const Article = () => {
                       <h2 className="text-xl font-bold lg:text-2xl">Description</h2>
                       <div
                         dangerouslySetInnerHTML={{
-                          __html: data.description,
+                          __html: data?.description,
                         }}
                       ></div>
                     </div>
                   </div>
-                  <BaseImage
-                    classes="my-2 h-[500px] rounded-lg lg:z-10 lg:col-span-4 lg:my-20 lg:rounded-lg"
-                    height={1100}
-                    width={1100}
-                    src={data?.media[selectedImage].formats.actual.url}
-                    alt="Engineering Images"
-                  />
+                  {data?.media ? (
+                    <BaseImage
+                      classes="my-2 h-[500px] rounded-lg lg:z-10 lg:col-span-4 lg:my-20 lg:rounded-lg"
+                      height={1100}
+                      width={1100}
+                      src={data?.media[selectedImage]?.formats?.actual?.url}
+                      alt="Engineering Images"
+                    />
+                  ) : (
+                    <div className="my-2 h-[500px] rounded-lg lg:z-10 lg:col-span-4 lg:my-20 lg:rounded-lg"></div>
+                  )}
                 </article>
               </section>
             </div>
@@ -140,23 +148,29 @@ const Article = () => {
               <div className="overflow-hiddend relative">
                 {/* Thumbnail Images */}
                 <div className="flex gap-4">
-                  {data?.media?.map((img, index) => (
-                    <button
-                      key={index}
-                      className={`relative h-24 w-24 overflow-hidden rounded-lg shadow-sm ${
-                        selectedImage === index ? "ring-4 ring-primary/50" : "ring-1 ring-gray-200"
-                      }`}
-                      onClick={() => setSelectedImage(index)}
-                    >
-                      <BaseImage
-                        height={96}
-                        width={96}
-                        src={img.formats.thumbnail.url}
-                        alt={`Product view ${index + 1}`}
-                        classes="h-full w-full object-cover"
-                      />
-                    </button>
-                  ))}
+                  {data?.media ? (
+                    data?.media?.map((img, index) => (
+                      <button
+                        key={index}
+                        className={`relative h-24 w-24 overflow-hidden rounded-lg shadow-sm ${
+                          selectedImage === index
+                            ? "ring-4 ring-primary/50"
+                            : "ring-1 ring-gray-200"
+                        }`}
+                        onClick={() => setSelectedImage(index)}
+                      >
+                        <BaseImage
+                          height={96}
+                          width={96}
+                          src={img?.formats?.thumbnail?.url}
+                          alt={`Product view ${index + 1}`}
+                          classes="h-full w-full object-cover"
+                        />
+                      </button>
+                    ))
+                  ) : (
+                    <div className="relative h-24 w-24 overflow-hidden rounded-lg shadow-sm"> </div>
+                  )}
                 </div>
               </div>
             </div>

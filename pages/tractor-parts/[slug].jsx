@@ -7,7 +7,6 @@ import { Navbar, PageLayout, BaseImage, BaseLoader } from "@/components/common";
 import { Check, X } from "lucide-react";
 import { convertToReadableDate } from "@/utils";
 import { appData } from "@/constants";
-import { type } from "os";
 
 const PartDetails = () => {
   const router = useRouter();
@@ -74,7 +73,7 @@ const PartDetails = () => {
     <>
       <Head>
         <title>
-          {data && data.name ? data.name : "Part Details"} | ${appData.name}
+          {data && data?.name ? data?.name : "Part Details"} | ${appData?.name}
         </title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
@@ -110,9 +109,9 @@ const PartDetails = () => {
                     onMouseMove={handleMouseMove}
                   >
                     <BaseImage
-                      height={data?.media[selectedImage]?.formats.actual.height}
-                      width={data?.media[selectedImage]?.formats.actual.width}
-                      src={data?.media[selectedImage].formats.actual.url}
+                      height={data?.media[selectedImage]?.formats?.actual?.height}
+                      width={data?.media[selectedImage]?.formats?.actual?.width}
+                      src={data?.media[selectedImage].formats?.actual?.url}
                       alt={data?.name}
                       classes="h-[350px] w-full object-cover lg:h-[500px]"
                       priority={true}
@@ -144,35 +143,45 @@ const PartDetails = () => {
                         transformOrigin: `${mousePosition.boundedX}% ${mousePosition.boundedY}%`,
                       }}
                     >
-                      <BaseImage
-                        src={data?.media[selectedImage]?.formats.actual.url}
-                        alt={data?.name + "zoomed-view"}
-                        classes="object-cover"
-                        fill={true}
-                      />
+                      {data?.media ? (
+                        <BaseImage
+                          src={data?.media[selectedImage]?.formats.actual.url}
+                          alt={data?.name + "zoomed-view"}
+                          classes="object-cover"
+                          fill={true}
+                        />
+                      ) : (
+                        <div></div>
+                      )}
                     </div>
                   </div>
                 ) : null}
 
                 {/* Thumbnail Images */}
                 <div className="flex gap-4">
-                  {data?.media.map((img, index) => (
-                    <button
-                      key={index}
-                      className={`relative h-24 w-24 overflow-hidden rounded-lg shadow-sm ${
-                        selectedImage === index ? "ring-4 ring-primary/50" : "ring-1 ring-gray-200"
-                      }`}
-                      onClick={() => setSelectedImage(index)}
-                    >
-                      <BaseImage
-                        height={img?.formats.thumbnail.height}
-                        width={img?.formats.thumbnail.width}
-                        src={img.formats.thumbnail.url}
-                        alt={`Product view ${index + 1}`}
-                        classes="h-full w-full object-cover"
-                      />
-                    </button>
-                  ))}
+                  {data?.media ? (
+                    data?.media.map((img, index) => (
+                      <button
+                        key={index}
+                        className={`relative h-24 w-24 overflow-hidden rounded-lg shadow-sm ${
+                          selectedImage === index
+                            ? "ring-4 ring-primary/50"
+                            : "ring-1 ring-gray-200"
+                        }`}
+                        onClick={() => setSelectedImage(index)}
+                      >
+                        <BaseImage
+                          height={img?.formats.thumbnail.height}
+                          width={img?.formats.thumbnail.width}
+                          src={img.formats.thumbnail.url}
+                          alt={`Product view ${index + 1}`}
+                          classes="h-full w-full object-cover"
+                        />
+                      </button>
+                    ))
+                  ) : (
+                    <div className="h-24 w-24"></div>
+                  )}
                 </div>
               </div>
               {/* Product Details Section */}
@@ -194,28 +203,28 @@ const PartDetails = () => {
                 <tbody>
                   <tr>
                     <td className="capitalize">Name:</td>
-                    <td>{data.name}</td>
+                    <td>{data?.name}</td>
                   </tr>
                   <tr>
                     <td className="capitalize">Registered Number:</td>
-                    <td>{data.number}</td>
+                    <td>{data?.number}</td>
                   </tr>
                   <tr>
                     <td className="capitalize">Material:</td>
-                    <td>{data.material}</td>
+                    <td>{data?.material}</td>
                   </tr>
                   <tr>
                     <td className="capitalize">Weight:</td>
-                    <td>{data.weight}</td>
+                    <td>{data?.weight}</td>
                   </tr>
                   <tr>
                     <td className="capitalize">Published at:</td>
-                    <td>{convertToReadableDate(data.publishedAt)}</td>
+                    <td>{convertToReadableDate(data?.publishedAt)}</td>
                   </tr>
                   <tr>
                     <td className="capitalize">Featured:</td>
                     <td>
-                      {data.featured ? (
+                      {data?.featured ? (
                         <Check className="text-success" />
                       ) : (
                         <X className="text-error" />
@@ -225,7 +234,7 @@ const PartDetails = () => {
                   <tr>
                     <td className="capitalize">OEM Numbers:</td>
                     <td>
-                      {data.oem_number.split(",").map((item, index) => (
+                      {data?.oem_number.split(",").map((item, index) => (
                         <p key={index}>{item}</p>
                       ))}
                     </td>

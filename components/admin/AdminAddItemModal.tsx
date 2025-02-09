@@ -84,7 +84,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
               type="text"
               className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
               placeholder={`Enter name`}
-              value={formData.name}
+              value={formData?.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             />
           </div>
@@ -95,7 +95,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
               rows={3}
               className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
               placeholder={`Enter description`}
-              value={formData.description}
+              value={formData?.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
             />
           </div>
@@ -109,7 +109,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
               <input
                 type="checkbox"
                 id="active"
-                checked={formData.active}
+                checked={formData?.active}
                 onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
                 className="rounded border-gray-300 outline-none focus:border-primary focus:ring-primary"
               />
