@@ -19,7 +19,11 @@ const ViewComponentDetails = () => {
         if (!Array.isArray(response.media)) {
           response.media = [response.media];
         }
-        if (response.hero_image.mime && response.hero_image.mime.includes("video")) {
+        if (
+          response.hero_image &&
+          response.hero_image.mime &&
+          response.hero_image.mime.includes("video")
+        ) {
           response.hero_image = transformHeroVideo(response.hero_image);
         }
         response.summary = response.summary.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");

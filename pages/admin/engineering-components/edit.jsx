@@ -29,7 +29,7 @@ const EditComponent = () => {
         if (!Array.isArray(response.media)) {
           response.media = [response.media];
         }
-        if (response.hero_image.mime?.includes("video")) {
+        if (response.hero_image && response.hero_image.mime?.includes("video")) {
           response.hero_image = transformHeroVideo(response.hero_image);
         }
         setFormData(response);
@@ -44,7 +44,7 @@ const EditComponent = () => {
     if (heroFileId.length === 0) {
       formData.hero_image = formData.hero_image.id;
     } else {
-      formData.hero_image = heroFileId[0];
+      formData.hero_image = heroFileId;
     }
     if (dataFilesIds.length === 0) {
       if (Array.isArray(formData.media)) {
