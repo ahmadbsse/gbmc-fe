@@ -146,9 +146,10 @@ const EditSubAssembly = () => {
               </div>
 
               <RichTextEditor handleChange={handleChange} defaultValue={formData.description} />
-
-              <label className="required mb-1 block text-sm font-medium"> Media</label>
-              <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
+              <div>
+                <label className="required mb-1 block text-sm font-medium"> Media</label>
+                <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
+              </div>
               <div className="flex items-center gap-4">
                 {formData?.media?.map((item) => (
                   <div className="relative h-32 w-44" key={item.documentId}>

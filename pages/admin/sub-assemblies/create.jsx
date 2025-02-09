@@ -127,9 +127,10 @@ const CreateSubAssembly = () => {
             </div>
 
             <RichTextEditor handleChange={handleChange} defaultValue={formData.description} />
-
-            <label className="required mb-1 block text-sm font-medium"> Media</label>
-            <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
+            <div>
+              <label className="required mb-1 block text-sm font-medium"> Media</label>
+              <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
+            </div>
             <div className="flex flex-col gap-2 pt-4">
               <div className="flex w-full items-center gap-2">
                 <input

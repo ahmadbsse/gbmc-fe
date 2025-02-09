@@ -109,8 +109,10 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
                 onChange={(e) => setData({ ...data, description: e.target.value })}
               />
             </div>
-            <label className="required mb-1 block text-sm font-medium"> Media</label>
-            <BaseFileUploader setDataFilesIds={setDataFilesIds} />
+            <div>
+              <label className="required mb-1 block text-sm font-medium"> Media</label>
+              <BaseFileUploader setDataFilesIds={setDataFilesIds} />
+            </div>
             <div className="flex items-center gap-4">
               {data?.media?.map((item) => (
                 <div className="relative h-32 w-44" key={item.documentId}>

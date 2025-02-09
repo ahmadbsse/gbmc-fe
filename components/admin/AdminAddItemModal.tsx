@@ -93,8 +93,10 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
             />
           </div>
-          <label className="required mb-1 block text-sm font-medium"> Media</label>
-          <BaseFileUploader setDataFilesIds={setDataFilesIds} />
+          <div>
+            <label className="required mb-1 block text-sm font-medium"> Media</label>
+            <BaseFileUploader setDataFilesIds={setDataFilesIds} />
+          </div>
           <div className="flex flex-col md:flex-row md:gap-8">
             <div className="mt-4 flex items-center gap-2">
               <input
