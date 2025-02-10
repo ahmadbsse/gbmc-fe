@@ -14,7 +14,6 @@ const PartDetails = () => {
   const [data, setData] = useState(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0, boundedX: 0, boundedY: 0 });
   const [isHovering, setIsHovering] = useState(false);
-  const [specifications, setSpecifications] = useState({});
   // Size of the magnifier square
   const magnifierSize = 60;
   // Zoom level
@@ -56,14 +55,6 @@ const PartDetails = () => {
           "<strong>$1</strong>"
         );
         setData(response);
-        setSpecifications({
-          name: response.name,
-          SKU: `${response.id}`,
-          material: response.material,
-          weight: response.weight,
-          published_at: response.publishedAt,
-          featured: response.featured,
-        });
       });
     } catch (error) {
       console.error("Error fetching resource:", error.message);
@@ -78,34 +69,11 @@ const PartDetails = () => {
     { text: data?.name, href: `/tractor-parts/${router.query.slug}` },
   ];
 
-  const replaceSpecialCharacterWithSpaced = (key) => {
-    return key.replace(/[^a-zA-Z0-9\s]/g, " ");
-  };
-  function isDateString(str) {
-    const date = new Date(str);
-    return !isNaN(date.getTime());
-  }
-  const extractSpecsValue = (val) => {
-    if (Array.isArray(val)) {
-      return val.join(", ");
-    }
-    if (typeof val === "number") {
-      return val.toString();
-    }
-    if (typeof val === "boolean") {
-      if (val) return <Check className="text-success" />;
-      else return <X className="text-error" />;
-    }
-    if (isDateString(val)) {
-      return convertToReadableDate(val);
-    }
-    return val;
-  };
   return (
     <>
       <Head>
         <title>
-          {data && data.name ? data.name : "Part Details"} | ${appData.name}
+          {data && data?.name ? data?.name : "Part Details"} | ${appData?.name}
         </title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
@@ -141,9 +109,9 @@ const PartDetails = () => {
                     onMouseMove={handleMouseMove}
                   >
                     <BaseImage
-                      height={data?.media[selectedImage]?.formats.actual.height}
-                      width={data?.media[selectedImage]?.formats.actual.width}
-                      src={data?.media[selectedImage].formats.actual.url}
+                      height={data?.media[selectedImage]?.formats?.actual?.height}
+                      width={data?.media[selectedImage]?.formats?.actual?.width}
+                      src={data?.media[selectedImage].formats?.actual?.url}
                       alt={data?.name}
                       classes="h-[350px] w-full object-cover lg:h-[500px]"
                       priority={true}
@@ -175,38 +143,47 @@ const PartDetails = () => {
                         transformOrigin: `${mousePosition.boundedX}% ${mousePosition.boundedY}%`,
                       }}
                     >
-                      <BaseImage
-                        src={data?.media[selectedImage]?.formats.actual.url}
-                        alt={data?.name + "zoomed-view"}
-                        classes="object-cover"
-                        fill={true}
-                      />
+                      {data?.media ? (
+                        <BaseImage
+                          src={data?.media[selectedImage]?.formats.actual.url}
+                          alt={data?.name + "zoomed-view"}
+                          classes="object-cover"
+                          fill={true}
+                        />
+                      ) : (
+                        <div></div>
+                      )}
                     </div>
                   </div>
                 ) : null}
 
                 {/* Thumbnail Images */}
                 <div className="flex gap-4">
-                  {data?.media.map((img, index) => (
-                    <button
-                      key={index}
-                      className={`relative h-24 w-24 overflow-hidden rounded-lg shadow-sm ${
-                        selectedImage === index ? "ring-4 ring-primary/50" : "ring-1 ring-gray-200"
-                      }`}
-                      onClick={() => setSelectedImage(index)}
-                    >
-                      <BaseImage
-                        height={img?.formats.thumbnail.height}
-                        width={img?.formats.thumbnail.width}
-                        src={img.formats.thumbnail.url}
-                        alt={`Product view ${index + 1}`}
-                        classes="h-full w-full object-cover"
-                      />
-                    </button>
-                  ))}
+                  {data?.media ? (
+                    data?.media.map((img, index) => (
+                      <button
+                        key={index}
+                        className={`relative h-24 w-24 overflow-hidden rounded-lg shadow-sm ${
+                          selectedImage === index
+                            ? "ring-4 ring-primary/50"
+                            : "ring-1 ring-gray-200"
+                        }`}
+                        onClick={() => setSelectedImage(index)}
+                      >
+                        <BaseImage
+                          height={img?.formats.thumbnail.height}
+                          width={img?.formats.thumbnail.width}
+                          src={img.formats.thumbnail.url}
+                          alt={`Product view ${index + 1}`}
+                          classes="h-full w-full object-cover"
+                        />
+                      </button>
+                    ))
+                  ) : (
+                    <div className="h-24 w-24"></div>
+                  )}
                 </div>
               </div>
-
               {/* Product Details Section */}
               <div className="space-y-6">
                 <div className="space-y-2">
@@ -214,7 +191,7 @@ const PartDetails = () => {
                   <h1 className="text-xl font-bold capitalize text-primary lg:text-3xl">
                     {data?.name}
                   </h1>
-                  <span className="text-xs italic">SKU: {data?.number}</span>
+                  <span className="text-xs italic">Registered Number: {data?.number}</span>
                 </div>
 
                 <p className="" dangerouslySetInnerHTML={{ __html: data?.description }}></p>
@@ -224,15 +201,44 @@ const PartDetails = () => {
               <h2 className="mb-3 font-semibold lg:text-xl">Specifications</h2>
               <table className="product-specification-table product-specification-table-striped">
                 <tbody>
-                  {Object.keys(specifications).map((key, index) => {
-                    const value = specifications[key];
-                    return (
-                      <tr key={index}>
-                        <td className="capitalize">{replaceSpecialCharacterWithSpaced(key)}:</td>
-                        <td>{extractSpecsValue(value)}</td>
-                      </tr>
-                    );
-                  })}
+                  <tr>
+                    <td className="capitalize">Name:</td>
+                    <td>{data?.name}</td>
+                  </tr>
+                  <tr>
+                    <td className="capitalize">Registered Number:</td>
+                    <td>{data?.number}</td>
+                  </tr>
+                  <tr>
+                    <td className="capitalize">Material:</td>
+                    <td>{data?.material}</td>
+                  </tr>
+                  <tr>
+                    <td className="capitalize">Weight:</td>
+                    <td>{data?.weight}</td>
+                  </tr>
+                  <tr>
+                    <td className="capitalize">Published at:</td>
+                    <td>{convertToReadableDate(data?.publishedAt)}</td>
+                  </tr>
+                  <tr>
+                    <td className="capitalize">Featured:</td>
+                    <td>
+                      {data?.featured ? (
+                        <Check className="text-success" />
+                      ) : (
+                        <X className="text-error" />
+                      )}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="capitalize">OEM Numbers:</td>
+                    <td>
+                      {data?.oem_number.split(",").map((item, index) => (
+                        <p key={index}>{item}</p>
+                      ))}
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>

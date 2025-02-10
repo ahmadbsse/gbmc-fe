@@ -13,20 +13,17 @@ const TractorPartsHome = () => {
       title: "Tractor Parts",
       key: "tractor-parts",
       description: "Complete range of engine components",
-      featured: true,
     },
     {
       title: "TXL (Sub Assemblies)",
       key: "sub-assemblies",
       description: "Gearbox and transmission components",
-      featured: false,
     },
-    {
-      title: "Tractors",
-      key: "tractors",
-      description: "Pumps, valves, and hydraulic accessories",
-      featured: false,
-    },
+    // {
+    //   title: "Tractors",
+    //   key: "tractors",
+    //   description: "Pumps, valves, and hydraulic accessories",
+    // },
   ];
 
   const breadcrumbs = [
@@ -38,7 +35,7 @@ const TractorPartsHome = () => {
     <>
       <Head>
         <title>
-          {categories[0].title} | {appData.name}
+          {categories[0]?.title} | {appData?.name}
         </title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
@@ -65,21 +62,21 @@ const TractorPartsHome = () => {
           <section>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {categories.map((category, index) => (
-                <Link key={index} href={category.key}>
+                <Link key={index} href={category?.key}>
                   <div
                     className={`cursor-pointer rounded-lg p-6 shadow-md transition-all duration-300 hover:shadow-lg ${
-                      category.title == categories[0].title
+                      category?.title == categories[0]?.title
                         ? "border-2 border-secondary/50 bg-secondary/20"
                         : "bg-white"
                     } `}
                   >
                     <div className="mb-4 flex items-center justify-between">
                       <Tractor
-                        className={`h-8 w-8 ${category.title == categories[0].title ? "text-secondary" : ""}`}
+                        className={`h-8 w-8 ${category?.title == categories[0]?.title ? "text-secondary" : ""}`}
                       />
                     </div>
-                    <h3 className="mb-2 text-lg font-semibold">{category.title}</h3>
-                    <p className="mb-4">{category.description}</p>
+                    <h3 className="mb-2 text-lg font-semibold">{category?.title}</h3>
+                    <p className="mb-4">{category?.description}</p>
                   </div>
                 </Link>
               ))}

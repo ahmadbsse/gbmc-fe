@@ -1,14 +1,20 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Mail, Phone, MapPin, MailPlus } from "lucide-react";
 import Head from "next/head";
 import emailjs from "@emailjs/browser";
 import { Navbar, BaseButton } from "@/components/common";
 import { appData } from "@/constants";
-
+import { GoogleMap } from "@/components/user";
 import showToast from "@/utils/toast";
 
 const ContactPage = () => {
   const [loading, setLoading] = useState(false);
+  const [formIsValid, setFormIsValid] = useState(false);
+  const [formValues, setFormValues] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
   const form = useRef<HTMLFormElement>(null);
   const sendEmail = (e) => {
     e.preventDefault();
@@ -40,6 +46,13 @@ const ContactPage = () => {
         }
       );
   };
+  useEffect(() => {
+    if (formValues.name && formValues.email && formValues.message) {
+      setFormIsValid(true);
+    } else {
+      setFormIsValid(false);
+    }
+  }, [formValues]);
   return (
     <>
       <Head>
@@ -65,27 +78,36 @@ const ContactPage = () => {
         {/* Navigation */}
         <Navbar />
 
-        <div className="container mx-auto p-4 pt-7">
+        <div className="container mx-auto p-4 pt-6">
           <div className="mx-auto max-w-4xl">
             <h1 className="mb-4 text-3xl font-bold text-slate-900">Contact Us</h1>
 
-            <div className="grid gap-12 md:grid-cols-2">
+            <div className="grid gap-4 md:grid-cols-2 lg:gap-8 xl:gap-12">
               {/* Contact Form */}
               <div className="rounded-lg bg-white p-6 shadow-md">
-                <h2 className="mb-6 text-2xl font-semibold text-slate-800">Send us an Email</h2>
-                <form ref={form} onSubmit={sendEmail} className="space-y-4">
+                <h2 className="text-2xl font-semibold text-slate-800">Send us an Email</h2>
+                <p className="my-3 text-sm">
+                  Please contact us for unmatched quality services for your industrial needs. Our
+                  representative will get in touch with you very soon.
+                </p>
+                <form ref={form} onSubmit={sendEmail} className="space-y-5">
                   <div>
-                    <label className="mb-1 block text-sm font-medium text-slate-700">Name</label>
+                    <label className="required mb-1 block text-sm font-medium text-slate-700">
+                      Name
+                    </label>
                     <input
                       name="from_name"
                       type="text"
                       maxLength={100}
                       required
-                      className="w-full rounded-lg border border-slate-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                      onChange={(e) => {
+                        setFormValues({ ...formValues, name: e.target.value });
+                      }}
+                      className="w-full text-ellipsis rounded-lg border border-slate-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                     />
                   </div>
                   <div>
-                    <label className="mb-1 block text-sm font-medium text-slate-700">
+                    <label className="required mb-1 block text-sm font-medium text-slate-700">
                       Your Email
                     </label>
                     <input
@@ -93,22 +115,30 @@ const ContactPage = () => {
                       type="email"
                       maxLength={100}
                       required
-                      className="w-full rounded-lg border border-slate-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                      onChange={(e) => {
+                        setFormValues({ ...formValues, email: e.target.value });
+                      }}
+                      className="w-full text-ellipsis rounded-lg border border-slate-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                     />
                   </div>
                   <div>
-                    <label className="mb-1 block text-sm font-medium text-slate-700">Message</label>
+                    <label className="required mb-1 block text-sm font-medium text-slate-700">
+                      Message
+                    </label>
                     <textarea
                       name="message"
                       rows={4}
+                      onChange={(e) => {
+                        setFormValues({ ...formValues, message: e.target.value });
+                      }}
                       maxLength={500}
                       required
                       className="w-full rounded-lg border border-slate-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                     />
                   </div>
 
-                  <div className="mx-auto mt-4 w-fit">
-                    <BaseButton loading={false} type="submit" disabled={loading}>
+                  <div className="mx-auto w-fit pt-6">
+                    <BaseButton loading={false} type="submit" disabled={loading || !formIsValid}>
                       {loading ? (
                         "Loading...."
                       ) : (
@@ -123,12 +153,12 @@ const ContactPage = () => {
               </div>
 
               {/* Contact Information */}
-              <div className="space-y-8">
+              <div className="space-y-2">
                 <div className="rounded-lg bg-white p-6 shadow-md">
-                  <h2 className="mb-6 text-2xl font-semibold text-slate-800">
+                  <h2 className="mb-3 text-2xl font-semibold text-slate-800">
                     Contact Information
                   </h2>
-                  <div className="space-y-4">
+                  <div className="space-y-2">
                     <div className="flex items-start gap-4">
                       <Mail className="h-6 w-6 text-primary" />
                       <div>
@@ -139,8 +169,15 @@ const ContactPage = () => {
                     <div className="flex items-start gap-4">
                       <Phone className="h-6 w-6 text-primary" />
                       <div>
-                        <h3 className="font-medium text-slate-900">Phone</h3>
-                        <p className="text-slate-600">{appData.conatcNumber}</p>
+                        <h3 className="font-medium text-slate-900">Office Number</h3>
+                        <p className="text-slate-600">{appData.officeNumber}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <Phone className="h-6 w-6 text-primary" />
+                      <div>
+                        <h3 className="font-medium text-slate-900">Mobile Number</h3>
+                        <p className="text-slate-600">{appData.mobileNumber}</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-4">
@@ -158,8 +195,10 @@ const ContactPage = () => {
                     </div>
                   </div>
                 </div>
-
-                <div className="rounded-lg bg-white p-6 shadow-md">
+                <div className="rounded-xl bg-white shadow-lg">
+                  <GoogleMap />
+                </div>
+                {/* <div className="rounded-lg bg-white p-6 shadow-md">
                   <h2 className="mb-6 text-2xl font-semibold text-slate-800">Business Hours</h2>
                   <div className="space-y-2">
                     <p className="flex justify-between">
@@ -175,7 +214,7 @@ const ContactPage = () => {
                       <span className="font-medium">Closed</span>
                     </p>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

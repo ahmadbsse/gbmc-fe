@@ -16,7 +16,26 @@ const EditPart = () => {
   const [formData, setFormData] = useState(null);
   const [dataFilesIds, setDataFilesIds] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
+  const [isFormValid, setIsFormValid] = useState(false);
 
+  useEffect(() => {
+    if (formData) {
+      if (
+        formData.name === "" ||
+        formData.number === "" ||
+        formData.material === "" ||
+        formData.supplier === "" ||
+        formData.oem_number === "" ||
+        formData.weight === "" ||
+        formData.description === "" ||
+        (dataFilesIds.length === 0 && formData.media.length === 0)
+      ) {
+        setIsFormValid(false);
+      } else {
+        setIsFormValid(true);
+      }
+    }
+  }, [formData, dataFilesIds]);
   const getPartDetails = async () => {
     try {
       const url = `/parts/${id}?populate=*`;
@@ -110,7 +129,7 @@ const EditPart = () => {
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">
-          <h1 className="mx-auto mb-8 w-fit text-2xl font-bold">Edit Part</h1>
+          <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">Edit Part</h1>
           {formData ? (
             <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3">
               <div className="flex flex-col md:flex-row md:gap-4">
@@ -118,30 +137,41 @@ const EditPart = () => {
                   <label className="required mb-1 block text-sm font-medium">Name</label>
                   <input
                     type="text"
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                    className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                     placeholder={`Enter name`}
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   />
                 </div>
                 <div className="w-full">
-                  <label className="required mb-1 block text-sm font-medium">SKU Number</label>
+                  <label className="required mb-1 block text-sm font-medium">
+                    Registered Number
+                  </label>
                   <input
-                    type="text"
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                    type="number"
+                    className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                     placeholder={`Enter number`}
                     value={formData.number}
                     onChange={(e) => setFormData({ ...formData, number: e.target.value })}
                   />
                 </div>
               </div>
-
+              <div className="w-full">
+                <label className="required mb-1 block text-sm font-medium">OEM Numbers</label>
+                <input
+                  type="text"
+                  className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                  placeholder={`Enter comma seperated numbers...`}
+                  value={formData.oem_number}
+                  onChange={(e) => setFormData({ ...formData, oem_number: e.target.value })}
+                />
+              </div>
               <div className="flex flex-col md:flex-row md:gap-4">
                 <div className="w-full">
                   <label className="required mb-1 block text-sm font-medium">Material</label>
                   <input
                     type="text"
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                    className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                     placeholder={`Enter material name`}
                     value={formData.material}
                     onChange={(e) => setFormData({ ...formData, material: e.target.value })}
@@ -151,7 +181,7 @@ const EditPart = () => {
                   <label className="required mb-1 block text-sm font-medium"> Weight</label>
                   <input
                     type="text"
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                    className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                     placeholder={`Enter weight`}
                     value={formData.weight}
                     onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
@@ -179,9 +209,10 @@ const EditPart = () => {
                 </div>
               </div>
               <RichTextEditor handleChange={handleChange} defaultValue={formData.description} />
-
-              <label className="required mb-1 block text-sm font-medium"> Media</label>
-              <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
+              <div>
+                <label className="required mb-1 block text-sm font-medium"> Media</label>
+                <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
+              </div>
               <div className="flex items-center gap-4">
                 {formData?.media?.map((item) => (
                   <div className="relative h-32 w-44" key={item.documentId}>
@@ -204,7 +235,7 @@ const EditPart = () => {
                   </div>
                 ))}
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 pt-3">
                 <div className="flex w-full items-center gap-2">
                   <input
                     type="checkbox"
@@ -231,8 +262,8 @@ const EditPart = () => {
                   </label>
                 </div>
               </div>
-              <div className="mx-auto w-[300px]">
-                <BaseButton loading={false} type="submit">
+              <div className="mx-auto w-[300px] py-4">
+                <BaseButton loading={false} type="submit" disabled={!isFormValid}>
                   Save
                 </BaseButton>
               </div>

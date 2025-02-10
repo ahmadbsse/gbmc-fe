@@ -77,7 +77,7 @@ export const modifyAdminTabname = (activeTab) => {
     ? "Part"
     : activeTab.name == "Engineering"
       ? "Component"
-      : activeTab.name == "Suppliers"
-        ? "Supplier"
+      : activeTab.name == "Make"
+        ? activeTab.name
         : "Category";
 };

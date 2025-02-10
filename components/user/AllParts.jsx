@@ -31,7 +31,7 @@ const AllParts = () => {
           url = `/parts?populate=*&filters[active]=true&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}`;
         }
       } else {
-        url = `/parts?populate=*&filters[active]=true&filters[name][$containsi]=${searchQuery}`;
+        url = `/parts?populate=*&filters[active]=true&filters[$or][0][name][$containsi]=${searchQuery}&filters[$or][1][oem_number][$containsi]=${searchQuery}`;
       }
 
       const res = await apiClient.GET(url);
@@ -92,7 +92,7 @@ const AllParts = () => {
     <>
       <div className="mt-5 flex flex-col items-center justify-between gap-3 lg:flex-row">
         <h2 className="my-4 text-lg font-bold md:text-3xl">All Parts</h2>
-        {allParts.length > 0 ? <BaseSearchbar setSearchQuery={setSearchQuery} /> : null}
+        <BaseSearchbar setSearchQuery={setSearchQuery} />
       </div>
       {isLoading ? (
         <p className="mx-auto w-fit">
@@ -121,14 +121,16 @@ const AllParts = () => {
                   >
                     <div className="rounded-lg border border-gray-200 bg-white shadow-sm transition">
                       <div className="relative h-[200px] w-full border-b border-gray-200">
-                        <BaseImage
-                          width={part.media[0].formats?.actual?.width}
-                          height={part.media[0].formats?.actual?.height}
-                          src={part.media[0].formats?.actual?.url}
-                          alt={part.name}
-                          priority={true}
-                          classes="h-full w-full object-cover rounded-t-lg"
-                        />
+                        {part.media ? (
+                          <BaseImage
+                            width={part.media[0].formats?.actual?.width}
+                            height={part.media[0].formats?.actual?.height}
+                            src={part.media[0].formats?.actual?.url}
+                            alt={part.name}
+                            priority={true}
+                            classes="h-full w-full object-cover rounded-t-lg"
+                          />
+                        ) : null}
                       </div>
                       <h3 className="p-4 text-lg font-semibold">{part.name}</h3>
                     </div>

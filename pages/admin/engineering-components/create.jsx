@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { Navbar } from "@/components/common";
@@ -25,10 +25,25 @@ const CreateEngineeringComponent = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [dataFilesIds, setDataFilesIds] = useState([]);
   const [heroFileId, setHeroFileId] = useState([]);
+  const [isFormValid, setIsFormValid] = useState(false);
 
+  useEffect(() => {
+    formData.media = dataFilesIds;
+    formData.hero_image = heroFileId;
+    if (
+      formData.name === "" ||
+      formData.description === "" ||
+      formData.summary === "" ||
+      dataFilesIds.length === 0 ||
+      heroFileId.length === 0
+    ) {
+      setIsFormValid(false);
+    } else {
+      setIsFormValid(true);
+    }
+  }, [formData, dataFilesIds, heroFileId]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(dataFilesIds);
     formData.media = dataFilesIds;
     formData.hero_image = heroFileId;
     if (createEngineeringComponentValidator(formData)) {
@@ -82,7 +97,7 @@ const CreateEngineeringComponent = () => {
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">
-          <h1 className="mx-auto mb-8 w-fit text-2xl font-bold">Create Engineering Component</h1>
+          <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">Create Engineering Component</h1>
 
           <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3">
             <div className="flex flex-col md:flex-row md:gap-4">
@@ -90,7 +105,7 @@ const CreateEngineeringComponent = () => {
                 <label className="required mb-1 block text-sm font-medium">Name</label>
                 <input
                   type="text"
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                  className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder={`Enter name`}
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -110,14 +125,17 @@ const CreateEngineeringComponent = () => {
             <div className="flex gap-2">
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Hero Image</label>
-                <BaseFileUploader setDataFilesIds={setHeroFileId} />
+                <BaseFileUploader
+                  setDataFilesIds={setHeroFileId}
+                  disabled={heroFileId != "" || heroFileId.length > 1}
+                />
               </div>
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Detail Images</label>
                 <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
               </div>
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 pt-3">
               <div className="flex w-full items-center gap-2">
                 <input
                   type="checkbox"
@@ -145,8 +163,8 @@ const CreateEngineeringComponent = () => {
               </div>
             </div>
 
-            <div className="mx-auto w-[300px]">
-              <BaseButton loading={false} type="submit">
+            <div className="mx-auto w-[300px] py-4">
+              <BaseButton loading={false} type="submit" disabled={!isFormValid}>
                 save
               </BaseButton>
             </div>

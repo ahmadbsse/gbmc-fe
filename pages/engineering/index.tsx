@@ -5,6 +5,7 @@ import { BaseLoader, Navbar, PageLayout } from "@/components/common";
 import EngineeringListingCard from "@/components/user/EngineeringListingCard";
 import apiClient from "@/utils/apiClient";
 import { transformMedia } from "@/utils";
+import Image from "next/image";
 
 const EngineeringHome = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +38,7 @@ const EngineeringHome = () => {
   return (
     <>
       <Head>
-        <title>Engineering Components | {appData.name}</title>
+        <title>Engineering Components | {appData?.name}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta
           property="og:title"
@@ -56,8 +57,26 @@ const EngineeringHome = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
+      <div className="relative h-96">
+        <div className="absolute inset-0 z-10 bg-gradient-to-r from-slate-900/50 to-slate-900/70" />
+        <div className="relative h-full">
+          <Image
+            src="/assets/engineering-component-banner.jpg"
+            alt="Factory"
+            fill
+            className="object-cover"
+          />
+        </div>
+        <div className="absolute inset-0 z-20 flex items-center justify-center text-center">
+          <div className="max-w-3xl px-4">
+            <h1 className="mb-6 text-4xl font-bold text-white md:text-5xl">
+              Manufactoring Processes
+            </h1>
+          </div>
+        </div>
+      </div>
       <PageLayout
-        title="Engineering Components"
+        title=""
         breadcrumbs={[
           { text: "Home", href: "/" },
           { text: "Engineering Components", href: "/engineering" },
@@ -70,16 +89,16 @@ const EngineeringHome = () => {
         ) : (
           <div className="grid h-screen gap-8">
             {/* Featured Components Section */}
-            {engineeringComponents.length != 0 ? (
+            {engineeringComponents?.length != 0 ? (
               <section>
                 <div className="grid gap-4 md:grid-cols-4">
-                  {engineeringComponents.map((component, index) => (
+                  {engineeringComponents?.map((component, index) => (
                     <EngineeringListingCard
                       key={index}
-                      id={component.documentId}
-                      image={component.media[0].formats.thumbnail.url}
-                      title={component.name}
-                      featured={component.featured}
+                      id={component?.documentId}
+                      image={component?.media[0]?.formats?.thumbnail?.url}
+                      title={component?.name}
+                      featured={component?.featured}
                     />
                   ))}
                 </div>

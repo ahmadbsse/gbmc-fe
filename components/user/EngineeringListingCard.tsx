@@ -7,13 +7,15 @@ const EngineeringListingCard: React.FC<EngineeringCardProps> = ({ id, title, ima
   return (
     <Link href={`/engineering/${id}`}>
       <div className="group relative cursor-pointer shadow-md hover:shadow-lg">
-        <BaseImage
-          height={160}
-          width={240}
-          src={image}
-          alt={title}
-          classes="h-40 w-full object-cover rounded-lg"
-        />
+        {image ? (
+          <BaseImage
+            height={160}
+            width={240}
+            src={image}
+            alt={title}
+            classes="h-40 w-full object-cover rounded-lg"
+          />
+        ) : null}
         <p className="absolute bottom-4 left-2 text-sm font-semibold text-white lg:left-4 lg:text-xl">
           {title}
         </p>

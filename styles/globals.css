@@ -178,3 +178,13 @@ input[type="checkbox"] {
   content: " *";
   color: red;
 }
+
+.ql-toolbar {
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+}
+
+.ql-container {
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
