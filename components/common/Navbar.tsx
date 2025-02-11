@@ -33,7 +33,7 @@ const Navbar = ({ isAdmin = false }) => {
       /> */}
       <nav className="bg-white shadow-lg drop-shadow-lg lg:mr-0">
         <div className="container mx-auto px-4">
-          <div className="flex h-16 items-center justify-between">
+          <div className="flex h-[74px] items-center justify-between">
             <div className="flex w-full items-center justify-between gap-8">
               <Link
                 href={`${isAdmin ? "/admin" : "/"}`}
@@ -67,7 +67,7 @@ const Navbar = ({ isAdmin = false }) => {
 
                     {/* Sliding menu */}
                     <div
-                      className={`fixed left-0 top-0 z-30 h-full w-full transform bg-white shadow-lg transition-transform duration-300 ease-in-out ${
+                      className={`fixed left-0 top-0 z-40 h-screen w-screen transform bg-white shadow-lg transition-transform duration-300 ease-in-out md:hidden ${
                         isOpen ? "translate-x-0" : "-translate-x-full"
                       }`}
                     >

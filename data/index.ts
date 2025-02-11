@@ -1,4 +1,4 @@
 export const userRoutes = [
-    { name: "About", href: "/about", routeName: "/about" },
-    { name: "Contact", href: "/contact", routeName: "/contact" },
+    { name: "About us", href: "/about", routeName: "/about" },
+    { name: "Contact us", href: "/contact", routeName: "/contact" },
 ];

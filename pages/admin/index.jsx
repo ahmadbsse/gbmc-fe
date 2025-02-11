@@ -15,7 +15,6 @@ import { Menu, X } from "lucide-react";
 const PAGE_SIZE = 6;
 const AdminDashboard = () => {
   const [page, setPage] = useState(1);
-  const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [parts, setParts] = useState([]);
@@ -44,9 +43,6 @@ const AdminDashboard = () => {
       setActiveTab(tabsKey[0]);
     }
   }, []);
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
 
   const getParts = async (pageNum, isLoadMore = false) => {
     try {
@@ -262,14 +258,8 @@ const AdminDashboard = () => {
         <main className="container mx-auto px-4 py-8">
           <div className="mb-8 flex items-center justify-between">
             <h1 className="text-2xl font-bold">Dashboard</h1>
-            <div>
-              {tabData[activeTab.key] > 0 ? (
-                <BaseSearchbar setSearchQuery={setSearchQuery} />
-              ) : null}
-              <button onClick={toggleMenu} className="z-50 ml-auto w-fit p-2 md:hidden">
-                {isOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
-            </div>
+
+            {tabData[activeTab.key] > 0 ? <BaseSearchbar setSearchQuery={setSearchQuery} /> : null}
           </div>
           {/* Desktop */}
           <div className="mb-6 hidden gap-4 md:flex">
@@ -284,33 +274,6 @@ const AdminDashboard = () => {
             ))}
           </div>
 
-          {/* Mobile */}
-          <>
-            {/* Sliding menu */}
-            <div
-              className={`ease-inmb-8-out fixed bottom-0 left-0 z-30 h-fit w-[100vw] transform bg-white shadow-lg transition-transform duration-300 ${
-                isOpen ? "translate-y-0" : "translate-y-full"
-              }`}
-            >
-              <div className="flex flex-col p-6">
-                {/* Menu items */}
-                <nav className="flex flex-col gap-5">
-                  {tabsKey.map((tab) => (
-                    <AdminTabs
-                      key={tab.key}
-                      active={activeTab.name === tab.name}
-                      onClick={() => {
-                        if (isOpen) setIsOpen(!isOpen);
-                        setTab(tab);
-                      }}
-                    >
-                      {tab.name}
-                    </AdminTabs>
-                  ))}
-                </nav>
-              </div>
-            </div>
-          </>
           {isLoading ? (
             <div className="mx-auto mt-10 w-fit">
               <BaseLoader width={40} height={40} />

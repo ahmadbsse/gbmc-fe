@@ -10,6 +10,7 @@ import showToast from "@/utils/toast";
 const ContactPage = () => {
   const [loading, setLoading] = useState(false);
   const [formIsValid, setFormIsValid] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(false);
   const [formValues, setFormValues] = useState({
     name: "",
     email: "",
@@ -46,8 +47,17 @@ const ContactPage = () => {
         }
       );
   };
+  function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
   useEffect(() => {
-    if (formValues.name && formValues.email && formValues.message) {
+    if (
+      formValues.name &&
+      formValues.email &&
+      formValues.message &&
+      isValidEmail(formValues.email)
+    ) {
       setFormIsValid(true);
     } else {
       setFormIsValid(false);
@@ -108,7 +118,7 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <label className="required mb-1 block text-sm font-medium text-slate-700">
-                      Your Email
+                      Email
                     </label>
                     <input
                       name="reply_to"
@@ -117,9 +127,18 @@ const ContactPage = () => {
                       required
                       onChange={(e) => {
                         setFormValues({ ...formValues, email: e.target.value });
+                        setIsEmailValid(!isValidEmail(e.target.value));
+                        if (e.target.value === "") {
+                          setIsEmailValid(false);
+                        }
                       }}
                       className="w-full text-ellipsis rounded-lg border border-slate-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                     />
+                    {isEmailValid && (
+                      <p>
+                        <small className="text-red-500">Please enter a valid email address</small>
+                      </p>
+                    )}
                   </div>
                   <div>
                     <label className="required mb-1 block text-sm font-medium text-slate-700">
@@ -151,7 +170,6 @@ const ContactPage = () => {
                   </div>
                 </form>
               </div>
-
               {/* Contact Information */}
               <div className="space-y-2">
                 <div className="rounded-lg bg-white p-6 shadow-md">
@@ -163,21 +181,36 @@ const ContactPage = () => {
                       <Mail className="h-6 w-6 text-primary" />
                       <div>
                         <h3 className="font-medium text-slate-900">Email</h3>
-                        <p className="text-slate-600">{appData.contactEmail}</p>
+                        <a
+                          href={`mailto:${appData.contactEmail}`}
+                          className="text-slate-600 hover:underline"
+                        >
+                          {appData.contactEmail}
+                        </a>
                       </div>
                     </div>
                     <div className="flex items-start gap-4">
                       <Phone className="h-6 w-6 text-primary" />
                       <div>
                         <h3 className="font-medium text-slate-900">Office Number</h3>
-                        <p className="text-slate-600">{appData.officeNumber}</p>
+                        <a
+                          href={`tel:${appData.officeNumber}`}
+                          className="text-slate-600 hover:underline"
+                        >
+                          {appData.officeNumber}
+                        </a>
                       </div>
                     </div>
                     <div className="flex items-start gap-4">
                       <Phone className="h-6 w-6 text-primary" />
                       <div>
                         <h3 className="font-medium text-slate-900">Mobile Number</h3>
-                        <p className="text-slate-600">{appData.mobileNumber}</p>
+                        <a
+                          href={`tel:${appData.mobileNumber}`}
+                          className="text-slate-600 hover:underline"
+                        >
+                          {appData.mobileNumber}
+                        </a>
                       </div>
                     </div>
                     <div className="flex items-start gap-4">
