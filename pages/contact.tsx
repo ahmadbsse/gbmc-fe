@@ -91,7 +91,6 @@ const ContactPage = () => {
         <div className="container mx-auto p-4 pt-6">
           <div className="mx-auto max-w-4xl">
             <h1 className="mb-4 text-3xl font-bold text-slate-900">Contact Us</h1>
-
             <div className="grid gap-4 md:grid-cols-2 lg:gap-8 xl:gap-12">
               {/* Contact Form */}
               <div className="rounded-lg bg-white p-6 shadow-md">
@@ -228,9 +227,7 @@ const ContactPage = () => {
                     </div>
                   </div>
                 </div>
-                <div className="rounded-xl bg-white shadow-lg">
-                  <GoogleMap />
-                </div>
+
                 {/* <div className="rounded-lg bg-white p-6 shadow-md">
                   <h2 className="mb-6 text-2xl font-semibold text-slate-800">Business Hours</h2>
                   <div className="space-y-2">
@@ -249,6 +246,9 @@ const ContactPage = () => {
                   </div>
                 </div> */}
               </div>
+            </div>
+            <div className="mt-5 bg-white shadow-lg">
+              <GoogleMap />
             </div>
           </div>
         </div>
