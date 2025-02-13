@@ -31,7 +31,7 @@ const Navbar = ({ isAdmin = false }) => {
                     nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
         speed={30}
       /> */}
-      <nav className="bg-white shadow-lg drop-shadow-lg lg:mr-0">
+      <nav className="bg-white drop-shadow-xl">
         <div className="container mx-auto px-4">
           <div className="flex h-[74px] items-center justify-between">
             <div className="flex w-full items-center justify-between gap-8">
@@ -43,7 +43,7 @@ const Navbar = ({ isAdmin = false }) => {
               </Link>
               {isAdmin ? null : (
                 <>
-                  <div className="hidden items-center gap-6 text-black md:flex">
+                  <div className="hidden items-center justify-between gap-6 text-black md:flex">
                     {userRoutes.map((item, index) => (
                       <Link
                         key={index}

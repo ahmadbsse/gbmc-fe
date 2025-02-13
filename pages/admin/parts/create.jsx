@@ -75,7 +75,7 @@ const CreatePart = () => {
       await apiClient.GET(url).then((res) => {
         setSuppliers(res.data);
         if (res.data.length == 0) {
-          showToast("Please add suppliers first", "warning");
+          showToast("Please add Make first", "warning");
         }
       });
     } catch (error) {
@@ -129,14 +129,19 @@ const CreatePart = () => {
                 />
               </div>
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">Registered Number</label>
-                <input
-                  type="number"
-                  className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                  placeholder={`Enter number`}
-                  value={formData.number}
-                  onChange={(e) => setFormData({ ...formData, number: e.target.value })}
-                />
+                <label className="required mb-1 block text-sm font-medium">Supplier</label>
+                <select
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                  value={formData.supplier}
+                  onChange={(e) => setFormData({ ...formData, supplier: e.target.value })}
+                >
+                  <option value="">Select a supplier</option>
+                  {suppliers.map((supplier) => (
+                    <option key={supplier.id} value={supplier.documentId}>
+                      {supplier.name}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
             <div className="w-full">
@@ -171,20 +176,17 @@ const CreatePart = () => {
                   onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
                 />
               </div>
+
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">Supplier</label>
-                <select
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                  value={formData.supplier}
-                  onChange={(e) => setFormData({ ...formData, supplier: e.target.value })}
-                >
-                  <option value="">Select a supplier</option>
-                  {suppliers.map((supplier) => (
-                    <option key={supplier.id} value={supplier.documentId}>
-                      {supplier.name}
-                    </option>
-                  ))}
-                </select>
+                <label className="required mb-1 block text-sm font-medium">Registered Number</label>
+                <input
+                  type="number"
+                  min={1}
+                  className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                  placeholder={`Enter number`}
+                  value={formData.number}
+                  onChange={(e) => setFormData({ ...formData, number: e.target.value })}
+                />
               </div>
             </div>
             <RichTextEditor handleChange={handleChange} defaultValue={formData.description} />

@@ -84,7 +84,7 @@ const ContactPage = () => {
         <meta name="keywords" content="tractor,spare parts,machinary" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="min-h-screen bg-slate-50">
+      <div className="min-h-screen">
         {/* Navigation */}
         <Navbar />
 
@@ -170,7 +170,7 @@ const ContactPage = () => {
                 </form>
               </div>
               {/* Contact Information */}
-              <div className="space-y-2">
+              <div className="space-y-3 xl:space-y-6">
                 <div className="rounded-lg bg-white p-6 shadow-md">
                   <h2 className="mb-3 text-2xl font-semibold text-slate-800">
                     Contact Information
@@ -228,7 +228,7 @@ const ContactPage = () => {
                   </div>
                 </div>
 
-                {/* <div className="rounded-lg bg-white p-6 shadow-md">
+                <div className="rounded-lg bg-white p-6 shadow-md">
                   <h2 className="mb-6 text-2xl font-semibold text-slate-800">Business Hours</h2>
                   <div className="space-y-2">
                     <p className="flex justify-between">
@@ -244,7 +244,7 @@ const ContactPage = () => {
                       <span className="font-medium">Closed</span>
                     </p>
                   </div>
-                </div> */}
+                </div>
               </div>
             </div>
             <div className="mt-5 bg-white shadow-lg">

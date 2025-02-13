@@ -132,6 +132,7 @@ const EditSubAssembly = () => {
                   </label>
                   <input
                     type="number"
+                    min={1}
                     className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                     placeholder={`Enter number`}
                     value={formData.number}
