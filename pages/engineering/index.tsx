@@ -104,7 +104,7 @@ const EngineeringHome = () => {
                 </div>
               </section>
             ) : (
-              <p className="mx-auto w-fit">No Data Found</p>
+              <p className="min-h-36 w-fit px-5">No Data Found</p>
             )}
           </div>
         )}

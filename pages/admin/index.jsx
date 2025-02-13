@@ -310,7 +310,7 @@ const AdminDashboard = () => {
                         : () => getParts(1, false)
                 }
               />
-              {tabData[activeTab.key] < total ? (
+              {tabData[activeTab.key] < total && total > 0 ? (
                 <div className="mt-3 flex justify-center md:justify-end">
                   <p
                     className="w-fit cursor-pointer rounded bg-cyan-400 px-4 py-2 text-sm hover:text-black"

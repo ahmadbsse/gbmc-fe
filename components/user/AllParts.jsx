@@ -151,7 +151,7 @@ const AllParts = () => {
           </div>
         </>
       ) : (
-        <p className="mt-10 text-center text-gray-500">No parts found.</p>
+        <p className="mt-10 min-h-36 w-fit px-5 text-gray-500">No parts found.</p>
       )}
     </>
   );
