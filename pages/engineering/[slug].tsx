@@ -117,7 +117,7 @@ const Article = () => {
                 dangerouslySetInnerHTML={{ __html: data?.summary }}
               />
               <p
-                className="text-sm lg:text-base"
+                className="mt-5 text-sm lg:text-base"
                 dangerouslySetInnerHTML={{ __html: data?.description }}
               />
 
@@ -143,7 +143,7 @@ const Article = () => {
                   </div>
                   {data?.media ? (
                     <BaseImage
-                      classes="my-2 h-[500px] rounded-lg lg:z-10 lg:col-span-4 lg:my-20 lg:rounded-lg"
+                      classes="my-2 h-[400px] rounded-lg lg:z-10 lg:col-span-4 lg:my-16 lg:rounded-lg"
                       height={1100}
                       width={1100}
                       src={data?.media[selectedImage]?.formats?.actual?.url}
