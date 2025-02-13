@@ -128,6 +128,14 @@ export const createEngineeringComponentValidator = (formData) => {
     showToast(`Please upload a hero image`, "error");
     return false;
   }
+  if (formData.material == "") {
+    showToast(`Please enter material`, "error");
+    return false;
+  }
+  if (formData.weight == "") {
+    showToast(`Please enter weight`, "error");
+    return false;
+  }
   if (formData.summary == "") {
     showToast(`Please enter summary`, "error");
     return false;
@@ -149,6 +157,14 @@ export const editEngineeringComponentValidator = (formData) => {
   }
   if (formData.hero_image == "") {
     showToast(`Please upload a hero image`, "error");
+    return false;
+  }
+  if (formData.material == "") {
+    showToast(`Please enter material`, "error");
+    return false;
+  }
+  if (formData.weight == "") {
+    showToast(`Please enter weight`, "error");
     return false;
   }
   if (formData.summary == "") {

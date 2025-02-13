@@ -57,6 +57,20 @@ const ViewComponentDetails = () => {
                   {formData.name}
                 </div>
               </div>
+              <div className="flex flex-col md:flex-row md:gap-5">
+                <div className="w-full">
+                  <label className="mb-1 block text-sm font-medium">Material</label>
+                  <div className="w-full rounded-lg border border-gray-300 px-4 py-2">
+                    {formData.material}
+                  </div>
+                </div>
+                <div className="w-full">
+                  <label className="mb-1 block text-sm font-medium"> Weight</label>
+                  <div className="w-full rounded-lg border border-gray-300 px-4 py-2">
+                    {formData.weight}
+                  </div>
+                </div>
+              </div>
               <div className="w-full">
                 <label className="mb-1 block text-sm font-medium">Summary</label>
                 <div
