@@ -9,19 +9,19 @@ const FeatureConfirmationModal = ({ onClose, handleToggle, currentTab, status })
           <X className="h-6 w-6" />
         </button>
         <h1 className="mb-2 text-lg font-bold">
-          Mark us {status ? "Unfeatured" : "Featured"}{" "}
+          Mark as {status ? "Unfeatured" : "Featured"}{" "}
           {currentTab == "engineering"
             ? "Engineering Component"
             : currentTab == "suppliers"
               ? "Make"
               : "Part"}
         </h1>
-        <h2 className="mb-6">
+        <h2 className="mb-16">
           Are you sure you want to {status ? "Unfeatured" : "Featured"} this item?
         </h2>
         <div className="ml-auto mt-6 flex w-fit">
           <BaseButton loading={false} type="button" handleClick={handleToggle}>
-            {status ? "Unfeatured" : "Featured"} Item
+            {status ? "Unfeatured" : "Featured"}
           </BaseButton>
         </div>
       </div>

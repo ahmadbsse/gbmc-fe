@@ -16,12 +16,12 @@ const ActiveConfirmationModal = ({ onClose, handleToggle, currentTab, status }) 
               ? "Make"
               : "Part"}
         </h1>
-        <h2 className="mb-6">
+        <h2 className="mb-16">
           Are you sure you want to {status ? "Deactivate" : "Activate"} this item?
         </h2>
         <div className="ml-auto mt-6 flex w-fit">
           <BaseButton loading={false} type="button" handleClick={handleToggle}>
-            {status ? "Deactivate" : "Activate"} Item
+            {status ? "Deactivate" : "Activate"}
           </BaseButton>
         </div>
       </div>

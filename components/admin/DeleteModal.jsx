@@ -16,10 +16,10 @@ const DeleteConfirmationModal = ({ onClose, handleDelete, currentTab }) => {
               ? "Make"
               : "Part"}
         </h1>
-        <h2 className="mb-6">Are you sure you want to delete this item?</h2>
+        <h2 className="mb-16">Are you sure you want to delete this item?</h2>
         <div className="ml-auto mt-6 flex w-fit">
           <BaseButton loading={false} type="button" handleClick={handleDelete}>
-            Delete Item
+            Delete
           </BaseButton>
         </div>
       </div>
