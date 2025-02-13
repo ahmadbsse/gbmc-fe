@@ -51,7 +51,6 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (editCategoryAndSupplierValidator(data, currentTab, dataFilesIds)) {
-      console.log(dataFilesIds);
       if (dataFilesIds.length == 0) {
         if (Array.isArray(data.media)) {
           data.media = data.media.map((item) => item.id);

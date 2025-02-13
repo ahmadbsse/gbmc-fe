@@ -37,7 +37,11 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
 
   useEffect(() => {
     formData.media = dataFilesIds;
-    if (formData.name === "" || formData.description === "" || dataFilesIds.length === 0) {
+    if (
+      formData.name.trim() === "" ||
+      formData.description === `<p><br></p>` ||
+      dataFilesIds.length === 0
+    ) {
       setIsFormValid(false);
     } else {
       setIsFormValid(true);

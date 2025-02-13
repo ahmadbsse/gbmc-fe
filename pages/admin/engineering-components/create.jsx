@@ -31,9 +31,9 @@ const CreateEngineeringComponent = () => {
     formData.media = dataFilesIds;
     formData.hero_image = heroFileId;
     if (
-      formData.name === "" ||
-      formData.description === "" ||
-      formData.summary === "" ||
+      formData.name.trim() === "" ||
+      formData.description == `<p><br></p>` ||
+      formData.summary === `<p><br></p>` ||
       dataFilesIds.length === 0 ||
       heroFileId.length === 0
     ) {

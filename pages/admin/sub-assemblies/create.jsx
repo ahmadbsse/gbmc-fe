@@ -30,12 +30,12 @@ const CreateSubAssembly = () => {
   useEffect(() => {
     formData.media = dataFilesIds;
     if (
-      formData.name === "" ||
-      formData.number === "" ||
-      formData.oem_number === "" ||
-      formData.weight === "" ||
-      formData.description === "" ||
-      formData.summary === "" ||
+      formData.name.trim() === "" ||
+      formData.number.trim() === "" ||
+      formData.oem_number.trim() === "" ||
+      formData.weight.trim() === "" ||
+      formData.description === `<p><br></p>` ||
+      formData.summary === `<p><br></p>` ||
       dataFilesIds.length === 0
     ) {
       setIsFormValid(false);
