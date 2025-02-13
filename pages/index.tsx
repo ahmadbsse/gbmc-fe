@@ -31,7 +31,7 @@ const Home = () => {
 
       <div className="flex flex-col xl:h-screen xl:overflow-hidden">
         {/* Navigation */}
-        <Navbar />
+        <Navbar setTab={() => {}} />
 
         {/* Main Split Screen Sections */}
         <div className="flex flex-1 flex-col md:flex-row">

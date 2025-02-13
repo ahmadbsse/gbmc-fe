@@ -92,7 +92,7 @@ const PartDetails = () => {
         <meta name="keywords" content="tractor,spare parts,machinary" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar />
+      <Navbar setTab={() => {}} />
 
       <PageLayout title="Product Details" breadcrumbs={breadcrumbs}>
         {data ? (

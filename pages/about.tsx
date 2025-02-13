@@ -28,7 +28,7 @@ const AboutPage = () => {
       </Head>
       <div className="min-h-screen bg-slate-50">
         {/* Navigation */}
-        <Navbar />
+        <Navbar setTab={() => {}} />
 
         {/* Hero Section */}
         <div className="relative h-96">

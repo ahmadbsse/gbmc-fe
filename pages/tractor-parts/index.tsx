@@ -54,7 +54,7 @@ const TractorPartsHome = () => {
         <meta name="keywords" content="tractor,spare parts,machinary" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar />
+      <Navbar setTab={() => {}} />
 
       <PageLayout title={``} breadcrumbs={breadcrumbs}>
         <div className="grid gap-8">

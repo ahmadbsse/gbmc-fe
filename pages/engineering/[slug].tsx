@@ -72,7 +72,7 @@ const Article = () => {
         <meta name="keywords" content="tractor,spare parts,machinary" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar />
+      <Navbar setTab={() => {}} />
 
       {data ? (
         <div className="mx-auto max-w-7xl">
@@ -116,17 +116,29 @@ const Article = () => {
                 className="text-sm lg:text-base"
                 dangerouslySetInnerHTML={{ __html: data?.summary }}
               />
+              <p
+                className="text-sm lg:text-base"
+                dangerouslySetInnerHTML={{ __html: data?.description }}
+              />
 
               <section id="projects" className="pt-5 lg:py-8">
                 <article className="reverse grid grid-cols-1 md:grid-cols-10">
                   <div className="card-details rounded-lg bg-[#707070] p-4 text-sm text-white lg:text-base">
                     <div className="flex flex-col gap-2 py-7 lg:w-[400px] lg:gap-5 lg:px-11">
-                      <h2 className="text-xl font-bold lg:text-2xl">Description</h2>
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: data?.description,
-                        }}
-                      ></div>
+                      <h2 className="text-xl font-bold lg:text-2xl">Key Features</h2>
+
+                      <p>
+                        <strong>Weight:</strong>
+                        <br />
+                        {data?.weight ? <span>{data?.weight}</span> : null}
+                      </p>
+
+                      <p>
+                        <strong>Material:</strong>
+                        <br />
+
+                        {data.material ? <span>{data.material}</span> : null}
+                      </p>
                     </div>
                   </div>
                   {data?.media ? (

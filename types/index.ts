@@ -147,4 +147,6 @@ export type EngineeringComponent = {
   summary: string; // HTML string
   media: MediaItem[];
   hero_image: HeroImage;
+  weight: string;
+  material: string;
 };

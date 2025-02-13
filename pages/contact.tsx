@@ -86,7 +86,7 @@ const ContactPage = () => {
       </Head>
       <div className="min-h-screen">
         {/* Navigation */}
-        <Navbar />
+        <Navbar setTab={() => {}} />
 
         <div className="container mx-auto p-4 pt-6">
           <div className="mx-auto max-w-4xl">
