@@ -73,7 +73,7 @@ const Navbar = ({ isAdmin = false, setTab }) => {
 
                             {/* Menu items */}
 
-                            <nav className="font-med flex flex-col gap-7 text-base">
+                            <nav className="flex flex-col gap-7 text-base">
                               {tabsKey.map((tab) => (
                                 <div
                                   key={tab.key}
@@ -131,13 +131,11 @@ const Navbar = ({ isAdmin = false, setTab }) => {
                         {/* Menu items */}
 
                         <nav className="flex flex-col gap-7">
-                          <div className="mb-6 gap-4">
-                            {tabsKey.map((tab) => (
-                              <div key={tab.key} onClick={() => setTab(tab)}>
-                                {tab.name}
-                              </div>
-                            ))}
-                          </div>
+                          {tabsKey.map((tab) => (
+                            <div key={tab.key} onClick={() => setTab(tab)}>
+                              {tab.name}
+                            </div>
+                          ))}
                         </nav>
                       </div>
                     </div>
