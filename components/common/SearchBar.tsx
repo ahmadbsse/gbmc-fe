@@ -2,17 +2,15 @@ import { Search } from "lucide-react";
 
 const SearchBar = ({ setSearchQuery }) => {
   return (
-    <>
-      <div className="relative">
-        <input
-          type="text"
-          placeholder="Search..."
-          className="w-64 rounded-lg border border-gray-300 px-4 py-2 pl-10 pr-4 outline-none focus:border-primary focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-primary" />
-      </div>
-    </>
+    <div className="flex w-64 items-center gap-3 rounded-lg border border-gray-300 pl-2 focus:border-primary focus:ring-1 focus:ring-primary">
+      <Search className="h-6 w-6 pl-1 text-primary" />
+      <input
+        type="text"
+        placeholder="Search..."
+        className="w-52 rounded-lg py-2 pr-4 outline-none focus:border-transparent focus:outline-none"
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
+    </div>
   );
 };
 

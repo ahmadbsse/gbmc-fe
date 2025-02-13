@@ -254,7 +254,7 @@ const AdminDashboard = () => {
       </Head>
 
       <div className="min-h-screen bg-gray-50">
-        <Navbar isAdmin />
+        <Navbar isAdmin setTab={setTab} />
         <main className="container mx-auto px-4 py-8">
           <div className="mb-8 flex items-center justify-between">
             <h1 className="text-2xl font-bold">Dashboard</h1>
