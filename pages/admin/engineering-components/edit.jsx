@@ -75,14 +75,7 @@ const EditComponent = () => {
     }
   };
   const deletePreviousImage = async (id, key) => {
-    try {
-      await apiClient.DELETE(`/upload/files/${id}`).then((res) => {
-        const newData = removeMediaById(id, key);
-        setFormData(newData);
-      });
-    } catch (error) {
-      console.error("Error deleting resource:", error.message);
-    }
+    setFormData(removeMediaById(id, key));
   };
   function removeMediaById(idToRemove, key) {
     if (key == "media")

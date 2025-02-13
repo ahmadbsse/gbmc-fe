@@ -81,28 +81,25 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
     }
   };
   const deletePreviousImage = async (id) => {
-    try {
-      await apiClient.DELETE(`/upload/files/${id}`).then((res) => {
-        setData(removeMediaById(id));
-      });
-    } catch (error) {
-      console.error("Error deleting resource:", error.message);
-    }
+    setData(removeMediaById(id));
   };
   function removeMediaById(idToRemove) {
     return { ...data, media: data?.media?.filter((mediaItem) => mediaItem.id !== idToRemove) };
   }
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="custom-scrollbar relative max-h-[600px] w-full max-w-xl overflow-y-auto rounded-lg bg-white p-6">
-        <button onClick={onClose} className="absolute right-4 top-6">
-          <X className="h-6 w-6" />
-        </button>
-        <h2 className="mb-8 text-2xl font-bold">
-          Edit {modifyAdminTabname(activeTab)} - {data?.name}
-        </h2>
+      <div className="custom-scrollbar relative max-h-[600px] w-full max-w-xl overflow-y-auto rounded-lg bg-white">
+        <div className="fixed flex w-full max-w-[560px] items-center justify-between rounded-tl-lg bg-white py-3 pl-6 pr-2">
+          <h2 className="text-2xl font-bold">
+            {" "}
+            Edit {modifyAdminTabname(activeTab)} - {data?.name}
+          </h2>
+          <button onClick={onClose} className="">
+            <X className="h-6 w-6" />
+          </button>
+        </div>
         {data ? (
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="mt-10 space-y-4 p-6">
             <div>
               <label className="required mb-1 block text-sm font-medium">Name</label>
               <input
@@ -133,26 +130,30 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
             </div>
             <div className="flex items-center gap-4">
               {data?.media ? (
-                data?.media?.map((item) => (
-                  <div className="relative h-32 w-44" key={item.documentId}>
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        deletePreviousImage(item.id);
-                      }}
-                      className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
-                    >
-                      <X className="h-4 w-4 text-white" />
-                    </button>
-                    <BaseImage
-                      width={item.formats.thumbnail.width}
-                      height={item.formats.thumbnail.height}
-                      src={item.formats.thumbnail.url}
-                      alt={item.name}
-                      classes="object-cover w-full h-full"
-                    />
-                  </div>
-                ))
+                data?.media?.map((item) => {
+                  if (item) {
+                    return (
+                      <div className="relative h-32 w-44" key={item.documentId}>
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            deletePreviousImage(item.id);
+                          }}
+                          className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
+                        >
+                          <X className="h-4 w-4 text-white" />
+                        </button>
+                        <BaseImage
+                          width={item.formats.thumbnail.width}
+                          height={item.formats.thumbnail.height}
+                          src={item.formats.thumbnail.url}
+                          alt={item.name}
+                          classes="object-cover w-full h-full"
+                        />
+                      </div>
+                    );
+                  }
+                })
               ) : (
                 <div className="relative h-32 w-44"></div>
               )}

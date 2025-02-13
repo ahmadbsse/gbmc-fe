@@ -100,14 +100,7 @@ const EditPart = () => {
     }
   };
   const deletePreviousImage = async (id) => {
-    try {
-      await apiClient.DELETE(`/upload/files/${id}`).then((res) => {
-        const newData = removeMediaById(id);
-        setFormData(newData);
-      });
-    } catch (error) {
-      console.error("Error deleting resource:", error.message);
-    }
+    setFormData(removeMediaById(id));
   };
   function removeMediaById(idToRemove) {
     return {

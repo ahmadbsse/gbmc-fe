@@ -71,13 +71,15 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="custom-scrollbar relative max-h-[600px] w-full max-w-xl overflow-y-auto rounded-lg bg-white p-6">
-        <button onClick={onClose} className="absolute right-4 top-6">
-          <X className="h-6 w-6" />
-        </button>
-        <h2 className="mb-8 text-2xl font-bold">Add New {modifyAdminTabname(activeTab)}</h2>
+      <div className="custom-scrollbar relative max-h-[600px] w-full max-w-xl overflow-y-auto rounded-lg bg-white">
+        <div className="fixed flex w-full max-w-[560px] items-center justify-between rounded-tl-lg bg-white py-3 pl-6 pr-2">
+          <h2 className="text-2xl font-bold">Add New {modifyAdminTabname(activeTab)}</h2>
+          <button onClick={onClose} className="">
+            <X className="h-6 w-6" />
+          </button>
+        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-3">
+        <form onSubmit={handleSubmit} className="mt-10 space-y-3 p-6">
           <div>
             <label className="required mb-1 block text-sm font-medium">Name</label>
             <input
