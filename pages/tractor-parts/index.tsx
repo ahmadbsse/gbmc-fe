@@ -57,10 +57,10 @@ const TractorPartsHome = () => {
       <Navbar setTab={() => {}} />
 
       <PageLayout title={``} breadcrumbs={breadcrumbs}>
-        <div className="grid gap-8">
+        <div className="grid lg:gap-8">
           {/* Categories Section */}
           <section>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="flex w-full flex-col gap-6 lg:w-auto lg:flex-row">
               {categories.map((category, index) => (
                 <Link key={index} href={category?.key}>
                   <div

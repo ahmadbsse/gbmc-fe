@@ -90,9 +90,11 @@ const AllParts = () => {
   }, []);
   return (
     <>
-      <div className="mt-5 flex flex-col items-center justify-between gap-3 lg:flex-row">
+      <div className="mt-5 flex flex-col justify-between lg:flex-row lg:items-center lg:gap-3">
         <h2 className="my-4 text-lg font-bold md:text-3xl">All Parts</h2>
-        <BaseSearchbar setSearchQuery={setSearchQuery} />
+        <div className="ml-auto px-4">
+          <BaseSearchbar setSearchQuery={setSearchQuery} />
+        </div>
       </div>
       {isLoading ? (
         <p className="mx-auto w-fit">
@@ -113,7 +115,7 @@ const AllParts = () => {
           </div>
           <div>
             <div className="custom-scrollbar flex max-w-7xl flex-col gap-3 overflow-x-auto pb-2 lg:flex-row">
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="grid w-fit grid-cols-1 gap-6 pr-3 sm:grid-cols-2 lg:grid-cols-4 lg:pr-0">
                 {allParts.map((part, index) => (
                   <Link
                     href={`/tractor-parts/${part.documentId}`}
@@ -138,10 +140,10 @@ const AllParts = () => {
                 ))}
               </div>
             </div>
-            {allParts.length < total && (
+            {allParts.length < total && total > 0 && (
               <div className="flex justify-center md:justify-end">
                 <p
-                  className="w-fit cursor-pointer text-sm underline hover:text-black"
+                  className="w-fit cursor-pointer rounded bg-cyan-400 px-4 py-2 text-sm hover:text-black"
                   onClick={loadMore}
                 >
                   {isLoadingMore ? "Loading..." : "Load More"}
