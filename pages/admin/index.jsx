@@ -311,9 +311,9 @@ const AdminDashboard = () => {
                 }
               />
               {tabData[activeTab.key] < total ? (
-                <div className="flex justify-center md:justify-end">
+                <div className="mt-3 flex justify-center md:justify-end">
                   <p
-                    className="w-fit cursor-pointer text-sm underline hover:text-black"
+                    className="w-fit cursor-pointer rounded bg-cyan-400 px-4 py-2 text-sm hover:text-black"
                     onClick={loadMore}
                   >
                     {isLoadingMore ? "Loading..." : "Load More"}

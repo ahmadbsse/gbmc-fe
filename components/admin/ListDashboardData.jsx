@@ -168,12 +168,13 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
       <div className="rounded-lg bg-white shadow">
         <div className="border-b border-gray-200 px-6 py-4">
           <div className="mb-8 flex items-center justify-between">
-            <h2 className="flex items-center gap-2 text-lg font-medium">
-              {activeTab.name} <span className="text-sm text-gray-500"> ({total})</span>
+            <h2 className="flex items-center text-lg font-medium">
+              {activeTab.name}{" "}
+              {total > 0 ? <span className="font-normal text-gray-500"> ({total})</span> : null}
             </h2>
             <div className="hidden w-fit md:flex">
               <BaseButton loading={false} type="submit" handleClick={addNewItem}>
-                <p className="mx-auto flex w-fit md:px-3">
+                <p className="mx-auto flex w-fit gap-2 md:px-3">
                   <Plus className="mt-0.5 h-4 w-4" />
                   Add {activeTab.name}
                 </p>

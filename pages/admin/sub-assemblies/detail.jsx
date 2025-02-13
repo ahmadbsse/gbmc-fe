@@ -77,18 +77,22 @@ const ViewSubAssemblyDetails = () => {
               <div className="flex flex-wrap items-center gap-4">
                 {formData.media ? (
                   Array.isArray(formData.media) ? (
-                    formData.media.map((item, index) => (
-                      <div className="h-32 w-40" key={index}>
-                        <BaseImage
-                          key={index}
-                          width={item.formats.thumbnail.width}
-                          height={item.formats.thumbnail.height}
-                          src={item.formats.thumbnail.url}
-                          alt={item.name}
-                          classes="object-cover w-full h-full"
-                        />
-                      </div>
-                    ))
+                    formData.media.map((item, index) => {
+                      if (item) {
+                        return (
+                          <div className="h-32 w-40" key={index}>
+                            <BaseImage
+                              key={index}
+                              width={item.formats.thumbnail.width}
+                              height={item.formats.thumbnail.height}
+                              src={item.formats.thumbnail.url}
+                              alt={item.name}
+                              classes="object-cover w-full h-full"
+                            />
+                          </div>
+                        );
+                      }
+                    })
                   ) : (
                     <div className="h-32 w-44">
                       <BaseImage

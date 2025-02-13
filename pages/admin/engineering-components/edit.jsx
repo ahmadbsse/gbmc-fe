@@ -175,26 +175,30 @@ const EditComponent = () => {
                   <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
                   {formData.media ? (
                     <div className="flex flex-wrap items-center gap-4">
-                      {formData?.media?.map((item) => (
-                        <div className="relative mt-2 h-32 w-48" key={item.documentId}>
-                          <button
-                            onClick={(e) => {
-                              e.preventDefault();
-                              deletePreviousImage(item.id, "media");
-                            }}
-                            className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
-                          >
-                            <X className="h-4 w-4 text-white" />
-                          </button>
-                          <BaseImage
-                            width={item.formats?.thumbnail.width}
-                            height={item.formats?.thumbnail.height}
-                            src={item.formats?.thumbnail.url}
-                            alt={item.name}
-                            classes="object-cover w-full h-full"
-                          />
-                        </div>
-                      ))}
+                      {formData?.media?.map((item) => {
+                        if (item) {
+                          return (
+                            <div className="relative mt-2 h-32 w-48" key={item.documentId}>
+                              <button
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  deletePreviousImage(item.id, "media");
+                                }}
+                                className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
+                              >
+                                <X className="h-4 w-4 text-white" />
+                              </button>
+                              <BaseImage
+                                width={item.formats?.thumbnail.width}
+                                height={item.formats?.thumbnail.height}
+                                src={item.formats?.thumbnail.url}
+                                alt={item.name}
+                                classes="object-cover w-full h-full"
+                              />
+                            </div>
+                          );
+                        }
+                      })}
                     </div>
                   ) : null}
                 </div>
