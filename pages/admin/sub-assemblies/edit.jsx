@@ -168,24 +168,26 @@ const EditSubAssembly = () => {
                 <div className="flex items-center gap-4">
                   {formData?.media?.map((item) => {
                     if (item) {
-                      <div className="relative h-32 w-44" key={item.documentId}>
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            deletePreviousImage(item.id);
-                          }}
-                          className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
-                        >
-                          <X className="h-4 w-4 text-white" />
-                        </button>
-                        <BaseImage
-                          width={item.formats.thumbnail.width}
-                          height={item.formats.thumbnail.height}
-                          src={item.formats.thumbnail.url}
-                          alt={item.name}
-                          classes="object-cover w-full h-full"
-                        />
-                      </div>;
+                      return (
+                        <div className="relative h-32 w-44" key={item.documentId}>
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              deletePreviousImage(item.id);
+                            }}
+                            className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
+                          >
+                            <X className="h-4 w-4 text-white" />
+                          </button>
+                          <BaseImage
+                            width={item.formats.thumbnail.width}
+                            height={item.formats.thumbnail.height}
+                            src={item.formats.thumbnail.url}
+                            alt={item.name}
+                            classes="object-cover w-full h-full"
+                          />
+                        </div>
+                      );
                     }
                   })}
                 </div>
