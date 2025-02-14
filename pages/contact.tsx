@@ -54,8 +54,11 @@ const ContactPage = () => {
   useEffect(() => {
     if (
       formValues.name &&
+      formValues.name.trim() &&
       formValues.email &&
+      formValues.email.trim() &&
       formValues.message &&
+      formValues.message.trim() &&
       isValidEmail(formValues.email)
     ) {
       setFormIsValid(true);
