@@ -105,159 +105,163 @@ const EditComponent = () => {
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">
-          <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">Edit Engineering Component</h1>
           {formData ? (
-            <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3">
-              <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">Name</label>
-                <input
-                  type="text"
-                  className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                  placeholder={`Enter name`}
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            <>
+              <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">
+                Edit Engineering Component - {formData.name || ""}
+              </h1>
+              <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3">
+                <div className="w-full">
+                  <label className="required mb-1 block text-sm font-medium">Name</label>
+                  <input
+                    type="text"
+                    className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                    placeholder={`Enter name`}
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  />
+                </div>
+                <div className="flex flex-col md:flex-row md:gap-4">
+                  <div className="w-full">
+                    <label className="required mb-1 block text-sm font-medium">Material</label>
+                    <input
+                      type="text"
+                      className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                      placeholder={`Enter material name`}
+                      value={formData.material}
+                      onChange={(e) => setFormData({ ...formData, material: e.target.value })}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <label className="required mb-1 block text-sm font-medium"> Weight</label>
+                    <input
+                      type="text"
+                      className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                      placeholder={`Enter weight`}
+                      value={formData.weight}
+                      onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
+                    />
+                  </div>
+                </div>
+                <RichTextEditor
+                  handleChange={handleChangeSummary}
+                  defaultValue={formData.summary}
+                  label="Summary"
                 />
-              </div>
-              <div className="flex flex-col md:flex-row md:gap-4">
-                <div className="w-full">
-                  <label className="required mb-1 block text-sm font-medium">Material</label>
-                  <input
-                    type="text"
-                    className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                    placeholder={`Enter material name`}
-                    value={formData.material}
-                    onChange={(e) => setFormData({ ...formData, material: e.target.value })}
-                  />
-                </div>
-                <div className="w-full">
-                  <label className="required mb-1 block text-sm font-medium"> Weight</label>
-                  <input
-                    type="text"
-                    className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                    placeholder={`Enter weight`}
-                    value={formData.weight}
-                    onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
-                  />
-                </div>
-              </div>
-              <RichTextEditor
-                handleChange={handleChangeSummary}
-                defaultValue={formData.summary}
-                label="Summary"
-              />
-              <RichTextEditor
-                handleChange={handleChangeDescription}
-                defaultValue={formData.description}
-              />
+                <RichTextEditor
+                  handleChange={handleChangeDescription}
+                  defaultValue={formData.description}
+                />
 
-              <div className="flex gap-2">
-                <div className="w-full">
-                  <label className="required mb-1 block text-sm font-medium">Hero Image</label>
-                  <BaseFileUploader
-                    setDataFilesIds={setHeroFileId}
-                    disabled={
-                      heroFileId != "" ||
-                      heroFileId.length > 1 ||
-                      (formData.hero_image && Object.keys(formData.hero_image).length)
-                    }
-                  />
-                  {formData.hero_image && Object.keys(formData.hero_image).length != 0 ? (
-                    <div className="relative mt-2 h-32 w-48">
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          deletePreviousImage(formData.hero_image.id, "hero_image");
-                        }}
-                        className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
-                      >
-                        <X className="h-4 w-4 text-white" />
-                      </button>
-                      {formData.hero_image.type === "video" ? (
-                        <BaseVideo
-                          src={formData.hero_image.url}
-                          autoPlay={true}
-                          muted={true}
-                          loop={true}
-                          classes="object-cover w-full h-full"
-                        />
-                      ) : (
-                        <BaseImage
-                          width={formData.hero_image.formats?.thumbnail?.width}
-                          height={formData.hero_image.formats?.thumbnail?.height}
-                          src={formData.hero_image.formats?.thumbnail?.url}
-                          alt={formData.hero_image.name}
-                          classes="object-cover w-full h-full"
-                        />
-                      )}
-                    </div>
-                  ) : null}
+                <div className="flex gap-2">
+                  <div className="w-full">
+                    <label className="required mb-1 block text-sm font-medium">Hero Image</label>
+                    <BaseFileUploader
+                      setDataFilesIds={setHeroFileId}
+                      disabled={
+                        heroFileId != "" ||
+                        heroFileId.length > 1 ||
+                        (formData.hero_image && Object.keys(formData.hero_image).length)
+                      }
+                    />
+                    {formData.hero_image && Object.keys(formData.hero_image).length != 0 ? (
+                      <div className="relative mt-2 h-32 w-48">
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            deletePreviousImage(formData.hero_image.id, "hero_image");
+                          }}
+                          className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
+                        >
+                          <X className="h-4 w-4 text-white" />
+                        </button>
+                        {formData.hero_image.type === "video" ? (
+                          <BaseVideo
+                            src={formData.hero_image.url}
+                            autoPlay={true}
+                            muted={true}
+                            loop={true}
+                            classes="object-cover w-full h-full"
+                          />
+                        ) : (
+                          <BaseImage
+                            width={formData.hero_image.formats?.thumbnail?.width}
+                            height={formData.hero_image.formats?.thumbnail?.height}
+                            src={formData.hero_image.formats?.thumbnail?.url}
+                            alt={formData.hero_image.name}
+                            classes="object-cover w-full h-full"
+                          />
+                        )}
+                      </div>
+                    ) : null}
+                  </div>
+                  <div className="w-full">
+                    <label className="required mb-1 block text-sm font-medium">Detail Images</label>
+                    <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
+                    {formData.media ? (
+                      <div className="flex flex-wrap items-center gap-4">
+                        {formData?.media?.map((item) => {
+                          if (item) {
+                            return (
+                              <div className="relative mt-2 h-32 w-48" key={item.documentId}>
+                                <button
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    deletePreviousImage(item.id, "media");
+                                  }}
+                                  className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
+                                >
+                                  <X className="h-4 w-4 text-white" />
+                                </button>
+                                <BaseImage
+                                  width={item.formats?.thumbnail.width}
+                                  height={item.formats?.thumbnail.height}
+                                  src={item.formats?.thumbnail.url}
+                                  alt={item.name}
+                                  classes="object-cover w-full h-full"
+                                />
+                              </div>
+                            );
+                          }
+                        })}
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
-                <div className="w-full">
-                  <label className="required mb-1 block text-sm font-medium">Detail Images</label>
-                  <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
-                  {formData.media ? (
-                    <div className="flex flex-wrap items-center gap-4">
-                      {formData?.media?.map((item) => {
-                        if (item) {
-                          return (
-                            <div className="relative mt-2 h-32 w-48" key={item.documentId}>
-                              <button
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  deletePreviousImage(item.id, "media");
-                                }}
-                                className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
-                              >
-                                <X className="h-4 w-4 text-white" />
-                              </button>
-                              <BaseImage
-                                width={item.formats?.thumbnail.width}
-                                height={item.formats?.thumbnail.height}
-                                src={item.formats?.thumbnail.url}
-                                alt={item.name}
-                                classes="object-cover w-full h-full"
-                              />
-                            </div>
-                          );
-                        }
-                      })}
-                    </div>
-                  ) : null}
-                </div>
-              </div>
-              <div className="flex flex-col gap-2 pt-3">
-                <div className="flex w-full items-center gap-2">
-                  <input
-                    type="checkbox"
-                    id="active"
-                    checked={formData.active}
-                    onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
-                    className="rounded border-gray-300 outline-none focus:border-primary focus:ring-primary"
-                  />
-                  <label htmlFor="active" className="text-sm">
-                    Mark as active
-                  </label>
-                </div>
+                <div className="flex flex-col gap-2 pt-3">
+                  <div className="flex w-full items-center gap-2">
+                    <input
+                      type="checkbox"
+                      id="active"
+                      checked={formData.active}
+                      onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
+                      className="rounded border-gray-300 outline-none focus:border-primary focus:ring-primary"
+                    />
+                    <label htmlFor="active" className="text-sm">
+                      Mark as active
+                    </label>
+                  </div>
 
-                <div className="flex w-full items-center gap-2">
-                  <input
-                    type="checkbox"
-                    id="featured"
-                    checked={formData.featured}
-                    onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
-                    className="rounded border-gray-300 outline-none focus:border-primary focus:ring-primary"
-                  />
-                  <label htmlFor="featured" className="text-sm">
-                    Mark as featured
-                  </label>
+                  <div className="flex w-full items-center gap-2">
+                    <input
+                      type="checkbox"
+                      id="featured"
+                      checked={formData.featured}
+                      onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
+                      className="rounded border-gray-300 outline-none focus:border-primary focus:ring-primary"
+                    />
+                    <label htmlFor="featured" className="text-sm">
+                      Mark as featured
+                    </label>
+                  </div>
                 </div>
-              </div>
-              <div className="mx-auto w-[300px] py-4">
-                <BaseButton loading={false} type="submit">
-                  save
-                </BaseButton>
-              </div>
-            </form>
+                <div className="mx-auto w-[300px] py-4">
+                  <BaseButton loading={false} type="submit">
+                    save
+                  </BaseButton>
+                </div>
+              </form>
+            </>
           ) : (
             <p className="mx-auto w-fit">
               <BaseLoader />

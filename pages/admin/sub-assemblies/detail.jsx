@@ -34,7 +34,9 @@ const ViewSubAssemblyDetails = () => {
         <main className="container mx-auto px-4 py-8">
           {formData ? (
             <div className="mx-auto max-w-[810px] space-y-3">
-              <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">Sub Assembly - Details</h1>
+              <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">
+                Sub Assembly - Details - {formData.name || ""}
+              </h1>
               <div className="flex flex-col md:flex-row md:gap-5">
                 <div className="w-full">
                   <label className="mb-1 block text-sm font-medium">Name</label>

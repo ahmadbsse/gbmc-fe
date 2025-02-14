@@ -49,7 +49,7 @@ const ViewComponentDetails = () => {
           {formData ? (
             <div className="mx-auto max-w-[810px] space-y-3">
               <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">
-                Engineering Component - Details
+                Engineering Component - Details - {formData.name || ""}
               </h1>
               <div className="w-full">
                 <label className="mb-1 block text-sm font-medium">Name</label>
