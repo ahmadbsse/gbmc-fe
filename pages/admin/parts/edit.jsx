@@ -86,7 +86,7 @@ const EditPart = () => {
         apiClient
           .PUT(`/parts/${id}`, { data: formData })
           .then(() => {
-            showToast("Edited Successfully", "success");
+            showToast("Part Saved Successfully", "success");
             router.push("/admin");
           })
           .catch((error) => {

@@ -56,7 +56,7 @@ const CreatePart = () => {
           .POST(`/parts`, { data: formData })
           .then(() => {
             setFormData(initialFormData);
-            showToast(` created successfully`, "success");
+            showToast(`Part created successfully`, "success");
             router.push("/admin");
           })
           .catch((error) => {

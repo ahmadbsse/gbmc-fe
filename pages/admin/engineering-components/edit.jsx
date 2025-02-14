@@ -61,7 +61,7 @@ const EditComponent = () => {
         apiClient
           .PUT(`/engineering-components/${id}`, { data: formData })
           .then(() => {
-            showToast("Editted Successfully", "success");
+            showToast("Engineering component saved Successfully", "success");
             router.push("/admin");
           })
           .catch((error) => {

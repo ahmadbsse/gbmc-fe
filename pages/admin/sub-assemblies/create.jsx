@@ -52,7 +52,7 @@ const CreateSubAssembly = () => {
           .POST(`/sub-assemblies`, { data: formData })
           .then(() => {
             setFormData(initialFormData);
-            showToast("Created Successfully", "success");
+            showToast("Sub Assembly Created Successfully", "success");
             router.push("/admin");
           })
           .catch((error) => {

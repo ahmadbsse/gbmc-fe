@@ -70,7 +70,7 @@ const EditSubAssembly = () => {
         apiClient
           .PUT(`/sub-assemblies/${id}`, { data: formData })
           .then(() => {
-            showToast("Editted Successfully", "success");
+            showToast("Sub Assembly Saved Successfully", "success");
             router.push("/admin");
           })
           .catch((error) => {

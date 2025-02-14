@@ -56,7 +56,7 @@ const CreateEngineeringComponent = () => {
           .POST(`/engineering-components`, { data: formData })
           .then(() => {
             setFormData(initialFormData);
-            showToast("Created Successfully", "success");
+            showToast("Engineering component Created Successfully", "success");
             router.push("/admin");
           })
           .catch((error) => {
