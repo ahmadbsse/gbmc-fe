@@ -313,7 +313,7 @@ const AdminDashboard = () => {
               {tabData[activeTab.key] < total && total > 0 ? (
                 <div className="mt-3 flex justify-center md:justify-end">
                   <p
-                    className="w-fit cursor-pointer rounded bg-cyan-400 px-4 py-2 text-sm hover:text-black"
+                    className="w-fit cursor-pointer rounded bg-[#000036] px-4 py-2 text-sm text-white hover:bg-black hover:text-primary-color"
                     onClick={loadMore}
                   >
                     {isLoadingMore ? "Loading..." : "Load More"}
