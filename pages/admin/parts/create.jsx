@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { Navbar } from "@/components/common";
-
+import { ChevronDown } from "lucide-react";
 import showToast from "@/utils/toast";
 import { BaseButton } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
@@ -128,10 +128,10 @@ const CreatePart = () => {
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 />
               </div>
-              <div className="w-full">
+              <div className="relative w-full">
                 <label className="required mb-1 block text-sm font-medium">Supplier</label>
                 <select
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                  className="w-full appearance-none rounded-lg border border-gray-300 bg-white px-4 py-2 text-[13px] outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   value={formData.supplier}
                   onChange={(e) => setFormData({ ...formData, supplier: e.target.value })}
                 >
@@ -142,6 +142,9 @@ const CreatePart = () => {
                     </option>
                   ))}
                 </select>
+                <div className="pointer-events-none absolute right-3 top-1/2">
+                  <ChevronDown className="h-5 w-5 pt-1" />
+                </div>
               </div>
             </div>
             <div className="w-full">

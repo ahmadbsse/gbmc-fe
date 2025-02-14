@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { X } from "lucide-react";
+import { X, ChevronDown } from "lucide-react";
 
 import apiClient from "@/utils/apiClient";
 import { transformMedia } from "@/utils";
@@ -140,11 +140,11 @@ const EditPart = () => {
                     />
                   </div>
 
-                  <div className="w-full">
+                  <div className="relative w-full">
                     <label className="required mb-1 block text-sm font-medium">Supplier</label>
                     <select
-                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                      value={JSON.stringify(formData.supplier.name)}
+                      className="w-full appearance-none rounded-lg border border-gray-300 bg-white px-4 py-2 text-[13px] outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                      value={JSON.stringify(formData.supplier.documentId)}
                       onChange={(e) => {
                         setFormData({
                           ...formData,
@@ -159,6 +159,9 @@ const EditPart = () => {
                         </option>
                       ))}
                     </select>
+                    <div className="pointer-events-none absolute right-3 top-1/2">
+                      <ChevronDown className="h-5 w-5 pt-1" />
+                    </div>
                   </div>
                 </div>
                 <div className="w-full">
