@@ -1,12 +1,13 @@
 import React, { useState, useRef } from "react";
 import { Upload, X, CheckCircle, AlertCircle } from "lucide-react";
 import apiClient from "@/utils/apiClient";
+import ImagePreview from "./ImagePreview";
 
 const BaseFileUploader = ({ setDataFilesIds, multiple = false, disabled = false }) => {
   const [files, setFiles] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
-
+  const [previewFile, setPreviewFile] = useState(null);
   // File upload handler for multiple files
   const handleFileUpload = async (filesToUpload) => {
     try {
@@ -89,6 +90,9 @@ const BaseFileUploader = ({ setDataFilesIds, multiple = false, disabled = false 
 
   return (
     <div className="w-full">
+      {previewFile ? (
+        <ImagePreview file={previewFile} onClose={() => setPreviewFile(null)} />
+      ) : null}
       {/* Upload Area */}
       {disabled ? null : (
         <div
@@ -125,7 +129,14 @@ const BaseFileUploader = ({ setDataFilesIds, multiple = false, disabled = false 
               {/* File Preview */}
               <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg bg-gray-100">
                 {file.preview ? (
-                  <img src={file.preview} alt={file.name} className="h-full w-full object-cover" />
+                  <img
+                    src={file.preview}
+                    alt={file.name}
+                    className="h-full w-full cursor-pointer object-cover"
+                    onClick={() => {
+                      setPreviewFile(file);
+                    }}
+                  />
                 ) : (
                   <div className="flex h-full w-full items-center justify-center bg-gray-200">
                     <span className="text-xs text-gray-500">No preview</span>
