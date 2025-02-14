@@ -14,7 +14,7 @@ const BaseFileUploader = ({ setDataFilesIds, multiple = false, disabled = false 
       filesToUpload.forEach((file) => {
         formData.append("files", file.file); // Use the correct file object
       });
-
+      if (filesToUpload.length === 0) return;
       const url = "/upload";
       const response = await apiClient.UPLOAD(url, formData);
       if (response) {
@@ -25,8 +25,9 @@ const BaseFileUploader = ({ setDataFilesIds, multiple = false, disabled = false 
         }
         // Update all files' status on success
         setFiles((prevFiles) =>
-          prevFiles.map((f) => ({
+          prevFiles.map((f, index) => ({
             ...f,
+            id: response[index]?.id,
             status: "success",
             progress: 100,
           }))
@@ -77,9 +78,11 @@ const BaseFileUploader = ({ setDataFilesIds, multiple = false, disabled = false 
   };
 
   // Remove file handler
-  const handleRemoveFile = (fileName) => {
+  const handleRemoveFile = (fileName, id) => {
     setFiles((prevFiles) => prevFiles.filter((f) => f.name !== fileName));
+    setDataFilesIds((prevIds) => prevIds.filter((fileId) => fileId !== id));
     if (!multiple) {
+      setDataFilesIds("");
       setDataFilesIds("");
     }
   };
@@ -156,7 +159,7 @@ const BaseFileUploader = ({ setDataFilesIds, multiple = false, disabled = false 
 
               {/* Remove Button */}
               <button
-                onClick={() => handleRemoveFile(file.name)}
+                onClick={() => handleRemoveFile(file.name, file.id)}
                 className="flex-shrink-0 text-gray-400 hover:text-gray-500"
               >
                 <X className="h-5 w-5" />

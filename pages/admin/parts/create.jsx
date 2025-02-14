@@ -190,6 +190,7 @@ const CreatePart = () => {
               </div>
             </div>
             <RichTextEditor handleChange={handleChange} defaultValue={formData.description} />
+
             <div>
               <label className="required mb-1 block text-sm font-medium"> Media</label>
               <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
