@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import apiClient from "@/utils/apiClient";
 
-import { Navbar, BaseLoader, BaseImage } from "@/components/common";
+import { Navbar, BaseLoader, BaseImage, SeoHead } from "@/components/common";
 
 const ViewPartDetails = () => {
   const router = useRouter();
@@ -29,6 +29,7 @@ const ViewPartDetails = () => {
   }, [id]);
   return (
     <>
+      <SeoHead title="Admin" />
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">

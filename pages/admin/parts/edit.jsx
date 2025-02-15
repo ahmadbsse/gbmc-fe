@@ -4,7 +4,7 @@ import { X, ChevronDown } from "lucide-react";
 
 import apiClient from "@/utils/apiClient";
 import { transformMedia } from "@/utils";
-import { Navbar, BaseLoader, BaseImage, BaseButton } from "@/components/common";
+import { Navbar, BaseLoader, BaseImage, BaseButton, SeoHead } from "@/components/common";
 import BaseFileUploader from "@/components/admin/BaseFileUploader";
 import showToast from "@/utils/toast";
 import RichTextEditor from "@/components/common/RichTextEditor";
@@ -119,6 +119,7 @@ const EditPart = () => {
   };
   return (
     <>
+      <SeoHead title="Admin" />
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">

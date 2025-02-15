@@ -4,7 +4,7 @@ import { X } from "lucide-react";
 
 import apiClient from "@/utils/apiClient";
 import { transformMedia } from "@/utils";
-import { Navbar, BaseLoader, BaseImage, BaseButton } from "@/components/common";
+import { Navbar, BaseLoader, BaseImage, BaseButton, SeoHead } from "@/components/common";
 import BaseFileUploader from "@/components/admin/BaseFileUploader";
 import showToast from "@/utils/toast";
 import { editSubAssemblyValidator } from "@/utils/validators";
@@ -102,6 +102,7 @@ const EditSubAssembly = () => {
   };
   return (
     <>
+      <SeoHead title="Admin" />
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">

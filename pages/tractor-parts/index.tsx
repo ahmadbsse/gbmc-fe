@@ -1,10 +1,7 @@
 import React from "react";
 import { Tractor } from "lucide-react";
-import Head from "next/head";
-import { appData } from "@/constants";
 import { FeaturedParts, AllParts } from "@/components/user";
-
-import { Navbar, PageLayout } from "@/components/common";
+import { Navbar, PageLayout, SeoHead } from "@/components/common";
 import Link from "next/link";
 
 const TractorPartsHome = () => {
@@ -33,29 +30,8 @@ const TractorPartsHome = () => {
 
   return (
     <>
-      <Head>
-        <title>
-          {categories[0]?.title} | {appData?.name}
-        </title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta
-          property="og:title"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta
-          name="og:description"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          name="description"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta name="keywords" content="tractor,spare parts,machinary" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <SeoHead title={categories[0]?.title} />
       <Navbar setTab={() => {}} />
-
       <PageLayout title={``} breadcrumbs={breadcrumbs}>
         <div className="grid lg:gap-8">
           {/* Categories Section */}

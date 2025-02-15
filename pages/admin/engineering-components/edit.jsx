@@ -4,7 +4,7 @@ import { X } from "lucide-react";
 
 import apiClient from "@/utils/apiClient";
 import { transformMedia, transformHeroVideo } from "@/utils";
-import { Navbar, BaseLoader, BaseImage, BaseButton, BaseVideo } from "@/components/common";
+import { Navbar, BaseLoader, BaseImage, BaseButton, BaseVideo, SeoHead } from "@/components/common";
 import BaseFileUploader from "@/components/admin/BaseFileUploader";
 import showToast from "@/utils/toast";
 import { editEngineeringComponentValidator } from "@/utils/validators";
@@ -120,6 +120,7 @@ const EditComponent = () => {
   };
   return (
     <>
+      <SeoHead title="Admin" />
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">

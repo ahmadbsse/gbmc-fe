@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import { useRouter } from "next/router";
-import { BaseImage, BaseLoader, BaseVideo, Navbar } from "@/components/common";
+import { BaseImage, BaseLoader, BaseVideo, Navbar, SeoHead } from "@/components/common";
 import apiClient from "@/utils/apiClient";
 import { transformHeroVideo, transformMedia } from "@/utils";
 import type { EngineeringComponent } from "@/types";
 import Link from "next/link";
-import { appData } from "@/constants";
 
 const Article = () => {
   const router = useRouter();
@@ -51,29 +49,8 @@ const Article = () => {
   ];
   return (
     <>
-      <Head>
-        <title>
-          Article - {data?.name} | {appData.name}
-        </title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta
-          property="og:title"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta
-          name="og:description"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          name="description"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta name="keywords" content="tractor,spare parts,machinary" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <SeoHead title={`Article - ${data?.name}`} />
       <Navbar setTab={() => {}} />
-
       {data ? (
         <div className="mx-auto max-w-7xl">
           <div className="my-4 px-2">

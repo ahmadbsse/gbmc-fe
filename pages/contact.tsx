@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Mail, Phone, MapPin, MailPlus } from "lucide-react";
-import Head from "next/head";
+
 import emailjs from "@emailjs/browser";
-import { Navbar, BaseButton } from "@/components/common";
+import { Navbar, BaseButton, SeoHead } from "@/components/common";
 import { appData } from "@/constants";
 import { GoogleMap } from "@/components/user";
 import showToast from "@/utils/toast";
@@ -68,25 +68,8 @@ const ContactPage = () => {
   }, [formValues]);
   return (
     <>
-      <Head>
-        <title>Contact | {appData.name}</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta
-          property="og:title"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta
-          name="og:description"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          name="description"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta name="keywords" content="tractor,spare parts,machinary" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <SeoHead title="Contact" />
+
       <div className="min-h-screen">
         {/* Navigation */}
         <Navbar setTab={() => {}} />

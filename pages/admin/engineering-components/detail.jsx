@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import apiClient from "@/utils/apiClient";
 
-import { Navbar, BaseLoader, BaseImage, BaseVideo } from "@/components/common";
+import { Navbar, BaseLoader, BaseImage, BaseVideo, SeoHead } from "@/components/common";
 import { transformHeroVideo } from "@/utils";
 
 const ViewComponentDetails = () => {
@@ -43,6 +43,7 @@ const ViewComponentDetails = () => {
   }, [id]);
   return (
     <>
+      <SeoHead title="Admin" />
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">

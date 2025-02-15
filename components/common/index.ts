@@ -5,3 +5,5 @@ export { default as BaseImage } from './BaseImage';
 export { default as BaseVideo } from './BaseVideo';
 export { default as PageLayout } from './PageLayout';
 export { default as BaseSearchbar } from './SearchBar';
+export { default as SeoHead } from './BaseHead';
+

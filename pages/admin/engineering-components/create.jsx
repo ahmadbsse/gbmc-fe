@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Head from "next/head";
 import { useRouter } from "next/router";
 import { Navbar } from "@/components/common";
 
-import { BaseButton } from "@/components/common";
+import { BaseButton, SeoHead } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
-import { appData } from "@/constants";
 import apiClient from "@/utils/apiClient";
 import showToast from "@/utils/toast";
 import { createEngineeringComponentValidator } from "@/utils/validators";
@@ -78,25 +76,7 @@ const CreateEngineeringComponent = () => {
   };
   return (
     <>
-      <Head>
-        <title>Admin | {appData.name}</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta
-          property="og:title"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta
-          name="og:description"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          name="description"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta name="keywords" content="tractor,spare parts,machinary" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <SeoHead title="Admin" />
 
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin />

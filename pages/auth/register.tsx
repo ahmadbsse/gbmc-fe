@@ -1,30 +1,11 @@
 import Link from "next/link";
-import Head from "next/head";
 import Image from "next/image";
-import { BaseButton } from "@/components/common";
-import { appData } from "@/constants";
+import { BaseButton, SeoHead } from "@/components/common";
 
 const Register = () => (
   <>
-    <Head>
-      <title>Register | {appData.name}</title>
-      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      <meta
-        property="og:title"
-        content="Platform where you get tractor related parts in one place"
-      />
-      <meta
-        name="og:description"
-        content="Platform where you get tractor related parts in one place"
-      />
-      <meta property="og:type" content="website" />
-      <meta
-        name="description"
-        content="Platform where you get tractor related parts in one place"
-      />
-      <meta name="keywords" content="tractor,spare parts,machinary" />
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
+    <SeoHead title="Register" />
+
     <section className="h-screen bg-gray-50">
       <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
         <div className="mb-4 lg:mb-8">
