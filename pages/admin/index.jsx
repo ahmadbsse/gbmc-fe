@@ -18,6 +18,7 @@ const AdminDashboard = () => {
   const [total, setTotal] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [pagination, setPagination] = useState(null);
+
   const tabsKey = [
     { name: "Make", key: "suppliers" },
     { name: "Sub Assemblies", key: "sub-assemblies" },
