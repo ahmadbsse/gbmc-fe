@@ -17,10 +17,7 @@ const AdminDashboard = () => {
   const [subAssemblies, setSubAssemblies] = useState([]);
   const [total, setTotal] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
-  const [totalParts, setTotalParts] = useState(0);
-  const [totalEngineering, setTotalEngineering] = useState(0);
-  const [totalSuppliers, setTotalSuppliers] = useState(0);
-  const [totalSubAssemblies, setTotalSubAssemblies] = useState(0);
+  const [pagination, setPagination] = useState(null);
   const tabsKey = [
     { name: "Make", key: "suppliers" },
     { name: "Sub Assemblies", key: "sub-assemblies" },
@@ -55,10 +52,11 @@ const AdminDashboard = () => {
         if (res && res.data.length > 0) {
           const transformedData = transformMedia(res.data);
           setParts((prev) => (isLoadMore ? [...prev, ...transformedData] : transformedData));
-          setTotalParts(res.meta.pagination.total);
           setTotal(res.meta.pagination.total);
+          setPagination(res.meta.pagination);
         } else {
           setParts([]);
+          setTotal(0);
         }
       });
     } catch (error) {
@@ -91,10 +89,11 @@ const AdminDashboard = () => {
         if (res && res.data.length > 0) {
           const transformedData = transformMedia(res.data);
           setEngineering((prev) => (isLoadMore ? [...prev, ...transformedData] : transformedData));
-          setTotalEngineering(res.meta.pagination.total);
           setTotal(res.meta.pagination.total);
+          setPagination(res.meta.pagination);
         } else {
           setEngineering([]);
+          setTotal(0);
         }
       });
     } catch (error) {
@@ -128,10 +127,11 @@ const AdminDashboard = () => {
           setSubAssemblies((prev) =>
             isLoadMore ? [...prev, ...transformedData] : transformedData
           );
-          setTotalSubAssemblies(res.meta.pagination.total);
           setTotal(res.meta.pagination.total);
+          setPagination(res.meta.pagination);
         } else {
           setSuppliers([]);
+          setTotal(0);
         }
       });
     } catch (error) {
@@ -163,10 +163,11 @@ const AdminDashboard = () => {
         if (res && res.data.length > 0) {
           const transformedData = transformMedia(res.data);
           setSuppliers((prev) => (isLoadMore ? [...prev, ...transformedData] : transformedData));
-          setTotalSuppliers(res.meta.pagination.total);
           setTotal(res.meta.pagination.total);
+          setPagination(res.meta.pagination);
         } else {
           setSuppliers([]);
+          setTotal(0);
         }
       });
     } catch (error) {
@@ -265,15 +266,7 @@ const AdminDashboard = () => {
                         ? subAssemblies
                         : parts
                 }
-                total={
-                  activeTab.key == "engineering"
-                    ? totalEngineering
-                    : activeTab.key == "suppliers"
-                      ? totalSuppliers
-                      : activeTab.key == "sub-assemblies"
-                        ? totalSubAssemblies
-                        : totalParts
-                }
+                total={total}
                 activeTab={activeTab}
                 getData={
                   activeTab.key === "engineering"
@@ -285,7 +278,7 @@ const AdminDashboard = () => {
                         : () => getParts(1, false)
                 }
               />
-              {tabData[activeTab.key] < total && total > 0 ? (
+              {pagination?.page < pagination?.pageCount ? (
                 <div className="mt-3 flex justify-center md:justify-end">
                   <p
                     className="w-fit cursor-pointer rounded bg-[#000036] px-4 py-2 text-sm text-white hover:bg-black hover:text-primary-color"

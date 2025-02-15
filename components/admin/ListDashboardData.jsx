@@ -43,6 +43,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
       data.active = !data.active;
       await apiClient.PUT(url, { data: data }).then((res) => {
         showToast(`${data.active ? "activated" : "deactivated"} successfully`, "success");
+        setActiveItem(null);
         getData();
       });
     } catch (error) {
@@ -70,6 +71,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
         .PUT(url, { data: data })
         .then((res) => {
           showToast(`${!data.featured ? "unfeatured" : "featured"} successfully`, "success");
+          setActiveItem(null);
           getData();
         })
         .catch((error) => {
@@ -90,6 +92,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
           setShowDeleteModal(false);
           showToast(`deleted succussfully`, "success");
           setActiveID(null);
+          setActiveItem(null);
           getData();
         })
         .catch((error) => {
@@ -136,7 +139,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
       {showDeleteModal ? (
         <DeleteConfirmationModal
           handleDelete={deleteItem}
-          name={activeItem.name}
+          name={activeItem?.name}
           currentTab={currentTab}
           onClose={() => setShowDeleteModal(false)}
         />
@@ -145,7 +148,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
         <ActiveConfirmationModal
           handleToggle={toggleActivation}
           status={activeItem?.active}
-          name={activeItem.name}
+          name={activeItem?.name}
           currentTab={currentTab}
           onClose={() => setShowActiveModal(false)}
         />
@@ -154,7 +157,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
         <FeatureConfirmationModal
           handleToggle={toggleFeatured}
           status={activeItem?.featured}
-          name={activeItem.name}
+          name={activeItem?.name}
           currentTab={currentTab}
           onClose={() => setShowFeatureModal(false)}
         />
@@ -284,6 +287,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                             router.push(`/admin/${currentTab}/edit?id=${item.documentId}`);
                           } else {
                             setActiveID(item.documentId);
+                            setActiveItem(item);
                             setShowEditModal(true);
                           }
                         }}
@@ -295,6 +299,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                         title="Delete"
                         onClick={() => {
                           setActiveID(item.documentId);
+                          setActiveItem(item);
                           setShowDeleteModal(true);
                         }}
                         className="rounded-lg bg-gray-100 p-2 hover:bg-yellow-50 hover:text-yellow-600"
