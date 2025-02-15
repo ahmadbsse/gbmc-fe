@@ -16,7 +16,25 @@ const EditComponent = () => {
   const [formData, setFormData] = useState(null);
   const [dataFilesIds, setDataFilesIds] = useState([]);
   const [heroFileId, setHeroFileId] = useState([]);
-
+  const [isFormValid, setIsFormValid] = useState(false);
+  useEffect(() => {
+    if (formData) {
+      if (
+        formData.name.trim() === "" ||
+        formData.material.trim() === "" ||
+        formData.weight.trim() === "" ||
+        formData.description == `<p><br></p>` ||
+        formData.summary === `<p><br></p>` ||
+        formData.media.length === 0 ||
+        (dataFilesIds.length === 0 && formData.media.length === 0) ||
+        (heroFileId.length === 0 && Object.keys(formData.hero_image).length === 0)
+      ) {
+        setIsFormValid(false);
+      } else {
+        setIsFormValid(true);
+      }
+    }
+  }, [formData, dataFilesIds, heroFileId]);
   const getComponentDetails = async () => {
     try {
       const url = `/engineering-components/${id}?populate=*`;
@@ -185,8 +203,8 @@ const EditComponent = () => {
                           />
                         ) : (
                           <BaseImage
-                            width={formData.hero_image.formats?.thumbnail?.width}
-                            height={formData.hero_image.formats?.thumbnail?.height}
+                            width={formData.hero_image.formats?.thumbnail?.width || 200}
+                            height={formData.hero_image.formats?.thumbnail?.height || 160}
                             src={formData.hero_image.formats?.thumbnail?.url}
                             alt={formData.hero_image.name}
                             classes="object-cover w-full h-full"
@@ -200,10 +218,13 @@ const EditComponent = () => {
                     <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
                     {formData.media ? (
                       <div className="flex flex-wrap items-center gap-4">
-                        {formData?.media?.map((item) => {
+                        {formData?.media?.map((item, index) => {
                           if (item) {
                             return (
-                              <div className="relative mt-2 h-32 w-48" key={item.documentId}>
+                              <div
+                                className="relative mt-2 h-32 w-48"
+                                key={item.documentId + index + item.id}
+                              >
                                 <button
                                   onClick={(e) => {
                                     e.preventDefault();
@@ -214,9 +235,9 @@ const EditComponent = () => {
                                   <X className="h-4 w-4 text-white" />
                                 </button>
                                 <BaseImage
-                                  width={item.formats?.thumbnail.width}
-                                  height={item.formats?.thumbnail.height}
-                                  src={item.formats?.thumbnail.url}
+                                  width={item.formats?.thumbnail?.width || 200}
+                                  height={item.formats?.thumbnail?.height || 200}
+                                  src={item.formats?.thumbnail?.url}
                                   alt={item.name}
                                   classes="object-cover w-full h-full"
                                 />
@@ -256,7 +277,7 @@ const EditComponent = () => {
                   </div>
                 </div>
                 <div className="mx-auto w-[300px] py-4">
-                  <BaseButton loading={false} type="submit">
+                  <BaseButton loading={false} disabled={!isFormValid} type="submit">
                     save
                   </BaseButton>
                 </div>
