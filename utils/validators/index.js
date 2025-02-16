@@ -79,7 +79,7 @@ export const editPartValidator = (formData, dataFilesIds) => {
   }
   return true;
 };
-export const createSubAssemblyValidator = (formData, dataFilesIds) => {
+export const subAssemblyValidator = (formData) => {
   if (formData.name == "") {
     showToast(`Please enter name`, "error");
     return false;
@@ -101,47 +101,13 @@ export const createSubAssemblyValidator = (formData, dataFilesIds) => {
     showToast(`Please enter description`, "error");
     return false;
   }
-  if (typeof dataFilesIds === "string" && dataFilesIds == "") {
-    showToast(`Please upload an image`, "error");
-    return false;
-  }
-  if (typeof dataFilesIds === "object" && dataFilesIds.length == 0) {
+  if (formData.media.length == 0) {
     showToast(`Please upload an image`, "error");
     return false;
   }
   return true;
 };
-export const editSubAssemblyValidator = (formData, dataFilesIds) => {
-  if (formData.name == "") {
-    showToast(`Please enter name`, "error");
-    return false;
-  }
-  if (formData.number == "") {
-    showToast(`Please enter registration number`, "error");
-    return false;
-  }
-  if (formData.weight == "") {
-    showToast(`Please enter weight`, "error");
-    return false;
-  }
-  if (formData.oem_number == "") {
-    showToast(`Please enter oem numbers`, "error");
-    return false;
-  }
-  if (formData.description == "") {
-    showToast(`Please enter description`, "error");
-    return false;
-  }
-  if (typeof dataFilesIds === "string" && formData.media.length == 0 && dataFilesIds == "") {
-    showToast(`Please upload an image`, "error");
-    return false;
-  }
-  if (typeof dataFilesIds === "object" && formData.media.length == 0 && dataFilesIds.length == 0) {
-    showToast(`Please upload an image`, "error");
-    return false;
-  }
-  return true;
-};
+
 export const createEngineeringComponentValidator = (formData) => {
   if (formData.name == "") {
     showToast(`Please enter name`, "error");
@@ -201,7 +167,7 @@ export const makeValidator = (formData) => {
     showToast(`Please enter name`, "error");
     return false;
   }
-  if (formData.media == "" || data.media.length == 0) {
+  if (formData.media == "" || formData.media.length == 0) {
     showToast(`Please upload an image`, "error");
     return false;
   }

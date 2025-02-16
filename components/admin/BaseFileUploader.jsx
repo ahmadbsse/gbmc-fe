@@ -66,8 +66,9 @@ const BaseFileUploader = ({ setDataFilesIds, multiple = false, disabled = false 
   // Remove file handler
   const handleRemoveFile = (fileName, id) => {
     setFiles((prevFiles) => prevFiles.filter((f) => f.name !== fileName));
-    setDataFilesIds((prevIds) => prevIds.filter((item) => item.preview !== preview));
-    if (!multiple) {
+    if (multiple) {
+      setDataFilesIds((prevIds) => prevIds.filter((item) => item.preview !== preview));
+    } else {
       setDataFilesIds("");
     }
   };

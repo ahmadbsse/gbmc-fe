@@ -9,20 +9,20 @@ import BaseFileUploader from "./BaseFileUploader";
 import { makeValidator } from "@/utils/validators";
 
 const AdminEditItemModal = ({ activeID, onClose, currentTab, getData }) => {
-  const [data, setData] = useState(null);
+  const [formData, setFormData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
   const [idsToRemove, setIdsToRemove] = useState([]);
 
   useEffect(() => {
-    if (data) {
-      if (data.name === "" || data.media.length === 0) {
+    if (formData) {
+      if (formData.name === "" || formData.media.length === 0) {
         setIsFormValid(false);
       } else {
         setIsFormValid(true);
       }
     }
-  }, [data]);
+  }, [formData]);
   const getMakeDetails = async () => {
     try {
       const url = `/${currentTab}/${activeID}?populate=*`;
@@ -35,7 +35,7 @@ const AdminEditItemModal = ({ activeID, onClose, currentTab, getData }) => {
         if (!Array.isArray(respose.media)) {
           respose.media = [respose.media];
         }
-        setData(respose);
+        setFormData(respose);
       });
     } catch (error) {
       console.error("Error fetching resource:", error.message);
@@ -47,22 +47,22 @@ const AdminEditItemModal = ({ activeID, onClose, currentTab, getData }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (makeValidator(data)) {
+    if (makeValidator(formData)) {
       setLoading(true);
       try {
-        await uploadFilesRequest(data.media, false)
+        await uploadFilesRequest(formData.media, false)
           .then((res) => {
             if (res) {
-              data.media = res;
-              delete data.documentId;
+              formData.media = res;
+              delete formData.documentId;
               try {
                 apiClient
-                  .PUT(`/${currentTab}/${activeID}`, { data: data })
+                  .PUT(`/${currentTab}/${activeID}`, { data: formData })
                   .then(async () => {
                     showToast(`Make saved successfully`, "success");
                     await deleteFilesRequest(idsToRemove).then(() => {
                       console.log("Files deleted successfully");
-                      getData();
+
                       onClose(e);
                     });
                   })
@@ -87,25 +87,28 @@ const AdminEditItemModal = ({ activeID, onClose, currentTab, getData }) => {
     }
   };
   const deletePreviousImage = async (id) => {
-    setData(removeMediaById(id));
+    setFormData(removeMediaById(id));
     setIdsToRemove([...idsToRemove, id]);
   };
   function removeMediaById(idsToRemove) {
-    return { ...data, media: data?.media?.filter((mediaItem) => mediaItem.id !== idsToRemove) };
+    return {
+      ...formData,
+      media: formData?.media?.filter((mediaItem) => mediaItem.id !== idsToRemove),
+    };
   }
   const setMedia = (media) => {
-    setData({ ...data, media });
+    setFormData({ ...formData, media });
   };
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="custom-scrollbar relative max-h-[600px] w-full max-w-xl overflow-y-auto rounded-lg bg-white">
         <div className="fixed flex w-full max-w-[560px] items-center justify-between rounded-tl-lg bg-white py-3 pl-6 pr-2">
-          <h2 className="text-2xl font-bold"> Edit Make - {data?.name}</h2>
+          <h2 className="text-2xl font-bold"> Edit Make - {formData?.name}</h2>
           <button onClick={onClose} className="">
             <X className="h-6 w-6" />
           </button>
         </div>
-        {data ? (
+        {formData ? (
           <form onSubmit={handleSubmit} className="mt-10 space-y-4 p-6">
             <div>
               <label className="required mb-1 block text-sm font-medium">Name</label>
@@ -113,9 +116,9 @@ const AdminEditItemModal = ({ activeID, onClose, currentTab, getData }) => {
                 type="text"
                 className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                 placeholder="Type name"
-                value={data.name}
+                value={formData.name}
                 required
-                onChange={(e) => setData({ ...data, name: e.target.value })}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               />
             </div>
 
@@ -123,13 +126,13 @@ const AdminEditItemModal = ({ activeID, onClose, currentTab, getData }) => {
               <label className="required mb-1 block text-sm font-medium"> Media</label>
               <BaseFileUploader
                 setDataFilesIds={setMedia}
-                disabled={data?.media != "" || data?.media.length > 1}
+                disabled={formData?.media != "" || formData?.media.length > 1}
               />
             </div>
             <div className="flex items-center gap-4">
-              {data?.media ? (
-                Array.isArray(data?.media) &&
-                data?.media?.map((item) => {
+              {formData?.media ? (
+                Array.isArray(formData?.media) &&
+                formData?.media?.map((item) => {
                   if (item && item.formats) {
                     return (
                       <div className="relative h-32 w-44" key={item.documentId}>
@@ -162,8 +165,8 @@ const AdminEditItemModal = ({ activeID, onClose, currentTab, getData }) => {
                 <input
                   type="checkbox"
                   id="active"
-                  checked={data.active}
-                  onChange={(e) => setData({ ...data, active: e.target.checked })}
+                  checked={formData.active}
+                  onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
                   className="rounded border-gray-300 outline-none focus:border-primary focus:ring-primary"
                 />
                 <label htmlFor="active" className="text-sm">

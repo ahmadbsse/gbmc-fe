@@ -7,15 +7,17 @@ import { transformMedia } from "@/utils";
 import { Navbar, BaseLoader, BaseImage, BaseButton, SeoHead } from "@/components/common";
 import BaseFileUploader from "@/components/admin/BaseFileUploader";
 import showToast from "@/utils/toast";
-import { editSubAssemblyValidator } from "@/utils/validators";
+import { uploadFilesRequest, deleteFilesRequest } from "@/utils";
+import { subAssemblyValidator } from "@/utils/validators";
 import RichTextEditor from "@/components/common/RichTextEditor";
 
 const EditSubAssembly = () => {
   const router = useRouter();
   const { id } = router.query;
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(null);
-  const [dataFilesIds, setDataFilesIds] = useState([]);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [idsToRemove, setIdsToRemove] = useState([]);
 
   useEffect(() => {
     if (formData) {
@@ -26,14 +28,14 @@ const EditSubAssembly = () => {
         formData.weight === "" ||
         formData.description === "" ||
         formData.summary === "" ||
-        (dataFilesIds.length === 0 && formData.media.length === 0)
+        formData?.media?.length === 0
       ) {
         setIsFormValid(false);
       } else {
         setIsFormValid(true);
       }
     }
-  }, [formData, dataFilesIds]);
+  }, [formData]);
   const getSubAssemblyDetails = async () => {
     try {
       const url = `/sub-assemblies/${id}?populate=*`;
@@ -53,38 +55,55 @@ const EditSubAssembly = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (editSubAssemblyValidator(formData, dataFilesIds)) {
-      if (dataFilesIds.length === 0) {
-        if (Array.isArray(formData.media)) {
-          formData.media = formData.media.map((item) => item.id);
-        } else {
-          formData.media = formData.media.id;
-        }
-      } else {
-        formData.media = [...formData.media.map((item) => item.id), ...dataFilesIds];
-      }
-      delete formData.documentId;
+    if (subAssemblyValidator(formData)) {
+      setLoading(true);
       try {
-        apiClient
-          .PUT(`/sub-assemblies/${id}`, { data: formData })
-          .then(() => {
-            showToast("Sub Assembly Saved Successfully", "success");
-            router.push("/admin");
+        const flattenedData = formData.media
+          .flat()
+          .filter((item) => item && typeof item === "object" && !item.id);
+
+        const previousMedia = formData.media.filter((item) => item && item.id);
+        const newMediaIds = previousMedia.map((file) => file.id);
+        await uploadFilesRequest(flattenedData, true)
+          .then((res) => {
+            if (res) {
+              formData.media = [...res, ...newMediaIds];
+              delete formData.documentId;
+              try {
+                apiClient
+                  .PUT(`/sub-assemblies/${id}`, { data: formData })
+                  .then(async () => {
+                    showToast("Sub Assembly Saved Successfully", "success");
+                    router.push("/admin");
+                    await deleteFilesRequest(idsToRemove).then(() => {
+                      console.log("Files deleted successfully");
+                    });
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                    showToast(error.message, "error");
+                  });
+              } catch (error) {
+                console.log(error);
+                showToast(error.message, "error");
+              }
+            }
           })
           .catch((error) => {
-            showToast(error.message, "error");
-            console.log(error);
+            console.error(error);
           });
       } catch (error) {
-        showToast(error.message, "error");
-        console.log(error);
+        console.error(error);
+      } finally {
+        setLoading(false);
       }
     }
   };
   const deletePreviousImage = async (id) => {
     setFormData(removeMediaById(id));
+    setIdsToRemove([...idsToRemove, id]);
   };
   function removeMediaById(idToRemove) {
     return {
@@ -99,6 +118,15 @@ const EditSubAssembly = () => {
   }, [id]);
   const handleChange = (content) => {
     setFormData({ ...formData, description: content });
+  };
+  const setMedia = (media) => {
+    console.log(typeof media);
+    if (typeof media === "object") {
+      setFormData((prevData) => ({
+        ...prevData,
+        media: [...prevData?.media, ...media],
+      }));
+    }
   };
   return (
     <>
@@ -168,11 +196,11 @@ const EditSubAssembly = () => {
                 <RichTextEditor handleChange={handleChange} defaultValue={formData.description} />
                 <div>
                   <label className="required mb-1 block text-sm font-medium"> Media</label>
-                  <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
+                  <BaseFileUploader setDataFilesIds={setMedia} multiple={true} />
                 </div>
                 <div className="flex items-center gap-4">
                   {formData?.media?.map((item) => {
-                    if (item) {
+                    if (item && item?.formats) {
                       return (
                         <div className="relative h-32 w-44" key={item.documentId}>
                           <button
@@ -185,10 +213,10 @@ const EditSubAssembly = () => {
                             <X className="h-4 w-4 text-white" />
                           </button>
                           <BaseImage
-                            width={item.formats.thumbnail.width}
-                            height={item.formats.thumbnail.height}
-                            src={item.formats.thumbnail.url}
-                            alt={item.name}
+                            width={item?.formats?.thumbnail?.width}
+                            height={item?.formats?.thumbnail?.height}
+                            src={item?.formats?.thumbnail?.url}
+                            alt={item?.name}
                             classes="object-cover w-full h-full"
                           />
                         </div>
@@ -224,7 +252,7 @@ const EditSubAssembly = () => {
                   </div>
                 </div>
                 <div className="mx-auto w-[300px] py-4">
-                  <BaseButton loading={false} type="submit" disabled={!isFormValid}>
+                  <BaseButton loading={loading} type="submit" disabled={!isFormValid}>
                     Save
                   </BaseButton>
                 </div>

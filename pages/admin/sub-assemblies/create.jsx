@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Navbar } from "@/components/common";
 
+import { uploadFilesRequest } from "@/utils";
 import { BaseButton, SeoHead } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
 import showToast from "@/utils/toast";
-import { createSubAssemblyValidator } from "@/utils/validators";
+import { subAssemblyValidator } from "@/utils/validators";
 import RichTextEditor from "@/components/common/RichTextEditor";
 
 const CreateSubAssembly = () => {
@@ -21,51 +22,62 @@ const CreateSubAssembly = () => {
     featured: false,
     media: "",
   };
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
   const [dataFilesIds, setDataFilesIds] = useState([]);
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
-    formData.media = dataFilesIds;
+    // formData.media = dataFilesIds;
     if (
       formData.name.trim() === "" ||
       formData.number.trim() === "" ||
       formData.oem_number.trim() === "" ||
       formData.weight.trim() === "" ||
       formData.description === `<p><br></p>` ||
-      formData.summary === `<p><br></p>` ||
-      dataFilesIds.length === 0
+      formData.media.length === 0 ||
+      formData.media == ""
     ) {
       setIsFormValid(false);
     } else {
       setIsFormValid(true);
     }
-  }, [formData, dataFilesIds]);
+  }, [formData]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (createSubAssemblyValidator(formData, dataFilesIds)) {
-      formData.media = dataFilesIds;
-      try {
-        apiClient
-          .POST(`/sub-assemblies`, { data: formData })
-          .then(() => {
-            setFormData(initialFormData);
-            showToast("Sub Assembly Created Successfully", "success");
-            router.push("/admin");
-          })
-          .catch((error) => {
-            console.log(error);
-            showToast(error.message, "error");
-          });
-      } catch (error) {
-        console.log(error);
-        showToast(error.message, "error");
-      }
+    if (subAssemblyValidator(formData)) {
+      setLoading(true);
+      await uploadFilesRequest(formData.media, true).then((res) => {
+        if (res) {
+          formData.media = res;
+        }
+        try {
+          apiClient
+            .POST(`/sub-assemblies`, { data: formData })
+            .then(() => {
+              setFormData(initialFormData);
+              showToast("Sub Assembly Created Successfully", "success");
+              router.push("/admin");
+            })
+            .catch((error) => {
+              console.log(error);
+              showToast(error.message, "error");
+            });
+        } catch (error) {
+          console.log(error);
+          showToast(error.message, "error");
+        } finally {
+          setLoading(false);
+        }
+      });
     }
   };
 
   const handleChange = (content) => {
     setFormData({ ...formData, description: content });
+  };
+  const setMedia = (media) => {
+    setFormData({ ...formData, media });
   };
   return (
     <>
@@ -131,7 +143,7 @@ const CreateSubAssembly = () => {
             <RichTextEditor handleChange={handleChange} defaultValue={formData.description} />
             <div>
               <label className="required mb-1 block text-sm font-medium"> Media</label>
-              <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
+              <BaseFileUploader setDataFilesIds={setMedia} multiple={true} />
             </div>
             <div className="flex flex-col gap-2 pt-4">
               <div className="flex w-full items-center gap-2">
@@ -161,7 +173,7 @@ const CreateSubAssembly = () => {
               </div>
             </div>
             <div className="mx-auto w-[300px] py-4">
-              <BaseButton loading={false} type="submit" disabled={!isFormValid}>
+              <BaseButton loading={loading} type="submit" disabled={!isFormValid}>
                 save
               </BaseButton>
             </div>

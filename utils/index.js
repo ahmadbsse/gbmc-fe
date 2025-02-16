@@ -21,23 +21,31 @@ export function transformMedia(response) {
       type: "image",
       id: media?.id,
       documentId: media?.documentId,
-      name: media.name,
+      name: media?.name,
       formats: {
-        small: media.formats?.small
+        small: media?.formats?.small
           ? {
-              url: media.formats.small.url,
-              width: media.formats.small.width,
-              height: media.formats.small.height,
+              url: media?.formats?.small?.url,
+              width: media?.formats?.small?.width || 500,
+              height: media?.formats?.small?.height || 500,
             }
-          : undefined,
-        thumbnail: media.formats?.thumbnail
+          : {
+              url: "/placeholder.com/500",
+              width: 500,
+              height: 500,
+            },
+        thumbnail: media?.formats?.thumbnail
           ? {
-              url: media.formats.thumbnail.url,
-              width: media.formats.thumbnail.width,
-              height: media.formats.thumbnail.height,
+              url: media?.formats?.thumbnail?.url,
+              width: media?.formats?.thumbnail?.width || 156,
+              height: media?.formats?.thumbnail?.height || 156,
             }
-          : undefined,
-        actual: { url: media.url, width: media.width, height: media.height },
+          : {
+              url: "/placeholder.com/156",
+              width: 156,
+              height: 156,
+            },
+        actual: { url: media.url, width: media.width || 1080, height: media.height || 1080 },
       },
     });
 
