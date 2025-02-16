@@ -136,7 +136,7 @@ const EditPart = () => {
                       required
                       type="text"
                       className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                      placeholder={`Enter name`}
+                      placeholder={`Type name`}
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     />
@@ -172,7 +172,7 @@ const EditPart = () => {
                     required
                     type="text"
                     className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                    placeholder={`Enter comma seperated numbers...`}
+                    placeholder={`Type comma seperated numbers...`}
                     value={formData.oem_number}
                     onChange={(e) => setFormData({ ...formData, oem_number: e.target.value })}
                   />
@@ -184,7 +184,7 @@ const EditPart = () => {
                       required
                       type="text"
                       className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                      placeholder={`Enter material name`}
+                      placeholder={`Type material name`}
                       value={formData.material}
                       onChange={(e) => setFormData({ ...formData, material: e.target.value })}
                     />
@@ -195,7 +195,7 @@ const EditPart = () => {
                       required
                       type="text"
                       className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                      placeholder={`Enter weight`}
+                      placeholder={`Type weight`}
                       value={formData.weight}
                       onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
                     />
@@ -209,7 +209,7 @@ const EditPart = () => {
                       type="number"
                       min={1}
                       className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                      placeholder={`Enter number`}
+                      placeholder={`Type number`}
                       value={formData.number}
                       onChange={(e) => setFormData({ ...formData, number: e.target.value })}
                     />

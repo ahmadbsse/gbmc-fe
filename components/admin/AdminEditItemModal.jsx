@@ -116,7 +116,7 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
               <textarea
                 rows={3}
                 className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 text-sm outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                placeholder={`Enter description`}
+                placeholder="Type description"
                 value={data.description}
                 required
                 onChange={(e) => setData({ ...data, description: e.target.value })}

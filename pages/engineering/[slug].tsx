@@ -28,7 +28,6 @@ const Article = () => {
         } else {
           response.hero_image = transformMedia(response.hero_image);
         }
-        response.summary = response.summary.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
         response.description = response.description.replace(
           /\*\*(.*?)\*\*/g,
           "<strong>$1</strong>"
@@ -89,10 +88,6 @@ const Article = () => {
               <p className="text-xl font-semibold lg:bottom-0 lg:left-20 lg:top-20 lg:text-4xl">
                 {data?.name}
               </p>
-              <p
-                className="text-sm lg:text-base"
-                dangerouslySetInnerHTML={{ __html: data?.summary }}
-              />
               <p
                 className="mt-5 text-sm lg:text-base"
                 dangerouslySetInnerHTML={{ __html: data?.description }}

@@ -179,9 +179,9 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
             </h2>
             <div className="hidden w-fit md:flex">
               <BaseButton loading={false} type="submit" handleClick={addNewItem}>
-                <p className="mx-auto flex w-fit gap-2 md:px-3">
+                <p className="mx-auto flex w-fit gap-2">
                   <Plus className="mt-0.5 h-4 w-4" />
-                  Add {activeTab.name}
+                  Add {activeTab?.tag}
                 </p>
               </BaseButton>
             </div>

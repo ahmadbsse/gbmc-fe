@@ -26,7 +26,6 @@ const ViewComponentDetails = () => {
         ) {
           response.hero_image = transformHeroVideo(response.hero_image);
         }
-        response.summary = response.summary.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
         response.description = response.description.replace(
           /\*\*(.*?)\*\*/g,
           "<strong>$1</strong>"
@@ -71,13 +70,6 @@ const ViewComponentDetails = () => {
                     {formData.weight}
                   </div>
                 </div>
-              </div>
-              <div className="w-full">
-                <label className="mb-1 block text-sm font-medium">Summary</label>
-                <div
-                  className="product-description rounded-lg border border-gray-300 px-2.5 py-2 text-justify"
-                  dangerouslySetInnerHTML={{ __html: formData.summary }}
-                />
               </div>
               <div className="w-full">
                 <label className="mb-1 block text-sm font-medium">Description</label>

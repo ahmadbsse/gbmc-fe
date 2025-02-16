@@ -136,10 +136,6 @@ export const createEngineeringComponentValidator = (formData) => {
     showToast(`Please enter weight`, "error");
     return false;
   }
-  if (formData.summary == "") {
-    showToast(`Please enter summary`, "error");
-    return false;
-  }
   return true;
 };
 export const editEngineeringComponentValidator = (formData) => {
@@ -165,10 +161,6 @@ export const editEngineeringComponentValidator = (formData) => {
   }
   if (formData.weight == "") {
     showToast(`Please enter weight`, "error");
-    return false;
-  }
-  if (formData.summary == "") {
-    showToast(`Please enter summary`, "error");
     return false;
   }
   return true;

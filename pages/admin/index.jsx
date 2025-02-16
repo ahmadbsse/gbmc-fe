@@ -20,10 +20,10 @@ const AdminDashboard = () => {
   const [pagination, setPagination] = useState(null);
 
   const tabsKey = [
-    { name: "Make", key: "suppliers" },
-    { name: "Sub Assemblies", key: "sub-assemblies" },
-    { name: "Parts", key: "parts" },
-    { name: "Engineering Component", key: "engineering" },
+    { name: "Makes", key: "suppliers", tag: "make" },
+    { name: "Sub Assemblies", key: "sub-assemblies", tag: "sub assembly" },
+    { name: "Parts", key: "parts", tag: "part" },
+    { name: "Engineering Components", key: "engineering", tag: "engineering component" },
   ];
   const [activeTab, setActiveTab] = useState(tabsKey[0]);
 

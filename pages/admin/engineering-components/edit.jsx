@@ -24,7 +24,6 @@ const EditComponent = () => {
         formData.material.trim() === "" ||
         formData.weight.trim() === "" ||
         formData.description == `<p><br></p>` ||
-        formData.summary === `<p><br></p>` ||
         formData.media.length === 0 ||
         (dataFilesIds.length === 0 && formData.media.length === 0) ||
         (heroFileId.length === 0 && Object.keys(formData.hero_image).length === 0)
@@ -115,9 +114,6 @@ const EditComponent = () => {
   const handleChangeDescription = (content) => {
     setFormData({ ...formData, description: content });
   };
-  const handleChangeSummary = (content) => {
-    setFormData({ ...formData, summary: content });
-  };
   return (
     <>
       <SeoHead title="Admin" />
@@ -136,7 +132,7 @@ const EditComponent = () => {
                     required
                     type="text"
                     className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                    placeholder={`Enter name`}
+                    placeholder={`Type name`}
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   />
@@ -148,7 +144,7 @@ const EditComponent = () => {
                       required
                       type="text"
                       className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                      placeholder={`Enter material name`}
+                      placeholder={`Type material name`}
                       value={formData.material}
                       onChange={(e) => setFormData({ ...formData, material: e.target.value })}
                     />
@@ -159,17 +155,12 @@ const EditComponent = () => {
                       required
                       type="text"
                       className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                      placeholder={`Enter weight`}
+                      placeholder={`Type weight`}
                       value={formData.weight}
                       onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
                     />
                   </div>
                 </div>
-                <RichTextEditor
-                  handleChange={handleChangeSummary}
-                  defaultValue={formData.summary}
-                  label="Summary"
-                />
                 <RichTextEditor
                   handleChange={handleChangeDescription}
                   defaultValue={formData.description}
