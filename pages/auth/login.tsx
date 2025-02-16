@@ -1,5 +1,5 @@
 // import Link from "next/link";
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import showToast from "@/utils/toast";
@@ -12,6 +12,7 @@ const Login = () => {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     setIsLoading(true);
@@ -48,6 +49,13 @@ const Login = () => {
       console.error("Error in POST request:", message);
     }
   };
+  useEffect(() => {
+    if (identifier.trim() && password.trim()) {
+      setIsFormValid(true);
+    } else {
+      setIsFormValid(false);
+    }
+  }, [identifier, password]);
   return (
     <>
       <SeoHead title="Login" />
@@ -64,7 +72,7 @@ const Login = () => {
               </h1>
               <form className="space-y-2 md:space-y-3" action="#" onSubmit={handleSubmit}>
                 <div>
-                  <label htmlFor="identifier" className="mb-2 block text-sm font-medium">
+                  <label htmlFor="identifier" className="required mb-2 block text-sm font-medium">
                     Username
                   </label>
                   <input
@@ -79,7 +87,7 @@ const Login = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="password" className="mb-2 block text-sm font-medium">
+                  <label htmlFor="password" className="required mb-2 block text-sm font-medium">
                     Password
                   </label>
                   <input
@@ -102,7 +110,12 @@ const Login = () => {
                   </Link>
                 </div> */}
 
-                <BaseButton loading={isLoading} id="signInButton" type="submit">
+                <BaseButton
+                  loading={isLoading}
+                  id="signInButton"
+                  disabled={!isFormValid}
+                  type="submit"
+                >
                   sign in
                 </BaseButton>
                 {/* <p className="text-sm font-light">
