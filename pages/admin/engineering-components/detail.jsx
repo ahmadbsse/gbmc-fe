@@ -52,92 +52,93 @@ const ViewComponentDetails = () => {
                 Engineering Component - Details - {formData.name || ""}
               </h1>
               <div className="w-full">
-                <label className="mb-1 block text-sm font-medium">Name</label>
+                <label className="required mb-1 block text-sm font-medium">Name</label>
                 <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
                   {formData.name}
                 </div>
               </div>
               <div className="flex flex-col md:flex-row md:gap-5">
                 <div className="w-full">
-                  <label className="mb-1 block text-sm font-medium">Material</label>
+                  <label className="required mb-1 block text-sm font-medium">Material</label>
                   <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
                     {formData.material}
                   </div>
                 </div>
                 <div className="w-full">
-                  <label className="mb-1 block text-sm font-medium"> Weight</label>
+                  <label className="required mb-1 block text-sm font-medium"> Weight</label>
                   <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
                     {formData.weight}
                   </div>
                 </div>
               </div>
               <div className="w-full">
-                <label className="mb-1 block text-sm font-medium">Description</label>
+                <label className="required mb-1 block text-sm font-medium">Description</label>
                 <div
                   className="product-description rounded-lg border border-gray-300 px-2.5 py-2 text-justify"
                   dangerouslySetInnerHTML={{ __html: formData.description }}
                 />
               </div>
-
-              <div>
-                <label className="mb-1 block text-sm font-medium">Hero Image</label>
-                <div className="h-28 w-44">
-                  {formData.hero_image ? (
-                    formData.hero_image.type === "video" ? (
-                      <BaseVideo
-                        src={formData.hero_image.url}
-                        autoPlay={true}
-                        muted={true}
-                        loop={true}
-                        classes="object-cover w-full h-full"
-                      />
-                    ) : (
-                      <BaseImage
-                        width={formData.hero_image.formats.thumbnail.width}
-                        height={formData.hero_image.formats.thumbnail.height}
-                        src={formData.hero_image.formats.thumbnail.url}
-                        alt={formData.hero_image.name}
-                        classes="object-cover w-full h-full"
-                      />
-                    )
-                  ) : null}
-                </div>
-              </div>
-              <div>
-                <label className="mb-1 block text-sm font-medium">Media</label>
-                <div className="flex flex-wrap items-center gap-4">
-                  {formData.media ? (
-                    Array.isArray(formData.media) ? (
-                      formData.media.map((item, index) => {
-                        if (item) {
-                          return (
-                            <div className="h-28 w-44" key={index}>
-                              <BaseImage
-                                key={index}
-                                width={item.formats.thumbnail.width}
-                                height={item.formats.thumbnail.height}
-                                src={item.formats.thumbnail.url}
-                                alt={item.name}
-                                classes="object-cover w-full h-full"
-                              />
-                            </div>
-                          );
-                        }
-                      })
-                    ) : (
-                      <div className="h-28 w-44">
-                        <BaseImage
-                          width={formData.media.formats.thumbnail.width}
-                          height={formData.media.formats.thumbnail.height}
-                          src={formData.media.formats.thumbnail.url}
-                          alt={formData.name}
+              <div className="flex flex-col md:flex-row md:gap-5">
+                <div className="basis-1/2">
+                  <label className="required mb-1 block text-sm font-medium">Hero Image</label>
+                  <div className="h-28 w-44">
+                    {formData.hero_image ? (
+                      formData.hero_image.type === "video" ? (
+                        <BaseVideo
+                          src={formData.hero_image.url}
+                          autoPlay={true}
+                          muted={true}
+                          loop={true}
                           classes="object-cover w-full h-full"
                         />
-                      </div>
-                    )
-                  ) : (
-                    <div className="h-28 w-44"></div>
-                  )}
+                      ) : (
+                        <BaseImage
+                          width={formData.hero_image.formats.thumbnail.width}
+                          height={formData.hero_image.formats.thumbnail.height}
+                          src={formData.hero_image.formats.thumbnail.url}
+                          alt={formData.hero_image.name}
+                          classes="object-cover w-full h-full"
+                        />
+                      )
+                    ) : null}
+                  </div>
+                </div>
+                <div className="basis-1/2">
+                  <label className="required mb-1 block text-sm font-medium">Detail Images</label>
+                  <div className="flex flex-wrap items-center gap-4">
+                    {formData.media ? (
+                      Array.isArray(formData.media) ? (
+                        formData.media.map((item, index) => {
+                          if (item) {
+                            return (
+                              <div className="h-28 w-44" key={index}>
+                                <BaseImage
+                                  key={index}
+                                  width={item.formats.thumbnail.width}
+                                  height={item.formats.thumbnail.height}
+                                  src={item.formats.thumbnail.url}
+                                  alt={item.name}
+                                  classes="object-cover w-full h-full"
+                                />
+                              </div>
+                            );
+                          }
+                        })
+                      ) : (
+                        <div className="h-28 w-44">
+                          <BaseImage
+                            width={formData.media.formats.thumbnail.width}
+                            height={formData.media.formats.thumbnail.height}
+                            src={formData.media.formats.thumbnail.url}
+                            alt={formData.name}
+                            classes="object-cover w-full h-full"
+                          />
+                        </div>
+                      )
+                    ) : (
+                      <div className="h-28 w-44"></div>
+                    )}
+                  </div>
                 </div>
               </div>
               <div className="flex flex-col gap-2 pt-3">

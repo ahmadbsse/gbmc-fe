@@ -8,16 +8,18 @@ const ActiveConfirmationModal = ({ onClose, handleToggle, name, currentTab, stat
         <button onClick={onClose} className="absolute right-4 top-6">
           <X className="h-6 w-6" />
         </button>
-        <h1 className="mb-2 text-lg font-bold">
-          {status ? "Deactivate" : "Activate"} {name} -{" "}
-          {currentTab == "engineering"
+
+        <h1 className="mb-2 text-lg font-bold">Confirm</h1>
+        <h2 className="mb-16">
+          Are you sure you want to {status ? "Deactivate" : "Activate"} <strong>{name} </strong>{" "}
+          {currentTab == "engineering-components"
             ? "Engineering Component"
             : currentTab == "suppliers"
               ? "Make"
-              : "Part"}
-        </h1>
-        <h2 className="mb-16">
-          Are you sure you want to {status ? "Deactivate" : "Activate"} this item?
+              : currentTab == "sub-assemblies"
+                ? "Sub Assembly"
+                : "Part"}
+          ?
         </h2>
         <div className="ml-auto mt-6 flex w-fit">
           <BaseButton loading={false} type="button" handleClick={handleToggle}>
