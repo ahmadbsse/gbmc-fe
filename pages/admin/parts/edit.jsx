@@ -133,8 +133,9 @@ const EditPart = () => {
                   <div className="w-full">
                     <label className="required mb-1 block text-sm font-medium">Name</label>
                     <input
+                      required
                       type="text"
-                      className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                      className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                       placeholder={`Enter name`}
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -144,7 +145,7 @@ const EditPart = () => {
                   <div className="relative w-full">
                     <label className="required mb-1 block text-sm font-medium">Supplier</label>
                     <select
-                      className="w-full appearance-none rounded-lg border border-gray-300 bg-white px-4 py-2 text-[13px] outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                      className="w-full appearance-none rounded-lg border border-gray-300 bg-white px-2.5 py-2 text-[13px] outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                       value={JSON.stringify(formData.supplier.documentId)}
                       onChange={(e) => {
                         setFormData({
@@ -168,8 +169,9 @@ const EditPart = () => {
                 <div className="w-full">
                   <label className="required mb-1 block text-sm font-medium">OEM Numbers</label>
                   <input
+                    required
                     type="text"
-                    className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                    className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                     placeholder={`Enter comma seperated numbers...`}
                     value={formData.oem_number}
                     onChange={(e) => setFormData({ ...formData, oem_number: e.target.value })}
@@ -179,8 +181,9 @@ const EditPart = () => {
                   <div className="w-full">
                     <label className="required mb-1 block text-sm font-medium">Material</label>
                     <input
+                      required
                       type="text"
-                      className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                      className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                       placeholder={`Enter material name`}
                       value={formData.material}
                       onChange={(e) => setFormData({ ...formData, material: e.target.value })}
@@ -189,8 +192,9 @@ const EditPart = () => {
                   <div className="w-full">
                     <label className="required mb-1 block text-sm font-medium"> Weight</label>
                     <input
+                      required
                       type="text"
-                      className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                      className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                       placeholder={`Enter weight`}
                       value={formData.weight}
                       onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
@@ -201,9 +205,10 @@ const EditPart = () => {
                       Registered Number
                     </label>
                     <input
+                      required
                       type="number"
                       min={1}
-                      className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                      className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                       placeholder={`Enter number`}
                       value={formData.number}
                       onChange={(e) => setFormData({ ...formData, number: e.target.value })}

@@ -41,13 +41,13 @@ const ViewSubAssemblyDetails = () => {
               <div className="flex flex-col md:flex-row md:gap-5">
                 <div className="w-full">
                   <label className="mb-1 block text-sm font-medium">Name</label>
-                  <div className="w-full rounded-lg border border-gray-300 px-4 py-2">
+                  <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
                     {formData.name}
                   </div>
                 </div>
                 <div className="w-full">
                   <label className="mb-1 block text-sm font-medium">Registered Number</label>
-                  <div className="w-full rounded-lg border border-gray-300 px-4 py-2">
+                  <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
                     {formData.number}
                   </div>
                 </div>
@@ -56,13 +56,13 @@ const ViewSubAssemblyDetails = () => {
               <div className="flex flex-col md:flex-row md:gap-5">
                 <div className="w-full">
                   <label className="mb-1 block text-sm font-medium">OEM Numbers</label>
-                  <div className="w-full rounded-lg border border-gray-300 px-4 py-2">
+                  <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
                     {formData.oem_number}
                   </div>
                 </div>
                 <div className="w-full">
                   <label className="mb-1 block text-sm font-medium"> Weight</label>
-                  <div className="w-full rounded-lg border border-gray-300 px-4 py-2">
+                  <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
                     {formData.weight}
                   </div>
                 </div>
@@ -71,7 +71,7 @@ const ViewSubAssemblyDetails = () => {
               <div className="w-full">
                 <label className="mb-1 block text-sm font-medium">Description</label>
                 <div
-                  className="product-description rounded-lg border border-gray-300 px-4 py-2 text-justify"
+                  className="product-description rounded-lg border border-gray-300 px-2.5 py-2 text-justify"
                   dangerouslySetInnerHTML={{ __html: formData.description }}
                 />
               </div>

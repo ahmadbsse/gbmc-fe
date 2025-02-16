@@ -89,7 +89,8 @@ const CreateEngineeringComponent = () => {
                 <label className="required mb-1 block text-sm font-medium">Name</label>
                 <input
                   type="text"
-                  className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                  required
+                  className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder={`Enter name`}
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -101,7 +102,8 @@ const CreateEngineeringComponent = () => {
                 <label className="required mb-1 block text-sm font-medium">Material</label>
                 <input
                   type="text"
-                  className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                  required
+                  className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder={`Enter material name`}
                   value={formData.material}
                   onChange={(e) => setFormData({ ...formData, material: e.target.value })}
@@ -111,7 +113,8 @@ const CreateEngineeringComponent = () => {
                 <label className="required mb-1 block text-sm font-medium"> Weight</label>
                 <input
                   type="text"
-                  className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                  required
+                  className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder={`Enter weight`}
                   value={formData.weight}
                   onChange={(e) => setFormData({ ...formData, weight: e.target.value })}

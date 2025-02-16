@@ -98,7 +98,7 @@ const ContactPage = () => {
                       onChange={(e) => {
                         setFormValues({ ...formValues, name: e.target.value });
                       }}
-                      className="w-full text-ellipsis rounded-lg border border-slate-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                      className="w-full text-ellipsis rounded-lg border border-slate-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                     />
                   </div>
                   <div>
@@ -117,7 +117,7 @@ const ContactPage = () => {
                           setIsEmailValid(false);
                         }
                       }}
-                      className="w-full text-ellipsis rounded-lg border border-slate-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                      className="w-full text-ellipsis rounded-lg border border-slate-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                     />
                     {isEmailValid && (
                       <p>
@@ -137,7 +137,7 @@ const ContactPage = () => {
                       }}
                       maxLength={500}
                       required
-                      className="w-full rounded-lg border border-slate-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                      className="w-full rounded-lg border border-slate-300 px-2.5 py-2 text-sm outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                     />
                   </div>
 
