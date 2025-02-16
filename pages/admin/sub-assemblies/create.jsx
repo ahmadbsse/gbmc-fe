@@ -27,7 +27,6 @@ const CreateSubAssembly = () => {
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
-    // formData.media = dataFilesIds;
     if (
       formData.name.trim() === "" ||
       formData.number.trim() === "" ||

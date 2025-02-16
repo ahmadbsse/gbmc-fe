@@ -9,6 +9,8 @@ import showToast from "@/utils/toast";
 import { createEngineeringComponentValidator } from "@/utils/validators";
 import RichTextEditor from "@/components/common/RichTextEditor";
 
+import { uploadFilesRequest } from "@/utils";
+
 const CreateEngineeringComponent = () => {
   const router = useRouter();
   const initialFormData = {
@@ -21,47 +23,67 @@ const CreateEngineeringComponent = () => {
     material: "",
     weight: "",
   };
+
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
-  const [dataFilesIds, setDataFilesIds] = useState([]);
-  const [heroFileId, setHeroFileId] = useState([]);
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
-    formData.media = dataFilesIds;
-    formData.hero_image = heroFileId;
     if (
       formData.name.trim() === "" ||
       formData.material.trim() === "" ||
       formData.weight.trim() === "" ||
       formData.description == `<p><br></p>` ||
-      dataFilesIds.length === 0 ||
-      heroFileId.length === 0
+      formData.media.length === 0 ||
+      formData.media == "" ||
+      formData.hero_image == "" ||
+      formData.hero_image.length === 0
     ) {
       setIsFormValid(false);
     } else {
       setIsFormValid(true);
     }
-  }, [formData, dataFilesIds, heroFileId]);
+  }, [formData]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    formData.media = dataFilesIds;
-    formData.hero_image = heroFileId;
     if (createEngineeringComponentValidator(formData)) {
+      setLoading(true);
+      const media = formData.media;
+      const hero_image = formData.hero_image;
       try {
-        apiClient
-          .POST(`/engineering-components`, { data: formData })
-          .then(() => {
-            setFormData(initialFormData);
-            showToast("Engineering component Created Successfully", "success");
-            router.push("/admin");
-          })
-          .catch((error) => {
-            console.log(error);
-            showToast(error.message, "error");
-          });
+        await uploadFilesRequest(media, true).then(async (res) => {
+          if (res) {
+            formData.media = res;
+          }
+          try {
+            await uploadFilesRequest(hero_image, true).then((res) => {
+              if (res) {
+                formData.hero_image = res[0];
+              }
+              try {
+                apiClient
+                  .POST(`/engineering-components`, { data: formData })
+                  .then(() => {
+                    setFormData(initialFormData);
+                    showToast("Engineering component Created Successfully", "success");
+                    router.push("/admin");
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                    showToast(error.message, "error");
+                  });
+              } catch (error) {
+                console.error(error);
+              }
+            });
+          } catch (error) {
+            console.error(error);
+          }
+        });
       } catch (error) {
-        console.log(error);
-        showToast(error.message, "error");
+        console.error(error);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -69,7 +91,12 @@ const CreateEngineeringComponent = () => {
   const handleChangeDescription = (content) => {
     setFormData({ ...formData, description: content });
   };
-
+  const setMedia = (media) => {
+    setFormData({ ...formData, media });
+  };
+  const setHeroImage = (hero_image) => {
+    setFormData({ ...formData, hero_image });
+  };
   return (
     <>
       <SeoHead title="Admin" />
@@ -78,7 +105,6 @@ const CreateEngineeringComponent = () => {
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">
           <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">Create Engineering Component</h1>
-
           <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3">
             <div className="flex flex-col md:flex-row md:gap-4">
               <div className="w-full">
@@ -127,13 +153,13 @@ const CreateEngineeringComponent = () => {
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Hero Image</label>
                 <BaseFileUploader
-                  setDataFilesIds={setHeroFileId}
-                  disabled={heroFileId != "" || heroFileId.length > 1}
+                  setDataFilesIds={setHeroImage}
+                  disabled={formData?.hero_image != "" || formData?.hero_image?.length > 1}
                 />
               </div>
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Detail Images</label>
-                <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
+                <BaseFileUploader setDataFilesIds={setMedia} multiple={true} />
               </div>
             </div>
             <div className="flex flex-col gap-2 pt-3">
@@ -165,7 +191,7 @@ const CreateEngineeringComponent = () => {
             </div>
 
             <div className="mx-auto w-[300px] py-4">
-              <BaseButton loading={false} type="submit" disabled={!isFormValid}>
+              <BaseButton loading={loading} type="submit" disabled={!isFormValid}>
                 save
               </BaseButton>
             </div>
