@@ -1,21 +1,22 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { X, ChevronDown } from "lucide-react";
-
 import apiClient from "@/utils/apiClient";
-import { transformMedia } from "@/utils";
+import { transformMedia, uploadFilesRequest, deleteFilesRequest } from "@/utils";
 import { Navbar, BaseLoader, BaseImage, BaseButton, SeoHead } from "@/components/common";
 import BaseFileUploader from "@/components/admin/BaseFileUploader";
 import showToast from "@/utils/toast";
 import RichTextEditor from "@/components/common/RichTextEditor";
-import { editPartValidator } from "@/utils/validators";
+import { partValidator } from "@/utils/validators";
 
 const EditPart = () => {
   const router = useRouter();
   const { id } = router.query;
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(null);
   const [dataFilesIds, setDataFilesIds] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
+  const [idsToRemove, setIdsToRemove] = useState([]);
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
@@ -28,14 +29,14 @@ const EditPart = () => {
         formData.oem_number === "" ||
         formData.weight === "" ||
         formData.description === "" ||
-        (dataFilesIds.length === 0 && formData.media.length === 0)
+        formData?.media?.length === 0
       ) {
         setIsFormValid(false);
       } else {
         setIsFormValid(true);
       }
     }
-  }, [formData, dataFilesIds]);
+  }, [formData]);
   const getPartDetails = async () => {
     try {
       const url = `/parts/${id}?populate=*`;
@@ -68,39 +69,52 @@ const EditPart = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (editPartValidator(formData, dataFilesIds)) {
-      if (dataFilesIds.length === 0) {
-        if (Array.isArray(formData.media)) {
-          formData.media = formData.media.map((item) => item.id);
-        } else {
-          formData.media = formData.media.id;
-        }
-      } else {
-        formData.media = [...formData.media.map((item) => item.id), ...dataFilesIds];
-      }
-      delete formData.documentId;
-      formData.supplier = formData.supplier.documentId;
+    if (partValidator(formData)) {
+      setLoading(true);
       try {
-        apiClient
-          .PUT(`/parts/${id}`, { data: formData })
-          .then(() => {
-            showToast("Part Saved Successfully", "success");
-            router.push("/admin");
-          })
-          .catch((error) => {
-            console.log(error);
-            showToast(error.message, "error");
-          });
+        const flattenedData = formData.media
+          .flat()
+          .filter((item) => item && typeof item === "object" && !item.id);
+        const previousMedia = formData.media.filter((item) => item && item.id);
+        const newMediaIds = previousMedia.map((file) => file.id);
+        await uploadFilesRequest(flattenedData, true).then((res) => {
+          if (res) {
+            formData.media = [...res, ...newMediaIds];
+            formData.supplier = formData.supplier.documentId;
+            delete formData.documentId;
+            try {
+              apiClient
+                .PUT(`/parts/${id}`, { data: formData })
+                .then(async () => {
+                  showToast("Part Saved Successfully", "success");
+                  await deleteFilesRequest(idsToRemove).then(() => {
+                    console.log("Files deleted successfully");
+                  });
+                  router.push("/admin");
+                })
+                .catch((error) => {
+                  console.log(error);
+                  showToast(error.message, "error");
+                });
+            } catch (error) {
+              console.log(error);
+              showToast(error.message, "error");
+            }
+          }
+        });
       } catch (error) {
         console.log(error);
         showToast(error.message, "error");
+      } finally {
+        setLoading(false);
       }
     }
   };
   const deletePreviousImage = async (id) => {
     setFormData(removeMediaById(id));
+    setIdsToRemove([...idsToRemove, id]);
   };
   function removeMediaById(idToRemove) {
     return {
@@ -116,6 +130,14 @@ const EditPart = () => {
   }, [id]);
   const handleChange = (content) => {
     setFormData({ ...formData, description: content });
+  };
+  const setMedia = (media) => {
+    if (typeof media === "object") {
+      setFormData((prevData) => ({
+        ...prevData,
+        media: [...prevData?.media, ...media],
+      }));
+    }
   };
   return (
     <>
@@ -218,11 +240,11 @@ const EditPart = () => {
                 <RichTextEditor handleChange={handleChange} defaultValue={formData.description} />
                 <div>
                   <label className="required mb-1 block text-sm font-medium"> Media</label>
-                  <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
+                  <BaseFileUploader setDataFilesIds={setMedia} multiple={true} />
                 </div>
                 <div className="flex items-center gap-4">
                   {formData?.media?.map((item) => {
-                    if (item) {
+                    if (item && item?.formats) {
                       return (
                         <div className="relative h-32 w-44" key={item.documentId}>
                           <button
@@ -274,7 +296,7 @@ const EditPart = () => {
                   </div>
                 </div>
                 <div className="mx-auto w-[300px] py-4">
-                  <BaseButton loading={false} type="submit" disabled={!isFormValid}>
+                  <BaseButton loading={loading} type="submit" disabled={!isFormValid}>
                     Save
                   </BaseButton>
                 </div>

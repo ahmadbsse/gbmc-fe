@@ -6,8 +6,8 @@ import showToast from "@/utils/toast";
 import { BaseButton, SeoHead } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
-import { createPartValidator } from "@/utils/validators";
-
+import { partValidator } from "@/utils/validators";
+import { uploadFilesRequest } from "@/utils";
 import RichTextEditor from "@/components/common/RichTextEditor";
 
 const CreatePart = () => {
@@ -24,12 +24,12 @@ const CreatePart = () => {
     media: "",
     oem_number: "",
   };
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
-  const [dataFilesIds, setDataFilesIds] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
   const [isFormValid, setIsFormValid] = useState(false);
+
   useEffect(() => {
-    formData.media = dataFilesIds;
     if (
       formData.name.trim() === "" ||
       formData.number.trim() === "" ||
@@ -38,33 +38,46 @@ const CreatePart = () => {
       formData.oem_number.trim() === "" ||
       formData.weight.trim() === "" ||
       formData.description === `<p><br></p>` ||
-      dataFilesIds.length === 0
+      formData.media.length === 0 ||
+      formData.media == ""
     ) {
       setIsFormValid(false);
     } else {
       setIsFormValid(true);
     }
-  }, [formData, dataFilesIds]);
+  }, [formData]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (createPartValidator(formData, dataFilesIds)) {
-      formData.media = dataFilesIds;
-      try {
-        apiClient
-          .POST(`/parts`, { data: formData })
-          .then(() => {
-            setFormData(initialFormData);
-            showToast(`Part created successfully`, "success");
-            router.push("/admin");
-          })
-          .catch((error) => {
-            console.log(error);
-            showToast(error.message, "error");
-          });
-      } catch (error) {
-        showToast(error.message, "error");
-        console.log(error);
-      }
+    if (partValidator(formData)) {
+      setLoading(true);
+      await uploadFilesRequest(formData.media, true)
+        .then((res) => {
+          if (res) {
+            formData.media = res;
+            try {
+              apiClient
+                .POST(`/parts`, { data: formData })
+                .then(() => {
+                  setFormData(initialFormData);
+                  showToast(`Part created successfully`, "success");
+                  router.push("/admin");
+                })
+                .catch((error) => {
+                  console.log(error);
+                  showToast(error.message, "error");
+                });
+            } catch (error) {
+              showToast(error.message, "error");
+              console.log(error);
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
   };
   const getSuppliers = async () => {
@@ -87,10 +100,18 @@ const CreatePart = () => {
   const handleChange = (content) => {
     setFormData({ ...formData, description: content });
   };
+  const setMedia = (media) => {
+    if (typeof media === "object") {
+      setFormData((prevData) => ({
+        ...prevData,
+        media: [...prevData?.media, ...media],
+      }));
+    }
+  };
   return (
     <>
       <SeoHead title="Admin" />
-
+      <pre>{JSON.stringify(formData.media, null, 2)}</pre>
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">
@@ -181,7 +202,7 @@ const CreatePart = () => {
 
             <div>
               <label className="required mb-1 block text-sm font-medium"> Media</label>
-              <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
+              <BaseFileUploader setDataFilesIds={setMedia} multiple={true} />
             </div>
             <div className="flex flex-col gap-2 pt-3">
               <div className="flex w-full items-center gap-2">
@@ -211,7 +232,7 @@ const CreatePart = () => {
               </div>
             </div>
             <div className="mx-auto w-[300px] py-4">
-              <BaseButton loading={false} type="submit" disabled={!isFormValid}>
+              <BaseButton loading={loading} type="submit" disabled={!isFormValid}>
                 save
               </BaseButton>
             </div>

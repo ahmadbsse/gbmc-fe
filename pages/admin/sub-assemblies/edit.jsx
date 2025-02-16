@@ -3,11 +3,10 @@ import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
 import apiClient from "@/utils/apiClient";
-import { transformMedia } from "@/utils";
+import { transformMedia, uploadFilesRequest, deleteFilesRequest } from "@/utils";
 import { Navbar, BaseLoader, BaseImage, BaseButton, SeoHead } from "@/components/common";
 import BaseFileUploader from "@/components/admin/BaseFileUploader";
 import showToast from "@/utils/toast";
-import { uploadFilesRequest, deleteFilesRequest } from "@/utils";
 import { subAssemblyValidator } from "@/utils/validators";
 import RichTextEditor from "@/components/common/RichTextEditor";
 
@@ -120,7 +119,6 @@ const EditSubAssembly = () => {
     setFormData({ ...formData, description: content });
   };
   const setMedia = (media) => {
-    console.log(typeof media);
     if (typeof media === "object") {
       setFormData((prevData) => ({
         ...prevData,

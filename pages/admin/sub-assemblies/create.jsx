@@ -24,7 +24,6 @@ const CreateSubAssembly = () => {
   };
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
-  const [dataFilesIds, setDataFilesIds] = useState([]);
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {

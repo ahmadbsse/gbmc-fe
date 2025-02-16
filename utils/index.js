@@ -109,8 +109,8 @@ export const uploadFilesRequest = async (filesToUpload, multiple = true) => {
 export const deleteFilesRequest = async (fileIds) => {
   fileIds.forEach(async (id) => {
     try {
-      await apiClient.DELETE(`/upload/files/${id}`).then((res) => {
-        console.log(res);
+      await apiClient.DELETE(`/upload/files/${id}`).then(() => {
+        console.log("File removed successfully");
       });
     } catch (error) {
       console.error("Error deleting resource:", error.message);

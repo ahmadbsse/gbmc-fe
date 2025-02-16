@@ -62,7 +62,7 @@ const AdminEditItemModal = ({ activeID, onClose, currentTab, getData }) => {
                     showToast(`Make saved successfully`, "success");
                     await deleteFilesRequest(idsToRemove).then(() => {
                       console.log("Files deleted successfully");
-
+                      getData();
                       onClose(e);
                     });
                   })
