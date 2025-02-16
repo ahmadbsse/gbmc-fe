@@ -1,3 +1,4 @@
+import apiClient from "@/utils/apiClient";
 export function convertToReadableDate(isoString) {
   const date = new Date(isoString);
   return date.toLocaleString("en-US", {
@@ -72,3 +73,39 @@ export function transformHeroVideo(hero_image) {
     height: hero_image.height,
   };
 }
+
+export const uploadFilesRequest = async (filesToUpload, multiple = true) => {
+  let fileIds = null;
+  const formData = new FormData();
+  filesToUpload.forEach((file) => {
+    formData.append("files", file.file); // Use the correct file object
+  });
+  if (filesToUpload.length === 0) return;
+  const url = "/upload";
+  try {
+    await apiClient.UPLOAD(url, formData).then((response) => {
+      if (response) {
+        if (multiple) {
+          fileIds = response.map((file) => file.id);
+        } else {
+          fileIds = response[0].id;
+        }
+      }
+    });
+  } catch (error) {
+    console.error(error);
+  } finally {
+    return fileIds;
+  }
+};
+export const deleteFilesRequest = async (fileIds) => {
+  fileIds.forEach(async (id) => {
+    try {
+      await apiClient.DELETE(`/upload/files/${id}`).then((res) => {
+        console.log(res);
+      });
+    } catch (error) {
+      console.error("Error deleting resource:", error.message);
+    }
+  });
+};

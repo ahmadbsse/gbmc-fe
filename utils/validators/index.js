@@ -196,32 +196,12 @@ export const editEngineeringComponentValidator = (formData) => {
   }
   return true;
 };
-export const addMakeValidator = (formData, dataFilesIds) => {
+export const makeValidator = (formData) => {
   if (formData.name == "") {
     showToast(`Please enter name`, "error");
     return false;
   }
-
-  if (typeof dataFilesIds === "string" && dataFilesIds == "") {
-    showToast(`Please upload an image`, "error");
-    return false;
-  }
-  if (typeof dataFilesIds === "object" && dataFilesIds.length == 0) {
-    showToast(`Please upload an image`, "error");
-    return false;
-  }
-  return true;
-};
-export const editMakeValidator = (data, dataFilesIds) => {
-  if (data.name == "") {
-    showToast(`Please enter name`, "error");
-    return false;
-  }
-  if (typeof dataFilesIds === "string" && data.media.length == 0 && dataFilesIds == "") {
-    showToast(`Please upload an image`, "error");
-    return false;
-  }
-  if (typeof dataFilesIds === "object" && data.media.length == 0 && dataFilesIds.length == 0) {
+  if (formData.media == "" || data.media.length == 0) {
     showToast(`Please upload an image`, "error");
     return false;
   }

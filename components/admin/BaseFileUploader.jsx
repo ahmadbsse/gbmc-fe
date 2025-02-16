@@ -11,29 +11,14 @@ const BaseFileUploader = ({ setDataFilesIds, multiple = false, disabled = false 
   // File upload handler for multiple files
   const handleFileUpload = async (filesToUpload) => {
     try {
-      const formData = new FormData();
-      filesToUpload.forEach((file) => {
-        formData.append("files", file.file); // Use the correct file object
-      });
-      if (filesToUpload.length === 0) return;
-      const url = "/upload";
-      const response = await apiClient.UPLOAD(url, formData);
-      if (response) {
-        if (multiple) {
-          setDataFilesIds(response.map((file) => file.id));
-        } else {
-          setDataFilesIds(response[0].id);
-        }
-        // Update all files' status on success
-        setFiles((prevFiles) =>
-          prevFiles.map((f, index) => ({
-            ...f,
-            id: response[index]?.id,
-            status: "success",
-            progress: 100,
-          }))
-        );
-      }
+      setDataFilesIds(filesToUpload);
+      setFiles((prevFiles) =>
+        prevFiles.map((f) => ({
+          ...f,
+          status: "success",
+          progress: 100,
+        }))
+      );
     } catch (error) {
       console.error(error);
       // Mark all files as failed
@@ -81,9 +66,8 @@ const BaseFileUploader = ({ setDataFilesIds, multiple = false, disabled = false 
   // Remove file handler
   const handleRemoveFile = (fileName, id) => {
     setFiles((prevFiles) => prevFiles.filter((f) => f.name !== fileName));
-    setDataFilesIds((prevIds) => prevIds.filter((fileId) => fileId !== id));
+    setDataFilesIds((prevIds) => prevIds.filter((item) => item.preview !== preview));
     if (!multiple) {
-      setDataFilesIds("");
       setDataFilesIds("");
     }
   };

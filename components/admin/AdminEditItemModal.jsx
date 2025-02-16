@@ -2,26 +2,27 @@ import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import showToast from "@/utils/toast";
-import { transformMedia } from "@/utils";
+import { transformMedia, uploadFilesRequest, deleteFilesRequest } from "@/utils";
 import apiClient from "@/utils/apiClient";
 import { BaseButton, BaseLoader, BaseImage } from "@/components/common";
 import BaseFileUploader from "./BaseFileUploader";
-import { editMakeValidator } from "@/utils/validators";
+import { makeValidator } from "@/utils/validators";
 
 const AdminEditItemModal = ({ activeID, onClose, currentTab, getData }) => {
   const [data, setData] = useState(null);
-  const [dataFilesIds, setDataFilesIds] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [idsToRemove, setIdsToRemove] = useState([]);
 
   useEffect(() => {
     if (data) {
-      if (data.name === "" || (dataFilesIds.length === 0 && data.media.length === 0)) {
+      if (data.name === "" || data.media.length === 0) {
         setIsFormValid(false);
       } else {
         setIsFormValid(true);
       }
     }
-  }, [data, dataFilesIds]);
+  }, [data]);
   const getMakeDetails = async () => {
     try {
       const url = `/${currentTab}/${activeID}?populate=*`;
@@ -44,48 +45,62 @@ const AdminEditItemModal = ({ activeID, onClose, currentTab, getData }) => {
     if (activeID) getMakeDetails();
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (editMakeValidator(data, currentTab, dataFilesIds)) {
-      if (dataFilesIds.length == 0) {
-        if (Array.isArray(data.media)) {
-          data.media = data.media.map((item) => item.id);
-        } else {
-          data.media = data.media.id;
-        }
-      } else {
-        data.media = [...data.media.map((item) => item.id), dataFilesIds];
-      }
-      delete data.documentId;
+    if (makeValidator(data)) {
+      setLoading(true);
       try {
-        apiClient
-          .PUT(`/${currentTab}/${activeID}`, { data: data })
-          .then(() => {
-            showToast(`${currentTab} edited successfully`, "success");
-            getData();
-            onClose(e);
+        await uploadFilesRequest(data.media, false)
+          .then((res) => {
+            if (res) {
+              data.media = res;
+              delete data.documentId;
+              try {
+                apiClient
+                  .PUT(`/${currentTab}/${activeID}`, { data: data })
+                  .then(async () => {
+                    showToast(`Make saved successfully`, "success");
+                    await deleteFilesRequest(idsToRemove).then(() => {
+                      console.log("Files deleted successfully");
+                      getData();
+                      onClose(e);
+                    });
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                    showToast(error.message, "error");
+                  });
+              } catch (error) {
+                console.log(error);
+                showToast(error.message, "error");
+              }
+            }
           })
           .catch((error) => {
-            console.log(error);
-            showToast(error.message, "error");
+            console.error(error);
           });
       } catch (error) {
-        console.log(error);
-        showToast(error.message, "error");
+        console.error(error);
+      } finally {
+        setLoading(false);
       }
     }
   };
   const deletePreviousImage = async (id) => {
     setData(removeMediaById(id));
+    setIdsToRemove([...idsToRemove, id]);
   };
-  function removeMediaById(idToRemove) {
-    return { ...data, media: data?.media?.filter((mediaItem) => mediaItem.id !== idToRemove) };
+  function removeMediaById(idsToRemove) {
+    return { ...data, media: data?.media?.filter((mediaItem) => mediaItem.id !== idsToRemove) };
   }
+  const setMedia = (media) => {
+    setData({ ...data, media });
+  };
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="custom-scrollbar relative max-h-[600px] w-full max-w-xl overflow-y-auto rounded-lg bg-white">
         <div className="fixed flex w-full max-w-[560px] items-center justify-between rounded-tl-lg bg-white py-3 pl-6 pr-2">
-          <h2 className="text-2xl font-bold"> Edit Make - {data.name}</h2>
+          <h2 className="text-2xl font-bold"> Edit Make - {data?.name}</h2>
           <button onClick={onClose} className="">
             <X className="h-6 w-6" />
           </button>
@@ -107,14 +122,15 @@ const AdminEditItemModal = ({ activeID, onClose, currentTab, getData }) => {
             <div>
               <label className="required mb-1 block text-sm font-medium"> Media</label>
               <BaseFileUploader
-                setDataFilesIds={setDataFilesIds}
-                disabled={dataFilesIds != "" || dataFilesIds.length > 1 || data.media.length}
+                setDataFilesIds={setMedia}
+                disabled={data?.media != "" || data?.media.length > 1}
               />
             </div>
             <div className="flex items-center gap-4">
               {data?.media ? (
+                Array.isArray(data?.media) &&
                 data?.media?.map((item) => {
-                  if (item) {
+                  if (item && item.formats) {
                     return (
                       <div className="relative h-32 w-44" key={item.documentId}>
                         <button
@@ -127,10 +143,10 @@ const AdminEditItemModal = ({ activeID, onClose, currentTab, getData }) => {
                           <X className="h-4 w-4 text-white" />
                         </button>
                         <BaseImage
-                          width={item.formats.thumbnail.width}
-                          height={item.formats.thumbnail.height}
-                          src={item.formats.thumbnail.url}
-                          alt={item.name}
+                          width={item?.formats?.thumbnail?.width}
+                          height={item?.formats?.thumbnail?.height}
+                          src={item?.formats?.thumbnail?.url}
+                          alt={item?.name}
                           classes="object-cover w-full h-full"
                         />
                       </div>
@@ -156,7 +172,7 @@ const AdminEditItemModal = ({ activeID, onClose, currentTab, getData }) => {
               </div>
             </div>
             <div className="ml-auto mt-6 w-1/3">
-              <BaseButton loading={false} type="submit" disabled={!isFormValid}>
+              <BaseButton loading={loading} type="submit" disabled={!isFormValid}>
                 Save
               </BaseButton>
             </div>

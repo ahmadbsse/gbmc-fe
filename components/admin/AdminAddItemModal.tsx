@@ -6,8 +6,8 @@ import { BaseButton } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
 
 import apiClient from "@/utils/apiClient";
-import { addMakeValidator } from "@/utils/validators";
-
+import { makeValidator } from "@/utils/validators";
+import { uploadFilesRequest } from "@/utils";
 import type { AdminAddItemModalProps } from "@/types";
 
 type FormDataTypes = {
@@ -22,42 +22,51 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({ onClose, currentT
     active: false,
     media: "",
   } as FormDataTypes;
-
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
-  const [dataFilesIds, setDataFilesIds] = useState<string | string[]>([]);
   const [isFormValid, setIsFormValid] = useState(false);
 
+  const setMedia = (media: string | string[]) => {
+    setFormData({ ...formData, media });
+  };
   useEffect(() => {
-    formData.media = dataFilesIds;
-    if (formData.name.trim() === "" || dataFilesIds.length === 0) {
+    if (formData.name.trim() === "" || formData.media === "") {
       setIsFormValid(false);
     } else {
       setIsFormValid(true);
     }
-  }, [formData, dataFilesIds]);
+  }, [formData]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (addMakeValidator(formData, dataFilesIds)) {
-      formData.media = dataFilesIds;
-
-      try {
-        apiClient
-          .POST(`/${currentTab}`, { data: formData })
-          .then(() => {
-            setFormData(initialFormData);
-            showToast(`${currentTab} added successfully`, "success");
-            getData();
-            onClose(e);
-          })
-          .catch((error) => {
-            console.log(error);
-            showToast(error.message, "error");
-          });
-      } catch (error) {
-        console.log(error);
-        showToast(error.message, "error");
-      }
+    if (makeValidator(formData)) {
+      setLoading(true);
+      await uploadFilesRequest(formData.media, false).then((res) => {
+        if (res) {
+          formData.media = res;
+        }
+        try {
+          apiClient
+            .POST(`/${currentTab}`, { data: formData })
+            .then(() => {
+              setFormData(initialFormData);
+              showToast(`${currentTab} added successfully`, "success");
+              getData();
+              onClose(e);
+            })
+            .catch((error) => {
+              console.log(error);
+              showToast(error.message, "error");
+            });
+        } catch (error) {
+          console.log(error);
+          showToast(error.message, "error");
+        } finally {
+          setLoading(false);
+        }
+      });
+    } else {
+      showToast("Please fill all required fields", "error");
     }
   };
 
@@ -87,8 +96,8 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({ onClose, currentT
           <div>
             <label className="required mb-1 block text-sm font-medium"> Media</label>
             <BaseFileUploader
-              setDataFilesIds={setDataFilesIds}
-              disabled={dataFilesIds != "" || dataFilesIds.length > 1}
+              setDataFilesIds={setMedia}
+              disabled={formData.media != "" || formData.media.length > 1}
             />
           </div>
           <div className="flex flex-col md:flex-row md:gap-8">
@@ -106,7 +115,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({ onClose, currentT
             </div>
           </div>
           <div className="ml-auto mt-6 w-1/3">
-            <BaseButton loading={false} type="submit" disabled={!isFormValid}>
+            <BaseButton loading={loading} type="submit" disabled={!isFormValid}>
               Save
             </BaseButton>
           </div>
