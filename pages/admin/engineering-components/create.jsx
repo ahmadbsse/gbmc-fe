@@ -158,8 +158,6 @@ const CreateEngineeringComponent = () => {
               handleChange={handleChangeDescription}
               defaultValue={formData.description}
             />
-            <pre>{JSON.stringify(formData, null, 2)}</pre>
-            {/* <pre>{JSON.stringify(formData.hero_image, null, 2)}</pre> */}
             <div className="flex gap-2">
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Hero Image</label>

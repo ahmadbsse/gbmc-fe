@@ -115,8 +115,6 @@ const CreatePart = () => {
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">
           <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">Create Part</h1>
-
-          <pre>{JSON.stringify(formData.media, null, 2)}</pre>
           <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3">
             <div className="flex flex-col md:flex-row md:gap-4">
               <div className="w-full">
