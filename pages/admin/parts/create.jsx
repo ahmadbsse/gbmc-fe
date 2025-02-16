@@ -147,7 +147,7 @@ const CreatePart = () => {
                   required
                   type="text"
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                  placeholder={`Type material name`}
+                  placeholder={`Type material`}
                   value={formData.material}
                   onChange={(e) => setFormData({ ...formData, material: e.target.value })}
                 />
