@@ -2,13 +2,13 @@ import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import showToast from "@/utils/toast";
-import { transformMedia, modifyAdminTabname } from "@/utils";
+import { transformMedia } from "@/utils";
 import apiClient from "@/utils/apiClient";
 import { BaseButton, BaseLoader, BaseImage } from "@/components/common";
 import BaseFileUploader from "./BaseFileUploader";
 import { editMakeValidator } from "@/utils/validators";
 
-const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData }) => {
+const AdminEditItemModal = ({ activeID, onClose, currentTab, getData }) => {
   const [data, setData] = useState(null);
   const [dataFilesIds, setDataFilesIds] = useState([]);
   const [isFormValid, setIsFormValid] = useState(false);
@@ -85,10 +85,7 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="custom-scrollbar relative max-h-[600px] w-full max-w-xl overflow-y-auto rounded-lg bg-white">
         <div className="fixed flex w-full max-w-[560px] items-center justify-between rounded-tl-lg bg-white py-3 pl-6 pr-2">
-          <h2 className="text-2xl font-bold">
-            {" "}
-            Edit {modifyAdminTabname(activeTab)} - {data?.name}
-          </h2>
+          <h2 className="text-2xl font-bold"> Edit Make - {data.name}</h2>
           <button onClick={onClose} className="">
             <X className="h-6 w-6" />
           </button>

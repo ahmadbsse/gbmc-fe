@@ -130,14 +130,19 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
       {showAddItemModal ? (
         <AdminAddItemModal
           onClose={() => setShowAddItemModal(false)}
-          activeTab={activeTab}
           type="product"
           currentTab={currentTab}
           getData={getData}
         />
       ) : null}
-      {/* {JSON.stringify(activeItem)} */}
-
+      {showEditModal ? (
+        <AdminEditItemModal
+          activeID={activeID}
+          currentTab={currentTab}
+          onClose={() => setShowEditModal(false)}
+          getData={getData}
+        />
+      ) : null}
       {showDeleteModal ? (
         <DeleteConfirmationModal
           handleDelete={deleteItem}
@@ -164,15 +169,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
           onClose={() => setShowFeatureModal(false)}
         />
       ) : null}
-      {showEditModal ? (
-        <AdminEditItemModal
-          activeTab={activeTab}
-          activeID={activeID}
-          currentTab={currentTab}
-          onClose={() => setShowEditModal(false)}
-          getData={getData}
-        />
-      ) : null}
+
       <div className="rounded-lg bg-white shadow">
         <div className="border-b border-gray-200 px-6 py-4">
           <div className="mb-8 flex items-center justify-between">

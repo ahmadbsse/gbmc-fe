@@ -72,12 +72,3 @@ export function transformHeroVideo(hero_image) {
     height: hero_image.height,
   };
 }
-export const modifyAdminTabname = (activeTab) => {
-  return activeTab.name == "Parts"
-    ? "Part"
-    : activeTab.name == "Engineering"
-      ? "Component"
-      : activeTab.name == "Make"
-        ? activeTab.name
-        : "Category";
-};

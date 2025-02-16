@@ -6,7 +6,6 @@ import { BaseButton } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
 
 import apiClient from "@/utils/apiClient";
-import { modifyAdminTabname } from "@/utils";
 import { addMakeValidator } from "@/utils/validators";
 
 import type { AdminAddItemModalProps } from "@/types";
@@ -17,12 +16,7 @@ type FormDataTypes = {
   media: string | string[];
 };
 
-const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
-  onClose,
-  activeTab,
-  currentTab,
-  getData,
-}) => {
+const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({ onClose, currentTab, getData }) => {
   const initialFormData = {
     name: "",
     active: false,
@@ -71,7 +65,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="custom-scrollbar relative max-h-[600px] w-full max-w-xl overflow-y-auto rounded-lg bg-white">
         <div className="fixed flex w-full max-w-[560px] items-center justify-between rounded-tl-lg bg-white py-3 pl-6 pr-2">
-          <h2 className="text-2xl font-bold">Add New {modifyAdminTabname(activeTab)}</h2>
+          <h2 className="text-2xl font-bold">Add New Make</h2>
           <button onClick={onClose} className="">
             <X className="h-6 w-6" />
           </button>
