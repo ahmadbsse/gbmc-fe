@@ -64,10 +64,12 @@ const BaseFileUploader = ({ setDataFilesIds, multiple = false, disabled = false 
   };
 
   // Remove file handler
-  const handleRemoveFile = (fileName, id) => {
-    setFiles((prevFiles) => prevFiles.filter((f) => f.name !== fileName));
+  const handleRemoveFile = (file) => {
+    const updatedFiles = files.filter((f) => f?.preview !== file?.preview);
+    console.log(updatedFiles);
+    setFiles(updatedFiles);
     if (multiple) {
-      setDataFilesIds((prevIds) => prevIds.filter((item) => item.preview !== preview));
+      setDataFilesIds(updatedFiles);
     } else {
       setDataFilesIds("");
     }
@@ -155,7 +157,10 @@ const BaseFileUploader = ({ setDataFilesIds, multiple = false, disabled = false 
 
               {/* Remove Button */}
               <button
-                onClick={() => handleRemoveFile(file.name, file.id)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleRemoveFile(file);
+                }}
                 className="flex-shrink-0 text-gray-400 hover:text-gray-500"
               >
                 <X className="h-5 w-5" />

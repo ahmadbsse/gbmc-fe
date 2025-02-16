@@ -27,18 +27,20 @@ const CreateSubAssembly = () => {
   const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
-    if (
-      formData.name.trim() === "" ||
-      formData.number.trim() === "" ||
-      formData.oem_number.trim() === "" ||
-      formData.weight.trim() === "" ||
-      formData.description === `<p><br></p>` ||
-      formData.media.length === 0 ||
-      formData.media == ""
-    ) {
-      setIsFormValid(false);
-    } else {
-      setIsFormValid(true);
+    if (formData) {
+      if (
+        formData?.name.trim() === "" ||
+        formData?.number.trim() === "" ||
+        formData?.oem_number.trim() === "" ||
+        formData?.weight.trim() === "" ||
+        formData?.description === `<p><br></p>` ||
+        formData?.media.length === 0 ||
+        formData?.media == ""
+      ) {
+        setIsFormValid(false);
+      } else {
+        setIsFormValid(true);
+      }
     }
   }, [formData]);
   const handleSubmit = async (e) => {
@@ -75,12 +77,7 @@ const CreateSubAssembly = () => {
     setFormData({ ...formData, description: content });
   };
   const setMedia = (media) => {
-    if (typeof media === "object") {
-      setFormData((prevData) => ({
-        ...prevData,
-        media: [...prevData?.media, ...media],
-      }));
-    }
+    setFormData({ ...formData, media: media });
   };
   return (
     <>
