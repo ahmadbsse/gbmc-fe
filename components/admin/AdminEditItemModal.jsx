@@ -6,7 +6,7 @@ import { transformMedia, modifyAdminTabname } from "@/utils";
 import apiClient from "@/utils/apiClient";
 import { BaseButton, BaseLoader, BaseImage } from "@/components/common";
 import BaseFileUploader from "./BaseFileUploader";
-import { editCategoryAndSupplierValidator } from "@/utils/validators";
+import { editMakeValidator } from "@/utils/validators";
 
 const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData }) => {
   const [data, setData] = useState(null);
@@ -15,18 +15,14 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
 
   useEffect(() => {
     if (data) {
-      if (
-        data.name === "" ||
-        data.description === "" ||
-        (dataFilesIds.length === 0 && data.media.length === 0)
-      ) {
+      if (data.name === "" || (dataFilesIds.length === 0 && data.media.length === 0)) {
         setIsFormValid(false);
       } else {
         setIsFormValid(true);
       }
     }
   }, [data, dataFilesIds]);
-  const getCategoryDetails = async () => {
+  const getMakeDetails = async () => {
     try {
       const url = `/${currentTab}/${activeID}?populate=*`;
       await apiClient.GET(url).then((res) => {
@@ -45,12 +41,12 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
     }
   };
   useEffect(() => {
-    if (activeID) getCategoryDetails();
+    if (activeID) getMakeDetails();
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (editCategoryAndSupplierValidator(data, currentTab, dataFilesIds)) {
+    if (editMakeValidator(data, currentTab, dataFilesIds)) {
       if (dataFilesIds.length == 0) {
         if (Array.isArray(data.media)) {
           data.media = data.media.map((item) => item.id);
@@ -111,17 +107,6 @@ const AdminEditItemModal = ({ activeTab, activeID, onClose, currentTab, getData 
               />
             </div>
 
-            <div>
-              <label className="required mb-1 block text-sm font-medium">Description</label>
-              <textarea
-                rows={3}
-                className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 text-sm outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                placeholder="Type description"
-                value={data.description}
-                required
-                onChange={(e) => setData({ ...data, description: e.target.value })}
-              />
-            </div>
             <div>
               <label className="required mb-1 block text-sm font-medium"> Media</label>
               <BaseFileUploader

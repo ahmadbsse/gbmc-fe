@@ -111,6 +111,37 @@ export const createSubAssemblyValidator = (formData, dataFilesIds) => {
   }
   return true;
 };
+export const editSubAssemblyValidator = (formData, dataFilesIds) => {
+  if (formData.name == "") {
+    showToast(`Please enter name`, "error");
+    return false;
+  }
+  if (formData.number == "") {
+    showToast(`Please enter registration number`, "error");
+    return false;
+  }
+  if (formData.weight == "") {
+    showToast(`Please enter weight`, "error");
+    return false;
+  }
+  if (formData.oem_number == "") {
+    showToast(`Please enter oem numbers`, "error");
+    return false;
+  }
+  if (formData.description == "") {
+    showToast(`Please enter description`, "error");
+    return false;
+  }
+  if (typeof dataFilesIds === "string" && formData.media.length == 0 && dataFilesIds == "") {
+    showToast(`Please upload an image`, "error");
+    return false;
+  }
+  if (typeof dataFilesIds === "object" && formData.media.length == 0 && dataFilesIds.length == 0) {
+    showToast(`Please upload an image`, "error");
+    return false;
+  }
+  return true;
+};
 export const createEngineeringComponentValidator = (formData) => {
   if (formData.name == "") {
     showToast(`Please enter name`, "error");
@@ -165,44 +196,9 @@ export const editEngineeringComponentValidator = (formData) => {
   }
   return true;
 };
-export const editSubAssemblyValidator = (formData, dataFilesIds) => {
+export const addMakeValidator = (formData, dataFilesIds) => {
   if (formData.name == "") {
     showToast(`Please enter name`, "error");
-    return false;
-  }
-  if (formData.number == "") {
-    showToast(`Please enter registration number`, "error");
-    return false;
-  }
-  if (formData.weight == "") {
-    showToast(`Please enter weight`, "error");
-    return false;
-  }
-  if (formData.oem_number == "") {
-    showToast(`Please enter oem numbers`, "error");
-    return false;
-  }
-  if (formData.description == "") {
-    showToast(`Please enter description`, "error");
-    return false;
-  }
-  if (typeof dataFilesIds === "string" && formData.media.length == 0 && dataFilesIds == "") {
-    showToast(`Please upload an image`, "error");
-    return false;
-  }
-  if (typeof dataFilesIds === "object" && formData.media.length == 0 && dataFilesIds.length == 0) {
-    showToast(`Please upload an image`, "error");
-    return false;
-  }
-  return true;
-};
-export const addCategoryAndSupplierValidator = (formData, currentTab, dataFilesIds) => {
-  if (formData.name == "") {
-    showToast(`Please enter name`, "error");
-    return false;
-  }
-  if (formData.description == "") {
-    showToast(`Please enter description`, "error");
     return false;
   }
 
@@ -216,13 +212,9 @@ export const addCategoryAndSupplierValidator = (formData, currentTab, dataFilesI
   }
   return true;
 };
-export const editCategoryAndSupplierValidator = (data, currentTab, dataFilesIds) => {
+export const editMakeValidator = (data, dataFilesIds) => {
   if (data.name == "") {
     showToast(`Please enter name`, "error");
-    return false;
-  }
-  if (data.description == "") {
-    showToast(`Please enter description`, "error");
     return false;
   }
   if (typeof dataFilesIds === "string" && data.media.length == 0 && dataFilesIds == "") {

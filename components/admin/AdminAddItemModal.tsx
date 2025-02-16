@@ -7,13 +7,12 @@ import { BaseFileUploader } from "@/components/admin";
 
 import apiClient from "@/utils/apiClient";
 import { modifyAdminTabname } from "@/utils";
-import { addCategoryAndSupplierValidator } from "@/utils/validators";
+import { addMakeValidator } from "@/utils/validators";
 
 import type { AdminAddItemModalProps } from "@/types";
 
 type FormDataTypes = {
   name: string;
-  description: string;
   active: boolean;
   media: string | string[];
 };
@@ -26,7 +25,6 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
 }) => {
   const initialFormData = {
     name: "",
-    description: "",
     active: false,
     media: "",
   } as FormDataTypes;
@@ -37,11 +35,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
 
   useEffect(() => {
     formData.media = dataFilesIds;
-    if (
-      formData.name.trim() === "" ||
-      formData.description === `<p><br></p>` ||
-      dataFilesIds.length === 0
-    ) {
+    if (formData.name.trim() === "" || dataFilesIds.length === 0) {
       setIsFormValid(false);
     } else {
       setIsFormValid(true);
@@ -50,7 +44,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (addCategoryAndSupplierValidator(formData, currentTab, dataFilesIds)) {
+    if (addMakeValidator(formData, dataFilesIds)) {
       formData.media = dataFilesIds;
 
       try {
@@ -93,18 +87,6 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
               value={formData?.name}
               required
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            />
-          </div>
-
-          <div>
-            <label className="required mb-1 block text-sm font-medium">Description</label>
-            <textarea
-              rows={3}
-              className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 text-sm outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-              placeholder="Type description"
-              value={formData?.description}
-              required
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
             />
           </div>
 

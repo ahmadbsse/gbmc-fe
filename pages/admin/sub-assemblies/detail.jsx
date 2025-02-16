@@ -36,7 +36,7 @@ const ViewSubAssemblyDetails = () => {
           {formData ? (
             <div className="mx-auto max-w-[810px] space-y-3">
               <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">
-                Sub Assembly - Details - {formData.name || ""}
+                View - Sub Assembly - {formData.name || ""}
               </h1>
               <div className="flex flex-col md:flex-row md:gap-5">
                 <div className="w-full">

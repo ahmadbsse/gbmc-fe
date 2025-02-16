@@ -228,23 +228,13 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                           )
                         ) : null}
                       </div>
-                      <div className="flex flex-col justify-between">
-                        <div>
-                          <h3
-                            onClick={() => viewDetails(item.documentId)}
-                            className={`font-medium capitalize ${currentTab == "parts" || currentTab == "sub-assemblies" || currentTab == "engineering-components" ? "cursor-pointer" : ""}`}
-                          >
-                            {item.name}
-                          </h3>
-                          {currentTab == "parts" ||
-                          currentTab == "sub-assemblies" ||
-                          currentTab == "engineering-components" ? null : (
-                            <span className="text-sm">{item.description}</span>
-                          )}
-                        </div>
-                        {/* <span className="text-xs text-solidGray/50">
-                          {convertToReadableDate(item.publishedAt)}
-                        </span> */}
+                      <div className="flex flex-col justify-center">
+                        <h3
+                          onClick={() => viewDetails(item.documentId)}
+                          className={`font-medium capitalize ${currentTab == "parts" || currentTab == "sub-assemblies" || currentTab == "engineering-components" ? "cursor-pointer" : ""}`}
+                        >
+                          {item.name}
+                        </h3>
                       </div>
                     </div>
 

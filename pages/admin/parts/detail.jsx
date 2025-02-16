@@ -36,7 +36,7 @@ const ViewPartDetails = () => {
           {formData ? (
             <div className="mx-auto max-w-[810px] space-y-3">
               <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">
-                Part - Details - {formData.name || ""}
+                View - Part - {formData.name || ""}
               </h1>
               <div className="flex flex-col md:flex-row md:gap-5">
                 <div className="w-full">
@@ -46,11 +46,9 @@ const ViewPartDetails = () => {
                   </div>
                 </div>
                 <div className="w-full">
-                  <label className="required mb-1 block text-sm font-medium">
-                    Registered Number
-                  </label>
+                  <label className="required mb-1 block text-sm font-medium">Supplier</label>
                   <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
-                    {formData.number}
+                    {formData.supplier.name}
                   </div>
                 </div>
               </div>
@@ -74,9 +72,11 @@ const ViewPartDetails = () => {
                   </div>
                 </div>
                 <div className="w-full">
-                  <label className="required mb-1 block text-sm font-medium">Supplier</label>
+                  <label className="required mb-1 block text-sm font-medium">
+                    Registered Number
+                  </label>
                   <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
-                    {formData.supplier.name}
+                    {formData.number}
                   </div>
                 </div>
               </div>
