@@ -133,6 +133,7 @@ const Article = () => {
                 {/* Thumbnail Images */}
                 <div className="flex gap-4">
                   {data?.media ? (
+                    data?.media.length > 1 &&
                     data?.media?.map((img, index) => (
                       <button
                         key={index}
