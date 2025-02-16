@@ -234,7 +234,7 @@ const AdminDashboard = () => {
         <Navbar isAdmin setTab={setTab} />
         <main className="container mx-auto px-4 py-8">
           <div className="mb-8 flex items-center justify-between">
-            <h1 className="text-2xl font-bold">Dashboard</h1>
+            <h1 className="text-2xl font-bold">Admin Dashboard</h1>
 
             {tabData[activeTab.key] > 0 ? <BaseSearchbar setSearchQuery={setSearchQuery} /> : null}
           </div>
