@@ -110,13 +110,13 @@ const CreatePart = () => {
                 />
               </div>
               <div className="relative w-full">
-                <label className="required mb-1 block text-sm font-medium">Supplier</label>
+                <label className="required mb-1 block text-sm font-medium">Make</label>
                 <select
                   className="w-full appearance-none rounded-lg border border-gray-300 bg-white px-2.5 py-2 text-[13px] outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   value={formData.supplier}
                   onChange={(e) => setFormData({ ...formData, supplier: e.target.value })}
                 >
-                  <option value="">Select a supplier</option>
+                  <option value="">Select a make</option>
                   {suppliers.map((supplier) => (
                     <option key={supplier.id} value={supplier.documentId}>
                       {supplier.name}
