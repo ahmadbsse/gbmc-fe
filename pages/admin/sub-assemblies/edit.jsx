@@ -27,7 +27,8 @@ const EditSubAssembly = () => {
         formData.weight === "" ||
         formData.description === "" ||
         formData.summary === "" ||
-        formData?.media?.length === 0
+        formData?.media?.length === 0 ||
+        formData?.media === ""
       ) {
         setIsFormValid(false);
       } else {

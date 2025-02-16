@@ -96,7 +96,7 @@ const BaseFileUploader = ({ setDataFilesIds, multiple = false, disabled = false 
             ref={fileInputRef}
             type="file"
             disabled={disabled}
-            multiple
+            multiple={multiple}
             className={`hidden`}
             onChange={(e) => handleFiles(e.target.files)}
           />

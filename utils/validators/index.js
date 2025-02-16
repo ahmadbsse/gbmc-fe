@@ -73,7 +73,8 @@ export const subAssemblyValidator = (formData) => {
   }
   return true;
 };
-export const createEngineeringComponentValidator = (formData) => {
+
+export const engineeringComponentValidator = (formData) => {
   if (formData.name == "") {
     showToast(`Please enter name`, "error");
     return false;
@@ -82,38 +83,11 @@ export const createEngineeringComponentValidator = (formData) => {
     showToast(`Please enter description`, "error");
     return false;
   }
-  if (formData.media == "") {
-    showToast(`Please upload an image`, "error");
-    return false;
-  }
-  if (formData.hero_image == "") {
-    showToast(`Please upload a hero image`, "error");
-    return false;
-  }
-  if (formData.material == "") {
-    showToast(`Please enter material`, "error");
-    return false;
-  }
-  if (formData.weight == "") {
-    showToast(`Please enter weight`, "error");
-    return false;
-  }
-  return true;
-};
-export const editEngineeringComponentValidator = (formData) => {
-  if (formData.name == "") {
-    showToast(`Please enter name`, "error");
-    return false;
-  }
-  if (formData.description == "") {
-    showToast(`Please enter description`, "error");
-    return false;
-  }
-  if (!formData.media || formData.media.length == 0) {
+  if (!formData.media || formData.media.length == 0 || formData.media == "") {
     showToast(`Please upload detail images`, "error");
     return false;
   }
-  if (formData.hero_image == "") {
+  if (formData.hero_image == "" || formData.hero_image.length == 0) {
     showToast(`Please upload a hero image`, "error");
     return false;
   }

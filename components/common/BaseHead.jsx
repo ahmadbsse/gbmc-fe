@@ -5,7 +5,7 @@ const SeoHead = ({ title }) => {
   return (
     <Head>
       <title>
-        {title} | {appData.name}
+        {title.toString()} | {appData.name.toString()}
       </title>
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       <meta

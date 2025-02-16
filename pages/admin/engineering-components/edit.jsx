@@ -3,20 +3,26 @@ import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
 import apiClient from "@/utils/apiClient";
-import { transformMedia, transformHeroVideo } from "@/utils";
+import {
+  transformMedia,
+  transformHeroVideo,
+  uploadFilesRequest,
+  deleteFilesRequest,
+} from "@/utils";
 import { Navbar, BaseLoader, BaseImage, BaseButton, BaseVideo, SeoHead } from "@/components/common";
 import BaseFileUploader from "@/components/admin/BaseFileUploader";
 import showToast from "@/utils/toast";
-import { editEngineeringComponentValidator } from "@/utils/validators";
+import { engineeringComponentValidator } from "@/utils/validators";
 import RichTextEditor from "@/components/common/RichTextEditor";
 
 const EditComponent = () => {
   const router = useRouter();
   const { id } = router.query;
   const [formData, setFormData] = useState(null);
-  const [dataFilesIds, setDataFilesIds] = useState([]);
-  const [heroFileId, setHeroFileId] = useState([]);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [idsToRemove, setIdsToRemove] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     if (formData) {
       if (
@@ -24,16 +30,17 @@ const EditComponent = () => {
         formData.material.trim() === "" ||
         formData.weight.trim() === "" ||
         formData.description == `<p><br></p>` ||
-        formData.media.length === 0 ||
-        (dataFilesIds.length === 0 && formData.media.length === 0) ||
-        (heroFileId.length === 0 && Object.keys(formData.hero_image).length === 0)
+        formData?.media?.length === 0 ||
+        formData?.hero_image?.length === 0 ||
+        formData?.media === "" ||
+        formData?.hero_image === ""
       ) {
         setIsFormValid(false);
       } else {
         setIsFormValid(true);
       }
     }
-  }, [formData, dataFilesIds, heroFileId]);
+  }, [formData]);
   const getComponentDetails = async () => {
     try {
       const url = `/engineering-components/${id}?populate=*`;
@@ -56,43 +63,58 @@ const EditComponent = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (heroFileId.length === 0) {
-      formData.hero_image = formData.hero_image.id;
-    } else {
-      formData.hero_image = heroFileId;
-    }
-    if (dataFilesIds.length === 0) {
-      if (Array.isArray(formData.media)) {
-        formData.media = formData.media.map((item) => item.id);
-      } else {
-        formData.media = formData.media.id;
-      }
-    } else {
-      formData.media = [...formData.media.map((item) => item.id), ...dataFilesIds];
-    }
-    if (editEngineeringComponentValidator(formData)) {
-      delete formData.documentId;
-      try {
-        apiClient
-          .PUT(`/engineering-components/${id}`, { data: formData })
-          .then(() => {
-            showToast("Engineering component saved Successfully", "success");
-            router.push("/admin");
-          })
-          .catch((error) => {
-            showToast(error.message, "error");
-            console.log(error);
-          });
-      } catch (error) {
-        showToast(error.message, "error");
-        console.log(error);
-      }
+
+    if (engineeringComponentValidator(formData)) {
+      setLoading(true);
+      const flattenedMediaData = formData.media
+        .flat()
+        .filter((item) => item && typeof item === "object" && !item.id);
+      const flattenedHeroData = formData.media
+        .flat()
+        .filter((item) => item && typeof item === "object" && !item.id);
+
+      const previousHero = formData.media.filter((item) => item && item.id);
+      const previousMedia = formData.media.filter((item) => item && item.id);
+      const newMediaIds = previousMedia.map((file) => file.id);
+
+      const newHeroIds = previousHero.map((file) => file.id);
+
+      await uploadFilesRequest(flattenedMediaData, true).then(async (res) => {
+        if (res) {
+          formData.media = [...res, ...newMediaIds];
+        }
+        await uploadFilesRequest(flattenedHeroData, true).then((res) => {
+          if (res) {
+            formData.hero_image = [...res, ...newHeroIds];
+            delete formData.documentId;
+            try {
+              apiClient
+                .PUT(`/engineering-components/${id}`, { data: formData })
+                .then(async () => {
+                  showToast("Engineering component saved Successfully", "success");
+                  await deleteFilesRequest(idsToRemove).then(() => {
+                    console.log("Files deleted successfully");
+                  });
+                  router.push("/admin");
+                })
+                .catch((error) => {
+                  showToast(error.message, "error");
+                  console.log(error);
+                });
+            } catch (error) {
+              showToast(error.message, "error");
+              console.log(error);
+            }
+          }
+        });
+      });
     }
   };
   const deletePreviousImage = async (id, key) => {
     setFormData(removeMediaById(id, key));
+    setIdsToRemove([...idsToRemove, id]);
   };
   function removeMediaById(idToRemove, key) {
     if (key == "media")
@@ -103,7 +125,7 @@ const EditComponent = () => {
     else
       return {
         ...formData,
-        hero_image: {},
+        hero_image: "",
       };
   }
   useEffect(() => {
@@ -113,6 +135,22 @@ const EditComponent = () => {
   }, [id]);
   const handleChangeDescription = (content) => {
     setFormData({ ...formData, description: content });
+  };
+  const setMedia = (media) => {
+    if (typeof media === "object") {
+      setFormData((prevData) => ({
+        ...prevData,
+        media: [...prevData?.media, ...media],
+      }));
+    }
+  };
+  const setHeroImage = (hero_image) => {
+    if (typeof hero_image === "object") {
+      setFormData((prevData) => ({
+        ...prevData,
+        hero_image: [...prevData?.hero_image, ...hero_image],
+      }));
+    }
   };
   return (
     <>
@@ -169,15 +207,16 @@ const EditComponent = () => {
                 <div className="flex gap-2">
                   <div className="w-full">
                     <label className="required mb-1 block text-sm font-medium">Hero Image</label>
+
                     <BaseFileUploader
-                      setDataFilesIds={setHeroFileId}
+                      setDataFilesIds={setHeroImage}
                       disabled={
-                        heroFileId != "" ||
-                        heroFileId.length > 1 ||
-                        (formData.hero_image && Object.keys(formData.hero_image).length)
+                        formData?.hero_image != "" || Object.keys(formData.hero_image).length !== 0
                       }
                     />
-                    {formData.hero_image && Object.keys(formData.hero_image).length != 0 ? (
+                    {formData.hero_image &&
+                    Object.keys(formData.hero_image).length !== 0 &&
+                    (formData.hero_image?.url || formData.hero_image?.formats) ? (
                       <div className="relative mt-2 h-32 w-48">
                         <button
                           onClick={(e) => {
@@ -188,7 +227,7 @@ const EditComponent = () => {
                         >
                           <X className="h-4 w-4 text-white" />
                         </button>
-                        {formData.hero_image.type === "video" ? (
+                        {formData.hero_image?.type === "video" && formData.hero_image?.url ? (
                           <BaseVideo
                             src={formData.hero_image.url}
                             autoPlay={true}
@@ -196,7 +235,7 @@ const EditComponent = () => {
                             loop={true}
                             classes="object-cover w-full h-full"
                           />
-                        ) : (
+                        ) : formData.hero_image && formData.hero_image.formats ? (
                           <BaseImage
                             width={formData.hero_image.formats?.thumbnail?.width || 200}
                             height={formData.hero_image.formats?.thumbnail?.height || 160}
@@ -204,17 +243,17 @@ const EditComponent = () => {
                             alt={formData.hero_image.name}
                             classes="object-cover w-full h-full"
                           />
-                        )}
+                        ) : null}
                       </div>
                     ) : null}
                   </div>
                   <div className="w-full">
                     <label className="required mb-1 block text-sm font-medium">Detail Images</label>
-                    <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
+                    <BaseFileUploader setDataFilesIds={setMedia} multiple={true} />
                     {formData.media ? (
                       <div className="flex flex-wrap items-center gap-4">
                         {formData?.media?.map((item, index) => {
-                          if (item) {
+                          if (item && item?.formats) {
                             return (
                               <div
                                 className="relative mt-2 h-32 w-48"
@@ -272,7 +311,7 @@ const EditComponent = () => {
                   </div>
                 </div>
                 <div className="mx-auto w-[300px] py-4">
-                  <BaseButton loading={false} disabled={!isFormValid} type="submit">
+                  <BaseButton loading={loading} disabled={!isFormValid} type="submit">
                     save
                   </BaseButton>
                 </div>

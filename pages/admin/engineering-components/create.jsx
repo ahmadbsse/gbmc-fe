@@ -6,7 +6,7 @@ import { BaseButton, SeoHead } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
 import showToast from "@/utils/toast";
-import { createEngineeringComponentValidator } from "@/utils/validators";
+import { engineeringComponentValidator } from "@/utils/validators";
 import RichTextEditor from "@/components/common/RichTextEditor";
 
 import { uploadFilesRequest } from "@/utils";
@@ -46,7 +46,7 @@ const CreateEngineeringComponent = () => {
   }, [formData]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (createEngineeringComponentValidator(formData)) {
+    if (engineeringComponentValidator(formData)) {
       setLoading(true);
       const media = formData.media;
       const hero_image = formData.hero_image;
@@ -92,10 +92,20 @@ const CreateEngineeringComponent = () => {
     setFormData({ ...formData, description: content });
   };
   const setMedia = (media) => {
-    setFormData({ ...formData, media });
+    if (typeof media === "object") {
+      setFormData((prevData) => ({
+        ...prevData,
+        hero_image: [...prevData?.media, ...media],
+      }));
+    }
   };
   const setHeroImage = (hero_image) => {
-    setFormData({ ...formData, hero_image });
+    if (typeof hero_image === "object") {
+      setFormData((prevData) => ({
+        ...prevData,
+        hero_image: [...prevData?.hero_image, ...hero_image],
+      }));
+    }
   };
   return (
     <>
@@ -148,7 +158,8 @@ const CreateEngineeringComponent = () => {
               handleChange={handleChangeDescription}
               defaultValue={formData.description}
             />
-
+            <pre>{JSON.stringify(formData, null, 2)}</pre>
+            {/* <pre>{JSON.stringify(formData.hero_image, null, 2)}</pre> */}
             <div className="flex gap-2">
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Hero Image</label>
