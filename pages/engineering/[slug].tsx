@@ -65,7 +65,7 @@ const Article = () => {
             </div>
           </div>
           <div className="mt-2 px-2 lg:px-16">
-            <div className="">
+            <div>
               {data?.hero_image ? (
                 data?.hero_image?.type && data?.hero_image?.type == "video" ? (
                   <BaseVideo src={data?.hero_image.url} autoPlay={true} muted={true} loop={true} />
