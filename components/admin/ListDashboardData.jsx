@@ -263,7 +263,10 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                             setShowFeatureModal(true);
                           }}
                         >
-                          <Star className="h-4 w-4" />
+                          <Star
+                            className="h-4 w-4"
+                            fill={item.featured ? "currentColor" : "#fff"}
+                          />
                         </i>
                       ) : null}
                       <i
