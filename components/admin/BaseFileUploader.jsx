@@ -66,7 +66,6 @@ const BaseFileUploader = ({ setDataFilesIds, multiple = false, disabled = false 
   // Remove file handler
   const handleRemoveFile = (file) => {
     const updatedFiles = files.filter((f) => f?.preview !== file?.preview);
-    console.log(updatedFiles);
     setFiles(updatedFiles);
     if (multiple) {
       setDataFilesIds(updatedFiles);

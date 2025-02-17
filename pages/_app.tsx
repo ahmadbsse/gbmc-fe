@@ -61,7 +61,7 @@ function MyApp({ Component, pageProps, authToken }: AppProps & { authToken?: str
   };
   return (
     <div className="">
-      <ToastContainer closeButton={CustomCloseButton} />
+      <ToastContainer closeButton={CustomCloseButton} className="text-sm" />
       <Component {...pageProps} />
     </div>
   );
