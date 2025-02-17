@@ -152,6 +152,12 @@ const EditComponent = () => {
       }));
     }
   };
+  const removeDetailsMedia = (file) => {
+    setFormData({
+      ...formData,
+      media: formData?.media?.filter((mediaItem) => mediaItem?.preview !== file?.preview),
+    });
+  };
   return (
     <>
       <SeoHead title="Admin" />
@@ -249,7 +255,11 @@ const EditComponent = () => {
                   </div>
                   <div className="w-full">
                     <label className="required mb-1 block text-sm font-medium">Detail Images</label>
-                    <BaseFileUploader setDataFilesIds={setMedia} multiple={true} />
+                    <BaseFileUploader
+                      setDataFilesIds={setMedia}
+                      multiple={true}
+                      removeMedia={removeDetailsMedia}
+                    />
                     {formData.media ? (
                       <div className="flex flex-wrap items-center gap-4">
                         {formData?.media?.map((item, index) => {

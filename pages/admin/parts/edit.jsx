@@ -139,6 +139,12 @@ const EditPart = () => {
       }));
     }
   };
+  const removeMedia = (file) => {
+    setFormData({
+      ...formData,
+      media: formData?.media?.filter((mediaItem) => mediaItem?.preview !== file?.preview),
+    });
+  };
   return (
     <>
       <SeoHead title="Admin" />
@@ -240,7 +246,11 @@ const EditPart = () => {
                 <RichTextEditor handleChange={handleChange} defaultValue={formData.description} />
                 <div>
                   <label className="required mb-1 block text-sm font-medium"> Media</label>
-                  <BaseFileUploader setDataFilesIds={setMedia} multiple={true} />
+                  <BaseFileUploader
+                    setDataFilesIds={setMedia}
+                    multiple={true}
+                    removeMedia={removeMedia}
+                  />
                 </div>
                 <div className="flex items-center gap-4">
                   {formData?.media?.map((item) => {

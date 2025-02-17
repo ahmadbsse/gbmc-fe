@@ -3,7 +3,12 @@ import { Upload, X, CheckCircle, AlertCircle } from "lucide-react";
 import apiClient from "@/utils/apiClient";
 import ImagePreview from "./ImagePreview";
 
-const BaseFileUploader = ({ setDataFilesIds, multiple = false, disabled = false }) => {
+const BaseFileUploader = ({
+  setDataFilesIds,
+  multiple = false,
+  disabled = false,
+  removeMedia = () => {},
+}) => {
   const [files, setFiles] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
@@ -68,7 +73,8 @@ const BaseFileUploader = ({ setDataFilesIds, multiple = false, disabled = false 
     const updatedFiles = files.filter((f) => f?.preview !== file?.preview);
     setFiles(updatedFiles);
     if (multiple) {
-      setDataFilesIds(updatedFiles);
+      removeMedia(file);
+      // setDataFilesIds(updatedFiles);
     } else {
       setDataFilesIds("");
     }
