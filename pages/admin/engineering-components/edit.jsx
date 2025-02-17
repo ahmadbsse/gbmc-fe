@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
+import WarningModal from "@/components/admin/WarningModal";
 import apiClient from "@/utils/apiClient";
 import {
   transformMedia,
@@ -19,6 +20,7 @@ const EditComponent = () => {
   const router = useRouter();
   const { id } = router.query;
   const [formData, setFormData] = useState(null);
+  const [showWarning, setShowWarning] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
   const [idsToRemove, setIdsToRemove] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -160,6 +162,14 @@ const EditComponent = () => {
   };
   return (
     <>
+      {showWarning ? (
+        <WarningModal
+          onClose={(e) => setShowWarning(false)}
+          handleToggle={(e) => router.push("/admin")}
+          currentTab="engineering-components"
+          type="modify"
+        />
+      ) : null}
       <SeoHead title="Admin" />
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin />
@@ -320,7 +330,17 @@ const EditComponent = () => {
                     </label>
                   </div>
                 </div>
-                <div className="mx-auto w-[300px] py-4">
+                <div className="mx-auto flex w-[300px] gap-4 py-4">
+                  <BaseButton
+                    btnStyle
+                    loading={false}
+                    type="button"
+                    handleClick={() => {
+                      setShowWarning(true);
+                    }}
+                  >
+                    Cancel
+                  </BaseButton>
                   <BaseButton loading={loading} disabled={!isFormValid} type="submit">
                     save
                   </BaseButton>

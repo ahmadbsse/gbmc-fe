@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Navbar } from "@/components/common";
 
+import WarningModal from "@/components/admin/WarningModal";
 import { BaseButton, SeoHead } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
@@ -27,6 +28,7 @@ const CreateEngineeringComponent = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
 
   useEffect(() => {
     if (
@@ -109,6 +111,14 @@ const CreateEngineeringComponent = () => {
   };
   return (
     <>
+      {showWarning ? (
+        <WarningModal
+          onClose={(e) => setShowWarning(false)}
+          handleToggle={(e) => router.push("/admin")}
+          currentTab="engineering-components"
+          type="create"
+        />
+      ) : null}
       <SeoHead title="Admin" />
 
       <div className="min-h-screen bg-gray-50">
@@ -199,7 +209,17 @@ const CreateEngineeringComponent = () => {
               </div>
             </div>
 
-            <div className="mx-auto w-[300px] py-4">
+            <div className="mx-auto flex w-[300px] gap-4 py-4">
+              <BaseButton
+                btnStyle
+                loading={false}
+                type="button"
+                handleClick={() => {
+                  setShowWarning(true);
+                }}
+              >
+                Cancel
+              </BaseButton>
               <BaseButton loading={loading} type="submit" disabled={!isFormValid}>
                 save
               </BaseButton>

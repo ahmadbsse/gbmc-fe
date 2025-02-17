@@ -9,6 +9,7 @@ import apiClient from "@/utils/apiClient";
 import showToast from "@/utils/toast";
 import { subAssemblyValidator } from "@/utils/validators";
 import RichTextEditor from "@/components/common/RichTextEditor";
+import WarningModal from "@/components/admin/WarningModal";
 
 const CreateSubAssembly = () => {
   const router = useRouter();
@@ -25,6 +26,7 @@ const CreateSubAssembly = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
 
   useEffect(() => {
     if (formData) {
@@ -81,8 +83,15 @@ const CreateSubAssembly = () => {
   };
   return (
     <>
+      {showWarning ? (
+        <WarningModal
+          onClose={(e) => setShowWarning(false)}
+          handleToggle={(e) => router.push("/admin")}
+          currentTab="sub-assemblies"
+          type="create"
+        />
+      ) : null}
       <SeoHead title="Admin" />
-
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">
@@ -172,7 +181,17 @@ const CreateSubAssembly = () => {
                 </label>
               </div>
             </div>
-            <div className="mx-auto w-[300px] py-4">
+            <div className="mx-auto flex w-[300px] gap-4 py-4">
+              <BaseButton
+                btnStyle
+                loading={false}
+                type="button"
+                handleClick={() => {
+                  setShowWarning(true);
+                }}
+              >
+                Cancel
+              </BaseButton>
               <BaseButton loading={loading} type="submit" disabled={!isFormValid}>
                 save
               </BaseButton>

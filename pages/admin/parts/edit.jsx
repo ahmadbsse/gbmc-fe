@@ -8,13 +8,14 @@ import BaseFileUploader from "@/components/admin/BaseFileUploader";
 import showToast from "@/utils/toast";
 import RichTextEditor from "@/components/common/RichTextEditor";
 import { partValidator } from "@/utils/validators";
+import WarningModal from "@/components/admin/WarningModal";
 
 const EditPart = () => {
   const router = useRouter();
   const { id } = router.query;
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(null);
-  const [dataFilesIds, setDataFilesIds] = useState([]);
+  const [showWarning, setShowWarning] = useState(false);
   const [suppliers, setSuppliers] = useState([]);
   const [idsToRemove, setIdsToRemove] = useState([]);
   const [isFormValid, setIsFormValid] = useState(false);
@@ -147,6 +148,14 @@ const EditPart = () => {
   };
   return (
     <>
+      {showWarning ? (
+        <WarningModal
+          onClose={(e) => setShowWarning(false)}
+          handleToggle={(e) => router.push("/admin")}
+          currentTab="parts"
+          type="modify"
+        />
+      ) : null}
       <SeoHead title="Admin" />
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin />
@@ -305,7 +314,17 @@ const EditPart = () => {
                     </label>
                   </div>
                 </div>
-                <div className="mx-auto w-[300px] py-4">
+                <div className="mx-auto flex w-[300px] gap-4 py-4">
+                  <BaseButton
+                    btnStyle
+                    loading={false}
+                    type="button"
+                    handleClick={() => {
+                      setShowWarning(true);
+                    }}
+                  >
+                    Cancel
+                  </BaseButton>
                   <BaseButton loading={loading} type="submit" disabled={!isFormValid}>
                     Save
                   </BaseButton>
