@@ -131,11 +131,28 @@ const Navbar = ({ isAdmin = false, setTab }) => {
                         {/* Menu items */}
 
                         <nav className="flex flex-col gap-7">
-                          {tabsKey.map((tab) => (
-                            <div key={tab.key} onClick={() => setTab(tab)}>
-                              {tab.name}
-                            </div>
-                          ))}
+                          {isAdmin
+                            ? tabsKey.map((tab) => (
+                                <div key={tab.key} onClick={() => setTab(tab)}>
+                                  {tab.name}
+                                </div>
+                              ))
+                            : userRoutes.map((item, index) => (
+                                <Link
+                                  key={index}
+                                  href={item.href}
+                                  className={`hover:text-solidGray ${
+                                    item.routeName.toLowerCase() === router.route.toLowerCase() ||
+                                    router.route
+                                      .toLowerCase()
+                                      .includes(item.routeName.toLowerCase())
+                                      ? "border-b border-primary-color font-medium text-black"
+                                      : ""
+                                  }`}
+                                >
+                                  {item.name}
+                                </Link>
+                              ))}
                         </nav>
                       </div>
                     </div>
