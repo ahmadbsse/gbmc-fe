@@ -16,7 +16,7 @@ const BaseButton: React.FC<ButtonProps> = ({
     type={type}
     id={id}
     disabled={disabled}
-    className={`relative z-10 h-[42px] w-full overflow-hidden px-10 text-sm font-bold uppercase text-[#363633] transition-all md:min-w-[7rem] lg:min-w-[8rem] ${
+    className={`relative z-10 h-[42px] w-full overflow-hidden px-5 text-sm font-bold uppercase text-[#363633] transition-all md:min-w-[7rem] lg:min-w-[8rem] ${
       btnStyle
         ? "btn-sec-anim border border-gray-500 hover:text-[#fff]"
         : "btn-anim border-primary-color bg-primary-color hover:border-[#FFC952]"

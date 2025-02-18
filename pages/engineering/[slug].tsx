@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import { useRouter } from "next/router";
-import { BaseImage, BaseLoader, BaseVideo, Navbar } from "@/components/common";
+import { BaseImage, BaseLoader, BaseVideo, Navbar, SeoHead } from "@/components/common";
 import apiClient from "@/utils/apiClient";
 import { transformHeroVideo, transformMedia } from "@/utils";
 import type { EngineeringComponent } from "@/types";
 import Link from "next/link";
-import { appData } from "@/constants";
 
 const Article = () => {
   const router = useRouter();
@@ -30,7 +28,6 @@ const Article = () => {
         } else {
           response.hero_image = transformMedia(response.hero_image);
         }
-        response.summary = response.summary.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
         response.description = response.description.replace(
           /\*\*(.*?)\*\*/g,
           "<strong>$1</strong>"
@@ -51,29 +48,8 @@ const Article = () => {
   ];
   return (
     <>
-      <Head>
-        <title>
-          Article - {data?.name} | {appData.name}
-        </title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta
-          property="og:title"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta
-          name="og:description"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          name="description"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta name="keywords" content="tractor,spare parts,machinary" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Navbar />
-
+      <SeoHead title={`Article - ${data?.name}`} />
+      <Navbar setTab={() => {}} />
       {data ? (
         <div className="mx-auto max-w-7xl">
           <div className="my-4 px-2">
@@ -89,7 +65,7 @@ const Article = () => {
             </div>
           </div>
           <div className="mt-2 px-2 lg:px-16">
-            <div className="">
+            <div>
               {data?.hero_image ? (
                 data?.hero_image?.type && data?.hero_image?.type == "video" ? (
                   <BaseVideo src={data?.hero_image.url} autoPlay={true} muted={true} loop={true} />
@@ -113,25 +89,33 @@ const Article = () => {
                 {data?.name}
               </p>
               <p
-                className="text-sm lg:text-base"
-                dangerouslySetInnerHTML={{ __html: data?.summary }}
+                className="mt-5 text-sm lg:text-base"
+                dangerouslySetInnerHTML={{ __html: data?.description }}
               />
 
               <section id="projects" className="pt-5 lg:py-8">
                 <article className="reverse grid grid-cols-1 md:grid-cols-10">
                   <div className="card-details rounded-lg bg-[#707070] p-4 text-sm text-white lg:text-base">
                     <div className="flex flex-col gap-2 py-7 lg:w-[400px] lg:gap-5 lg:px-11">
-                      <h2 className="text-xl font-bold lg:text-2xl">Description</h2>
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: data?.description,
-                        }}
-                      ></div>
+                      <h2 className="text-xl font-bold lg:text-2xl">Key Features</h2>
+
+                      <p>
+                        <strong>Weight:</strong>
+                        <br />
+                        {data?.weight ? <span>{data?.weight}</span> : null}
+                      </p>
+
+                      <p>
+                        <strong>Material:</strong>
+                        <br />
+
+                        {data.material ? <span>{data.material}</span> : null}
+                      </p>
                     </div>
                   </div>
                   {data?.media ? (
                     <BaseImage
-                      classes="my-2 h-[500px] rounded-lg lg:z-10 lg:col-span-4 lg:my-20 lg:rounded-lg"
+                      classes="my-2 h-[400px] rounded-lg lg:z-10 lg:col-span-4 lg:my-16 lg:rounded-lg"
                       height={1100}
                       width={1100}
                       src={data?.media[selectedImage]?.formats?.actual?.url}
@@ -149,6 +133,7 @@ const Article = () => {
                 {/* Thumbnail Images */}
                 <div className="flex gap-4">
                   {data?.media ? (
+                    data?.media.length > 1 &&
                     data?.media?.map((img, index) => (
                       <button
                         key={index}

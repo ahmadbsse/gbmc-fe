@@ -5,7 +5,7 @@ import { BaseButton, Navbar } from "@/components/common";
 export default function FourOhFour() {
   return (
     <>
-      <Navbar />
+      <Navbar setTab={() => {}} />
       <div className="3xl:my-36 relative mx-auto my-24">
         <div className="mx-auto max-w-[90%]">
           <div className="z-10 flex flex-col items-center justify-between gap-10">

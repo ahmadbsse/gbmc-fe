@@ -1,34 +1,15 @@
 import React from "react";
 import Image from "next/image";
-import Head from "next/head";
 import { appData } from "@/constants";
-import { Navbar } from "../components/common";
+import { Navbar, SeoHead } from "@/components/common";
 
 const AboutPage = () => {
   return (
     <>
-      <Head>
-        <title>About | {appData.name}</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta
-          property="og:title"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta
-          name="og:description"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          name="description"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta name="keywords" content="tractor,spare parts,machinary" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <SeoHead title="About" />
       <div className="min-h-screen bg-slate-50">
         {/* Navigation */}
-        <Navbar />
+        <Navbar setTab={() => {}} />
 
         {/* Hero Section */}
         <div className="relative h-96">

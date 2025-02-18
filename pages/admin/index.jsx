@@ -1,21 +1,14 @@
 import React, { useEffect, useState } from "react";
-import Head from "next/head";
-
 import { AdminTabs } from "@/components/admin";
-import { Navbar, BaseSearchbar } from "@/components/common";
+import { Navbar, BaseSearchbar, SeoHead } from "@/components/common";
 import ListDashboardData from "@/components/admin/ListDashboardData";
 import { BaseLoader } from "@/components/common";
-
-import { appData } from "@/constants";
 import apiClient from "@/utils/apiClient";
 import { transformMedia } from "@/utils";
-
-import { Menu, X } from "lucide-react";
 
 const PAGE_SIZE = 6;
 const AdminDashboard = () => {
   const [page, setPage] = useState(1);
-  const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [parts, setParts] = useState([]);
@@ -24,15 +17,13 @@ const AdminDashboard = () => {
   const [subAssemblies, setSubAssemblies] = useState([]);
   const [total, setTotal] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
-  const [totalParts, setTotalParts] = useState(0);
-  const [totalEngineering, setTotalEngineering] = useState(0);
-  const [totalSuppliers, setTotalSuppliers] = useState(0);
-  const [totalSubAssemblies, setTotalSubAssemblies] = useState(0);
+  const [pagination, setPagination] = useState(null);
+
   const tabsKey = [
-    { name: "Make", key: "suppliers" },
-    { name: "Sub Assemblies", key: "sub-assemblies" },
-    { name: "Parts", key: "parts" },
-    { name: "Engineering Component", key: "engineering" },
+    { name: "Makes", key: "suppliers", tag: "make" },
+    { name: "Sub Assemblies", key: "sub-assemblies", tag: "sub assembly" },
+    { name: "Parts", key: "parts", tag: "part" },
+    { name: "Engineering Components", key: "engineering", tag: "engineering component" },
   ];
   const [activeTab, setActiveTab] = useState(tabsKey[0]);
 
@@ -44,9 +35,6 @@ const AdminDashboard = () => {
       setActiveTab(tabsKey[0]);
     }
   }, []);
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
 
   const getParts = async (pageNum, isLoadMore = false) => {
     try {
@@ -65,10 +53,11 @@ const AdminDashboard = () => {
         if (res && res.data.length > 0) {
           const transformedData = transformMedia(res.data);
           setParts((prev) => (isLoadMore ? [...prev, ...transformedData] : transformedData));
-          setTotalParts(res.meta.pagination.total);
           setTotal(res.meta.pagination.total);
+          setPagination(res.meta.pagination);
         } else {
           setParts([]);
+          setTotal(0);
         }
       });
     } catch (error) {
@@ -101,10 +90,11 @@ const AdminDashboard = () => {
         if (res && res.data.length > 0) {
           const transformedData = transformMedia(res.data);
           setEngineering((prev) => (isLoadMore ? [...prev, ...transformedData] : transformedData));
-          setTotalEngineering(res.meta.pagination.total);
           setTotal(res.meta.pagination.total);
+          setPagination(res.meta.pagination);
         } else {
           setEngineering([]);
+          setTotal(0);
         }
       });
     } catch (error) {
@@ -138,10 +128,11 @@ const AdminDashboard = () => {
           setSubAssemblies((prev) =>
             isLoadMore ? [...prev, ...transformedData] : transformedData
           );
-          setTotalSubAssemblies(res.meta.pagination.total);
           setTotal(res.meta.pagination.total);
+          setPagination(res.meta.pagination);
         } else {
           setSuppliers([]);
+          setTotal(0);
         }
       });
     } catch (error) {
@@ -173,10 +164,11 @@ const AdminDashboard = () => {
         if (res && res.data.length > 0) {
           const transformedData = transformMedia(res.data);
           setSuppliers((prev) => (isLoadMore ? [...prev, ...transformedData] : transformedData));
-          setTotalSuppliers(res.meta.pagination.total);
           setTotal(res.meta.pagination.total);
+          setPagination(res.meta.pagination);
         } else {
           setSuppliers([]);
+          setTotal(0);
         }
       });
     } catch (error) {
@@ -237,39 +229,14 @@ const AdminDashboard = () => {
   };
   return (
     <>
-      <Head>
-        <title>Admin | {appData.name}</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta
-          property="og:title"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta
-          name="og:description"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          name="description"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta name="keywords" content="tractor,spare parts,machinary" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
+      <SeoHead title="Admin" />
       <div className="min-h-screen bg-gray-50">
-        <Navbar isAdmin />
+        <Navbar isAdmin setTab={setTab} />
         <main className="container mx-auto px-4 py-8">
           <div className="mb-8 flex items-center justify-between">
-            <h1 className="text-2xl font-bold">Dashboard</h1>
-            <div>
-              {tabData[activeTab.key] > 0 ? (
-                <BaseSearchbar setSearchQuery={setSearchQuery} />
-              ) : null}
-              <button onClick={toggleMenu} className="z-50 ml-auto w-fit p-2 md:hidden">
-                {isOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
-            </div>
+            <h1 className="text-2xl font-bold">Admin Dashboard</h1>
+
+            {tabData[activeTab.key] > 0 ? <BaseSearchbar setSearchQuery={setSearchQuery} /> : null}
           </div>
           {/* Desktop */}
           <div className="mb-6 hidden gap-4 md:flex">
@@ -284,33 +251,6 @@ const AdminDashboard = () => {
             ))}
           </div>
 
-          {/* Mobile */}
-          <>
-            {/* Sliding menu */}
-            <div
-              className={`ease-inmb-8-out fixed bottom-0 left-0 z-30 h-fit w-[100vw] transform bg-white shadow-lg transition-transform duration-300 ${
-                isOpen ? "translate-y-0" : "translate-y-full"
-              }`}
-            >
-              <div className="flex flex-col p-6">
-                {/* Menu items */}
-                <nav className="flex flex-col gap-5">
-                  {tabsKey.map((tab) => (
-                    <AdminTabs
-                      key={tab.key}
-                      active={activeTab.name === tab.name}
-                      onClick={() => {
-                        if (isOpen) setIsOpen(!isOpen);
-                        setTab(tab);
-                      }}
-                    >
-                      {tab.name}
-                    </AdminTabs>
-                  ))}
-                </nav>
-              </div>
-            </div>
-          </>
           {isLoading ? (
             <div className="mx-auto mt-10 w-fit">
               <BaseLoader width={40} height={40} />
@@ -327,15 +267,7 @@ const AdminDashboard = () => {
                         ? subAssemblies
                         : parts
                 }
-                total={
-                  activeTab.key == "engineering"
-                    ? totalEngineering
-                    : activeTab.key == "suppliers"
-                      ? totalSuppliers
-                      : activeTab.key == "sub-assemblies"
-                        ? totalSubAssemblies
-                        : totalParts
-                }
+                total={total}
                 activeTab={activeTab}
                 getData={
                   activeTab.key === "engineering"
@@ -347,10 +279,10 @@ const AdminDashboard = () => {
                         : () => getParts(1, false)
                 }
               />
-              {tabData[activeTab.key] < total ? (
-                <div className="flex justify-center md:justify-end">
+              {pagination?.page < pagination?.pageCount ? (
+                <div className="mt-3 flex justify-center md:justify-end">
                   <p
-                    className="w-fit cursor-pointer text-sm underline hover:text-black"
+                    className="w-fit cursor-pointer rounded bg-[#000036] px-2.5 py-2 text-sm text-white hover:bg-black hover:text-primary-color"
                     onClick={loadMore}
                   >
                     {isLoadingMore ? "Loading..." : "Load More"}

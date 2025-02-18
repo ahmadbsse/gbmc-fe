@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import apiClient from "@/utils/apiClient";
 
-import { Navbar, BaseLoader, BaseImage, BaseVideo } from "@/components/common";
+import { Navbar, BaseLoader, BaseImage, BaseVideo, SeoHead } from "@/components/common";
 import { transformHeroVideo } from "@/utils";
 
 const ViewComponentDetails = () => {
@@ -26,7 +26,6 @@ const ViewComponentDetails = () => {
         ) {
           response.hero_image = transformHeroVideo(response.hero_image);
         }
-        response.summary = response.summary.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
         response.description = response.description.replace(
           /\*\*(.*?)\*\*/g,
           "<strong>$1</strong>"
@@ -43,90 +42,103 @@ const ViewComponentDetails = () => {
   }, [id]);
   return (
     <>
+      <SeoHead title="Admin" />
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">
           {formData ? (
             <div className="mx-auto max-w-[810px] space-y-3">
               <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">
-                Engineering Component - Details
+                View - Engineering Component - {formData.name || ""}
               </h1>
               <div className="w-full">
-                <label className="mb-1 block text-sm font-medium">Name</label>
-                <div className="w-full rounded-lg border border-gray-300 px-4 py-2">
+                <label className="required mb-1 block text-sm font-medium">Name</label>
+                <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
                   {formData.name}
                 </div>
               </div>
-              <div className="w-full">
-                <label className="mb-1 block text-sm font-medium">Summary</label>
-                <div
-                  className="product-description rounded-lg border border-gray-300 px-4 py-2 text-justify"
-                  dangerouslySetInnerHTML={{ __html: formData.summary }}
-                />
+              <div className="flex flex-col md:flex-row md:gap-5">
+                <div className="w-full">
+                  <label className="required mb-1 block text-sm font-medium">Material</label>
+                  <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
+                    {formData.material}
+                  </div>
+                </div>
+                <div className="w-full">
+                  <label className="required mb-1 block text-sm font-medium"> Weight</label>
+                  <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
+                    {formData.weight}
+                  </div>
+                </div>
               </div>
               <div className="w-full">
-                <label className="mb-1 block text-sm font-medium">Description</label>
+                <label className="required mb-1 block text-sm font-medium">Description</label>
                 <div
-                  className="product-description rounded-lg border border-gray-300 px-4 py-2 text-justify"
+                  className="product-description rounded-lg border border-gray-300 px-2.5 py-2 text-justify"
                   dangerouslySetInnerHTML={{ __html: formData.description }}
                 />
               </div>
-
-              <div>
-                <label className="mb-1 block text-sm font-medium">Hero Image</label>
-                <div className="h-28 w-44">
-                  {formData.hero_image ? (
-                    formData.hero_image.type === "video" ? (
-                      <BaseVideo
-                        src={formData.hero_image.url}
-                        autoPlay={true}
-                        muted={true}
-                        loop={true}
-                        classes="object-cover w-full h-full"
-                      />
-                    ) : (
-                      <BaseImage
-                        width={formData.hero_image.formats.thumbnail.width}
-                        height={formData.hero_image.formats.thumbnail.height}
-                        src={formData.hero_image.formats.thumbnail.url}
-                        alt={formData.hero_image.name}
-                        classes="object-cover w-full h-full"
-                      />
-                    )
-                  ) : null}
+              <div className="flex flex-col md:flex-row md:gap-5">
+                <div className="basis-1/2">
+                  <label className="required mb-1 block text-sm font-medium">Hero Image</label>
+                  <div className="h-28 w-44">
+                    {formData.hero_image ? (
+                      formData.hero_image.type === "video" ? (
+                        <BaseVideo
+                          src={formData.hero_image.url}
+                          autoPlay={true}
+                          muted={true}
+                          loop={true}
+                          classes="object-cover w-full h-full"
+                        />
+                      ) : (
+                        <BaseImage
+                          width={formData.hero_image.formats.thumbnail.width}
+                          height={formData.hero_image.formats.thumbnail.height}
+                          src={formData.hero_image.formats.thumbnail.url}
+                          alt={formData.hero_image.name}
+                          classes="object-cover w-full h-full"
+                        />
+                      )
+                    ) : null}
+                  </div>
                 </div>
-              </div>
-              <div>
-                <label className="mb-1 block text-sm font-medium">Media</label>
-                <div className="flex flex-wrap items-center gap-4">
-                  {formData.media ? (
-                    Array.isArray(formData.media) ? (
-                      formData.media.map((item, index) => (
-                        <div className="h-28 w-44" key={index}>
+                <div className="basis-1/2">
+                  <label className="required mb-1 block text-sm font-medium">Detail Images</label>
+                  <div className="flex flex-wrap items-center gap-4">
+                    {formData.media ? (
+                      Array.isArray(formData.media) ? (
+                        formData.media.map((item, index) => {
+                          if (item) {
+                            return (
+                              <div className="h-28 w-44" key={index}>
+                                <BaseImage
+                                  key={index}
+                                  width={item.formats.thumbnail.width}
+                                  height={item.formats.thumbnail.height}
+                                  src={item.formats.thumbnail.url}
+                                  alt={item.name}
+                                  classes="object-cover w-full h-full"
+                                />
+                              </div>
+                            );
+                          }
+                        })
+                      ) : (
+                        <div className="h-28 w-44">
                           <BaseImage
-                            key={index}
-                            width={item.formats.thumbnail.width}
-                            height={item.formats.thumbnail.height}
-                            src={item.formats.thumbnail.url}
-                            alt={item.name}
+                            width={formData.media.formats.thumbnail.width}
+                            height={formData.media.formats.thumbnail.height}
+                            src={formData.media.formats.thumbnail.url}
+                            alt={formData.name}
                             classes="object-cover w-full h-full"
                           />
                         </div>
-                      ))
+                      )
                     ) : (
-                      <div className="h-28 w-44">
-                        <BaseImage
-                          width={formData.media.formats.thumbnail.width}
-                          height={formData.media.formats.thumbnail.height}
-                          src={formData.media.formats.thumbnail.url}
-                          alt={formData.name}
-                          classes="object-cover w-full h-full"
-                        />
-                      </div>
-                    )
-                  ) : (
-                    <div className="h-28 w-44"></div>
-                  )}
+                      <div className="h-28 w-44"></div>
+                    )}
+                  </div>
                 </div>
               </div>
               <div className="flex flex-col gap-2 pt-3">

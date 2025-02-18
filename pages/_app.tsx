@@ -60,10 +60,10 @@ function MyApp({ Component, pageProps, authToken }: AppProps & { authToken?: str
     );
   };
   return (
-    <>
-      <ToastContainer closeButton={CustomCloseButton} />
+    <div>
+      <ToastContainer closeButton={CustomCloseButton} className="text-xs font-medium" />
       <Component {...pageProps} />
-    </>
+    </div>
   );
 }
 export default MyApp;

@@ -1,37 +1,29 @@
 import React, { useState, useRef } from "react";
 import { Upload, X, CheckCircle, AlertCircle } from "lucide-react";
 import apiClient from "@/utils/apiClient";
+import ImagePreview from "./ImagePreview";
 
-const BaseFileUploader = ({ setDataFilesIds, multiple = false, disabled = false }) => {
+const BaseFileUploader = ({
+  setDataFilesIds,
+  multiple = false,
+  disabled = false,
+  removeMedia = () => {},
+}) => {
   const [files, setFiles] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
-
+  const [previewFile, setPreviewFile] = useState(null);
   // File upload handler for multiple files
   const handleFileUpload = async (filesToUpload) => {
     try {
-      const formData = new FormData();
-      filesToUpload.forEach((file) => {
-        formData.append("files", file.file); // Use the correct file object
-      });
-
-      const url = "/upload";
-      const response = await apiClient.UPLOAD(url, formData);
-      if (response) {
-        if (multiple) {
-          setDataFilesIds(response.map((file) => file.id));
-        } else {
-          setDataFilesIds(response[0].id);
-        }
-        // Update all files' status on success
-        setFiles((prevFiles) =>
-          prevFiles.map((f) => ({
-            ...f,
-            status: "success",
-            progress: 100,
-          }))
-        );
-      }
+      setDataFilesIds(filesToUpload);
+      setFiles((prevFiles) =>
+        prevFiles.map((f) => ({
+          ...f,
+          status: "success",
+          progress: 100,
+        }))
+      );
     } catch (error) {
       console.error(error);
       // Mark all files as failed
@@ -77,34 +69,46 @@ const BaseFileUploader = ({ setDataFilesIds, multiple = false, disabled = false 
   };
 
   // Remove file handler
-  const handleRemoveFile = (fileName) => {
-    setFiles((prevFiles) => prevFiles.filter((f) => f.name !== fileName));
+  const handleRemoveFile = (file) => {
+    const updatedFiles = files.filter((f) => f?.preview !== file?.preview);
+    setFiles(updatedFiles);
+    if (multiple) {
+      removeMedia(file);
+      // setDataFilesIds(updatedFiles);
+    } else {
+      setDataFilesIds("");
+    }
   };
 
   return (
     <div className="w-full">
+      {previewFile ? (
+        <ImagePreview file={previewFile} onClose={() => setPreviewFile(null)} />
+      ) : null}
       {/* Upload Area */}
-      <div
-        className={`cursor-pointer rounded-lg border-2 border-dashed bg-white p-8 text-center transition-colors ${isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300 hover:border-gray-400"} ${disabled ? "pointer-events-none opacity-50" : ""}`}
-        onDragEnter={handleDragEnter}
-        onDragOver={handleDragEnter}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-        onClick={() => fileInputRef.current?.click()}
-      >
-        <Upload className="mx-auto h-12 w-12 text-gray-400" />
-        <p className="mt-2 text-sm text-gray-600">
-          Drag and drop files here, or click to select files
-        </p>
-        <input
-          ref={fileInputRef}
-          type="file"
-          disabled={disabled}
-          multiple
-          className={`hidden`}
-          onChange={(e) => handleFiles(e.target.files)}
-        />
-      </div>
+      {disabled ? null : (
+        <div
+          className={`cursor-pointer rounded-lg border-2 border-dashed bg-white p-8 text-center transition-colors ${isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300 hover:border-gray-400"} ${disabled ? "pointer-events-none opacity-50" : ""}`}
+          onDragEnter={handleDragEnter}
+          onDragOver={handleDragEnter}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+          onClick={() => fileInputRef.current?.click()}
+        >
+          <Upload className="mx-auto h-12 w-12 text-gray-400" />
+          <p className="mt-2 text-sm text-gray-600">
+            Drag and drop files here, or click to select files
+          </p>
+          <input
+            ref={fileInputRef}
+            type="file"
+            disabled={disabled}
+            multiple={multiple}
+            className={`hidden`}
+            onChange={(e) => handleFiles(e.target.files)}
+          />
+        </div>
+      )}
 
       {/* File List */}
       {files.length ? (
@@ -117,7 +121,14 @@ const BaseFileUploader = ({ setDataFilesIds, multiple = false, disabled = false 
               {/* File Preview */}
               <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg bg-gray-100">
                 {file.preview ? (
-                  <img src={file.preview} alt={file.name} className="h-full w-full object-cover" />
+                  <img
+                    src={file.preview}
+                    alt={file.name}
+                    className="h-full w-full cursor-pointer object-cover"
+                    onClick={() => {
+                      setPreviewFile(file);
+                    }}
+                  />
                 ) : (
                   <div className="flex h-full w-full items-center justify-center bg-gray-200">
                     <span className="text-xs text-gray-500">No preview</span>
@@ -151,7 +162,10 @@ const BaseFileUploader = ({ setDataFilesIds, multiple = false, disabled = false 
 
               {/* Remove Button */}
               <button
-                onClick={() => handleRemoveFile(file.name)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleRemoveFile(file);
+                }}
                 className="flex-shrink-0 text-gray-400 hover:text-gray-500"
               >
                 <X className="h-5 w-5" />

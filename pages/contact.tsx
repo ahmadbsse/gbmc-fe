@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Mail, Phone, MapPin, MailPlus } from "lucide-react";
-import Head from "next/head";
+
 import emailjs from "@emailjs/browser";
-import { Navbar, BaseButton } from "@/components/common";
+import { Navbar, BaseButton, SeoHead } from "@/components/common";
 import { appData } from "@/constants";
 import { GoogleMap } from "@/components/user";
 import showToast from "@/utils/toast";
@@ -10,6 +10,7 @@ import showToast from "@/utils/toast";
 const ContactPage = () => {
   const [loading, setLoading] = useState(false);
   const [formIsValid, setFormIsValid] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(false);
   const [formValues, setFormValues] = useState({
     name: "",
     email: "",
@@ -46,8 +47,20 @@ const ContactPage = () => {
         }
       );
   };
+  function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
   useEffect(() => {
-    if (formValues.name && formValues.email && formValues.message) {
+    if (
+      formValues.name &&
+      formValues.name.trim() &&
+      formValues.email &&
+      formValues.email.trim() &&
+      formValues.message &&
+      formValues.message.trim() &&
+      isValidEmail(formValues.email)
+    ) {
       setFormIsValid(true);
     } else {
       setFormIsValid(false);
@@ -55,33 +68,15 @@ const ContactPage = () => {
   }, [formValues]);
   return (
     <>
-      <Head>
-        <title>Contact | {appData.name}</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta
-          property="og:title"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta
-          name="og:description"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          name="description"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta name="keywords" content="tractor,spare parts,machinary" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <div className="min-h-screen bg-slate-50">
+      <SeoHead title="Contact" />
+
+      <div className="min-h-screen">
         {/* Navigation */}
-        <Navbar />
+        <Navbar setTab={() => {}} />
 
         <div className="container mx-auto p-4 pt-6">
           <div className="mx-auto max-w-4xl">
             <h1 className="mb-4 text-3xl font-bold text-slate-900">Contact Us</h1>
-
             <div className="grid gap-4 md:grid-cols-2 lg:gap-8 xl:gap-12">
               {/* Contact Form */}
               <div className="rounded-lg bg-white p-6 shadow-md">
@@ -103,12 +98,12 @@ const ContactPage = () => {
                       onChange={(e) => {
                         setFormValues({ ...formValues, name: e.target.value });
                       }}
-                      className="w-full text-ellipsis rounded-lg border border-slate-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                      className="w-full text-ellipsis rounded-lg border border-slate-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                     />
                   </div>
                   <div>
                     <label className="required mb-1 block text-sm font-medium text-slate-700">
-                      Your Email
+                      Email
                     </label>
                     <input
                       name="reply_to"
@@ -117,9 +112,18 @@ const ContactPage = () => {
                       required
                       onChange={(e) => {
                         setFormValues({ ...formValues, email: e.target.value });
+                        setIsEmailValid(!isValidEmail(e.target.value));
+                        if (e.target.value === "") {
+                          setIsEmailValid(false);
+                        }
                       }}
-                      className="w-full text-ellipsis rounded-lg border border-slate-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                      className="w-full text-ellipsis rounded-lg border border-slate-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                     />
+                    {isEmailValid && (
+                      <p>
+                        <small className="text-red-500">Please enter a valid email address</small>
+                      </p>
+                    )}
                   </div>
                   <div>
                     <label className="required mb-1 block text-sm font-medium text-slate-700">
@@ -133,7 +137,7 @@ const ContactPage = () => {
                       }}
                       maxLength={500}
                       required
-                      className="w-full rounded-lg border border-slate-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                      className="w-full rounded-lg border border-slate-300 px-2.5 py-2 text-sm outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                     />
                   </div>
 
@@ -151,9 +155,8 @@ const ContactPage = () => {
                   </div>
                 </form>
               </div>
-
               {/* Contact Information */}
-              <div className="space-y-2">
+              <div className="space-y-3 xl:space-y-6">
                 <div className="rounded-lg bg-white p-6 shadow-md">
                   <h2 className="mb-3 text-2xl font-semibold text-slate-800">
                     Contact Information
@@ -163,21 +166,36 @@ const ContactPage = () => {
                       <Mail className="h-6 w-6 text-primary" />
                       <div>
                         <h3 className="font-medium text-slate-900">Email</h3>
-                        <p className="text-slate-600">{appData.contactEmail}</p>
+                        <a
+                          href={`mailto:${appData.contactEmail}`}
+                          className="text-slate-600 hover:underline"
+                        >
+                          {appData.contactEmail}
+                        </a>
                       </div>
                     </div>
                     <div className="flex items-start gap-4">
                       <Phone className="h-6 w-6 text-primary" />
                       <div>
                         <h3 className="font-medium text-slate-900">Office Number</h3>
-                        <p className="text-slate-600">{appData.officeNumber}</p>
+                        <a
+                          href={`tel:${appData.officeNumber}`}
+                          className="text-slate-600 hover:underline"
+                        >
+                          {appData.officeNumber}
+                        </a>
                       </div>
                     </div>
                     <div className="flex items-start gap-4">
                       <Phone className="h-6 w-6 text-primary" />
                       <div>
                         <h3 className="font-medium text-slate-900">Mobile Number</h3>
-                        <p className="text-slate-600">{appData.mobileNumber}</p>
+                        <a
+                          href={`tel:${appData.mobileNumber}`}
+                          className="text-slate-600 hover:underline"
+                        >
+                          {appData.mobileNumber}
+                        </a>
                       </div>
                     </div>
                     <div className="flex items-start gap-4">
@@ -195,10 +213,8 @@ const ContactPage = () => {
                     </div>
                   </div>
                 </div>
-                <div className="rounded-xl bg-white shadow-lg">
-                  <GoogleMap />
-                </div>
-                {/* <div className="rounded-lg bg-white p-6 shadow-md">
+
+                <div className="rounded-lg bg-white p-6 shadow-md">
                   <h2 className="mb-6 text-2xl font-semibold text-slate-800">Business Hours</h2>
                   <div className="space-y-2">
                     <p className="flex justify-between">
@@ -214,8 +230,11 @@ const ContactPage = () => {
                       <span className="font-medium">Closed</span>
                     </p>
                   </div>
-                </div> */}
+                </div>
               </div>
+            </div>
+            <div className="mt-5 bg-white shadow-lg">
+              <GoogleMap />
             </div>
           </div>
         </div>

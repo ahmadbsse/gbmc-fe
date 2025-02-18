@@ -1,3 +1,4 @@
+import apiClient from "@/utils/apiClient";
 export function convertToReadableDate(isoString) {
   const date = new Date(isoString);
   return date.toLocaleString("en-US", {
@@ -20,23 +21,31 @@ export function transformMedia(response) {
       type: "image",
       id: media?.id,
       documentId: media?.documentId,
-      name: media.name,
+      name: media?.name,
       formats: {
-        small: media.formats?.small
+        small: media?.formats?.small
           ? {
-              url: media.formats.small.url,
-              width: media.formats.small.width,
-              height: media.formats.small.height,
+              url: media?.formats?.small?.url,
+              width: media?.formats?.small?.width || 500,
+              height: media?.formats?.small?.height || 500,
             }
-          : undefined,
-        thumbnail: media.formats?.thumbnail
+          : {
+              url: "/placeholder.com/500",
+              width: 500,
+              height: 500,
+            },
+        thumbnail: media?.formats?.thumbnail
           ? {
-              url: media.formats.thumbnail.url,
-              width: media.formats.thumbnail.width,
-              height: media.formats.thumbnail.height,
+              url: media?.formats?.thumbnail?.url,
+              width: media?.formats?.thumbnail?.width || 156,
+              height: media?.formats?.thumbnail?.height || 156,
             }
-          : undefined,
-        actual: { url: media.url, width: media.width, height: media.height },
+          : {
+              url: "/placeholder.com/156",
+              width: 156,
+              height: 156,
+            },
+        actual: { url: media.url, width: media.width || 1080, height: media.height || 1080 },
       },
     });
 
@@ -72,12 +81,39 @@ export function transformHeroVideo(hero_image) {
     height: hero_image.height,
   };
 }
-export const modifyAdminTabname = (activeTab) => {
-  return activeTab.name == "Parts"
-    ? "Part"
-    : activeTab.name == "Engineering"
-      ? "Component"
-      : activeTab.name == "Make"
-        ? activeTab.name
-        : "Category";
+
+export const uploadFilesRequest = async (filesToUpload, multiple = true) => {
+  let fileIds = null;
+  const formData = new FormData();
+  filesToUpload.forEach((file) => {
+    formData.append("files", file.file); // Use the correct file object
+  });
+  if (filesToUpload.length === 0) return;
+  const url = "/upload";
+  try {
+    await apiClient.UPLOAD(url, formData).then((response) => {
+      if (response) {
+        if (multiple) {
+          fileIds = response.map((file) => file.id);
+        } else {
+          fileIds = response[0].id;
+        }
+      }
+    });
+  } catch (error) {
+    console.error(error);
+  } finally {
+    return fileIds;
+  }
+};
+export const deleteFilesRequest = async (fileIds) => {
+  fileIds.forEach(async (id) => {
+    try {
+      await apiClient.DELETE(`/upload/files/${id}`).then(() => {
+        console.log("File removed successfully");
+      });
+    } catch (error) {
+      console.error("Error deleting resource:", error.message);
+    }
+  });
 };

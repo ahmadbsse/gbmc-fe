@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import Head from "next/head";
 import { useRouter } from "next/router";
 import { Navbar } from "@/components/common";
 
-import { BaseButton } from "@/components/common";
+import { uploadFilesRequest } from "@/utils";
+import { BaseButton, SeoHead } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
-import { appData } from "@/constants";
 import apiClient from "@/utils/apiClient";
 import showToast from "@/utils/toast";
-import { createSubAssemblyValidator } from "@/utils/validators";
+import { subAssemblyValidator } from "@/utils/validators";
 import RichTextEditor from "@/components/common/RichTextEditor";
+import WarningModal from "@/components/admin/WarningModal";
 
 const CreateSubAssembly = () => {
   const router = useRouter();
@@ -23,74 +23,75 @@ const CreateSubAssembly = () => {
     featured: false,
     media: "",
   };
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
-  const [dataFilesIds, setDataFilesIds] = useState([]);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
 
   useEffect(() => {
-    formData.media = dataFilesIds;
-    if (
-      formData.name === "" ||
-      formData.number === "" ||
-      formData.oem_number === "" ||
-      formData.weight === "" ||
-      formData.description === "" ||
-      formData.summary === "" ||
-      dataFilesIds.length === 0
-    ) {
-      setIsFormValid(false);
-    } else {
-      setIsFormValid(true);
+    if (formData) {
+      if (
+        formData?.name.trim() === "" ||
+        formData?.number.trim() === "" ||
+        formData?.oem_number.trim() === "" ||
+        formData?.weight.trim() === "" ||
+        formData?.description === `<p><br></p>` ||
+        formData?.media.length === 0 ||
+        formData?.media == ""
+      ) {
+        setIsFormValid(false);
+      } else {
+        setIsFormValid(true);
+      }
     }
-  }, [formData, dataFilesIds]);
+  }, [formData]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (createSubAssemblyValidator(formData, dataFilesIds)) {
-      formData.media = dataFilesIds;
-      try {
-        apiClient
-          .POST(`/sub-assemblies`, { data: formData })
-          .then(() => {
-            setFormData(initialFormData);
-            showToast("Created Successfully", "success");
-            router.push("/admin");
-          })
-          .catch((error) => {
-            console.log(error);
-            showToast(error.message, "error");
-          });
-      } catch (error) {
-        console.log(error);
-        showToast(error.message, "error");
-      }
+    if (subAssemblyValidator(formData)) {
+      setLoading(true);
+      await uploadFilesRequest(formData.media, true).then((res) => {
+        if (res) {
+          formData.media = res;
+        }
+        try {
+          apiClient
+            .POST(`/sub-assemblies`, { data: formData })
+            .then(() => {
+              setFormData(initialFormData);
+              showToast("Sub Assembly Created Successfully", "success");
+              router.push("/admin");
+            })
+            .catch((error) => {
+              console.log(error);
+              showToast(error.message, "error");
+            });
+        } catch (error) {
+          console.log(error);
+          showToast(error.message, "error");
+        } finally {
+          setLoading(false);
+        }
+      });
     }
   };
 
   const handleChange = (content) => {
     setFormData({ ...formData, description: content });
   };
+  const setMedia = (media) => {
+    setFormData({ ...formData, media: media });
+  };
   return (
     <>
-      <Head>
-        <title>Admin | {appData.name}</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta
-          property="og:title"
-          content="Platform where you get tractor related parts in one place"
+      {showWarning ? (
+        <WarningModal
+          onClose={(e) => setShowWarning(false)}
+          handleToggle={(e) => router.push("/admin")}
+          currentTab="sub-assemblies"
+          type="create"
         />
-        <meta
-          name="og:description"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          name="description"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta name="keywords" content="tractor,spare parts,machinary" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
+      ) : null}
+      <SeoHead title="Admin" />
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">
@@ -101,9 +102,10 @@ const CreateSubAssembly = () => {
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Name</label>
                 <input
+                  required
                   type="text"
-                  className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                  placeholder={`Enter name`}
+                  className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                  placeholder={`Type name`}
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 />
@@ -111,9 +113,11 @@ const CreateSubAssembly = () => {
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Registered Number</label>
                 <input
+                  required
                   type="number"
-                  className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                  placeholder={`Enter number`}
+                  min={1}
+                  className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                  placeholder={`Type number`}
                   value={formData.number}
                   onChange={(e) => setFormData({ ...formData, number: e.target.value })}
                 />
@@ -124,9 +128,10 @@ const CreateSubAssembly = () => {
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">OEM Numbers</label>
                 <input
+                  required
                   type="text"
-                  className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                  placeholder={`Enter comma sepereated numbers..`}
+                  className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                  placeholder={`Type comma sepereated numbers..`}
                   value={formData.oem_number}
                   onChange={(e) => setFormData({ ...formData, oem_number: e.target.value })}
                 />
@@ -134,9 +139,10 @@ const CreateSubAssembly = () => {
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium"> Weight</label>
                 <input
+                  required
                   type="text"
-                  className="w-full text-ellipsis rounded-lg border border-gray-300 px-4 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                  placeholder={`Enter weight`}
+                  className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
+                  placeholder={`Type weight`}
                   value={formData.weight}
                   onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
                 />
@@ -146,7 +152,7 @@ const CreateSubAssembly = () => {
             <RichTextEditor handleChange={handleChange} defaultValue={formData.description} />
             <div>
               <label className="required mb-1 block text-sm font-medium"> Media</label>
-              <BaseFileUploader setDataFilesIds={setDataFilesIds} multiple={true} />
+              <BaseFileUploader setDataFilesIds={setMedia} multiple={true} />
             </div>
             <div className="flex flex-col gap-2 pt-4">
               <div className="flex w-full items-center gap-2">
@@ -175,8 +181,18 @@ const CreateSubAssembly = () => {
                 </label>
               </div>
             </div>
-            <div className="mx-auto w-[300px] py-4">
-              <BaseButton loading={false} type="submit" disabled={!isFormValid}>
+            <div className="mx-auto flex w-[300px] gap-4 py-4">
+              <BaseButton
+                btnStyle
+                loading={false}
+                type="button"
+                handleClick={() => {
+                  setShowWarning(true);
+                }}
+              >
+                Cancel
+              </BaseButton>
+              <BaseButton loading={loading} type="submit" disabled={!isFormValid}>
                 save
               </BaseButton>
             </div>

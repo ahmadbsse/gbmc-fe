@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
 import { BaseButton } from "@/components/common";
 
-const FeatureConfirmationModal = ({ onClose, handleToggle, name, currentTab, status }) => {
+const WarningModal = ({ onClose, handleToggle, currentTab, type }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="relative max-h-[500px] w-full max-w-lg overflow-y-auto rounded-lg bg-white p-6">
@@ -10,23 +10,25 @@ const FeatureConfirmationModal = ({ onClose, handleToggle, name, currentTab, sta
         </button>
         <h1 className="mb-2 text-lg font-bold">Confirm</h1>
         <h2 className="mb-16">
-          Are you sure you want to {status ? "Remove" : "Add"} <strong>{name} </strong>{" "}
-          {currentTab == "engineering-components"
-            ? "Engineering Component"
-            : currentTab == "suppliers"
-              ? "Make"
-              : currentTab == "sub-assemblies"
-                ? "Sub Assembly"
-                : "Part"}{" "}
-          {status ? "from" : "to "} featured?
+          Any thing you have added to {type} the{" "}
+          <strong>
+            {currentTab == "engineering-components"
+              ? "Engineering Component"
+              : currentTab == "suppliers"
+                ? "Make"
+                : currentTab == "sub-assemblies"
+                  ? "Sub Assembly"
+                  : "Part"}{" "}
+          </strong>
+          will be lost.
         </h2>
         <div className="ml-auto mt-6 flex w-fit">
           <BaseButton loading={false} type="button" handleClick={handleToggle}>
-            {status ? "Remove" : "Add"}
+            Ok
           </BaseButton>
         </div>
       </div>
     </div>
   );
 };
-export default FeatureConfirmationModal;
+export default WarningModal;

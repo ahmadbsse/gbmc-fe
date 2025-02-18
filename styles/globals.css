@@ -188,3 +188,7 @@ input[type="checkbox"] {
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
 }
+
+input {
+  font-size: 13px;
+}

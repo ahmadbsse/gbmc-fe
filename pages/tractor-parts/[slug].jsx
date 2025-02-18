@@ -1,12 +1,10 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import apiClient from "@/utils/apiClient";
-import Head from "next/head";
 import { transformMedia } from "@/utils";
-import { Navbar, PageLayout, BaseImage, BaseLoader } from "@/components/common";
+import { Navbar, PageLayout, BaseImage, BaseLoader, SeoHead } from "@/components/common";
 import { Check, X } from "lucide-react";
 import { convertToReadableDate } from "@/utils";
-import { appData } from "@/constants";
 
 const PartDetails = () => {
   const router = useRouter();
@@ -71,29 +69,8 @@ const PartDetails = () => {
 
   return (
     <>
-      <Head>
-        <title>
-          {data && data?.name ? data?.name : "Part Details"} | ${appData?.name}
-        </title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta
-          property="og:title"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta
-          name="og:description"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          name="description"
-          content="Platform where you get tractor related parts in one place"
-        />
-        <meta name="keywords" content="tractor,spare parts,machinary" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Navbar />
-
+      <SeoHead title={data && data?.name ? data?.name : "Part Details"} />
+      <Navbar setTab={() => {}} />
       <PageLayout title="Product Details" breadcrumbs={breadcrumbs}>
         {data ? (
           <div className="px-2">
@@ -194,7 +171,7 @@ const PartDetails = () => {
                   <span className="text-xs italic">Registered Number: {data?.number}</span>
                 </div>
 
-                <p className="" dangerouslySetInnerHTML={{ __html: data?.description }}></p>
+                <p dangerouslySetInnerHTML={{ __html: data?.description }}></p>
               </div>
             </div>
             <div className="mt-8 max-w-3xl">

@@ -43,6 +43,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
       data.active = !data.active;
       await apiClient.PUT(url, { data: data }).then((res) => {
         showToast(`${data.active ? "activated" : "deactivated"} successfully`, "success");
+        setActiveItem(null);
         getData();
       });
     } catch (error) {
@@ -70,6 +71,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
         .PUT(url, { data: data })
         .then((res) => {
           showToast(`${!data.featured ? "unfeatured" : "featured"} successfully`, "success");
+          setActiveItem(null);
           getData();
         })
         .catch((error) => {
@@ -90,6 +92,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
           setShowDeleteModal(false);
           showToast(`deleted succussfully`, "success");
           setActiveID(null);
+          setActiveItem(null);
           getData();
         })
         .catch((error) => {
@@ -127,15 +130,23 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
       {showAddItemModal ? (
         <AdminAddItemModal
           onClose={() => setShowAddItemModal(false)}
-          activeTab={activeTab}
           type="product"
           currentTab={currentTab}
+          getData={getData}
+        />
+      ) : null}
+      {showEditModal ? (
+        <AdminEditItemModal
+          activeID={activeID}
+          currentTab={currentTab}
+          onClose={() => setShowEditModal(false)}
           getData={getData}
         />
       ) : null}
       {showDeleteModal ? (
         <DeleteConfirmationModal
           handleDelete={deleteItem}
+          name={activeItem?.name}
           currentTab={currentTab}
           onClose={() => setShowDeleteModal(false)}
         />
@@ -144,6 +155,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
         <ActiveConfirmationModal
           handleToggle={toggleActivation}
           status={activeItem?.active}
+          name={activeItem?.name}
           currentTab={currentTab}
           onClose={() => setShowActiveModal(false)}
         />
@@ -152,30 +164,24 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
         <FeatureConfirmationModal
           handleToggle={toggleFeatured}
           status={activeItem?.featured}
+          name={activeItem?.name}
           currentTab={currentTab}
           onClose={() => setShowFeatureModal(false)}
         />
       ) : null}
-      {showEditModal ? (
-        <AdminEditItemModal
-          activeTab={activeTab}
-          activeID={activeID}
-          currentTab={currentTab}
-          onClose={() => setShowEditModal(false)}
-          getData={getData}
-        />
-      ) : null}
+
       <div className="rounded-lg bg-white shadow">
         <div className="border-b border-gray-200 px-6 py-4">
           <div className="mb-8 flex items-center justify-between">
-            <h2 className="flex items-center gap-2 text-lg font-medium">
-              {activeTab.name} <span className="text-sm text-gray-500"> ({total})</span>
+            <h2 className="flex items-center text-lg">
+              <span className="font-bold">{activeTab.name}</span>
+              {total > 0 ? <span> ({total})</span> : null}
             </h2>
             <div className="hidden w-fit md:flex">
               <BaseButton loading={false} type="submit" handleClick={addNewItem}>
-                <p className="mx-auto flex w-fit md:px-3">
+                <p className="mx-auto flex w-fit gap-2">
                   <Plus className="mt-0.5 h-4 w-4" />
-                  Add {activeTab.name}
+                  Add {activeTab?.tag}
                 </p>
               </BaseButton>
             </div>
@@ -200,18 +206,18 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                         {item.media ? (
                           Array.isArray(item.media) ? (
                             <BaseImage
-                              width={item.media[0]?.formats?.thumbnail?.width}
-                              height={item.media[0]?.formats?.thumbnail?.height}
-                              src={item?.media[0]?.formats.thumbnail?.url}
+                              width={item.media[0]?.formats?.thumbnail?.width || 160}
+                              height={item.media[0]?.formats?.thumbnail?.height || 112}
+                              src={item?.media[0]?.formats.thumbnail?.url || "/placeholder"}
                               alt={item?.name}
                               priority={true}
                               classes="object-cover w-full h-full"
                             />
                           ) : (
                             <BaseImage
-                              width={item.media?.formats?.thumbnail?.width}
-                              height={item.media?.formats?.thumbnail?.height}
-                              src={item?.media?.formats.thumbnail?.url}
+                              width={item.media?.formats?.thumbnail?.width || 160}
+                              height={item.media?.formats?.thumbnail?.height || 112}
+                              src={item?.media?.formats.thumbnail?.url || "/placeholder"}
                               alt={item?.name}
                               priority={true}
                               classes="object-cover w-full h-full"
@@ -219,23 +225,13 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                           )
                         ) : null}
                       </div>
-                      <div className="flex flex-col justify-between">
-                        <div>
-                          <h3
-                            onClick={() => viewDetails(item.documentId)}
-                            className={`font-medium capitalize ${currentTab == "parts" || currentTab == "sub-assemblies" || currentTab == "engineering-components" ? "cursor-pointer" : ""}`}
-                          >
-                            {item.name}
-                          </h3>
-                          {currentTab == "parts" ||
-                          currentTab == "sub-assemblies" ||
-                          currentTab == "engineering-components" ? null : (
-                            <span className="text-sm">{item.description}</span>
-                          )}
-                        </div>
-                        {/* <span className="text-xs text-solidGray/50">
-                          {convertToReadableDate(item.publishedAt)}
-                        </span> */}
+                      <div className="flex flex-col justify-center">
+                        <h3
+                          onClick={() => viewDetails(item.documentId)}
+                          className={`font-medium capitalize ${currentTab == "parts" || currentTab == "sub-assemblies" || currentTab == "engineering-components" ? "cursor-pointer" : ""}`}
+                        >
+                          {item.name}
+                        </h3>
                       </div>
                     </div>
 
@@ -267,7 +263,10 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                             setShowFeatureModal(true);
                           }}
                         >
-                          <Star className="h-4 w-4" />
+                          <Star
+                            className="h-4 w-4"
+                            fill={item.featured ? "currentColor" : "#fff"}
+                          />
                         </i>
                       ) : null}
                       <i
@@ -281,6 +280,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                             router.push(`/admin/${currentTab}/edit?id=${item.documentId}`);
                           } else {
                             setActiveID(item.documentId);
+                            setActiveItem(item);
                             setShowEditModal(true);
                           }
                         }}
@@ -292,6 +292,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                         title="Delete"
                         onClick={() => {
                           setActiveID(item.documentId);
+                          setActiveItem(item);
                           setShowDeleteModal(true);
                         }}
                         className="rounded-lg bg-gray-100 p-2 hover:bg-yellow-50 hover:text-yellow-600"
@@ -303,7 +304,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                 ))}
             </div>
           ) : (
-            <p className="mx-auto w-fit">No Data Found</p>
+            <p className="min-h-36 w-fit px-5">No Data Found</p>
           )}
         </div>
       </div>

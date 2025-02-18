@@ -72,7 +72,7 @@ const RichTextEditor = ({ handleChange, defaultValue, label = "Description" }) =
           formats={formats}
           modules={modules}
           onChange={handleChange}
-          placeholder={`Enter ${label}`}
+          placeholder={`Type ${label}`}
         />
       </div>
     </div>
