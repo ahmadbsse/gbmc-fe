@@ -116,7 +116,7 @@ const Login = () => {
                   disabled={!isFormValid}
                   type="submit"
                 >
-                  sign in
+                  {isLoading ? "Logging in" : "log in"}
                 </BaseButton>
                 {/* <p className="text-sm font-light">
                   Don’t have an account yet?{" "}
