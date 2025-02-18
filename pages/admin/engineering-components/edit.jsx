@@ -179,7 +179,10 @@ const EditComponent = () => {
               <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">
                 Edit Engineering Component - {formData.name || ""}
               </h1>
-              <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3">
+              <form
+                onSubmit={handleSubmit}
+                className="mx-auto max-w-[810px] space-y-3 lg:space-y-5"
+              >
                 <div className="w-full">
                   <label className="required mb-1 block text-sm font-medium">Name</label>
                   <input

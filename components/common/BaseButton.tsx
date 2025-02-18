@@ -22,13 +22,14 @@ const BaseButton: React.FC<ButtonProps> = ({
         : "btn-anim border-primary-color bg-primary-color hover:border-[#FFC952]"
     } ${rounded ? "rounded-lg" : ""} ${loading || disabled ? "pointer-events-none cursor-not-allowed opacity-50" : ""}`}
   >
-    {loading ? (
-      <div className="mx-auto w-fit">
-        <BaseLoader />
-      </div>
-    ) : (
-      children
-    )}
+    <span className="mx-auto flex w-fit items-center gap-3">
+      {loading ? (
+        <div className="mx-auto w-fit">
+          <BaseLoader />
+        </div>
+      ) : null}
+      {children}
+    </span>
   </button>
 );
 export default BaseButton;
