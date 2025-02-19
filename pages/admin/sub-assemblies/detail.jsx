@@ -34,7 +34,7 @@ const ViewSubAssemblyDetails = () => {
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">
           {formData ? (
-            <div className="mx-auto max-w-[810px] space-y-3">
+            <div className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
               <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">
                 View - Sub Assembly - {formData.name || ""}
               </h1>

@@ -144,7 +144,7 @@ const ContactPage = () => {
                   <div className="mx-auto w-fit pt-6">
                     <BaseButton loading={false} type="submit" disabled={loading || !formIsValid}>
                       {loading ? (
-                        "Loading...."
+                        "Sending...."
                       ) : (
                         <div className="flex items-center justify-center gap-3">
                           <span>Send Email</span>

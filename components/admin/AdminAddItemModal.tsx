@@ -90,7 +90,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({ onClose, currentT
             </button>
           </div>
 
-          <form onSubmit={handleSubmit} className="mt-10 space-y-3 p-6">
+          <form onSubmit={handleSubmit} className="mt-10 lg:space-y-5 space-y-3 p-6">
             <div>
               <label className="required mb-1 block text-sm font-medium">Name</label>
               <input

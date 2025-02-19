@@ -12,10 +12,10 @@ const Navbar = ({ isAdmin = false, setTab }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const tabsKey = [
-    { name: "Make", key: "suppliers" },
-    { name: "Sub Assemblies", key: "sub-assemblies" },
+    { name: "Makes", key: "suppliers" },
     { name: "Parts", key: "parts" },
-    { name: "Engineering Component", key: "engineering" },
+    { name: "Sub Assemblies", key: "sub-assemblies" },
+    { name: "Engineering Components", key: "engineering" },
   ];
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -131,11 +131,28 @@ const Navbar = ({ isAdmin = false, setTab }) => {
                         {/* Menu items */}
 
                         <nav className="flex flex-col gap-7">
-                          {tabsKey.map((tab) => (
-                            <div key={tab.key} onClick={() => setTab(tab)}>
-                              {tab.name}
-                            </div>
-                          ))}
+                          {isAdmin
+                            ? tabsKey.map((tab) => (
+                                <div key={tab.key} onClick={() => setTab(tab)}>
+                                  {tab.name}
+                                </div>
+                              ))
+                            : userRoutes.map((item, index) => (
+                                <Link
+                                  key={index}
+                                  href={item.href}
+                                  className={`hover:text-solidGray ${
+                                    item.routeName.toLowerCase() === router.route.toLowerCase() ||
+                                    router.route
+                                      .toLowerCase()
+                                      .includes(item.routeName.toLowerCase())
+                                      ? "border-b border-primary-color font-medium text-black"
+                                      : ""
+                                  }`}
+                                >
+                                  {item.name}
+                                </Link>
+                              ))}
                         </nav>
                       </div>
                     </div>

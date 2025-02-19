@@ -120,7 +120,7 @@ const AdminEditItemModal = ({ activeID, onClose, currentTab, getData }) => {
             </button>
           </div>
           {formData ? (
-            <form onSubmit={handleSubmit} className="mt-10 space-y-4 p-6">
+            <form onSubmit={handleSubmit} className="mt-10 space-y-3 p-6 lg:space-y-5">
               <div>
                 <label className="required mb-1 block text-sm font-medium">Name</label>
                 <input
