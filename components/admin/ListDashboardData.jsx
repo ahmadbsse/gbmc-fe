@@ -205,17 +205,17 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
             </div>
           </div>
         </div>
-        <div className="p-3 md:p-6">
+        <div className="p-1 md:p-6">
           {data && data.length > 0 ? (
-            <div className="grid gap-4">
+            <div className="grid gap-2 md:gap-4">
               {data &&
                 data.map((item, index) => (
                   <div
                     key={item.documentId}
-                    className={`flex flex-col justify-between rounded-lg bg-gray-50 p-4 md:flex-row md:items-center`}
+                    className={`flex flex-col justify-between rounded-lg bg-gray-50 p-2 md:flex-row md:items-center md:p-4`}
                   >
-                    <div className="flex gap-4">
-                      <div className="hidden h-28 w-40 max-w-44 md:block">
+                    <div className="flex gap-2 md:gap-4">
+                      <div className="h-20 w-32 max-w-36 md:h-28 md:w-40 md:max-w-44">
                         {item.media ? (
                           Array.isArray(item.media) ? (
                             <BaseImage
@@ -245,10 +245,79 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                         >
                           {item.name}
                         </h3>
+                        <div className="ml-auto flex w-fit items-center gap-2 md:hidden">
+                          <i
+                            title={item.active ? "Deactivate" : "Activate"}
+                            onClick={() => {
+                              setActiveItem(item);
+                              setShowActiveModal(true);
+                            }}
+                            className={`rounded-lg p-2 ${
+                              item.active
+                                ? "bg-green-50 text-green-600 hover:bg-yellow-50"
+                                : "bg-gray-100 hover:bg-yellow-50 hover:text-yellow-600"
+                            }`}
+                          >
+                            {item.active ? (
+                              <Eye className="h-2.5 w-2.5 md:h-4 md:w-4" />
+                            ) : (
+                              <EyeOff className="h-2.5 w-2.5 md:h-4 md:w-4" />
+                            )}
+                          </i>
+                          {currentTab != "suppliers" ? (
+                            <i
+                              title={item.featured ? "Unfeature" : "Feature"}
+                              className={`rounded-lg p-2 ${
+                                item.featured
+                                  ? "bg-yellow-50 text-yellow-600 hover:bg-yellow-50"
+                                  : "bg-gray-100 hover:bg-yellow-50 hover:text-yellow-600"
+                              }`}
+                              onClick={() => {
+                                setActiveItem(item);
+                                setShowFeatureModal(true);
+                              }}
+                            >
+                              <Star
+                                className="h-2.5 w-2.5 md:h-4 md:w-4"
+                                fill={item.featured ? "currentColor" : "#fff"}
+                              />
+                            </i>
+                          ) : null}
+                          <i
+                            title="Edit"
+                            onClick={() => {
+                              if (
+                                currentTab == "parts" ||
+                                currentTab == "sub-assemblies" ||
+                                currentTab == "engineering-components"
+                              ) {
+                                router.push(`/admin/${currentTab}/edit?id=${item.documentId}`);
+                              } else {
+                                setActiveID(item.documentId);
+                                setActiveItem(item);
+                                setShowEditModal(true);
+                              }
+                            }}
+                            className={`rounded-lg bg-gray-100 p-2 hover:bg-yellow-50 hover:text-yellow-600`}
+                          >
+                            <Pencil className="h-2.5 w-2.5 md:h-4 md:w-4" />
+                          </i>
+                          <i
+                            title="Delete"
+                            onClick={() => {
+                              setActiveID(item.documentId);
+                              setActiveItem(item);
+                              setShowDeleteModal(true);
+                            }}
+                            className="rounded-lg bg-gray-100 p-2 hover:bg-yellow-50 hover:text-yellow-600"
+                          >
+                            <Trash className="h-2.5 w-2.5 md:h-4 md:w-4" />
+                          </i>
+                        </div>
                       </div>
                     </div>
 
-                    <div className="ml-auto mt-2 flex w-fit items-center gap-2 md:ml-0 md:mt-0 md:gap-4">
+                    <div className="hidden w-fit items-center md:ml-0 md:mt-0 md:flex md:gap-4">
                       <i
                         title={item.active ? "Deactivate" : "Activate"}
                         onClick={() => {
