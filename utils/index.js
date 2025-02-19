@@ -83,12 +83,14 @@ export function transformHeroVideo(hero_image) {
 }
 
 export const uploadFilesRequest = async (filesToUpload, multiple = true) => {
+  if (filesToUpload.length === 0) return;
+  const newFiles = filesToUpload.filter((file) => file.file);
+  if (newFiles.length === 0) return;
   let fileIds = null;
   const formData = new FormData();
   filesToUpload.forEach((file) => {
     formData.append("files", file.file); // Use the correct file object
   });
-  if (filesToUpload.length === 0) return;
   const url = "/upload";
   try {
     await apiClient.UPLOAD(url, formData).then((response) => {

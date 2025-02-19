@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Navbar } from "@/components/common";
 
-import { uploadFilesRequest } from "@/utils";
+import { uploadFilesRequest, deepEqual } from "@/utils";
 import { BaseButton, SeoHead } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
@@ -27,7 +27,7 @@ const CreateSubAssembly = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [isFormValid, setIsFormValid] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
-
+  const deepCopy = structuredClone(initialFormData);
   useEffect(() => {
     if (formData) {
       if (
@@ -85,8 +85,10 @@ const CreateSubAssembly = () => {
     <>
       {showWarning ? (
         <WarningModal
-          onClose={(e) => setShowWarning(false)}
-          handleToggle={(e) => router.push("/admin")}
+          onClose={(e) => {
+            setShowWarning(false);
+            router.push("/admin");
+          }}
           currentTab="sub-assemblies"
           type="create"
         />
@@ -187,7 +189,11 @@ const CreateSubAssembly = () => {
                 loading={false}
                 type="button"
                 handleClick={() => {
-                  setShowWarning(true);
+                  if (deepEqual(deepCopy, formData)) {
+                    router.push("/admin");
+                  } else {
+                    setShowWarning(true);
+                  }
                 }}
               >
                 Cancel

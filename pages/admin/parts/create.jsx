@@ -7,7 +7,7 @@ import { BaseButton, SeoHead } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
 import { partValidator } from "@/utils/validators";
-import { uploadFilesRequest } from "@/utils";
+import { uploadFilesRequest, deepEqual } from "@/utils";
 import RichTextEditor from "@/components/common/RichTextEditor";
 
 import WarningModal from "@/components/admin/WarningModal";
@@ -31,6 +31,7 @@ const CreatePart = () => {
   const [suppliers, setSuppliers] = useState([]);
   const [isFormValid, setIsFormValid] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
+  const deepCopy = structuredClone(initialFormData);
 
   useEffect(() => {
     if (
@@ -115,8 +116,10 @@ const CreatePart = () => {
     <>
       {showWarning ? (
         <WarningModal
-          onClose={(e) => setShowWarning(false)}
-          handleToggle={(e) => router.push("/admin")}
+          onClose={(e) => {
+            setShowWarning(false);
+            router.push("/admin");
+          }}
           currentTab="parts"
           type="create"
         />
@@ -246,7 +249,11 @@ const CreatePart = () => {
                 loading={false}
                 type="button"
                 handleClick={() => {
-                  setShowWarning(true);
+                  if (deepEqual(deepCopy, formData)) {
+                    router.push("/admin");
+                  } else {
+                    setShowWarning(true);
+                  }
                 }}
               >
                 Cancel

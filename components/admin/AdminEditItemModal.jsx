@@ -55,10 +55,31 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
       try {
         await uploadFilesRequest(formData.media, false)
           .then((res) => {
+            delete formData.documentId;
             if (res) {
               formData.media = res;
-              delete formData.documentId;
               try {
+                apiClient
+                  .PUT(`/${currentTab}/${activeID}`, { data: formData })
+                  .then(async () => {
+                    showToast(`Make saved successfully`, "success");
+                    await deleteFilesRequest(idsToRemove).then(() => {
+                      console.log("Files deleted successfully");
+                      getData();
+                      setShowEditModal(false);
+                    });
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                    showToast(error.message, "error");
+                  });
+              } catch (error) {
+                console.log(error);
+                showToast(error.message, "error");
+              }
+            } else {
+              try {
+                formData.media = formData.media.id;
                 apiClient
                   .PUT(`/${currentTab}/${activeID}`, { data: formData })
                   .then(async () => {

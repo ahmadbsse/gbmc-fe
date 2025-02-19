@@ -10,7 +10,7 @@ import showToast from "@/utils/toast";
 import { engineeringComponentValidator } from "@/utils/validators";
 import RichTextEditor from "@/components/common/RichTextEditor";
 
-import { uploadFilesRequest } from "@/utils";
+import { uploadFilesRequest, deepEqual } from "@/utils";
 
 const CreateEngineeringComponent = () => {
   const router = useRouter();
@@ -29,6 +29,7 @@ const CreateEngineeringComponent = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [isFormValid, setIsFormValid] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
+  const deepCopy = structuredClone(initialFormData);
 
   useEffect(() => {
     if (
@@ -113,8 +114,10 @@ const CreateEngineeringComponent = () => {
     <>
       {showWarning ? (
         <WarningModal
-          onClose={(e) => setShowWarning(false)}
-          handleToggle={(e) => router.push("/admin")}
+          onClose={(e) => {
+            setShowWarning(false);
+            router.push("/admin");
+          }}
           currentTab="engineering-components"
           type="create"
         />
@@ -215,7 +218,11 @@ const CreateEngineeringComponent = () => {
                 loading={false}
                 type="button"
                 handleClick={() => {
-                  setShowWarning(true);
+                  if (deepEqual(deepCopy, formData)) {
+                    router.push("/admin");
+                  } else {
+                    setShowWarning(true);
+                  }
                 }}
               >
                 Cancel
