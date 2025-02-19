@@ -57,7 +57,7 @@ const ViewComponentDetails = () => {
                   {formData.name}
                 </div>
               </div>
-              <div className="flex flex-col md:flex-row md:gap-5">
+              <div className="flex flex-col gap-3 md:flex-row md:gap-5">
                 <div className="w-full">
                   <label className="required mb-1 block text-sm font-medium">Material</label>
                   <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
@@ -78,7 +78,7 @@ const ViewComponentDetails = () => {
                   dangerouslySetInnerHTML={{ __html: formData.description }}
                 />
               </div>
-              <div className="flex flex-col md:flex-row md:gap-5">
+              <div className="flex flex-col gap-3 md:flex-row md:gap-5">
                 <div className="basis-1/2">
                   <label className="required mb-1 block text-sm font-medium">Hero Image</label>
                   <div className="h-28 w-44">

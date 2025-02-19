@@ -211,7 +211,7 @@ const EditComponent = () => {
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   />
                 </div>
-                <div className="flex flex-col md:flex-row md:gap-4">
+                <div className="flex flex-col gap-4 md:flex-row">
                   <div className="w-full">
                     <label className="required mb-1 block text-sm font-medium">Material</label>
                     <input

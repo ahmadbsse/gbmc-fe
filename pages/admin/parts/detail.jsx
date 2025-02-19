@@ -38,7 +38,7 @@ const ViewPartDetails = () => {
               <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">
                 View - Part - {formData.name || ""}
               </h1>
-              <div className="flex flex-col md:flex-row md:gap-5">
+              <div className="flex flex-col gap-3 md:flex-row md:gap-5">
                 <div className="w-full">
                   <label className="required mb-1 block text-sm font-medium">Name</label>
                   <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
@@ -58,7 +58,7 @@ const ViewPartDetails = () => {
                   {formData.oem_number}
                 </div>
               </div>
-              <div className="flex flex-col md:flex-row md:gap-5">
+              <div className="flex flex-col gap-3 md:flex-row md:gap-5">
                 <div className="w-full">
                   <label className="required mb-1 block text-sm font-medium">Material</label>
                   <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">

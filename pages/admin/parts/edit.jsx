@@ -177,7 +177,7 @@ const EditPart = () => {
                 onSubmit={handleSubmit}
                 className="mx-auto max-w-[810px] space-y-3 lg:space-y-5"
               >
-                <div className="flex flex-col md:flex-row md:gap-4">
+                <div className="flex flex-col gap-4 md:flex-row">
                   <div className="w-full">
                     <label className="required mb-1 block text-sm font-medium">Name</label>
                     <input
@@ -225,7 +225,7 @@ const EditPart = () => {
                     onChange={(e) => setFormData({ ...formData, oem_number: e.target.value })}
                   />
                 </div>
-                <div className="flex flex-col md:flex-row md:gap-4">
+                <div className="flex flex-col gap-4 md:flex-row">
                   <div className="w-full">
                     <label className="required mb-1 block text-sm font-medium">Material</label>
                     <input
