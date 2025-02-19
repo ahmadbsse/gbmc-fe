@@ -5,7 +5,7 @@ import type { PageLayoutProps } from "@/types";
 
 const PageLayout: React.FC<PageLayoutProps> = ({ children, title, breadcrumbs = [] }) => {
   return (
-    <div className="bg-gray-50">
+    <div className="bg-gray-50 pt-20">
       <div className="mx-auto max-w-7xl">
         <div className="container mx-auto px-4 pb-12 pt-4">
           <div className="mb-4">

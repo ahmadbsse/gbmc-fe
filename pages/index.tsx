@@ -11,12 +11,11 @@ const Home = () => {
       <SeoHead title="Home" />
       <div className="flex flex-col xl:h-screen xl:overflow-hidden">
         {/* Navigation */}
-        <div className="z-50">
-          <Navbar setTab={() => {}} />
-        </div>
+
+        <Navbar setTab={() => {}} />
 
         {/* Main Split Screen Sections */}
-        <div className="flex flex-1 flex-col md:flex-row">
+        <div className="md-mt-0 mt-16 flex flex-1 flex-col md:flex-row">
           {/* Engineering Components Section */}
           <div className="relative order-2 cursor-pointer md:order-1 md:h-screen md:w-1/2">
             <div className="absolute inset-0" />

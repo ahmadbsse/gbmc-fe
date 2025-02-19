@@ -36,7 +36,7 @@ const Navbar = ({ isAdmin = false, setTab }) => {
                     nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
         speed={30}
       /> */}
-      <nav className="bg-white drop-shadow-xl">
+      <nav className="fixed top-0 z-50 w-full bg-white drop-shadow-xl">
         <div className="container mx-auto px-4">
           <div className="flex h-[74px] items-center justify-between">
             <div className="flex w-full items-center justify-between gap-8">
@@ -46,7 +46,7 @@ const Navbar = ({ isAdmin = false, setTab }) => {
               >
                 <Image height={70} width={150} src="/assets/logo.svg" alt="logo" priority />
               </Link>
-              {router.route != "/" || isAdmin ? (
+              {isAdmin ? (
                 <div className="flex items-center gap-4 pl-4">
                   {isAdmin && (
                     <div className="flex items-center gap-4">
@@ -92,7 +92,7 @@ const Navbar = ({ isAdmin = false, setTab }) => {
                     </div>
                   )}
                 </div>
-              ) : (
+              ) : router.route == "/about" || router.route == "/" || router.route == "/contact" ? (
                 <>
                   <div className="hidden items-center justify-between gap-6 text-black md:flex">
                     {userRoutes.map((item, index) => (
@@ -158,7 +158,7 @@ const Navbar = ({ isAdmin = false, setTab }) => {
                     </div>
                   </>
                 </>
-              )}
+              ) : null}
             </div>
           </div>
         </div>

@@ -37,7 +37,7 @@ const EngineeringHome = () => {
     <>
       <SeoHead title={`Engineering Components`} />
       <Navbar setTab={() => {}} />
-      <div className="relative h-96">
+      <div className="relative mt-16 h-96">
         <div className="absolute inset-0 z-10 bg-gradient-to-r from-slate-900/50 to-slate-900/70" />
         <div className="relative h-full">
           <Image
