@@ -2,7 +2,7 @@ import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import showToast from "@/utils/toast";
-import { transformMedia, uploadFilesRequest, deleteFilesRequest, deepEqual } from "@/utils";
+import { transformMedia, uploadFilesRequest, deleteFilesRequest } from "@/utils";
 import apiClient from "@/utils/apiClient";
 import { BaseButton, BaseLoader, BaseImage } from "@/components/common";
 import BaseFileUploader from "./BaseFileUploader";
@@ -15,7 +15,7 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
   const [isFormValid, setIsFormValid] = useState(false);
   const [idsToRemove, setIdsToRemove] = useState([]);
   const [showWarning, setShowWarning] = useState(false);
-  let deepCopy;
+
   useEffect(() => {
     if (formData) {
       if (formData.name === "" || formData.media.length === 0) {
@@ -37,7 +37,6 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
         if (!Array.isArray(response.media)) {
           response.media = [response.media];
         }
-        deepCopy = res.data;
         setFormData(response);
       });
     } catch (error) {
@@ -141,11 +140,7 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
             <h2 className="text-2xl font-bold"> Edit Make - {formData?.name}</h2>
             <button
               onClick={() => {
-                if (deepEqual(deepCopy, formData)) {
-                  setShowEditModal(false);
-                } else {
-                  setShowWarning(true);
-                }
+                setShowWarning(true);
               }}
             >
               <X className="h-6 w-6" />

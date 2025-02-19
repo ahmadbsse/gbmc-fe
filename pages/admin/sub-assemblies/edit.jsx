@@ -68,29 +68,15 @@ const EditSubAssembly = () => {
 
         const previousMedia = formData.media.filter((item) => item && item.id);
         const newMediaIds = previousMedia.map((file) => file.id);
+        delete formData.documentId;
         await uploadFilesRequest(flattenedData, true)
           .then((res) => {
             if (res) {
               formData.media = [...res, ...newMediaIds];
-              delete formData.documentId;
-              try {
-                apiClient
-                  .PUT(`/sub-assemblies/${id}`, { data: formData })
-                  .then(async () => {
-                    showToast("Sub Assembly Saved Successfully", "success");
-                    router.push("/admin");
-                    await deleteFilesRequest(idsToRemove).then(() => {
-                      console.log("Files deleted successfully");
-                    });
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                    showToast(error.message, "error");
-                  });
-              } catch (error) {
-                console.log(error);
-                showToast(error.message, "error");
-              }
+              saveData();
+            } else {
+              formData.media = newMediaIds;
+              saveData();
             }
           })
           .catch((error) => {
@@ -101,6 +87,26 @@ const EditSubAssembly = () => {
       } finally {
         setLoading(false);
       }
+    }
+  };
+  const saveData = () => {
+    try {
+      apiClient
+        .PUT(`/sub-assemblies/${id}`, { data: formData })
+        .then(async () => {
+          showToast("Sub Assembly Saved Successfully", "success");
+          router.push("/admin");
+          await deleteFilesRequest(idsToRemove).then(() => {
+            console.log("Files deleted successfully");
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+          showToast(error.message, "error");
+        });
+    } catch (error) {
+      console.log(error);
+      showToast(error.message, "error");
     }
   };
   const deletePreviousImage = async (id) => {
@@ -139,8 +145,10 @@ const EditSubAssembly = () => {
     <>
       {showWarning ? (
         <WarningModal
-          onClose={(e) => setShowWarning(false)}
-          handleToggle={(e) => router.push("/admin")}
+          onClose={(e) => {
+            setShowWarning(false);
+            router.push("/admin");
+          }}
           currentTab="sub-assemblies"
           type="modify"
         />

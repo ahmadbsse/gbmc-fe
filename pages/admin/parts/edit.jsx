@@ -80,29 +80,15 @@ const EditPart = () => {
           .filter((item) => item && typeof item === "object" && !item.id);
         const previousMedia = formData.media.filter((item) => item && item.id);
         const newMediaIds = previousMedia.map((file) => file.id);
+        formData.supplier = formData.supplier.documentId;
+        delete formData.documentId;
         await uploadFilesRequest(flattenedData, true).then((res) => {
           if (res) {
             formData.media = [...res, ...newMediaIds];
-            formData.supplier = formData.supplier.documentId;
-            delete formData.documentId;
-            try {
-              apiClient
-                .PUT(`/parts/${id}`, { data: formData })
-                .then(async () => {
-                  showToast("Part Saved Successfully", "success");
-                  await deleteFilesRequest(idsToRemove).then(() => {
-                    console.log("Files deleted successfully");
-                  });
-                  router.push("/admin");
-                })
-                .catch((error) => {
-                  console.log(error);
-                  showToast(error.message, "error");
-                });
-            } catch (error) {
-              console.log(error);
-              showToast(error.message, "error");
-            }
+            saveData();
+          } else {
+            formData.media = newMediaIds;
+            saveData();
           }
         });
       } catch (error) {
@@ -111,6 +97,26 @@ const EditPart = () => {
       } finally {
         setLoading(false);
       }
+    }
+  };
+  const saveData = () => {
+    try {
+      apiClient
+        .PUT(`/parts/${id}`, { data: formData })
+        .then(async () => {
+          showToast("Part Saved Successfully", "success");
+          await deleteFilesRequest(idsToRemove).then(() => {
+            console.log("Files deleted successfully");
+          });
+          router.push("/admin");
+        })
+        .catch((error) => {
+          console.log(error);
+          showToast(error.message, "error");
+        });
+    } catch (error) {
+      console.log(error);
+      showToast(error.message, "error");
     }
   };
   const deletePreviousImage = async (id) => {
@@ -150,8 +156,10 @@ const EditPart = () => {
     <>
       {showWarning ? (
         <WarningModal
-          onClose={(e) => setShowWarning(false)}
-          handleToggle={(e) => router.push("/admin")}
+          onClose={(e) => {
+            setShowWarning(false);
+            router.push("/admin");
+          }}
           currentTab="parts"
           type="modify"
         />

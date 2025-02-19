@@ -83,35 +83,50 @@ const EditComponent = () => {
 
       const newHeroIds = previousHero.map((file) => file.id);
 
-      await uploadFilesRequest(flattenedMediaData, true).then(async (res) => {
-        if (res) {
-          formData.media = [...res, ...newMediaIds];
-        }
-        await uploadFilesRequest(flattenedHeroData, true).then((res) => {
+      delete formData.documentId;
+      console.log(flattenedHeroData, "hero");
+      console.log(flattenedMediaData, "media");
+      if (flattenedHeroData.length !== 0 && flattenedMediaData.length !== 0) {
+        await uploadFilesRequest(flattenedMediaData, true).then(async (res) => {
           if (res) {
-            formData.hero_image = [...res, ...newHeroIds];
-            delete formData.documentId;
-            try {
-              apiClient
-                .PUT(`/engineering-components/${id}`, { data: formData })
-                .then(async () => {
-                  showToast("Engineering component saved Successfully", "success");
-                  await deleteFilesRequest(idsToRemove).then(() => {
-                    console.log("Files deleted successfully");
-                  });
-                  router.push("/admin");
-                })
-                .catch((error) => {
-                  showToast(error.message, "error");
-                  console.log(error);
-                });
-            } catch (error) {
-              showToast(error.message, "error");
-              console.log(error);
-            }
+            formData.media = [...res, ...newMediaIds];
+          } else {
+            formData.media = newMediaIds;
           }
+          await uploadFilesRequest(flattenedHeroData, true).then((res) => {
+            if (res) {
+              formData.hero_image = [...res, ...newHeroIds];
+              saveData();
+            } else {
+              formData.hero_image = newHeroIds;
+            }
+          });
         });
-      });
+      } else {
+        formData.media = newMediaIds;
+        formData.hero_image = newHeroIds;
+        saveData();
+      }
+    }
+  };
+  const saveData = () => {
+    try {
+      apiClient
+        .PUT(`/engineering-components/${id}`, { data: formData })
+        .then(async () => {
+          showToast("Engineering component saved Successfully", "success");
+          await deleteFilesRequest(idsToRemove).then(() => {
+            console.log("Files deleted successfully");
+          });
+          router.push("/admin");
+        })
+        .catch((error) => {
+          showToast(error.message, "error");
+          console.log(error);
+        });
+    } catch (error) {
+      showToast(error.message, "error");
+      console.log(error);
     }
   };
   const deletePreviousImage = async (id, key) => {
@@ -164,8 +179,10 @@ const EditComponent = () => {
     <>
       {showWarning ? (
         <WarningModal
-          onClose={(e) => setShowWarning(false)}
-          handleToggle={(e) => router.push("/admin")}
+          onClose={(e) => {
+            setShowWarning(false);
+            router.push("/admin");
+          }}
           currentTab="engineering-components"
           type="modify"
         />
