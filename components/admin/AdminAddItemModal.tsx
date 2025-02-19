@@ -51,7 +51,11 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({ onClose, currentT
             .POST(`/${currentTab}`, { data: formData })
             .then(() => {
               setFormData(initialFormData);
-              showToast(`${currentTab} added successfully`, "success");
+              if (currentTab === "suppliers") {
+                showToast(`Make added successfully`, "success");
+              } else {
+                showToast(`${currentTab} added successfully`, "success");
+              }
               getData();
               onClose(e);
             })
@@ -90,7 +94,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({ onClose, currentT
             </button>
           </div>
 
-          <form onSubmit={handleSubmit} className="mt-10 lg:space-y-5 space-y-3 p-6">
+          <form onSubmit={handleSubmit} className="mt-10 space-y-3 p-6 lg:space-y-5">
             <div>
               <label className="required mb-1 block text-sm font-medium">Name</label>
               <input

@@ -173,7 +173,7 @@ const EditComponent = () => {
       <SeoHead title="Admin" />
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin />
-        <main className="container mx-auto px-4 py-8">
+        <main className="container mx-auto mt-20 px-4 py-8">
           {formData ? (
             <>
               <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">

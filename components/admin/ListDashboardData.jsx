@@ -41,6 +41,12 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
         data.media = data.media.id;
       }
       data.active = !data.active;
+      if (currentTab == "parts") {
+        data.supplier = data.supplier.id;
+      }
+      if (currentTab == "engineering-components") {
+        data.hero_image = data.hero_image.id;
+      }
       await apiClient.PUT(url, { data: data }).then((res) => {
         showToast(`${data.active ? "activated" : "deactivated"} successfully`, "success");
         setActiveItem(null);
@@ -53,6 +59,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
   const toggleFeatured = async () => {
     const item = activeItem;
     try {
+      console.log(currentTab);
       const url = `/${currentTab}/${item.documentId}`;
       const data = JSON.parse(JSON.stringify(item));
       delete data.id;
@@ -60,6 +67,12 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
       delete data.createdAt;
       delete data.updatedAt;
       delete data.publishedAt;
+      if (currentTab == "parts") {
+        data.supplier = data.supplier.id;
+      }
+      if (currentTab == "engineering-components") {
+        data.hero_image = data.hero_image.id;
+      }
       if (Array.isArray(data.media)) {
         data.media = data.media.map((item) => item.id);
       } else {

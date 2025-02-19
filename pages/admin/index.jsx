@@ -230,13 +230,14 @@ const AdminDashboard = () => {
   return (
     <>
       <SeoHead title="Admin" />
-      <div className="min-h-screen bg-gray-50">
+      <div className="mt-20 min-h-screen bg-gray-50">
         <Navbar isAdmin setTab={setTab} />
         <main className="container mx-auto px-4 py-8">
-          <div className="mb-8 flex items-center justify-between gap-3">
-            <h1 className="flex gap-2 text-lg font-bold md:text-2xl">Admin Dashboard</h1>
-
-            {tabData[activeTab.key] > 0 ? <BaseSearchbar setSearchQuery={setSearchQuery} /> : null}
+          <h1 className="flex gap-2 text-lg font-bold md:text-2xl">Admin Dashboard</h1>
+          <div className="mb-8 ml-auto w-fit">
+            {tabData[activeTab.key] > 0 || searchQuery !== "" ? (
+              <BaseSearchbar setSearchQuery={setSearchQuery} />
+            ) : null}
           </div>
           {/* Desktop */}
           <div className="mb-6 hidden gap-4 md:flex">

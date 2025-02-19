@@ -30,7 +30,7 @@ const ViewPartDetails = () => {
   return (
     <>
       <SeoHead title="Admin" />
-      <div className="min-h-screen bg-gray-50">
+      <div className="bg-gray-5 mt-20 min-h-screen">
         <Navbar isAdmin />
         <main className="container mx-auto px-4 py-8">
           {formData ? (
