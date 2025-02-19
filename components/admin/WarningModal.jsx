@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
 import { BaseButton } from "@/components/common";
 
-const WarningModal = ({ onClose, handleToggle, currentTab, type }) => {
+const WarningModal = ({ onClose, currentTab, type }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="relative max-h-[500px] w-full max-w-lg overflow-y-auto rounded-lg bg-white p-6">
@@ -23,7 +23,7 @@ const WarningModal = ({ onClose, handleToggle, currentTab, type }) => {
           will be lost.
         </h2>
         <div className="ml-auto mt-6 flex w-fit">
-          <BaseButton loading={false} type="button" handleClick={handleToggle}>
+          <BaseButton loading={false} type="button" handleClick={onClose}>
             Ok
           </BaseButton>
         </div>

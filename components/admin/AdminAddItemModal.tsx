@@ -6,7 +6,7 @@ import { BaseButton } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
 import { makeValidator } from "@/utils/validators";
-import { uploadFilesRequest } from "@/utils";
+import { uploadFilesRequest, deepEqual } from "@/utils";
 import type { AdminAddItemModalProps } from "@/types";
 import WarningModal from "@/components/admin/WarningModal";
 
@@ -16,7 +16,11 @@ type FormDataTypes = {
   media: string | string[];
 };
 
-const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({ onClose, currentTab, getData }) => {
+const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
+  setShowAddItemModal,
+  currentTab,
+  getData,
+}) => {
   const initialFormData = {
     name: "",
     active: false,
@@ -26,7 +30,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({ onClose, currentT
   const [formData, setFormData] = useState(initialFormData);
   const [isFormValid, setIsFormValid] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
-
+  const deepCopy = structuredClone(initialFormData);
   const setMedia = (media: string | string[]) => {
     setFormData({ ...formData, media });
   };
@@ -57,7 +61,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({ onClose, currentT
                 showToast(`${currentTab} added successfully`, "success");
               }
               getData();
-              onClose(e);
+              setShowAddItemModal(false);
             })
             .catch((error) => {
               console.log(error);
@@ -79,17 +83,28 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({ onClose, currentT
     <>
       {showWarning ? (
         <WarningModal
-          onClose={() => setShowWarning(false)}
-          handleToggle={() => setShowWarning(false)}
+          onClose={() => {
+            setShowWarning(false);
+            setShowAddItemModal(false);
+          }}
           currentTab="suppliers"
           type="create"
         />
       ) : null}
+
       <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-50">
         <div className="custom-scrollbar relative max-h-[600px] w-full max-w-xl overflow-y-auto rounded-lg bg-white">
           <div className="fixed flex w-full max-w-[560px] items-center justify-between rounded-tl-lg bg-white py-3 pl-6 pr-2">
             <h2 className="text-2xl font-bold">Add New Make</h2>
-            <button onClick={onClose}>
+            <button
+              onClick={() => {
+                if (deepEqual(deepCopy, formData)) {
+                  setShowAddItemModal(false);
+                } else {
+                  setShowWarning(true);
+                }
+              }}
+            >
               <X className="h-6 w-6" />
             </button>
           </div>
@@ -129,16 +144,6 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({ onClose, currentT
               </div>
             </div>
             <div className="ml-auto mt-6 flex w-fit gap-4">
-              <BaseButton
-                btnStyle
-                loading={false}
-                type="button"
-                handleClick={() => {
-                  setShowWarning(true);
-                }}
-              >
-                Cancel
-              </BaseButton>
               <BaseButton loading={loading} type="submit" disabled={!isFormValid}>
                 Save
               </BaseButton>

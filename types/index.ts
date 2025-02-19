@@ -16,10 +16,8 @@ export type TabProps = {
 };
 export type AdminAddItemModalProps = {
 
-  onClose: (
-    event:
-      | React.FormEvent<HTMLFormElement>
-      | React.MouseEvent<HTMLButtonElement, MouseEvent>
+  setShowAddItemModal: (
+    value: boolean
   ) => void;
   activeTab: tab;
   currentTab: string;

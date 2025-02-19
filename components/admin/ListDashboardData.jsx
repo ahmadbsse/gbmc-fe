@@ -142,7 +142,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
     <>
       {showAddItemModal ? (
         <AdminAddItemModal
-          onClose={() => setShowAddItemModal(false)}
+          setShowAddItemModal={setShowAddItemModal}
           type="product"
           currentTab={currentTab}
           getData={getData}
@@ -152,7 +152,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
         <AdminEditItemModal
           activeID={activeID}
           currentTab={currentTab}
-          onClose={() => setShowEditModal(false)}
+          setShowEditModal={setShowEditModal}
           getData={getData}
         />
       ) : null}
