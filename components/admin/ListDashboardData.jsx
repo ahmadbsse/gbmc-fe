@@ -214,7 +214,10 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                     className={`flex flex-col justify-between gap-2 rounded-lg bg-gray-50 p-4 md:flex-row md:items-center`}
                   >
                     <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-4">
-                      <div className="h-32 w-full md:w-40 md:max-w-44">
+                      <div
+                        className="h-32 w-full md:w-40 md:max-w-44"
+                        onClick={() => viewDetails(item.documentId)}
+                      >
                         {item.media ? (
                           Array.isArray(item.media) ? (
                             <BaseImage
