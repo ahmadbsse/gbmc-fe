@@ -14,7 +14,7 @@ import apiClient from "@/utils/apiClient";
 import { BaseButton, BaseImage } from "@/components/common";
 // import { convertToReadableDate } from "@/utils";
 
-const ListDashboardData = ({ data, activeTab, getData, total }) => {
+const ListDashboardData = ({ data, activeTab, getData, total, setData }) => {
   const [showAddItemModal, setShowAddItemModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showActiveModal, setShowActiveModal] = useState(false);
@@ -96,6 +96,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
     }
   };
   const deleteItem = async () => {
+    console.log(data.length);
     try {
       const url = `/${currentTab}/${activeID}`;
       await apiClient
@@ -105,6 +106,9 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
           showToast(`deleted succussfully`, "success");
           setActiveID(null);
           setActiveItem(null);
+          if (data.length == 1) {
+            setData([]);
+          }
           getData();
         })
         .catch((error) => {

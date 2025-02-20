@@ -296,6 +296,15 @@ const AdminDashboard = () => {
                 }
                 total={total}
                 activeTab={activeTab}
+                setData={
+                  activeTab.key == "engineering"
+                    ? setEngineering
+                    : activeTab.key == "suppliers"
+                      ? setSuppliers
+                      : activeTab.key == "sub-assemblies"
+                        ? setSubAssemblies
+                        : setParts
+                }
                 getData={
                   activeTab.key === "engineering"
                     ? () => getEngineering(1, false)
