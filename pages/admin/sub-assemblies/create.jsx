@@ -89,6 +89,12 @@ const CreateSubAssembly = () => {
       router.push("/admin");
     }
   };
+  const removeMedia = (file) => {
+    setFormData({
+      ...formData,
+      media: formData?.media?.filter((mediaItem) => mediaItem?.preview !== file?.preview),
+    });
+  };
   return (
     <>
       {showWarning ? (
@@ -166,7 +172,11 @@ const CreateSubAssembly = () => {
             <RichTextEditor handleChange={handleChange} defaultValue={formData.description} />
             <div>
               <label className="required mb-1 block text-sm font-medium"> Media</label>
-              <BaseFileUploader setDataFilesIds={setMedia} multiple={true} />
+              <BaseFileUploader
+                setDataFilesIds={setMedia}
+                multiple={true}
+                removeMedia={removeMedia}
+              />
             </div>
             <div className="flex flex-col gap-2 pt-4">
               <div className="flex w-full items-center gap-2">

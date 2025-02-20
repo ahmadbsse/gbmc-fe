@@ -109,6 +109,8 @@ const CreateEngineeringComponent = () => {
         ...prevData,
         hero_image: [...prevData?.hero_image, ...hero_image],
       }));
+    } else {
+      setFormData({ ...formData, hero_image: "" });
     }
   };
   const setTab = (tab) => {
@@ -117,6 +119,12 @@ const CreateEngineeringComponent = () => {
       localStorage.setItem("activeTab", JSON.stringify(tab));
       router.push("/admin");
     }
+  };
+  const removeDetailsMedia = (file) => {
+    setFormData({
+      ...formData,
+      media: formData?.media?.filter((mediaItem) => mediaItem?.preview !== file?.preview),
+    });
   };
   return (
     <>
@@ -139,7 +147,7 @@ const CreateEngineeringComponent = () => {
         <Navbar isAdmin setTab={setTab} activeTab={"Engineering Components"} />
         <main className="container mx-auto px-4 py-8">
           <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">Create Engineering Component</h1>
-          <pre>{JSON.stringify(formData, null, 2)}</pre>
+
           <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
             <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
@@ -193,7 +201,11 @@ const CreateEngineeringComponent = () => {
               </div>
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Detail Images</label>
-                <BaseFileUploader setDataFilesIds={setMedia} multiple={true} />
+                <BaseFileUploader
+                  setDataFilesIds={setMedia}
+                  multiple={true}
+                  removeMedia={removeDetailsMedia}
+                />
               </div>
             </div>
             <div className="flex flex-col gap-2 pt-3">

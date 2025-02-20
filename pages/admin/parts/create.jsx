@@ -120,6 +120,12 @@ const CreatePart = () => {
       router.push("/admin");
     }
   };
+  const removeMedia = (file) => {
+    setFormData({
+      ...formData,
+      media: formData?.media?.filter((mediaItem) => mediaItem?.preview !== file?.preview),
+    });
+  };
   return (
     <>
       {showWarning ? (
@@ -141,6 +147,7 @@ const CreatePart = () => {
         <Navbar isAdmin setTab={setTab} activeTab={"Parts"} />
         <main className="container mx-auto px-4 py-8">
           <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">Create Part</h1>
+
           <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
             <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
@@ -226,7 +233,11 @@ const CreatePart = () => {
 
             <div>
               <label className="required mb-1 block text-sm font-medium"> Media</label>
-              <BaseFileUploader setDataFilesIds={setMedia} multiple={true} />
+              <BaseFileUploader
+                setDataFilesIds={setMedia}
+                multiple={true}
+                removeMedia={removeMedia}
+              />
             </div>
             <div className="flex flex-col gap-2 pt-3">
               <div className="flex w-full items-center gap-2">
