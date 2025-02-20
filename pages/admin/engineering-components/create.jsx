@@ -10,7 +10,7 @@ import showToast from "@/utils/toast";
 import { engineeringComponentValidator } from "@/utils/validators";
 import RichTextEditor from "@/components/common/RichTextEditor";
 
-import { uploadFilesRequest, deepEqual } from "@/utils";
+import { uploadFilesRequest, deepEqual, richTextHasOnlySpaces } from "@/utils";
 
 const CreateEngineeringComponent = () => {
   const router = useRouter();
@@ -37,6 +37,7 @@ const CreateEngineeringComponent = () => {
       formData.material.trim() === "" ||
       formData.weight.trim() === "" ||
       formData.description == `<p><br></p>` ||
+      richTextHasOnlySpaces(formData.description) ||
       formData.media.length === 0 ||
       formData.media == "" ||
       formData.hero_image == "" ||
@@ -134,11 +135,11 @@ const CreateEngineeringComponent = () => {
         />
       ) : null}
       <SeoHead title="Admin" />
-
       <div className="mt-20 min-h-screen bg-gray-50">
         <Navbar isAdmin setTab={setTab} activeTab={"Engineering Components"} />
         <main className="container mx-auto px-4 py-8">
           <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">Create Engineering Component</h1>
+          <pre>{JSON.stringify(formData, null, 2)}</pre>
           <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
             <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">

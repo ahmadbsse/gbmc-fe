@@ -9,6 +9,7 @@ import {
   transformHeroVideo,
   uploadFilesRequest,
   deleteFilesRequest,
+  richTextHasOnlySpaces,
 } from "@/utils";
 import { Navbar, BaseLoader, BaseImage, BaseButton, BaseVideo, SeoHead } from "@/components/common";
 import BaseFileUploader from "@/components/admin/BaseFileUploader";
@@ -32,6 +33,7 @@ const EditComponent = () => {
         formData.material.trim() === "" ||
         formData.weight.trim() === "" ||
         formData.description == `<p><br></p>` ||
+        richTextHasOnlySpaces(formData.description) ||
         formData?.media?.length === 0 ||
         formData?.hero_image?.length === 0 ||
         formData?.media === "" ||

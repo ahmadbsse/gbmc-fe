@@ -140,3 +140,10 @@ export function deepEqual(obj1, obj2) {
 
   return true;
 }
+
+export function richTextHasOnlySpaces(html) {
+  // Remove HTML tags
+  const textContent = html.replace(/<[^>]*>/g, "");
+  // Check if the remaining content is only whitespace
+  return textContent.trim().length === 0;
+}

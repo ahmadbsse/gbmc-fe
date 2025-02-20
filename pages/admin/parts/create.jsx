@@ -7,7 +7,7 @@ import { BaseButton, SeoHead } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
 import { partValidator } from "@/utils/validators";
-import { uploadFilesRequest, deepEqual } from "@/utils";
+import { uploadFilesRequest, deepEqual, richTextHasOnlySpaces } from "@/utils";
 import RichTextEditor from "@/components/common/RichTextEditor";
 
 import WarningModal from "@/components/admin/WarningModal";
@@ -42,6 +42,7 @@ const CreatePart = () => {
       formData.oem_number.trim() === "" ||
       formData.weight.trim() === "" ||
       formData.description === `<p><br></p>` ||
+      richTextHasOnlySpaces(formData.description) ||
       formData.media.length === 0 ||
       formData.media == ""
     ) {

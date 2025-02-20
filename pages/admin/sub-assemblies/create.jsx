@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Navbar } from "@/components/common";
 
-import { uploadFilesRequest, deepEqual } from "@/utils";
+import { uploadFilesRequest, deepEqual, richTextHasOnlySpaces } from "@/utils";
 import { BaseButton, SeoHead } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
@@ -36,6 +36,7 @@ const CreateSubAssembly = () => {
         formData?.oem_number.trim() === "" ||
         formData?.weight.trim() === "" ||
         formData?.description === `<p><br></p>` ||
+        richTextHasOnlySpaces(formData.description) ||
         formData?.media.length === 0 ||
         formData?.media == ""
       ) {
