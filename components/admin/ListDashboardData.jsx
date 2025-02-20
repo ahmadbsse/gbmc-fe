@@ -189,7 +189,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
               <span className="font-bold">{activeTab.name}</span>
               {total > 0 ? <span> ({total})</span> : null}
             </h2>
-            <div className="hidden w-fit md:flex">
+            <div className="hidden w-fit sm:flex">
               <BaseButton loading={false} type="submit" handleClick={addNewItem}>
                 <p className="mx-auto flex w-fit gap-2">
                   <Plus className="mt-0.5 h-4 w-4" />
@@ -197,25 +197,25 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                 </p>
               </BaseButton>
             </div>
-            <div className="w-fit md:hidden">
+            <div className="w-fit sm:hidden">
               <div onClick={addNewItem}>
                 <Plus className="h-5 w-5" />
               </div>
             </div>
           </div>
         </div>
-        <div className="p-3 md:p-6">
+        <div className="p-3 sm:p-6">
           {data && data.length > 0 ? (
-            <div className="grid gap-3 md:gap-4">
+            <div className="grid gap-3 sm:gap-4">
               {data &&
                 data.map((item, index) => (
                   <div
                     key={item.documentId}
-                    className={`flex flex-col justify-between gap-2 rounded-lg bg-gray-50 p-4 md:flex-row md:items-center`}
+                    className={`flex flex-col justify-between gap-2 rounded-lg bg-gray-50 p-4 sm:flex-row sm:items-center`}
                   >
-                    <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-4">
+                    <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
                       <div
-                        className="h-32 w-full md:w-40 md:max-w-44"
+                        className="h-32 w-40 max-w-44"
                         onClick={() => viewDetails(item.documentId)}
                       >
                         {item.media ? (
@@ -242,13 +242,13 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                       </div>
                       <h3
                         onClick={() => viewDetails(item.documentId)}
-                        className={`text-sm font-medium capitalize md:text-base ${currentTab == "parts" || currentTab == "sub-assemblies" || currentTab == "engineering-components" ? "cursor-pointer" : ""}`}
+                        className={`text-sm font-bold capitalize sm:text-base ${currentTab == "parts" || currentTab == "sub-assemblies" || currentTab == "engineering-components" ? "cursor-pointer" : ""}`}
                       >
                         {item.name}
                       </h3>
                     </div>
 
-                    <div className="flex w-fit items-center gap-3 md:gap-4">
+                    <div className="mx-auto flex w-fit items-center gap-3 sm:mx-0 sm:gap-4">
                       <i
                         title={item.active ? "Deactivate" : "Activate"}
                         onClick={() => {
