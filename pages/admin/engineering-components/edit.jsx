@@ -84,8 +84,6 @@ const EditComponent = () => {
       const newHeroIds = previousHero.map((file) => file.id);
 
       delete formData.documentId;
-      console.log(flattenedHeroData, "hero");
-      console.log(flattenedMediaData, "media");
       if (flattenedHeroData.length !== 0 && flattenedMediaData.length !== 0) {
         await uploadFilesRequest(flattenedMediaData, true).then(async (res) => {
           if (res) {
@@ -196,7 +194,7 @@ const EditComponent = () => {
       ) : null}
       <SeoHead title="Admin" />
       <div className="min-h-screen bg-gray-50">
-        <Navbar isAdmin setTab={setTab}/>
+        <Navbar isAdmin setTab={setTab} />
         <main className="container mx-auto mt-20 px-4 py-8">
           {formData ? (
             <>

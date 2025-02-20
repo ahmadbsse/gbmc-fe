@@ -59,7 +59,6 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
   const toggleFeatured = async () => {
     const item = activeItem;
     try {
-      console.log(currentTab);
       const url = `/${currentTab}/${item.documentId}`;
       const data = JSON.parse(JSON.stringify(item));
       delete data.id;
