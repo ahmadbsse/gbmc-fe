@@ -57,6 +57,7 @@ const AdminDashboard = () => {
             setTotal(res.meta.pagination.total);
             setPagination(res.meta.pagination);
           } else {
+            setPagination(null);
             setParts([]);
             setTotal(0);
           }
@@ -98,6 +99,7 @@ const AdminDashboard = () => {
             setTotal(res.meta.pagination.total);
             setPagination(res.meta.pagination);
           } else {
+            setPagination(null);
             setEngineering([]);
             setTotal(0);
           }
@@ -138,6 +140,7 @@ const AdminDashboard = () => {
             setTotal(res.meta.pagination.total);
             setPagination(res.meta.pagination);
           } else {
+            setPagination(null);
             setSuppliers([]);
             setTotal(0);
           }
@@ -176,6 +179,7 @@ const AdminDashboard = () => {
             setTotal(res.meta.pagination.total);
             setPagination(res.meta.pagination);
           } else {
+            setPagination(null);
             setSuppliers([]);
             setTotal(0);
           }
@@ -229,8 +233,9 @@ const AdminDashboard = () => {
     //store tab object to local storage
     if (tab) {
       localStorage.setItem("activeTab", JSON.stringify(tab));
-      setActiveTab(tab);
       setPagination(null);
+      setActiveTab(tab);
+      setTotal(0);
     }
   };
 
