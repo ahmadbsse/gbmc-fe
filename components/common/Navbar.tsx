@@ -41,6 +41,9 @@ const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
           <div className="flex h-[74px] items-center justify-between">
             <div className="flex w-full items-center justify-between gap-8">
               <Link
+                onClick={() => {
+                  if (isAdmin) setTab({ name: "Parts", key: "parts", tag: "part" });
+                }}
                 href={`${isAdmin ? "/admin" : "/"}`}
                 className="text-xl font-extrabold text-black md:text-2xl"
               >

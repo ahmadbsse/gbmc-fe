@@ -245,7 +245,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                       </h3>
                     </div>
 
-                    <div className="ml-auto flex w-fit items-center md:ml-0 md:mt-0 md:gap-4">
+                    <div className="flex w-fit items-center gap-3 md:gap-4">
                       <i
                         title={item.active ? "Deactivate" : "Activate"}
                         onClick={() => {
@@ -258,11 +258,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                             : "bg-gray-100 hover:bg-yellow-50 hover:text-yellow-600"
                         }`}
                       >
-                        {item.active ? (
-                          <Eye className="h-3 w-3 md:h-4 md:w-4" />
-                        ) : (
-                          <EyeOff className="h-3 w-3 md:h-4 md:w-4" />
-                        )}
+                        {item.active ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
                       </i>
                       {currentTab != "suppliers" ? (
                         <i
@@ -278,7 +274,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                           }}
                         >
                           <Star
-                            className="h-3 w-3 md:h-4 md:w-4"
+                            className="h-4 w-4"
                             fill={item.featured ? "currentColor" : "#fff"}
                           />
                         </i>
@@ -300,7 +296,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                         }}
                         className={`rounded-lg bg-gray-100 p-2 hover:bg-yellow-50 hover:text-yellow-600`}
                       >
-                        <Pencil className="h-3 w-3 md:h-4 md:w-4" />
+                        <Pencil className="h-4 w-4" />
                       </i>
                       <i
                         title="Delete"
@@ -311,7 +307,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                         }}
                         className="rounded-lg bg-gray-100 p-2 hover:bg-yellow-50 hover:text-yellow-600"
                       >
-                        <Trash className="h-3 w-3 md:h-4 md:w-4" />
+                        <Trash className="h-4 w-4" />
                       </i>
                     </div>
                   </div>

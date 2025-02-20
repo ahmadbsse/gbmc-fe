@@ -136,7 +136,7 @@ const CreateEngineeringComponent = () => {
       <SeoHead title="Admin" />
 
       <div className="mt-20 min-h-screen bg-gray-50">
-        <Navbar isAdmin setTab={setTab} />
+        <Navbar isAdmin setTab={setTab} activeTab={"Engineering Components"} />
         <main className="container mx-auto px-4 py-8">
           <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">Create Engineering Component</h1>
           <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">

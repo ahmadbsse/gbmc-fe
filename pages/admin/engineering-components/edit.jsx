@@ -198,7 +198,7 @@ const EditComponent = () => {
       ) : null}
       <SeoHead title="Admin" />
       <div className="min-h-screen bg-gray-50">
-        <Navbar isAdmin setTab={setTab} />
+        <Navbar isAdmin setTab={setTab} activeTab={"Engineering Components"} />
         <main className="container mx-auto mt-20 px-4 py-8">
           {formData ? (
             <>

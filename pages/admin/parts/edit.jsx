@@ -177,7 +177,7 @@ const EditPart = () => {
       ) : null}
       <SeoHead title="Admin" />
       <div className="mt-20 min-h-screen bg-gray-50">
-        <Navbar isAdmin setTab={setTab} />
+        <Navbar isAdmin setTab={setTab} activeTab={"Parts"} />
         <main className="container mx-auto px-4 py-8">
           {formData ? (
             <>

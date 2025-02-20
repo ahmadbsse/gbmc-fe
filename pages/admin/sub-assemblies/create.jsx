@@ -106,7 +106,7 @@ const CreateSubAssembly = () => {
       ) : null}
       <SeoHead title="Admin" />
       <div className="mt-20 min-h-screen bg-gray-50">
-        <Navbar isAdmin setTab={setTab} />
+        <Navbar isAdmin setTab={setTab} activeTab={"Sub Assemblies"} />
         <main className="container mx-auto px-4 py-8">
           <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">Create Sub Assembly</h1>
 

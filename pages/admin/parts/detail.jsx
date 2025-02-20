@@ -38,7 +38,7 @@ const ViewPartDetails = () => {
     <>
       <SeoHead title="Admin" />
       <div className="bg-gray-5 mt-20 min-h-screen">
-        <Navbar isAdmin setTab={setTab} />
+        <Navbar isAdmin setTab={setTab} activeTab={"Parts"} />
         <main className="container mx-auto px-4 py-8">
           {formData ? (
             <div className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
@@ -90,7 +90,7 @@ const ViewPartDetails = () => {
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Description</label>
                 <div
-                  className="product-description rounded-lg border border-gray-300 px-2.5 py-2 text-justify"
+                  className="product-description min-h-10 rounded-lg border border-gray-300 px-2.5 py-2 text-justify"
                   dangerouslySetInnerHTML={{ __html: formData.description }}
                 />
               </div>

@@ -21,11 +21,11 @@ const AdminDashboard = () => {
 
   const tabsKey = [
     { name: "Makes", key: "suppliers", tag: "make" },
-    { name: "Sub Assemblies", key: "sub-assemblies", tag: "sub assembly" },
     { name: "Parts", key: "parts", tag: "part" },
+    { name: "Sub Assemblies", key: "sub-assemblies", tag: "sub assembly" },
     { name: "Engineering Components", key: "engineering", tag: "engineering component" },
   ];
-  const [activeTab, setActiveTab] = useState(tabsKey[0]);
+  const [activeTab, setActiveTab] = useState(tabsKey[1]);
 
   useEffect(() => {
     const storedTab = localStorage.getItem("activeTab");
@@ -236,7 +236,7 @@ const AdminDashboard = () => {
         <Navbar isAdmin setTab={setTab} activeTab={activeTab.name} />
         <main className="container mx-auto px-4 py-8">
           <div className="mb-3 flex items-center justify-between md:mb-8">
-            <h1 className="flex gap-2 text-lg font-bold md:text-2xl">Admin Dashboard</h1>
+            <h1 className="flex gap-2 text-lg font-bold md:text-3xl">Admin Dashboard</h1>
             <div className="hidden md:flex">
               {tabData[activeTab.key] > 0 || searchQuery !== "" ? (
                 <BaseSearchbar setSearchQuery={setSearchQuery} />
