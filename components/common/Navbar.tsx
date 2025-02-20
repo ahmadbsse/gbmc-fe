@@ -8,7 +8,7 @@ import Image from "next/image";
 import { userRoutes } from "@/data";
 import apiClient from "@/utils/apiClient";
 
-const Navbar = ({ isAdmin = false, setTab }) => {
+const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const tabsKey = [
@@ -76,6 +76,11 @@ const Navbar = ({ isAdmin = false, setTab }) => {
                             <nav className="flex flex-col gap-7 text-base">
                               {tabsKey.map((tab) => (
                                 <div
+                                  className={`w-fit ${
+                                    activeTab == tab.name
+                                      ? "border-b border-primary-color font-medium text-black"
+                                      : ""
+                                  }`}
                                   key={tab.key}
                                   onClick={() => {
                                     setTab(tab);
@@ -129,7 +134,6 @@ const Navbar = ({ isAdmin = false, setTab }) => {
                         </div>
 
                         {/* Menu items */}
-
                         <nav className="flex flex-col gap-7">
                           {isAdmin
                             ? tabsKey.map((tab) => (
@@ -141,7 +145,7 @@ const Navbar = ({ isAdmin = false, setTab }) => {
                                 <Link
                                   key={index}
                                   href={item.href}
-                                  className={`hover:text-solidGray ${
+                                  className={`w-fit hover:text-solidGray ${
                                     item.routeName.toLowerCase() === router.route.toLowerCase() ||
                                     router.route
                                       .toLowerCase()

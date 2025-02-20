@@ -231,7 +231,7 @@ const AdminDashboard = () => {
     <>
       <SeoHead title="Admin" />
       <div className="mt-20 min-h-screen bg-gray-50">
-        <Navbar isAdmin setTab={setTab} />
+        <Navbar isAdmin setTab={setTab} activeTab={activeTab.name} />
         <main className="container mx-auto px-4 py-8">
           <div className="mb-3 flex items-center justify-between md:mb-8">
             <h1 className="flex gap-2 text-lg font-bold md:text-2xl">Admin Dashboard</h1>
