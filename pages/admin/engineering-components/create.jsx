@@ -121,9 +121,13 @@ const CreateEngineeringComponent = () => {
     <>
       {showWarning ? (
         <WarningModal
-          onClose={(e) => {
-            setShowWarning(false);
-            router.push("/admin");
+          onClose={(check) => {
+            if (check) {
+              setShowWarning(false);
+              router.push("/admin");
+            } else {
+              setShowWarning(false);
+            }
           }}
           currentTab="engineering-components"
           type="create"

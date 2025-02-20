@@ -126,9 +126,13 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
     <>
       {showWarning ? (
         <WarningModal
-          onClose={() => {
-            setShowWarning(false);
-            setShowEditModal(false);
+          onClose={(check) => {
+            if (check) {
+              setShowWarning(false);
+              setShowEditModal(false);
+            } else {
+              setShowWarning(false);
+            }
           }}
           currentTab="suppliers"
           type="modify"

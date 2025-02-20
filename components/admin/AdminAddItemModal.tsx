@@ -83,9 +83,13 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
     <>
       {showWarning ? (
         <WarningModal
-          onClose={() => {
-            setShowWarning(false);
-            setShowAddItemModal(false);
+          onClose={(check: boolean) => {
+            if (check) {
+              setShowWarning(false);
+              setShowAddItemModal(false);
+            } else {
+              setShowWarning(false);
+            }
           }}
           currentTab="suppliers"
           type="create"
