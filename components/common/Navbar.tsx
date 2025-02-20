@@ -76,18 +76,21 @@ const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
                             <nav className="flex flex-col gap-7 text-base">
                               {tabsKey.map((tab) => (
                                 <div
-                                  className={`w-fit ${
-                                    activeTab == tab.name
-                                      ? "border-b border-primary-color font-medium text-black"
-                                      : ""
-                                  }`}
                                   key={tab.key}
                                   onClick={() => {
                                     setTab(tab);
                                     setIsOpen(false);
                                   }}
                                 >
-                                  {tab.name}
+                                  <div
+                                    className={`w-fit hover:text-solidGray ${
+                                      activeTab == tab.name
+                                        ? "border-b border-primary-color font-medium text-black"
+                                        : ""
+                                    }`}
+                                  >
+                                    {tab.name}
+                                  </div>
                                 </div>
                               ))}
                             </nav>
@@ -145,16 +148,20 @@ const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
                                 <Link
                                   key={index}
                                   href={item.href}
-                                  className={`w-fit hover:text-solidGray ${
-                                    item.routeName.toLowerCase() === router.route.toLowerCase() ||
-                                    router.route
-                                      .toLowerCase()
-                                      .includes(item.routeName.toLowerCase())
-                                      ? "border-b border-primary-color font-medium text-black"
-                                      : ""
-                                  }`}
+                                  className={`hover:text-solidGray`}
                                 >
-                                  {item.name}
+                                  <div
+                                    className={`w-fit ${
+                                      item.routeName.toLowerCase() === router.route.toLowerCase() ||
+                                      router.route
+                                        .toLowerCase()
+                                        .includes(item.routeName.toLowerCase())
+                                        ? "border-b border-primary-color font-medium text-black"
+                                        : ""
+                                    }`}
+                                  >
+                                    {item.name}
+                                  </div>
                                 </Link>
                               ))}
                         </nav>

@@ -112,6 +112,13 @@ const CreatePart = () => {
       }));
     }
   };
+  const setTab = (tab) => {
+    //store tab object to local storage
+    if (tab) {
+      localStorage.setItem("activeTab", JSON.stringify(tab));
+      router.push("/admin");
+    }
+  };
   return (
     <>
       {showWarning ? (
@@ -126,7 +133,7 @@ const CreatePart = () => {
       ) : null}
       <SeoHead title="Admin" />
       <div className="mt-20 min-h-screen bg-gray-50">
-        <Navbar isAdmin />
+        <Navbar isAdmin setTab={setTab} />
         <main className="container mx-auto px-4 py-8">
           <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">Create Part</h1>
           <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">

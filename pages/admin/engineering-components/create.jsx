@@ -110,6 +110,13 @@ const CreateEngineeringComponent = () => {
       }));
     }
   };
+  const setTab = (tab) => {
+    //store tab object to local storage
+    if (tab) {
+      localStorage.setItem("activeTab", JSON.stringify(tab));
+      router.push("/admin");
+    }
+  };
   return (
     <>
       {showWarning ? (
@@ -125,7 +132,7 @@ const CreateEngineeringComponent = () => {
       <SeoHead title="Admin" />
 
       <div className="mt-20 min-h-screen bg-gray-50">
-        <Navbar isAdmin />
+        <Navbar isAdmin setTab={setTab} />
         <main className="container mx-auto px-4 py-8">
           <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">Create Engineering Component</h1>
           <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
@@ -171,7 +178,7 @@ const CreateEngineeringComponent = () => {
               handleChange={handleChangeDescription}
               defaultValue={formData.description}
             />
-            <div className="flex gap-2">
+            <div className="flex flex-col gap-3 md:flex-row md:gap-2">
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Hero Image</label>
                 <BaseFileUploader

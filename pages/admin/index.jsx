@@ -217,8 +217,10 @@ const AdminDashboard = () => {
 
   const setTab = (tab) => {
     //store tab object to local storage
-    localStorage.setItem("activeTab", JSON.stringify(tab));
-    setActiveTab(tab);
+    if (tab) {
+      localStorage.setItem("activeTab", JSON.stringify(tab));
+      setActiveTab(tab);
+    }
   };
 
   const tabData = {

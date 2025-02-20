@@ -141,6 +141,13 @@ const EditSubAssembly = () => {
       media: formData?.media?.filter((mediaItem) => mediaItem?.preview !== file?.preview),
     });
   };
+  const setTab = (tab) => {
+    //store tab object to local storage
+    if (tab) {
+      localStorage.setItem("activeTab", JSON.stringify(tab));
+      router.push("/admin");
+    }
+  };
   return (
     <>
       {showWarning ? (
@@ -155,7 +162,7 @@ const EditSubAssembly = () => {
       ) : null}
       <SeoHead title="Admin" />
       <div className="mt-20 min-h-screen bg-gray-50">
-        <Navbar isAdmin />
+        <Navbar isAdmin setTab={setTab} />
         <main className="container mx-auto px-4 py-8">
           {formData ? (
             <>

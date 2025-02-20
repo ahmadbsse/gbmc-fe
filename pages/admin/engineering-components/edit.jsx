@@ -175,6 +175,13 @@ const EditComponent = () => {
       media: formData?.media?.filter((mediaItem) => mediaItem?.preview !== file?.preview),
     });
   };
+  const setTab = (tab) => {
+    //store tab object to local storage
+    if (tab) {
+      localStorage.setItem("activeTab", JSON.stringify(tab));
+      router.push("/admin");
+    }
+  };
   return (
     <>
       {showWarning ? (
@@ -189,7 +196,7 @@ const EditComponent = () => {
       ) : null}
       <SeoHead title="Admin" />
       <div className="min-h-screen bg-gray-50">
-        <Navbar isAdmin />
+        <Navbar isAdmin setTab={setTab}/>
         <main className="container mx-auto mt-20 px-4 py-8">
           {formData ? (
             <>
@@ -240,7 +247,7 @@ const EditComponent = () => {
                   defaultValue={formData.description}
                 />
 
-                <div className="flex gap-2">
+                <div className="flex flex-col gap-3 md:flex-row md:gap-2">
                   <div className="w-full">
                     <label className="required mb-1 block text-sm font-medium">Hero Image</label>
 
