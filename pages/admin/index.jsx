@@ -233,8 +233,15 @@ const AdminDashboard = () => {
       <div className="mt-20 min-h-screen bg-gray-50">
         <Navbar isAdmin setTab={setTab} />
         <main className="container mx-auto px-4 py-8">
-          <h1 className="flex gap-2 text-lg font-bold md:text-2xl">Admin Dashboard</h1>
-          <div className="mb-8 ml-auto w-fit">
+          <div className="mb-3 flex items-center justify-between md:mb-8">
+            <h1 className="flex gap-2 text-lg font-bold md:text-2xl">Admin Dashboard</h1>
+            <div className="hidden md:flex">
+              {tabData[activeTab.key] > 0 || searchQuery !== "" ? (
+                <BaseSearchbar setSearchQuery={setSearchQuery} />
+              ) : null}
+            </div>
+          </div>
+          <div className="mb-8 ml-auto w-full md:hidden">
             {tabData[activeTab.key] > 0 || searchQuery !== "" ? (
               <BaseSearchbar setSearchQuery={setSearchQuery} />
             ) : null}
