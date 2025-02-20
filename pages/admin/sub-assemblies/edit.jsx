@@ -28,13 +28,12 @@ const EditSubAssembly = () => {
   useEffect(() => {
     if (formData) {
       if (
-        formData.name === "" ||
-        formData.number === "" ||
-        formData.oem_number === "" ||
-        formData.weight === "" ||
+        formData.name.trim() === "" ||
+        formData.number.trim() === "" ||
+        formData.oem_number.trim() === "" ||
+        formData.weight.trim() === "" ||
         formData.description === `<p><br></p>` ||
         richTextHasOnlySpaces(formData.description) ||
-        formData.summary === "" ||
         formData?.media?.length === 0 ||
         formData?.media === ""
       ) {

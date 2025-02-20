@@ -28,13 +28,13 @@ const EditPart = () => {
   useEffect(() => {
     if (formData) {
       if (
-        formData.name === "" ||
-        formData.number === "" ||
-        formData.material === "" ||
+        formData.name.trim() === "" ||
+        formData.number.trim() === "" ||
+        formData.material.trim() === "" ||
         formData.supplier === "" ||
-        formData.oem_number === "" ||
-        formData.weight === "" ||
-        formData.description === "" ||
+        formData.oem_number.trim() === "" ||
+        formData.weight.trim() === "" ||
+        formData.description === `<p><br></p>` ||
         richTextHasOnlySpaces(formData.description) ||
         formData?.media?.length === 0
       ) {
