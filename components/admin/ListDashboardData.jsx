@@ -14,7 +14,7 @@ import apiClient from "@/utils/apiClient";
 import { BaseButton, BaseImage } from "@/components/common";
 // import { convertToReadableDate } from "@/utils";
 
-const ListDashboardData = ({ data, activeTab, getData, total }) => {
+const ListDashboardData = ({ data, activeTab, getData, total, setData }) => {
   const [showAddItemModal, setShowAddItemModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showActiveModal, setShowActiveModal] = useState(false);
@@ -41,6 +41,12 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
         data.media = data.media.id;
       }
       data.active = !data.active;
+      if (currentTab == "parts") {
+        data.supplier = data.supplier.id;
+      }
+      if (currentTab == "engineering-components") {
+        data.hero_image = data.hero_image.id;
+      }
       await apiClient.PUT(url, { data: data }).then((res) => {
         showToast(`${data.active ? "activated" : "deactivated"} successfully`, "success");
         setActiveItem(null);
@@ -60,6 +66,12 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
       delete data.createdAt;
       delete data.updatedAt;
       delete data.publishedAt;
+      if (currentTab == "parts") {
+        data.supplier = data.supplier.id;
+      }
+      if (currentTab == "engineering-components") {
+        data.hero_image = data.hero_image.id;
+      }
       if (Array.isArray(data.media)) {
         data.media = data.media.map((item) => item.id);
       } else {
@@ -84,6 +96,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
     }
   };
   const deleteItem = async () => {
+    console.log(data.length);
     try {
       const url = `/${currentTab}/${activeID}`;
       await apiClient
@@ -93,6 +106,9 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
           showToast(`deleted succussfully`, "success");
           setActiveID(null);
           setActiveItem(null);
+          if (data.length == 1) {
+            setData([]);
+          }
           getData();
         })
         .catch((error) => {
@@ -129,7 +145,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
     <>
       {showAddItemModal ? (
         <AdminAddItemModal
-          onClose={() => setShowAddItemModal(false)}
+          setShowAddItemModal={setShowAddItemModal}
           type="product"
           currentTab={currentTab}
           getData={getData}
@@ -139,7 +155,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
         <AdminEditItemModal
           activeID={activeID}
           currentTab={currentTab}
-          onClose={() => setShowEditModal(false)}
+          setShowEditModal={setShowEditModal}
           getData={getData}
         />
       ) : null}
@@ -177,7 +193,7 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
               <span className="font-bold">{activeTab.name}</span>
               {total > 0 ? <span> ({total})</span> : null}
             </h2>
-            <div className="hidden w-fit md:flex">
+            <div className="hidden w-fit sm:flex">
               <BaseButton loading={false} type="submit" handleClick={addNewItem}>
                 <p className="mx-auto flex w-fit gap-2">
                   <Plus className="mt-0.5 h-4 w-4" />
@@ -185,24 +201,27 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                 </p>
               </BaseButton>
             </div>
-            <div className="w-fit md:hidden">
+            <div className="w-fit sm:hidden">
               <div onClick={addNewItem}>
                 <Plus className="h-5 w-5" />
               </div>
             </div>
           </div>
         </div>
-        <div className="p-3 md:p-6">
+        <div className="p-3 sm:p-6">
           {data && data.length > 0 ? (
-            <div className="grid gap-4">
+            <div className="grid gap-3 sm:gap-4">
               {data &&
                 data.map((item, index) => (
                   <div
                     key={item.documentId}
-                    className={`flex flex-col justify-between rounded-lg bg-gray-50 p-4 md:flex-row md:items-center`}
+                    className={`flex flex-col justify-between gap-2 rounded-lg bg-gray-50 p-4 sm:flex-row sm:items-center`}
                   >
-                    <div className="flex gap-4">
-                      <div className="hidden h-28 w-40 max-w-44 md:block">
+                    <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
+                      <div
+                        className="h-32 w-40 max-w-44"
+                        onClick={() => viewDetails(item.documentId)}
+                      >
                         {item.media ? (
                           Array.isArray(item.media) ? (
                             <BaseImage
@@ -225,17 +244,15 @@ const ListDashboardData = ({ data, activeTab, getData, total }) => {
                           )
                         ) : null}
                       </div>
-                      <div className="flex flex-col justify-center">
-                        <h3
-                          onClick={() => viewDetails(item.documentId)}
-                          className={`font-medium capitalize ${currentTab == "parts" || currentTab == "sub-assemblies" || currentTab == "engineering-components" ? "cursor-pointer" : ""}`}
-                        >
-                          {item.name}
-                        </h3>
-                      </div>
+                      <h3
+                        onClick={() => viewDetails(item.documentId)}
+                        className={`text-sm font-bold capitalize sm:text-base ${currentTab == "parts" || currentTab == "sub-assemblies" || currentTab == "engineering-components" ? "cursor-pointer" : ""}`}
+                      >
+                        {item.name}
+                      </h3>
                     </div>
 
-                    <div className="ml-auto mt-2 flex w-fit items-center gap-2 md:ml-0 md:mt-0 md:gap-4">
+                    <div className="mx-auto flex w-fit items-center gap-3 sm:mx-0 sm:gap-4">
                       <i
                         title={item.active ? "Deactivate" : "Activate"}
                         onClick={() => {

@@ -27,18 +27,25 @@ const ViewSubAssemblyDetails = () => {
   useEffect(() => {
     if (id) getSubAssemblyDetails();
   }, [id]);
+  const setTab = (tab) => {
+    //store tab object to local storage
+    if (tab) {
+      localStorage.setItem("activeTab", JSON.stringify(tab));
+      router.push("/admin");
+    }
+  };
   return (
     <>
       <SeoHead title="Admin" />
-      <div className="min-h-screen bg-gray-50">
-        <Navbar isAdmin />
+      <div className="mt-20 min-h-screen bg-gray-50">
+        <Navbar isAdmin setTab={setTab} activeTab={"Sub Assemblies"} />
         <main className="container mx-auto px-4 py-8">
           {formData ? (
             <div className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
               <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">
                 View - Sub Assembly - {formData.name || ""}
               </h1>
-              <div className="flex flex-col md:flex-row md:gap-5">
+              <div className="flex flex-col gap-3 md:flex-row md:gap-5">
                 <div className="w-full">
                   <label className="required mb-1 block text-sm font-medium">Name</label>
                   <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
@@ -55,7 +62,7 @@ const ViewSubAssemblyDetails = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col md:flex-row md:gap-5">
+              <div className="flex flex-col gap-3 md:flex-row md:gap-5">
                 <div className="w-full">
                   <label className="required mb-1 block text-sm font-medium">OEM Numbers</label>
                   <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
@@ -73,7 +80,7 @@ const ViewSubAssemblyDetails = () => {
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Description</label>
                 <div
-                  className="product-description rounded-lg border border-gray-300 px-2.5 py-2 text-justify"
+                  className="product-description min-h-10 rounded-lg border border-gray-300 px-2.5 py-2 text-justify"
                   dangerouslySetInnerHTML={{ __html: formData.description }}
                 />
               </div>

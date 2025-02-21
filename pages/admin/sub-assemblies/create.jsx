@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Navbar } from "@/components/common";
 
-import { uploadFilesRequest } from "@/utils";
+import { uploadFilesRequest, deepEqual, richTextHasOnlySpaces } from "@/utils";
 import { BaseButton, SeoHead } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
@@ -27,7 +27,7 @@ const CreateSubAssembly = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [isFormValid, setIsFormValid] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
-
+  const deepCopy = structuredClone(initialFormData);
   useEffect(() => {
     if (formData) {
       if (
@@ -36,6 +36,7 @@ const CreateSubAssembly = () => {
         formData?.oem_number.trim() === "" ||
         formData?.weight.trim() === "" ||
         formData?.description === `<p><br></p>` ||
+        richTextHasOnlySpaces(formData.description) ||
         formData?.media.length === 0 ||
         formData?.media == ""
       ) {
@@ -81,24 +82,43 @@ const CreateSubAssembly = () => {
   const setMedia = (media) => {
     setFormData({ ...formData, media: media });
   };
+  const setTab = (tab) => {
+    //store tab object to local storage
+    if (tab) {
+      localStorage.setItem("activeTab", JSON.stringify(tab));
+      router.push("/admin");
+    }
+  };
+  const removeMedia = (file) => {
+    setFormData({
+      ...formData,
+      media: formData?.media?.filter((mediaItem) => mediaItem?.preview !== file?.preview),
+    });
+  };
   return (
     <>
       {showWarning ? (
         <WarningModal
-          onClose={(e) => setShowWarning(false)}
-          handleToggle={(e) => router.push("/admin")}
+          onClose={(check) => {
+            if (check) {
+              setShowWarning(false);
+              router.push("/admin");
+            } else {
+              setShowWarning(false);
+            }
+          }}
           currentTab="sub-assemblies"
           type="create"
         />
       ) : null}
       <SeoHead title="Admin" />
-      <div className="min-h-screen bg-gray-50">
-        <Navbar isAdmin />
+      <div className="mt-20 min-h-screen bg-gray-50">
+        <Navbar isAdmin setTab={setTab} activeTab={"Sub Assemblies"} />
         <main className="container mx-auto px-4 py-8">
           <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">Create Sub Assembly</h1>
 
           <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
-            <div className="flex flex-col md:flex-row md:gap-4">
+            <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Name</label>
                 <input
@@ -124,7 +144,7 @@ const CreateSubAssembly = () => {
               </div>
             </div>
 
-            <div className="flex flex-col md:flex-row md:gap-4">
+            <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">OEM Numbers</label>
                 <input
@@ -152,7 +172,11 @@ const CreateSubAssembly = () => {
             <RichTextEditor handleChange={handleChange} defaultValue={formData.description} />
             <div>
               <label className="required mb-1 block text-sm font-medium"> Media</label>
-              <BaseFileUploader setDataFilesIds={setMedia} multiple={true} />
+              <BaseFileUploader
+                setDataFilesIds={setMedia}
+                multiple={true}
+                removeMedia={removeMedia}
+              />
             </div>
             <div className="flex flex-col gap-2 pt-4">
               <div className="flex w-full items-center gap-2">
@@ -187,7 +211,11 @@ const CreateSubAssembly = () => {
                 loading={false}
                 type="button"
                 handleClick={() => {
-                  setShowWarning(true);
+                  if (deepEqual(deepCopy, formData)) {
+                    router.push("/admin");
+                  } else {
+                    setShowWarning(true);
+                  }
                 }}
               >
                 Cancel

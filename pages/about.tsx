@@ -7,7 +7,7 @@ const AboutPage = () => {
   return (
     <>
       <SeoHead title="About" />
-      <div className="min-h-screen bg-slate-50">
+      <div className="mt-16 min-h-screen bg-slate-50">
         {/* Navigation */}
         <Navbar setTab={() => {}} />
 

@@ -27,18 +27,25 @@ const ViewPartDetails = () => {
   useEffect(() => {
     if (id) getPartDetails();
   }, [id]);
+  const setTab = (tab) => {
+    //store tab object to local storage
+    if (tab) {
+      localStorage.setItem("activeTab", JSON.stringify(tab));
+      router.push("/admin");
+    }
+  };
   return (
     <>
       <SeoHead title="Admin" />
-      <div className="min-h-screen bg-gray-50">
-        <Navbar isAdmin />
+      <div className="bg-gray-5 mt-20 min-h-screen">
+        <Navbar isAdmin setTab={setTab} activeTab={"Parts"} />
         <main className="container mx-auto px-4 py-8">
           {formData ? (
             <div className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
               <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">
                 View - Part - {formData.name || ""}
               </h1>
-              <div className="flex flex-col md:flex-row md:gap-5">
+              <div className="flex flex-col gap-3 md:flex-row md:gap-5">
                 <div className="w-full">
                   <label className="required mb-1 block text-sm font-medium">Name</label>
                   <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
@@ -46,7 +53,7 @@ const ViewPartDetails = () => {
                   </div>
                 </div>
                 <div className="w-full">
-                  <label className="required mb-1 block text-sm font-medium">Supplier</label>
+                  <label className="required mb-1 block text-sm font-medium">Make</label>
                   <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
                     {formData.supplier.name}
                   </div>
@@ -58,7 +65,7 @@ const ViewPartDetails = () => {
                   {formData.oem_number}
                 </div>
               </div>
-              <div className="flex flex-col md:flex-row md:gap-5">
+              <div className="flex flex-col gap-3 md:flex-row md:gap-5">
                 <div className="w-full">
                   <label className="required mb-1 block text-sm font-medium">Material</label>
                   <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
@@ -83,7 +90,7 @@ const ViewPartDetails = () => {
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Description</label>
                 <div
-                  className="product-description rounded-lg border border-gray-300 px-2.5 py-2 text-justify"
+                  className="product-description min-h-10 rounded-lg border border-gray-300 px-2.5 py-2 text-justify"
                   dangerouslySetInnerHTML={{ __html: formData.description }}
                 />
               </div>

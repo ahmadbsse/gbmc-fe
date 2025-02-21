@@ -171,7 +171,7 @@ const PartDetails = () => {
                   <span className="text-xs italic">Registered Number: {data?.number}</span>
                 </div>
 
-                <p dangerouslySetInnerHTML={{ __html: data?.description }}></p>
+                <p className="min-h-10" dangerouslySetInnerHTML={{ __html: data?.description }}></p>
               </div>
             </div>
             <div className="mt-8 max-w-3xl">

@@ -51,7 +51,7 @@ const Article = () => {
       <SeoHead title={`Article - ${data?.name}`} />
       <Navbar setTab={() => {}} />
       {data ? (
-        <div className="mx-auto max-w-7xl">
+        <div className="mx-auto mb-8 max-w-7xl pt-20">
           <div className="my-4 px-2">
             <div className="mb-8 flex items-center gap-2 text-sm text-gray-500">
               {breadcrumbs.map((crumb, index) => (
@@ -89,7 +89,7 @@ const Article = () => {
                 {data?.name}
               </p>
               <p
-                className="mt-5 text-sm lg:text-base"
+                className="mt-5 min-h-10 text-sm lg:text-base"
                 dangerouslySetInnerHTML={{ __html: data?.description }}
               />
 

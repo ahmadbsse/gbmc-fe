@@ -74,7 +74,6 @@ const BaseFileUploader = ({
     setFiles(updatedFiles);
     if (multiple) {
       removeMedia(file);
-      // setDataFilesIds(updatedFiles);
     } else {
       setDataFilesIds("");
     }

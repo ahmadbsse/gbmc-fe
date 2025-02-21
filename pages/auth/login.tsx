@@ -109,15 +109,16 @@ const Login = () => {
                     Forgot password?
                   </Link>
                 </div> */}
-
-                <BaseButton
-                  loading={isLoading}
-                  id="signInButton"
-                  disabled={!isFormValid}
-                  type="submit"
-                >
-                  {isLoading ? "Logging in" : "log in"}
-                </BaseButton>
+                <div className="pt-10">
+                  <BaseButton
+                    loading={isLoading}
+                    id="signInButton"
+                    disabled={!isFormValid}
+                    type="submit"
+                  >
+                    {isLoading ? "Logging in" : "log in"}
+                  </BaseButton>
+                </div>
                 {/* <p className="text-sm font-light">
                   Don’t have an account yet?{" "}
                   <Link href="/auth/register" className="font-medium text-primary hover:underline">

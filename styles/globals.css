@@ -179,6 +179,10 @@ input[type="checkbox"] {
   color: red;
 }
 
+label {
+  font-weight: 700 !important;
+}
+
 .ql-toolbar {
   border-top-right-radius: 8px;
   border-top-left-radius: 8px;

@@ -9,6 +9,7 @@ import {
   transformHeroVideo,
   uploadFilesRequest,
   deleteFilesRequest,
+  richTextHasOnlySpaces,
 } from "@/utils";
 import { Navbar, BaseLoader, BaseImage, BaseButton, BaseVideo, SeoHead } from "@/components/common";
 import BaseFileUploader from "@/components/admin/BaseFileUploader";
@@ -32,6 +33,7 @@ const EditComponent = () => {
         formData.material.trim() === "" ||
         formData.weight.trim() === "" ||
         formData.description == `<p><br></p>` ||
+        richTextHasOnlySpaces(formData.description) ||
         formData?.media?.length === 0 ||
         formData?.hero_image?.length === 0 ||
         formData?.media === "" ||
@@ -83,35 +85,48 @@ const EditComponent = () => {
 
       const newHeroIds = previousHero.map((file) => file.id);
 
-      await uploadFilesRequest(flattenedMediaData, true).then(async (res) => {
-        if (res) {
-          formData.media = [...res, ...newMediaIds];
-        }
-        await uploadFilesRequest(flattenedHeroData, true).then((res) => {
+      delete formData.documentId;
+      if (flattenedHeroData.length !== 0 && flattenedMediaData.length !== 0) {
+        await uploadFilesRequest(flattenedMediaData, true).then(async (res) => {
           if (res) {
-            formData.hero_image = [...res, ...newHeroIds];
-            delete formData.documentId;
-            try {
-              apiClient
-                .PUT(`/engineering-components/${id}`, { data: formData })
-                .then(async () => {
-                  showToast("Engineering component saved Successfully", "success");
-                  await deleteFilesRequest(idsToRemove).then(() => {
-                    console.log("Files deleted successfully");
-                  });
-                  router.push("/admin");
-                })
-                .catch((error) => {
-                  showToast(error.message, "error");
-                  console.log(error);
-                });
-            } catch (error) {
-              showToast(error.message, "error");
-              console.log(error);
-            }
+            formData.media = [...res, ...newMediaIds];
+          } else {
+            formData.media = newMediaIds;
           }
+          await uploadFilesRequest(flattenedHeroData, true).then((res) => {
+            if (res) {
+              formData.hero_image = [...res, ...newHeroIds];
+              saveData();
+            } else {
+              formData.hero_image = newHeroIds;
+            }
+          });
         });
-      });
+      } else {
+        formData.media = newMediaIds;
+        formData.hero_image = newHeroIds;
+        saveData();
+      }
+    }
+  };
+  const saveData = () => {
+    try {
+      apiClient
+        .PUT(`/engineering-components/${id}`, { data: formData })
+        .then(async () => {
+          showToast("Engineering component saved Successfully", "success");
+          await deleteFilesRequest(idsToRemove).then(() => {
+            console.log("Files deleted successfully");
+          });
+          router.push("/admin");
+        })
+        .catch((error) => {
+          showToast(error.message, "error");
+          console.log(error);
+        });
+    } catch (error) {
+      showToast(error.message, "error");
+      console.log(error);
     }
   };
   const deletePreviousImage = async (id, key) => {
@@ -160,20 +175,33 @@ const EditComponent = () => {
       media: formData?.media?.filter((mediaItem) => mediaItem?.preview !== file?.preview),
     });
   };
+  const setTab = (tab) => {
+    //store tab object to local storage
+    if (tab) {
+      localStorage.setItem("activeTab", JSON.stringify(tab));
+      router.push("/admin");
+    }
+  };
   return (
     <>
       {showWarning ? (
         <WarningModal
-          onClose={(e) => setShowWarning(false)}
-          handleToggle={(e) => router.push("/admin")}
+          onClose={(check) => {
+            if (check) {
+              setShowWarning(false);
+              router.push("/admin");
+            } else {
+              setShowWarning(false);
+            }
+          }}
           currentTab="engineering-components"
           type="modify"
         />
       ) : null}
       <SeoHead title="Admin" />
       <div className="min-h-screen bg-gray-50">
-        <Navbar isAdmin />
-        <main className="container mx-auto px-4 py-8">
+        <Navbar isAdmin setTab={setTab} activeTab={"Engineering Components"} />
+        <main className="container mx-auto mt-20 px-4 py-8">
           {formData ? (
             <>
               <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">
@@ -194,7 +222,7 @@ const EditComponent = () => {
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   />
                 </div>
-                <div className="flex flex-col md:flex-row md:gap-4">
+                <div className="flex flex-col gap-4 md:flex-row">
                   <div className="w-full">
                     <label className="required mb-1 block text-sm font-medium">Material</label>
                     <input
@@ -223,7 +251,7 @@ const EditComponent = () => {
                   defaultValue={formData.description}
                 />
 
-                <div className="flex gap-2">
+                <div className="flex flex-col gap-3 md:flex-row md:gap-2">
                   <div className="w-full">
                     <label className="required mb-1 block text-sm font-medium">Hero Image</label>
 

@@ -10,7 +10,7 @@ import showToast from "@/utils/toast";
 import { engineeringComponentValidator } from "@/utils/validators";
 import RichTextEditor from "@/components/common/RichTextEditor";
 
-import { uploadFilesRequest } from "@/utils";
+import { uploadFilesRequest, deepEqual, richTextHasOnlySpaces } from "@/utils";
 
 const CreateEngineeringComponent = () => {
   const router = useRouter();
@@ -29,6 +29,7 @@ const CreateEngineeringComponent = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [isFormValid, setIsFormValid] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
+  const deepCopy = structuredClone(initialFormData);
 
   useEffect(() => {
     if (
@@ -36,6 +37,7 @@ const CreateEngineeringComponent = () => {
       formData.material.trim() === "" ||
       formData.weight.trim() === "" ||
       formData.description == `<p><br></p>` ||
+      richTextHasOnlySpaces(formData.description) ||
       formData.media.length === 0 ||
       formData.media == "" ||
       formData.hero_image == "" ||
@@ -97,7 +99,7 @@ const CreateEngineeringComponent = () => {
     if (typeof media === "object") {
       setFormData((prevData) => ({
         ...prevData,
-        hero_image: [...prevData?.media, ...media],
+        media: [...prevData?.media, ...media],
       }));
     }
   };
@@ -107,26 +109,47 @@ const CreateEngineeringComponent = () => {
         ...prevData,
         hero_image: [...prevData?.hero_image, ...hero_image],
       }));
+    } else {
+      setFormData({ ...formData, hero_image: "" });
     }
+  };
+  const setTab = (tab) => {
+    //store tab object to local storage
+    if (tab) {
+      localStorage.setItem("activeTab", JSON.stringify(tab));
+      router.push("/admin");
+    }
+  };
+  const removeDetailsMedia = (file) => {
+    setFormData({
+      ...formData,
+      media: formData?.media?.filter((mediaItem) => mediaItem?.preview !== file?.preview),
+    });
   };
   return (
     <>
       {showWarning ? (
         <WarningModal
-          onClose={(e) => setShowWarning(false)}
-          handleToggle={(e) => router.push("/admin")}
+          onClose={(check) => {
+            if (check) {
+              setShowWarning(false);
+              router.push("/admin");
+            } else {
+              setShowWarning(false);
+            }
+          }}
           currentTab="engineering-components"
           type="create"
         />
       ) : null}
       <SeoHead title="Admin" />
-
-      <div className="min-h-screen bg-gray-50">
-        <Navbar isAdmin />
+      <div className="mt-20 min-h-screen bg-gray-50">
+        <Navbar isAdmin setTab={setTab} activeTab={"Engineering Components"} />
         <main className="container mx-auto px-4 py-8">
           <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">Create Engineering Component</h1>
+
           <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
-            <div className="flex flex-col md:flex-row md:gap-4">
+            <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Name</label>
                 <input
@@ -139,7 +162,7 @@ const CreateEngineeringComponent = () => {
                 />
               </div>
             </div>
-            <div className="flex flex-col md:flex-row md:gap-4">
+            <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Material</label>
                 <input
@@ -168,7 +191,7 @@ const CreateEngineeringComponent = () => {
               handleChange={handleChangeDescription}
               defaultValue={formData.description}
             />
-            <div className="flex gap-2">
+            <div className="flex flex-col gap-3 md:flex-row md:gap-2">
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Hero Image</label>
                 <BaseFileUploader
@@ -178,7 +201,11 @@ const CreateEngineeringComponent = () => {
               </div>
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Detail Images</label>
-                <BaseFileUploader setDataFilesIds={setMedia} multiple={true} />
+                <BaseFileUploader
+                  setDataFilesIds={setMedia}
+                  multiple={true}
+                  removeMedia={removeDetailsMedia}
+                />
               </div>
             </div>
             <div className="flex flex-col gap-2 pt-3">
@@ -215,7 +242,11 @@ const CreateEngineeringComponent = () => {
                 loading={false}
                 type="button"
                 handleClick={() => {
-                  setShowWarning(true);
+                  if (deepEqual(deepCopy, formData)) {
+                    router.push("/admin");
+                  } else {
+                    setShowWarning(true);
+                  }
                 }}
               >
                 Cancel

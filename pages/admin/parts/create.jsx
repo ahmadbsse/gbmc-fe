@@ -7,7 +7,7 @@ import { BaseButton, SeoHead } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
 import { partValidator } from "@/utils/validators";
-import { uploadFilesRequest } from "@/utils";
+import { uploadFilesRequest, deepEqual, richTextHasOnlySpaces } from "@/utils";
 import RichTextEditor from "@/components/common/RichTextEditor";
 
 import WarningModal from "@/components/admin/WarningModal";
@@ -31,6 +31,7 @@ const CreatePart = () => {
   const [suppliers, setSuppliers] = useState([]);
   const [isFormValid, setIsFormValid] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
+  const deepCopy = structuredClone(initialFormData);
 
   useEffect(() => {
     if (
@@ -41,6 +42,7 @@ const CreatePart = () => {
       formData.oem_number.trim() === "" ||
       formData.weight.trim() === "" ||
       formData.description === `<p><br></p>` ||
+      richTextHasOnlySpaces(formData.description) ||
       formData.media.length === 0 ||
       formData.media == ""
     ) {
@@ -111,23 +113,43 @@ const CreatePart = () => {
       }));
     }
   };
+  const setTab = (tab) => {
+    //store tab object to local storage
+    if (tab) {
+      localStorage.setItem("activeTab", JSON.stringify(tab));
+      router.push("/admin");
+    }
+  };
+  const removeMedia = (file) => {
+    setFormData({
+      ...formData,
+      media: formData?.media?.filter((mediaItem) => mediaItem?.preview !== file?.preview),
+    });
+  };
   return (
     <>
       {showWarning ? (
         <WarningModal
-          onClose={(e) => setShowWarning(false)}
-          handleToggle={(e) => router.push("/admin")}
+          onClose={(check) => {
+            if (check) {
+              setShowWarning(false);
+              router.push("/admin");
+            } else {
+              setShowWarning(false);
+            }
+          }}
           currentTab="parts"
           type="create"
         />
       ) : null}
       <SeoHead title="Admin" />
-      <div className="min-h-screen bg-gray-50">
-        <Navbar isAdmin />
+      <div className="mt-20 min-h-screen bg-gray-50">
+        <Navbar isAdmin setTab={setTab} activeTab={"Parts"} />
         <main className="container mx-auto px-4 py-8">
           <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">Create Part</h1>
+
           <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
-            <div className="flex flex-col md:flex-row md:gap-4">
+            <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Name</label>
                 <input
@@ -170,7 +192,7 @@ const CreatePart = () => {
               />
             </div>
 
-            <div className="flex flex-col md:flex-row md:gap-4">
+            <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Material</label>
                 <input
@@ -211,7 +233,11 @@ const CreatePart = () => {
 
             <div>
               <label className="required mb-1 block text-sm font-medium"> Media</label>
-              <BaseFileUploader setDataFilesIds={setMedia} multiple={true} />
+              <BaseFileUploader
+                setDataFilesIds={setMedia}
+                multiple={true}
+                removeMedia={removeMedia}
+              />
             </div>
             <div className="flex flex-col gap-2 pt-3">
               <div className="flex w-full items-center gap-2">
@@ -246,7 +272,11 @@ const CreatePart = () => {
                 loading={false}
                 type="button"
                 handleClick={() => {
-                  setShowWarning(true);
+                  if (deepEqual(deepCopy, formData)) {
+                    router.push("/admin");
+                  } else {
+                    setShowWarning(true);
+                  }
                 }}
               >
                 Cancel

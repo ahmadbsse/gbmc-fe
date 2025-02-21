@@ -40,11 +40,18 @@ const ViewComponentDetails = () => {
   useEffect(() => {
     if (id) getComponentDetails();
   }, [id]);
+  const setTab = (tab) => {
+    //store tab object to local storage
+    if (tab) {
+      localStorage.setItem("activeTab", JSON.stringify(tab));
+      router.push("/admin");
+    }
+  };
   return (
     <>
       <SeoHead title="Admin" />
-      <div className="min-h-screen bg-gray-50">
-        <Navbar isAdmin />
+      <div className="mt-20 min-h-screen bg-gray-50">
+        <Navbar isAdmin setTab={setTab} activeTab={"Engineering Components"} />
         <main className="container mx-auto px-4 py-8">
           {formData ? (
             <div className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
@@ -57,7 +64,7 @@ const ViewComponentDetails = () => {
                   {formData.name}
                 </div>
               </div>
-              <div className="flex flex-col md:flex-row md:gap-5">
+              <div className="flex flex-col gap-3 md:flex-row md:gap-5">
                 <div className="w-full">
                   <label className="required mb-1 block text-sm font-medium">Material</label>
                   <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
@@ -74,11 +81,11 @@ const ViewComponentDetails = () => {
               <div className="w-full">
                 <label className="required mb-1 block text-sm font-medium">Description</label>
                 <div
-                  className="product-description rounded-lg border border-gray-300 px-2.5 py-2 text-justify"
+                  className="product-description min-h-10 rounded-lg border border-gray-300 px-2.5 py-2 text-justify"
                   dangerouslySetInnerHTML={{ __html: formData.description }}
                 />
               </div>
-              <div className="flex flex-col md:flex-row md:gap-5">
+              <div className="flex flex-col gap-3 md:flex-row md:gap-5">
                 <div className="basis-1/2">
                   <label className="required mb-1 block text-sm font-medium">Hero Image</label>
                   <div className="h-28 w-44">

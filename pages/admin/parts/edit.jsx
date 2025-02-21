@@ -2,7 +2,12 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { X, ChevronDown } from "lucide-react";
 import apiClient from "@/utils/apiClient";
-import { transformMedia, uploadFilesRequest, deleteFilesRequest } from "@/utils";
+import {
+  transformMedia,
+  uploadFilesRequest,
+  deleteFilesRequest,
+  richTextHasOnlySpaces,
+} from "@/utils";
 import { Navbar, BaseLoader, BaseImage, BaseButton, SeoHead } from "@/components/common";
 import BaseFileUploader from "@/components/admin/BaseFileUploader";
 import showToast from "@/utils/toast";
@@ -23,13 +28,14 @@ const EditPart = () => {
   useEffect(() => {
     if (formData) {
       if (
-        formData.name === "" ||
-        formData.number === "" ||
-        formData.material === "" ||
+        formData.name.trim() === "" ||
+        formData.number.trim() === "" ||
+        formData.material.trim() === "" ||
         formData.supplier === "" ||
-        formData.oem_number === "" ||
-        formData.weight === "" ||
-        formData.description === "" ||
+        formData.oem_number.trim() === "" ||
+        formData.weight.trim() === "" ||
+        formData.description === `<p><br></p>` ||
+        richTextHasOnlySpaces(formData.description) ||
         formData?.media?.length === 0
       ) {
         setIsFormValid(false);
@@ -80,29 +86,15 @@ const EditPart = () => {
           .filter((item) => item && typeof item === "object" && !item.id);
         const previousMedia = formData.media.filter((item) => item && item.id);
         const newMediaIds = previousMedia.map((file) => file.id);
+        formData.supplier = formData.supplier.documentId;
+        delete formData.documentId;
         await uploadFilesRequest(flattenedData, true).then((res) => {
           if (res) {
             formData.media = [...res, ...newMediaIds];
-            formData.supplier = formData.supplier.documentId;
-            delete formData.documentId;
-            try {
-              apiClient
-                .PUT(`/parts/${id}`, { data: formData })
-                .then(async () => {
-                  showToast("Part Saved Successfully", "success");
-                  await deleteFilesRequest(idsToRemove).then(() => {
-                    console.log("Files deleted successfully");
-                  });
-                  router.push("/admin");
-                })
-                .catch((error) => {
-                  console.log(error);
-                  showToast(error.message, "error");
-                });
-            } catch (error) {
-              console.log(error);
-              showToast(error.message, "error");
-            }
+            saveData();
+          } else {
+            formData.media = newMediaIds;
+            saveData();
           }
         });
       } catch (error) {
@@ -111,6 +103,26 @@ const EditPart = () => {
       } finally {
         setLoading(false);
       }
+    }
+  };
+  const saveData = () => {
+    try {
+      apiClient
+        .PUT(`/parts/${id}`, { data: formData })
+        .then(async () => {
+          showToast("Part Saved Successfully", "success");
+          await deleteFilesRequest(idsToRemove).then(() => {
+            console.log("Files deleted successfully");
+          });
+          router.push("/admin");
+        })
+        .catch((error) => {
+          console.log(error);
+          showToast(error.message, "error");
+        });
+    } catch (error) {
+      console.log(error);
+      showToast(error.message, "error");
     }
   };
   const deletePreviousImage = async (id) => {
@@ -146,19 +158,32 @@ const EditPart = () => {
       media: formData?.media?.filter((mediaItem) => mediaItem?.preview !== file?.preview),
     });
   };
+  const setTab = (tab) => {
+    //store tab object to local storage
+    if (tab) {
+      localStorage.setItem("activeTab", JSON.stringify(tab));
+      router.push("/admin");
+    }
+  };
   return (
     <>
       {showWarning ? (
         <WarningModal
-          onClose={(e) => setShowWarning(false)}
-          handleToggle={(e) => router.push("/admin")}
+          onClose={(check) => {
+            if (check) {
+              setShowWarning(false);
+              router.push("/admin");
+            } else {
+              setShowWarning(false);
+            }
+          }}
           currentTab="parts"
           type="modify"
         />
       ) : null}
       <SeoHead title="Admin" />
-      <div className="min-h-screen bg-gray-50">
-        <Navbar isAdmin />
+      <div className="mt-20 min-h-screen bg-gray-50">
+        <Navbar isAdmin setTab={setTab} activeTab={"Parts"} />
         <main className="container mx-auto px-4 py-8">
           {formData ? (
             <>
@@ -169,7 +194,7 @@ const EditPart = () => {
                 onSubmit={handleSubmit}
                 className="mx-auto max-w-[810px] space-y-3 lg:space-y-5"
               >
-                <div className="flex flex-col md:flex-row md:gap-4">
+                <div className="flex flex-col gap-4 md:flex-row">
                   <div className="w-full">
                     <label className="required mb-1 block text-sm font-medium">Name</label>
                     <input
@@ -217,7 +242,7 @@ const EditPart = () => {
                     onChange={(e) => setFormData({ ...formData, oem_number: e.target.value })}
                   />
                 </div>
-                <div className="flex flex-col md:flex-row md:gap-4">
+                <div className="flex flex-col gap-4 md:flex-row">
                   <div className="w-full">
                     <label className="required mb-1 block text-sm font-medium">Material</label>
                     <input

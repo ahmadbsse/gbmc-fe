@@ -83,12 +83,14 @@ export function transformHeroVideo(hero_image) {
 }
 
 export const uploadFilesRequest = async (filesToUpload, multiple = true) => {
+  if (filesToUpload.length === 0) return;
+  const newFiles = filesToUpload.filter((file) => file.file);
+  if (newFiles.length === 0) return;
   let fileIds = null;
   const formData = new FormData();
   filesToUpload.forEach((file) => {
     formData.append("files", file.file); // Use the correct file object
   });
-  if (filesToUpload.length === 0) return;
   const url = "/upload";
   try {
     await apiClient.UPLOAD(url, formData).then((response) => {
@@ -117,3 +119,31 @@ export const deleteFilesRequest = async (fileIds) => {
     }
   });
 };
+
+export function deepEqual(obj1, obj2) {
+  if (obj1 === obj2) return true; // Check for reference equality
+
+  if (typeof obj1 !== "object" || typeof obj2 !== "object" || obj1 === null || obj2 === null) {
+    return false; // If either is not an object or null, they are not equal
+  }
+
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+  if (keys1.length !== keys2.length) return false; // Different number of keys
+
+  for (let key of keys1) {
+    if (!keys2.includes(key) || !deepEqual(obj1[key], obj2[key])) {
+      return false; // Key mismatch or recursive value mismatch
+    }
+  }
+
+  return true;
+}
+
+export function richTextHasOnlySpaces(html) {
+  // Remove HTML tags
+  const textContent = html.replace(/<[^>]*>/g, "");
+  // Check if the remaining content is only whitespace
+  return textContent.trim().length === 0;
+}

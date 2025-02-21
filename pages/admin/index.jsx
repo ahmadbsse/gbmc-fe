@@ -21,11 +21,11 @@ const AdminDashboard = () => {
 
   const tabsKey = [
     { name: "Makes", key: "suppliers", tag: "make" },
-    { name: "Sub Assemblies", key: "sub-assemblies", tag: "sub assembly" },
     { name: "Parts", key: "parts", tag: "part" },
+    { name: "Sub Assemblies", key: "sub-assemblies", tag: "sub assembly" },
     { name: "Engineering Components", key: "engineering", tag: "engineering component" },
   ];
-  const [activeTab, setActiveTab] = useState(tabsKey[0]);
+  const [activeTab, setActiveTab] = useState(tabsKey[1]);
 
   useEffect(() => {
     const storedTab = localStorage.getItem("activeTab");
@@ -37,149 +37,163 @@ const AdminDashboard = () => {
   }, []);
 
   const getParts = async (pageNum, isLoadMore = false) => {
-    try {
-      if (isLoadMore) {
-        setIsLoadingMore(true);
-      } else {
-        setIsLoading(true);
-      }
-      let url = "";
-      if (searchQuery == "") {
-        url = `/parts?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}`;
-      } else {
-        url = `/parts?populate=*&filters[name][$containsi]=${searchQuery}`;
-      }
-      await apiClient.GET(url).then(async (res) => {
-        if (res && res.data.length > 0) {
-          const transformedData = transformMedia(res.data);
-          setParts((prev) => (isLoadMore ? [...prev, ...transformedData] : transformedData));
-          setTotal(res.meta.pagination.total);
-          setPagination(res.meta.pagination);
+    if (activeTab.key == "parts") {
+      try {
+        if (isLoadMore) {
+          setIsLoadingMore(true);
         } else {
-          setParts([]);
-          setTotal(0);
+          setIsLoading(true);
         }
-      });
-    } catch (error) {
-      const message = error.message;
+        let url = "";
+        if (searchQuery == "") {
+          url = `/parts?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}`;
+        } else {
+          url = `/parts?populate=*&filters[name][$containsi]=${searchQuery}`;
+        }
+        await apiClient.GET(url).then(async (res) => {
+          if (res && res.data.length > 0) {
+            const transformedData = transformMedia(res.data);
+            setParts((prev) => (isLoadMore ? [...prev, ...transformedData] : transformedData));
+            setTotal(res.meta.pagination.total);
+            setPagination(res.meta.pagination);
+          } else {
+            setPagination(null);
+            setParts([]);
+            setTotal(0);
+          }
+        });
+      } catch (error) {
+        const message = error.message;
 
-      console.error("Error in POST request:", message);
-    } finally {
-      if (isLoadMore) {
-        setIsLoadingMore(false);
-      } else {
-        setIsLoading(false);
+        console.error("Error in POST request:", message);
+      } finally {
+        if (isLoadMore) {
+          setIsLoadingMore(false);
+        } else {
+          setIsLoading(false);
+        }
       }
     }
   };
 
   const getEngineering = async (pageNum, isLoadMore = false) => {
-    try {
-      if (isLoadMore) {
-        setIsLoadingMore(true);
-      } else {
-        setIsLoading(true);
-      }
-      let url = "";
-      if (searchQuery == "") {
-        url = `/engineering-components?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}`;
-      } else {
-        url = `/engineering-components?populate=*&filters[name][$containsi]=${searchQuery}`;
-      }
-      await apiClient.GET(url).then(async (res) => {
-        if (res && res.data.length > 0) {
-          const transformedData = transformMedia(res.data);
-          setEngineering((prev) => (isLoadMore ? [...prev, ...transformedData] : transformedData));
-          setTotal(res.meta.pagination.total);
-          setPagination(res.meta.pagination);
+    if (activeTab.key == "engineering") {
+      try {
+        if (isLoadMore) {
+          setIsLoadingMore(true);
         } else {
-          setEngineering([]);
-          setTotal(0);
+          setIsLoading(true);
         }
-      });
-    } catch (error) {
-      const message = error.message;
-      console.error("Error in POST request:", message);
-    } finally {
-      if (isLoadMore) {
-        setIsLoadingMore(false);
-      } else {
-        setIsLoading(false);
+        let url = "";
+        if (searchQuery == "") {
+          url = `/engineering-components?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}`;
+        } else {
+          url = `/engineering-components?populate=*&filters[name][$containsi]=${searchQuery}`;
+        }
+        await apiClient.GET(url).then(async (res) => {
+          if (res && res.data.length > 0) {
+            const transformedData = transformMedia(res.data);
+            setEngineering((prev) =>
+              isLoadMore ? [...prev, ...transformedData] : transformedData
+            );
+            setTotal(res.meta.pagination.total);
+            setPagination(res.meta.pagination);
+          } else {
+            setPagination(null);
+            setEngineering([]);
+            setTotal(0);
+          }
+        });
+      } catch (error) {
+        const message = error.message;
+        console.error("Error in POST request:", message);
+      } finally {
+        if (isLoadMore) {
+          setIsLoadingMore(false);
+        } else {
+          setIsLoading(false);
+        }
       }
     }
   };
 
   const getSubAssemblies = async (pageNum, isLoadMore = false) => {
-    try {
-      if (isLoadMore) {
-        setIsLoadingMore(true);
-      } else {
-        setIsLoading(true);
-      }
-      let url = "";
-      if (searchQuery == "") {
-        url = `/sub-assemblies?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}`;
-      } else {
-        url = `/sub-assemblies?populate=*&filters[name][$containsi]=${searchQuery}`;
-      }
-      await apiClient.GET(url).then(async (res) => {
-        if (res && res.data.length > 0) {
-          const transformedData = transformMedia(res.data);
-          setSubAssemblies((prev) =>
-            isLoadMore ? [...prev, ...transformedData] : transformedData
-          );
-          setTotal(res.meta.pagination.total);
-          setPagination(res.meta.pagination);
+    if (activeTab.key == "sub-assemblies") {
+      try {
+        if (isLoadMore) {
+          setIsLoadingMore(true);
         } else {
-          setSuppliers([]);
-          setTotal(0);
+          setIsLoading(true);
         }
-      });
-    } catch (error) {
-      const message = error.message;
-      console.error("Error in POST request:", message);
-    } finally {
-      if (isLoadMore) {
-        setIsLoadingMore(false);
-      } else {
-        setIsLoading(false);
+        let url = "";
+        if (searchQuery == "") {
+          url = `/sub-assemblies?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}`;
+        } else {
+          url = `/sub-assemblies?populate=*&filters[name][$containsi]=${searchQuery}`;
+        }
+        await apiClient.GET(url).then(async (res) => {
+          if (res && res.data.length > 0) {
+            const transformedData = transformMedia(res.data);
+            setSubAssemblies((prev) =>
+              isLoadMore ? [...prev, ...transformedData] : transformedData
+            );
+            setTotal(res.meta.pagination.total);
+            setPagination(res.meta.pagination);
+          } else {
+            setPagination(null);
+            setSuppliers([]);
+            setTotal(0);
+          }
+        });
+      } catch (error) {
+        const message = error.message;
+        console.error("Error in POST request:", message);
+      } finally {
+        if (isLoadMore) {
+          setIsLoadingMore(false);
+        } else {
+          setIsLoading(false);
+        }
       }
     }
   };
 
   const getSuppliers = async (pageNum, isLoadMore) => {
-    try {
-      if (isLoadMore) {
-        setIsLoadingMore(true);
-      } else {
-        setIsLoading(true);
-      }
-      let url = "";
-      if (searchQuery == "") {
-        url = `/suppliers?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}`;
-      } else {
-        url = `/suppliers?populate=*&filters[name][$containsi]=${searchQuery}`;
-      }
-      await apiClient.GET(url).then(async (res) => {
-        if (res && res.data.length > 0) {
-          const transformedData = transformMedia(res.data);
-          setSuppliers((prev) => (isLoadMore ? [...prev, ...transformedData] : transformedData));
-          setTotal(res.meta.pagination.total);
-          setPagination(res.meta.pagination);
+    if (activeTab.key == "suppliers") {
+      try {
+        if (isLoadMore) {
+          setIsLoadingMore(true);
         } else {
-          setSuppliers([]);
-          setTotal(0);
+          setIsLoading(true);
         }
-      });
-    } catch (error) {
-      const message = error.message;
-      setIsLoading(false);
-      console.error("Error in POST request:", message);
-    } finally {
-      if (isLoadMore) {
-        setIsLoadingMore(false);
-      } else {
+        let url = "";
+        if (searchQuery == "") {
+          url = `/suppliers?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}`;
+        } else {
+          url = `/suppliers?populate=*&filters[name][$containsi]=${searchQuery}`;
+        }
+        await apiClient.GET(url).then(async (res) => {
+          if (res && res.data.length > 0) {
+            const transformedData = transformMedia(res.data);
+            setSuppliers((prev) => (isLoadMore ? [...prev, ...transformedData] : transformedData));
+            setTotal(res.meta.pagination.total);
+            setPagination(res.meta.pagination);
+          } else {
+            setPagination(null);
+            setSuppliers([]);
+            setTotal(0);
+          }
+        });
+      } catch (error) {
+        const message = error.message;
         setIsLoading(false);
+        console.error("Error in POST request:", message);
+      } finally {
+        if (isLoadMore) {
+          setIsLoadingMore(false);
+        } else {
+          setIsLoading(false);
+        }
       }
     }
   };
@@ -217,8 +231,12 @@ const AdminDashboard = () => {
 
   const setTab = (tab) => {
     //store tab object to local storage
-    localStorage.setItem("activeTab", JSON.stringify(tab));
-    setActiveTab(tab);
+    if (tab) {
+      localStorage.setItem("activeTab", JSON.stringify(tab));
+      setPagination(null);
+      setActiveTab(tab);
+      setTotal(0);
+    }
   };
 
   const tabData = {
@@ -230,13 +248,22 @@ const AdminDashboard = () => {
   return (
     <>
       <SeoHead title="Admin" />
-      <div className="min-h-screen bg-gray-50">
-        <Navbar isAdmin setTab={setTab} />
-        <main className="container mx-auto px-4 py-8">
-          <div className="mb-8 flex items-center justify-between gap-3">
-            <h1 className="flex gap-2 text-lg font-bold md:text-2xl">Admin Dashboard</h1>
+      <div className="mt-20 min-h-screen bg-gray-50">
+        <Navbar isAdmin setTab={setTab} activeTab={activeTab.name} />
 
-            {tabData[activeTab.key] > 0 ? <BaseSearchbar setSearchQuery={setSearchQuery} /> : null}
+        <main className="container mx-auto px-4 py-8">
+          <div className="mb-3 flex items-center justify-between md:mb-8">
+            <h1 className="flex gap-2 text-lg font-bold md:text-3xl">Admin Dashboard</h1>
+            <div className="hidden md:flex">
+              {tabData[activeTab.key] > 0 || searchQuery !== "" ? (
+                <BaseSearchbar setSearchQuery={setSearchQuery} />
+              ) : null}
+            </div>
+          </div>
+          <div className="mb-8 ml-auto w-full md:hidden">
+            {tabData[activeTab.key] > 0 || searchQuery !== "" ? (
+              <BaseSearchbar setSearchQuery={setSearchQuery} />
+            ) : null}
           </div>
           {/* Desktop */}
           <div className="mb-6 hidden gap-4 md:flex">
@@ -269,6 +296,15 @@ const AdminDashboard = () => {
                 }
                 total={total}
                 activeTab={activeTab}
+                setData={
+                  activeTab.key == "engineering"
+                    ? setEngineering
+                    : activeTab.key == "suppliers"
+                      ? setSuppliers
+                      : activeTab.key == "sub-assemblies"
+                        ? setSubAssemblies
+                        : setParts
+                }
                 getData={
                   activeTab.key === "engineering"
                     ? () => getEngineering(1, false)

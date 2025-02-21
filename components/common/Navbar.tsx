@@ -8,7 +8,7 @@ import Image from "next/image";
 import { userRoutes } from "@/data";
 import apiClient from "@/utils/apiClient";
 
-const Navbar = ({ isAdmin = false, setTab }) => {
+const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const tabsKey = [
@@ -36,17 +36,20 @@ const Navbar = ({ isAdmin = false, setTab }) => {
                     nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
         speed={30}
       /> */}
-      <nav className="bg-white drop-shadow-xl">
+      <nav className="fixed top-0 z-50 w-full bg-white drop-shadow-xl">
         <div className="container mx-auto px-4">
           <div className="flex h-[74px] items-center justify-between">
             <div className="flex w-full items-center justify-between gap-8">
               <Link
+                onClick={() => {
+                  if (isAdmin) setTab({ name: "Parts", key: "parts", tag: "part" });
+                }}
                 href={`${isAdmin ? "/admin" : "/"}`}
                 className="text-xl font-extrabold text-black md:text-2xl"
               >
                 <Image height={70} width={150} src="/assets/logo.svg" alt="logo" priority />
               </Link>
-              {router.route != "/" || isAdmin ? (
+              {isAdmin ? (
                 <div className="flex items-center gap-4 pl-4">
                   {isAdmin && (
                     <div className="flex items-center gap-4">
@@ -82,7 +85,15 @@ const Navbar = ({ isAdmin = false, setTab }) => {
                                     setIsOpen(false);
                                   }}
                                 >
-                                  {tab.name}
+                                  <div
+                                    className={`w-fit hover:text-solidGray ${
+                                      activeTab == tab.name
+                                        ? "border-b border-primary-color font-medium text-black"
+                                        : ""
+                                    }`}
+                                  >
+                                    {tab.name}
+                                  </div>
                                 </div>
                               ))}
                             </nav>
@@ -92,7 +103,7 @@ const Navbar = ({ isAdmin = false, setTab }) => {
                     </div>
                   )}
                 </div>
-              ) : (
+              ) : router.route == "/about" || router.route == "/" || router.route == "/contact" ? (
                 <>
                   <div className="hidden items-center justify-between gap-6 text-black md:flex">
                     {userRoutes.map((item, index) => (
@@ -129,7 +140,6 @@ const Navbar = ({ isAdmin = false, setTab }) => {
                         </div>
 
                         {/* Menu items */}
-
                         <nav className="flex flex-col gap-7">
                           {isAdmin
                             ? tabsKey.map((tab) => (
@@ -141,16 +151,20 @@ const Navbar = ({ isAdmin = false, setTab }) => {
                                 <Link
                                   key={index}
                                   href={item.href}
-                                  className={`hover:text-solidGray ${
-                                    item.routeName.toLowerCase() === router.route.toLowerCase() ||
-                                    router.route
-                                      .toLowerCase()
-                                      .includes(item.routeName.toLowerCase())
-                                      ? "border-b border-primary-color font-medium text-black"
-                                      : ""
-                                  }`}
+                                  className={`hover:text-solidGray`}
                                 >
-                                  {item.name}
+                                  <div
+                                    className={`w-fit ${
+                                      item.routeName.toLowerCase() === router.route.toLowerCase() ||
+                                      router.route
+                                        .toLowerCase()
+                                        .includes(item.routeName.toLowerCase())
+                                        ? "border-b border-primary-color font-medium text-black"
+                                        : ""
+                                    }`}
+                                  >
+                                    {item.name}
+                                  </div>
                                 </Link>
                               ))}
                         </nav>
@@ -158,7 +172,7 @@ const Navbar = ({ isAdmin = false, setTab }) => {
                     </div>
                   </>
                 </>
-              )}
+              ) : null}
             </div>
           </div>
         </div>
