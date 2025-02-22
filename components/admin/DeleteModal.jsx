@@ -10,15 +10,15 @@ const DeleteConfirmationModal = ({ onClose, handleDelete, name, currentTab }) =>
         </button>
         <h1 className="mb-2 text-lg font-bold">Confirm</h1>
         <h2 className="mb-16">
-          Are you sure you want to delete <strong>{name} </strong>
+          Are you sure you want to delete{" "}
           {currentTab == "engineering-components"
             ? "Engineering Component"
             : currentTab == "suppliers"
               ? "Make"
               : currentTab == "sub-assemblies"
                 ? "Sub Assembly"
-                : "Part"}
-          ?
+                : "Part"}{" "}
+          <strong>{name} </strong>?
         </h2>
         <div className="ml-auto mt-6 flex w-fit">
           <BaseButton loading={false} type="button" handleClick={handleDelete}>

@@ -219,7 +219,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData }) => {
                   >
                     <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
                       <div
-                        className="h-32 w-40 max-w-44"
+                        className={`h-32 w-40 min-w-44 max-w-44 ${currentTab == "parts" || currentTab == "sub-assemblies" || currentTab == "engineering-components" ? "cursor-pointer" : ""}`}
                         onClick={() => viewDetails(item.documentId)}
                       >
                         {item.media ? (
@@ -230,7 +230,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData }) => {
                               src={item?.media[0]?.formats.thumbnail?.url || "/placeholder"}
                               alt={item?.name}
                               priority={true}
-                              classes="object-cover w-full h-full"
+                              classes="object-fill w-full h-full"
                             />
                           ) : (
                             <BaseImage
@@ -239,14 +239,14 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData }) => {
                               src={item?.media?.formats.thumbnail?.url || "/placeholder"}
                               alt={item?.name}
                               priority={true}
-                              classes="object-cover w-full h-full"
+                              classes="object-fill w-full h-full"
                             />
                           )
                         ) : null}
                       </div>
                       <h3
                         onClick={() => viewDetails(item.documentId)}
-                        className={`text-sm font-bold capitalize sm:text-base ${currentTab == "parts" || currentTab == "sub-assemblies" || currentTab == "engineering-components" ? "cursor-pointer" : ""}`}
+                        className={`text-sm font-bold sm:text-base ${currentTab == "parts" || currentTab == "sub-assemblies" || currentTab == "engineering-components" ? "cursor-pointer" : ""}`}
                       >
                         {item.name}
                       </h3>

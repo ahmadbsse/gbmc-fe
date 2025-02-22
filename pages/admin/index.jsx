@@ -236,6 +236,7 @@ const AdminDashboard = () => {
       setPagination(null);
       setActiveTab(tab);
       setTotal(0);
+      setSearchQuery("");
     }
   };
 
@@ -253,16 +254,16 @@ const AdminDashboard = () => {
 
         <main className="container mx-auto px-4 py-8">
           <div className="mb-3 flex items-center justify-between md:mb-8">
-            <h1 className="flex gap-2 text-lg font-bold md:text-3xl">Admin Dashboard</h1>
+            <h1 className="flex gap-2 text-lg font-bold md:text-[1.65rem]">Admin Dashboard</h1>
             <div className="hidden md:flex">
               {tabData[activeTab.key] > 0 || searchQuery !== "" ? (
-                <BaseSearchbar setSearchQuery={setSearchQuery} />
+                <BaseSearchbar key={activeTab.key} setSearchQuery={setSearchQuery} />
               ) : null}
             </div>
           </div>
           <div className="mb-8 ml-auto w-full md:hidden">
             {tabData[activeTab.key] > 0 || searchQuery !== "" ? (
-              <BaseSearchbar setSearchQuery={setSearchQuery} />
+              <BaseSearchbar key={activeTab.key} setSearchQuery={setSearchQuery} />
             ) : null}
           </div>
           {/* Desktop */}
