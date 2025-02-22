@@ -151,9 +151,12 @@ const CreatePart = () => {
           <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
             <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">Name</label>
+                <label for="name" className="required mb-1 block text-sm font-medium">
+                  Name
+                </label>
                 <input
                   required
+                  id="name"
                   type="text"
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder={`Type name`}
@@ -162,8 +165,11 @@ const CreatePart = () => {
                 />
               </div>
               <div className="relative w-full">
-                <label className="required mb-1 block text-sm font-medium">Make</label>
+                <label for="make" className="required mb-1 block text-sm font-medium">
+                  Make
+                </label>
                 <select
+                  id="make"
                   className="w-full appearance-none rounded-lg border border-gray-300 bg-white px-2.5 py-2 text-[13px] outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   value={formData.supplier}
                   onChange={(e) => setFormData({ ...formData, supplier: e.target.value })}
@@ -181,8 +187,11 @@ const CreatePart = () => {
               </div>
             </div>
             <div className="w-full">
-              <label className="required mb-1 block text-sm font-medium">OEM Numbers</label>
+              <label for="oem_numbers" className="required mb-1 block text-sm font-medium">
+                OEM Numbers
+              </label>
               <input
+                id="oem_numbers"
                 required
                 type="text"
                 className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -194,9 +203,12 @@ const CreatePart = () => {
 
             <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">Material</label>
+                <label for="material" className="required mb-1 block text-sm font-medium">
+                  Material
+                </label>
                 <input
                   required
+                  id="material"
                   type="text"
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder={`Type material`}
@@ -205,9 +217,12 @@ const CreatePart = () => {
                 />
               </div>
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium"> Weight</label>
+                <label for="weight" className="required mb-1 block text-sm font-medium">
+                  Weight
+                </label>
                 <input
                   required
+                  id="weight"
                   type="text"
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder={`Type weight`}
@@ -217,8 +232,14 @@ const CreatePart = () => {
               </div>
 
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">Registered Number</label>
+                <label
+                  for="registration_number"
+                  className="required mb-1 block text-sm font-medium"
+                >
+                  Registered Number
+                </label>
                 <input
+                  id="registration_number"
                   required
                   type="number"
                   min={1}

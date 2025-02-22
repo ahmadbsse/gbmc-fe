@@ -87,10 +87,14 @@ const ContactPage = () => {
                 </p>
                 <form ref={form} onSubmit={sendEmail} className="space-y-5">
                   <div>
-                    <label className="required mb-1 block text-sm font-medium text-slate-700">
+                    <label
+                      for="name"
+                      className="required mb-1 block text-sm font-medium text-slate-700"
+                    >
                       Name
                     </label>
                     <input
+                      id="name"
                       name="from_name"
                       type="text"
                       maxLength={100}
@@ -102,10 +106,14 @@ const ContactPage = () => {
                     />
                   </div>
                   <div>
-                    <label className="required mb-1 block text-sm font-medium text-slate-700">
+                    <label
+                      for="email"
+                      className="required mb-1 block text-sm font-medium text-slate-700"
+                    >
                       Email
                     </label>
                     <input
+                      id="email"
                       name="reply_to"
                       type="email"
                       maxLength={100}
@@ -126,10 +134,14 @@ const ContactPage = () => {
                     )}
                   </div>
                   <div>
-                    <label className="required mb-1 block text-sm font-medium text-slate-700">
+                    <label
+                      for="message"
+                      className="required mb-1 block text-sm font-medium text-slate-700"
+                    >
                       Message
                     </label>
                     <textarea
+                      id="message"
                       name="message"
                       rows={4}
                       onChange={(e) => {

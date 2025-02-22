@@ -120,8 +120,11 @@ const CreateSubAssembly = () => {
           <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
             <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">Name</label>
+                <label for="name" className="required mb-1 block text-sm font-medium">
+                  Name
+                </label>
                 <input
+                  id="name"
                   required
                   type="text"
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -131,8 +134,11 @@ const CreateSubAssembly = () => {
                 />
               </div>
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">Registered Number</label>
+                <label for="registered_number" className="required mb-1 block text-sm font-medium">
+                  Registered Number
+                </label>
                 <input
+                  id="registered_number"
                   required
                   type="number"
                   min={1}
@@ -146,8 +152,11 @@ const CreateSubAssembly = () => {
 
             <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">OEM Numbers</label>
+                <label for="oem_numbers" className="required mb-1 block text-sm font-medium">
+                  OEM Numbers
+                </label>
                 <input
+                  id="oem_numbers"
                   required
                   type="text"
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -157,8 +166,12 @@ const CreateSubAssembly = () => {
                 />
               </div>
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium"> Weight</label>
+                <label for="weight" className="required mb-1 block text-sm font-medium">
+                  {" "}
+                  Weight
+                </label>
                 <input
+                  id="weight"
                   required
                   type="text"
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"

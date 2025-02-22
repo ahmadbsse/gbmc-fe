@@ -68,9 +68,12 @@ const RichTextEditor = ({
 
   return (
     <div className={`rich-text-editor-wrapper ${disabled ? "pointer-events-none" : ""}`}>
-      <label className="required mb-1 block text-sm font-medium">{label}</label>
+      <label for={label} className="required mb-1 block text-sm font-medium">
+        {label}
+      </label>
       <div>
         <QuillEditor
+          id={label}
           className="quill-editor rounded-lg bg-white"
           theme="snow"
           value={defaultValue}

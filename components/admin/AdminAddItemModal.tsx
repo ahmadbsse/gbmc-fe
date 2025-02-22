@@ -115,8 +115,11 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
 
           <form onSubmit={handleSubmit} className="mt-10 space-y-3 p-6 lg:space-y-5">
             <div>
-              <label className="required mb-1 block text-sm font-medium">Name</label>
+              <label for="name" className="required mb-1 block text-sm font-medium">
+                Name
+              </label>
               <input
+                id="name"
                 type="text"
                 className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                 placeholder="Type name"

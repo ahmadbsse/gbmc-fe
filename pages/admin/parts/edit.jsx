@@ -196,8 +196,11 @@ const EditPart = () => {
               >
                 <div className="flex flex-col gap-4 md:flex-row">
                   <div className="w-full">
-                    <label className="required mb-1 block text-sm font-medium">Name</label>
+                    <label for="name" className="required mb-1 block text-sm font-medium">
+                      Name
+                    </label>
                     <input
+                      id="name"
                       required
                       type="text"
                       className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -208,8 +211,11 @@ const EditPart = () => {
                   </div>
 
                   <div className="relative w-full">
-                    <label className="required mb-1 block text-sm font-medium">Make</label>
+                    <label for="make" className="required mb-1 block text-sm font-medium">
+                      Make
+                    </label>
                     <select
+                      id="make"
                       className="w-full appearance-none rounded-lg border border-gray-300 bg-white px-2.5 py-2 text-[13px] outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                       value={JSON.stringify(formData.supplier.documentId)}
                       onChange={(e) => {
@@ -232,8 +238,11 @@ const EditPart = () => {
                   </div>
                 </div>
                 <div className="w-full">
-                  <label className="required mb-1 block text-sm font-medium">OEM Numbers</label>
+                  <label for="oem_numbers" className="required mb-1 block text-sm font-medium">
+                    OEM Numbers
+                  </label>
                   <input
+                    id="oem_numbers"
                     required
                     type="text"
                     className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -244,8 +253,11 @@ const EditPart = () => {
                 </div>
                 <div className="flex flex-col gap-4 md:flex-row">
                   <div className="w-full">
-                    <label className="required mb-1 block text-sm font-medium">Material</label>
+                    <label for="material" className="required mb-1 block text-sm font-medium">
+                      Material
+                    </label>
                     <input
+                      id="material"
                       required
                       type="text"
                       className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -255,8 +267,11 @@ const EditPart = () => {
                     />
                   </div>
                   <div className="w-full">
-                    <label className="required mb-1 block text-sm font-medium"> Weight</label>
+                    <label for="weight" className="required mb-1 block text-sm font-medium">
+                      Weight
+                    </label>
                     <input
+                      id="weight"
                       required
                       type="text"
                       className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -266,10 +281,14 @@ const EditPart = () => {
                     />
                   </div>
                   <div className="w-full">
-                    <label className="required mb-1 block text-sm font-medium">
+                    <label
+                      for="registered_number"
+                      className="required mb-1 block text-sm font-medium"
+                    >
                       Registered Number
                     </label>
                     <input
+                      id="registered_number"
                       required
                       type="number"
                       min={1}

@@ -151,8 +151,11 @@ const CreateEngineeringComponent = () => {
           <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
             <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">Name</label>
+                <label for="name" className="required mb-1 block text-sm font-medium">
+                  Name
+                </label>
                 <input
+                  id="name"
                   type="text"
                   required
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -164,8 +167,11 @@ const CreateEngineeringComponent = () => {
             </div>
             <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">Material</label>
+                <label for="material" className="required mb-1 block text-sm font-medium">
+                  Material
+                </label>
                 <input
+                  id="material"
                   type="text"
                   required
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -175,8 +181,12 @@ const CreateEngineeringComponent = () => {
                 />
               </div>
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium"> Weight</label>
+                <label for="weight" className="required mb-1 block text-sm font-medium">
+                  {" "}
+                  Weight
+                </label>
                 <input
+                  id="weight"
                   type="text"
                   required
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
