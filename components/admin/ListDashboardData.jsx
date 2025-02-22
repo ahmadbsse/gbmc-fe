@@ -48,7 +48,11 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData }) => {
         data.hero_image = data.hero_image.id;
       }
       await apiClient.PUT(url, { data: data }).then((res) => {
-        showToast(`${data.active ? "activated" : "deactivated"} successfully`, "success");
+        console.log(data);
+        showToast(
+          `${data.name} ${" "}${data?.active ? "activated" : "deactivated"} successfully`,
+          "success"
+        );
         setActiveItem(null);
         getData();
       });
@@ -82,7 +86,10 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData }) => {
       await apiClient
         .PUT(url, { data: data })
         .then((res) => {
-          showToast(`${!data.featured ? "unfeatured" : "featured"} successfully`, "success");
+          showToast(
+            `${data.name} ${" "}${!data.featured ? "unfeatured" : "featured"} successfully`,
+            "success"
+          );
           setActiveItem(null);
           getData();
         })
@@ -96,14 +103,13 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData }) => {
     }
   };
   const deleteItem = async () => {
-    console.log(data.length);
     try {
       const url = `/${currentTab}/${activeID}`;
       await apiClient
         .DELETE(url)
         .then((res) => {
           setShowDeleteModal(false);
-          showToast(`deleted succussfully`, "success");
+          showToast(`${activeItem.name} ${" "}deleted succussfully`, "success");
           setActiveID(null);
           setActiveItem(null);
           if (data.length == 1) {
