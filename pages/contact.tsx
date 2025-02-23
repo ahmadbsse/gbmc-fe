@@ -95,6 +95,7 @@ const ContactPage = () => {
                     </label>
                     <input
                       id="name"
+                      maxlength={255}
                       name="from_name"
                       type="text"
                       maxLength={100}

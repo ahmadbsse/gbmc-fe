@@ -188,6 +188,7 @@ const EditSubAssembly = () => {
                       Name
                     </label>
                     <input
+                      maxlength={255}
                       id="name"
                       required
                       type="text"
