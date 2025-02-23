@@ -88,17 +88,16 @@ const ContactPage = () => {
                 <form ref={form} onSubmit={sendEmail} className="space-y-5">
                   <div>
                     <label
-                      for="name"
+                      htmlFor="name"
                       className="required mb-1 block text-sm font-medium text-slate-700"
                     >
                       Name
                     </label>
                     <input
                       id="name"
-                      maxlength={255}
+                      maxLength={255}
                       name="from_name"
                       type="text"
-                      maxLength={100}
                       required
                       onChange={(e) => {
                         setFormValues({ ...formValues, name: e.target.value });
@@ -108,7 +107,7 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <label
-                      for="email"
+                      htmlFor="email"
                       className="required mb-1 block text-sm font-medium text-slate-700"
                     >
                       Email
@@ -136,7 +135,7 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <label
-                      for="message"
+                      htmlFor="message"
                       className="required mb-1 block text-sm font-medium text-slate-700"
                     >
                       Message

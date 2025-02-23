@@ -110,11 +110,12 @@ const EditComponent = () => {
     }
   };
   const saveData = () => {
+    console.log(formData);
     try {
       apiClient
         .PUT(`/engineering-components/${id}`, { data: formData })
         .then(async () => {
-          showToast("Engineering component saved Successfully", "success");
+          showToast(`${formData.name} saved Successfully`, "success");
           await deleteFilesRequest(idsToRemove).then(() => {
             console.log("Files deleted successfully");
           });
@@ -212,12 +213,12 @@ const EditComponent = () => {
                 className="mx-auto max-w-[810px] space-y-3 lg:space-y-5"
               >
                 <div className="w-full">
-                  <label for="name" className="required mb-1 block text-sm font-medium">
+                  <label htmlFor="name" className="required mb-1 block text-sm font-medium">
                     Name
                   </label>
                   <input
                     id="name"
-                    maxlength={255}
+                    maxLength={255}
                     required
                     type="text"
                     className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -228,7 +229,7 @@ const EditComponent = () => {
                 </div>
                 <div className="flex flex-col gap-4 md:flex-row">
                   <div className="w-full">
-                    <label for="material" className="required mb-1 block text-sm font-medium">
+                    <label htmlFor="material" className="required mb-1 block text-sm font-medium">
                       Material
                     </label>
                     <input
@@ -242,7 +243,7 @@ const EditComponent = () => {
                     />
                   </div>
                   <div className="w-full">
-                    <label for="weight" className="required mb-1 block text-sm font-medium">
+                    <label htmlFor="weight" className="required mb-1 block text-sm font-medium">
                       {" "}
                       Weight
                     </label>

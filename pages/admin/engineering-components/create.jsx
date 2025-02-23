@@ -69,7 +69,7 @@ const CreateEngineeringComponent = () => {
                   .POST(`/engineering-components`, { data: formData })
                   .then(() => {
                     setFormData(initialFormData);
-                    showToast("Engineering component Created Successfully", "success");
+                    showToast(`${formData.name} Created Successfully`, "success");
                     router.push("/admin");
                   })
                   .catch((error) => {
@@ -151,12 +151,12 @@ const CreateEngineeringComponent = () => {
           <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
             <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
-                <label for="name" className="required mb-1 block text-sm font-medium">
+                <label htmlFor="name" className="required mb-1 block text-sm font-medium">
                   Name
                 </label>
                 <input
                   id="name"
-                  maxlength={255}
+                  maxLength={255}
                   type="text"
                   required
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -168,7 +168,7 @@ const CreateEngineeringComponent = () => {
             </div>
             <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
-                <label for="material" className="required mb-1 block text-sm font-medium">
+                <label htmlFor="material" className="required mb-1 block text-sm font-medium">
                   Material
                 </label>
                 <input
@@ -182,7 +182,7 @@ const CreateEngineeringComponent = () => {
                 />
               </div>
               <div className="w-full">
-                <label for="weight" className="required mb-1 block text-sm font-medium">
+                <label htmlFor="weight" className="required mb-1 block text-sm font-medium">
                   {" "}
                   Weight
                 </label>

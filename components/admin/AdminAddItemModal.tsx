@@ -56,7 +56,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
             .then(() => {
               setFormData(initialFormData);
               if (currentTab === "suppliers") {
-                showToast(`Make added successfully`, "success");
+                showToast(`${formData.name} added successfully`, "success");
               } else {
                 showToast(`${currentTab} added successfully`, "success");
               }
@@ -115,12 +115,12 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
 
           <form onSubmit={handleSubmit} className="mt-10 space-y-3 p-6 lg:space-y-5">
             <div>
-              <label for="name" className="required mb-1 block text-sm font-medium">
+              <label htmlFor="name" className="required mb-1 block text-sm font-medium">
                 Name
               </label>
               <input
                 id="name"
-                maxlength={255}
+                maxLength={255}
                 type="text"
                 className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                 placeholder="Type name"

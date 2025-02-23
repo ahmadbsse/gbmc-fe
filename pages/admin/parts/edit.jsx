@@ -110,7 +110,7 @@ const EditPart = () => {
       apiClient
         .PUT(`/parts/${id}`, { data: formData })
         .then(async () => {
-          showToast("Part Saved Successfully", "success");
+          showToast(`${formData.name} Saved Successfully`, "success");
           await deleteFilesRequest(idsToRemove).then(() => {
             console.log("Files deleted successfully");
           });
@@ -196,12 +196,12 @@ const EditPart = () => {
               >
                 <div className="flex flex-col gap-4 md:flex-row">
                   <div className="w-full">
-                    <label for="name" className="required mb-1 block text-sm font-medium">
+                    <label htmlFor="name" className="required mb-1 block text-sm font-medium">
                       Name
                     </label>
                     <input
                       id="name"
-                      maxlength={255}
+                      maxLength={255}
                       required
                       type="text"
                       className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -212,7 +212,7 @@ const EditPart = () => {
                   </div>
 
                   <div className="relative w-full">
-                    <label for="make" className="required mb-1 block text-sm font-medium">
+                    <label htmlFor="make" className="required mb-1 block text-sm font-medium">
                       Make
                     </label>
                     <select
@@ -239,7 +239,7 @@ const EditPart = () => {
                   </div>
                 </div>
                 <div className="w-full">
-                  <label for="oem_numbers" className="required mb-1 block text-sm font-medium">
+                  <label htmlFor="oem_numbers" className="required mb-1 block text-sm font-medium">
                     OEM Numbers
                   </label>
                   <input
@@ -254,7 +254,7 @@ const EditPart = () => {
                 </div>
                 <div className="flex flex-col gap-4 md:flex-row">
                   <div className="w-full">
-                    <label for="material" className="required mb-1 block text-sm font-medium">
+                    <label htmlFor="material" className="required mb-1 block text-sm font-medium">
                       Material
                     </label>
                     <input
@@ -268,7 +268,7 @@ const EditPart = () => {
                     />
                   </div>
                   <div className="w-full">
-                    <label for="weight" className="required mb-1 block text-sm font-medium">
+                    <label htmlFor="weight" className="required mb-1 block text-sm font-medium">
                       Weight
                     </label>
                     <input
@@ -283,7 +283,7 @@ const EditPart = () => {
                   </div>
                   <div className="w-full">
                     <label
-                      for="registered_number"
+                      htmlFor="registered_number"
                       className="required mb-1 block text-sm font-medium"
                     >
                       Registered Number

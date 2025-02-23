@@ -64,7 +64,7 @@ const CreatePart = () => {
                 .POST(`/parts`, { data: formData })
                 .then(() => {
                   setFormData(initialFormData);
-                  showToast(`Part created successfully`, "success");
+                  showToast(`${formData.name} created successfully`, "success");
                   router.push("/admin");
                 })
                 .catch((error) => {
@@ -151,13 +151,13 @@ const CreatePart = () => {
           <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
             <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
-                <label for="name" className="required mb-1 block text-sm font-medium">
+                <label htmlFor="name" className="required mb-1 block text-sm font-medium">
                   Name
                 </label>
                 <input
                   required
                   id="name"
-                  maxlength={255}
+                  maxLength={255}
                   type="text"
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder={`Type name`}
@@ -166,7 +166,7 @@ const CreatePart = () => {
                 />
               </div>
               <div className="relative w-full">
-                <label for="make" className="required mb-1 block text-sm font-medium">
+                <label htmlFor="make" className="required mb-1 block text-sm font-medium">
                   Make
                 </label>
                 <select
@@ -188,7 +188,7 @@ const CreatePart = () => {
               </div>
             </div>
             <div className="w-full">
-              <label for="oem_numbers" className="required mb-1 block text-sm font-medium">
+              <label htmlFor="oem_numbers" className="required mb-1 block text-sm font-medium">
                 OEM Numbers
               </label>
               <input
@@ -204,7 +204,7 @@ const CreatePart = () => {
 
             <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
-                <label for="material" className="required mb-1 block text-sm font-medium">
+                <label htmlFor="material" className="required mb-1 block text-sm font-medium">
                   Material
                 </label>
                 <input
@@ -218,7 +218,7 @@ const CreatePart = () => {
                 />
               </div>
               <div className="w-full">
-                <label for="weight" className="required mb-1 block text-sm font-medium">
+                <label htmlFor="weight" className="required mb-1 block text-sm font-medium">
                   Weight
                 </label>
                 <input
@@ -234,7 +234,7 @@ const CreatePart = () => {
 
               <div className="w-full">
                 <label
-                  for="registration_number"
+                  htmlFor="registration_number"
                   className="required mb-1 block text-sm font-medium"
                 >
                   Registered Number

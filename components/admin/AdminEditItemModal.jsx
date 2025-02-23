@@ -61,7 +61,7 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
                 apiClient
                   .PUT(`/${currentTab}/${activeID}`, { data: formData })
                   .then(async () => {
-                    showToast(`Make saved successfully`, "success");
+                    showToast(`${formData.name} saved successfully`, "success");
                     await deleteFilesRequest(idsToRemove).then(() => {
                       console.log("Files deleted successfully");
                       getData();
@@ -82,7 +82,7 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
                 apiClient
                   .PUT(`/${currentTab}/${activeID}`, { data: formData })
                   .then(async () => {
-                    showToast(`Make saved successfully`, "success");
+                    showToast(`${formData.name} saved successfully`, "success");
                     await deleteFilesRequest(idsToRemove).then(() => {
                       console.log("Files deleted successfully");
                       getData();
@@ -153,12 +153,12 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
           {formData ? (
             <form onSubmit={handleSubmit} className="mt-10 space-y-3 p-6 lg:space-y-5">
               <div>
-                <label for="name" className="required mb-1 block text-sm font-medium">
+                <label htmlFor="name" className="required mb-1 block text-sm font-medium">
                   Name
                 </label>
                 <input
                   id="name"
-                  maxlength={255}
+                  maxLength={255}
                   type="text"
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder="Type name"

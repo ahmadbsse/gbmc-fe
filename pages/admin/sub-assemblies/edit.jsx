@@ -99,7 +99,7 @@ const EditSubAssembly = () => {
       apiClient
         .PUT(`/sub-assemblies/${id}`, { data: formData })
         .then(async () => {
-          showToast("Sub Assembly Saved Successfully", "success");
+          showToast(`${formData.name} Sub Assembly Saved Successfully`, "success");
           router.push("/admin");
           await deleteFilesRequest(idsToRemove).then(() => {
             console.log("Files deleted successfully");
@@ -184,11 +184,11 @@ const EditSubAssembly = () => {
               >
                 <div className="flex flex-col gap-4 md:flex-row">
                   <div className="w-full">
-                    <label for="name" className="required mb-1 block text-sm font-medium">
+                    <label htmlFor="name" className="required mb-1 block text-sm font-medium">
                       Name
                     </label>
                     <input
-                      maxlength={255}
+                      maxLength={255}
                       id="name"
                       required
                       type="text"
@@ -200,7 +200,7 @@ const EditSubAssembly = () => {
                   </div>
                   <div className="w-full">
                     <label
-                      for="registered_number"
+                      htmlFor="registered_number"
                       className="required mb-1 block text-sm font-medium"
                     >
                       Registred Number
@@ -220,7 +220,7 @@ const EditSubAssembly = () => {
 
                 <div className="flex flex-col gap-4 md:flex-row">
                   <div className="w-full">
-                    <label for="oem_number" className="required mb-1 block text-sm font-medium">
+                    <label htmlFor="oem_number" className="required mb-1 block text-sm font-medium">
                       OEM Numbers
                     </label>
                     <input
@@ -234,7 +234,7 @@ const EditSubAssembly = () => {
                     />
                   </div>
                   <div className="w-full">
-                    <label for="weight" className="required mb-1 block text-sm font-medium">
+                    <label htmlFor="weight" className="required mb-1 block text-sm font-medium">
                       {" "}
                       Weight
                     </label>
