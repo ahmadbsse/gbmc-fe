@@ -135,9 +135,9 @@ const PartDetails = () => {
                 ) : null}
 
                 {/* Thumbnail Images */}
-                <div className="flex gap-4">
-                  {data?.media ? (
-                    data?.media.map((img, index) => (
+                {data?.media && data?.media.length > 1 ? (
+                  <div className="flex gap-4">
+                    {data?.media.map((img, index) => (
                       <button
                         key={index}
                         className={`relative h-24 w-24 overflow-hidden rounded-lg shadow-sm ${
@@ -155,17 +155,15 @@ const PartDetails = () => {
                           classes="h-full w-full object-cover"
                         />
                       </button>
-                    ))
-                  ) : (
-                    <div className="h-24 w-24"></div>
-                  )}
-                </div>
+                    ))}
+                  </div>
+                ) : null}
               </div>
               {/* Product Details Section */}
               <div className="space-y-6">
                 <div className="space-y-2">
                   <p className="text-sm lg:text-base">PRODUCT CODE: {data?.id}</p>
-                  <h1 className="text-xl font-bold capitalize text-primary lg:text-3xl">
+                  <h1 className="text-xl font-bold capitalize text-[#0060AA] lg:text-3xl">
                     {data?.name}
                   </h1>
                   <span className="text-xs italic">Registered Number: {data?.number}</span>
@@ -179,27 +177,27 @@ const PartDetails = () => {
               <table className="product-specification-table product-specification-table-striped">
                 <tbody>
                   <tr>
-                    <td className="capitalize">Name:</td>
+                    <td className="font-bold capitalize">Name:</td>
                     <td>{data?.name}</td>
                   </tr>
                   <tr>
-                    <td className="capitalize">Registered Number:</td>
+                    <td className="font-bold capitalize">Registered Number:</td>
                     <td>{data?.number}</td>
                   </tr>
                   <tr>
-                    <td className="capitalize">Material:</td>
+                    <td className="font-bold capitalize">Material:</td>
                     <td>{data?.material}</td>
                   </tr>
                   <tr>
-                    <td className="capitalize">Weight:</td>
+                    <td className="font-bold capitalize">Weight:</td>
                     <td>{data?.weight}</td>
                   </tr>
                   <tr>
-                    <td className="capitalize">Published at:</td>
+                    <td className="font-bold capitalize">Published at:</td>
                     <td>{convertToReadableDate(data?.publishedAt)}</td>
                   </tr>
                   <tr>
-                    <td className="capitalize">Featured:</td>
+                    <td className="font-bold capitalize">Featured:</td>
                     <td>
                       {data?.featured ? (
                         <Check className="text-success" />
@@ -209,7 +207,7 @@ const PartDetails = () => {
                     </td>
                   </tr>
                   <tr>
-                    <td className="capitalize">OEM Numbers:</td>
+                    <td className="font-bold capitalize">OEM Numbers:</td>
                     <td>
                       {data?.oem_number.split(",").map((item, index) => (
                         <p key={index}>{item}</p>

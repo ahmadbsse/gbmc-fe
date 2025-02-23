@@ -15,6 +15,7 @@ const AllParts = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suppliers, setSuppliers] = useState([]);
   const [selectedSupplier, setSelectedSupplier] = useState("");
+  const [pagination, setPagination] = useState(null);
 
   const getParts = async (pageNum, isLoadMore = false) => {
     try {
@@ -26,23 +27,27 @@ const AllParts = () => {
       let url = "";
       if (searchQuery == "") {
         if (selectedSupplier) {
-          url = `/parts?populate=*&filters[active]=true&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&filters[supplier][documentId]=${selectedSupplier}`;
+          url = `/parts?populate=*&filters[active]=true&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&filters[supplier][documentId]=${selectedSupplier}&sort=createdAt:desc`;
         } else {
-          url = `/parts?populate=*&filters[active]=true&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}`;
+          url = `/parts?populate=*&filters[active]=true&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=createdAt:desc`;
         }
       } else {
-        url = `/parts?populate=*&filters[active]=true&filters[$or][0][name][$containsi]=${searchQuery}&filters[$or][1][oem_number][$containsi]=${searchQuery}`;
+        url = `/parts?populate=*&filters[active]=true&filters[$or][0][name][$containsi]=${searchQuery}&filters[$or][1][oem_number][$containsi]=${searchQuery}&sort=createdAt:desc`;
       }
 
       const res = await apiClient.GET(url);
 
       if (res && res.data.length > 0) {
         const parts = res.data.filter((part) => part.supplier.active);
+        console.log(parts);
         const transformedData = transformMedia(parts);
         setAllParts((prev) => (isLoadMore ? [...prev, ...transformedData] : transformedData));
         setTotal(res.meta.pagination.total);
+        setPagination(res.meta.pagination);
       } else {
-        setAllParts([]); // Ensure the list clears when no results match
+        setPagination(null);
+        setAllParts([]);
+        setTotal(0);
       }
     } catch (error) {
       console.error("Error in GET request:", error.message);
@@ -54,20 +59,19 @@ const AllParts = () => {
       }
     }
   };
-
-  useEffect(() => {
-    getParts(page);
-  }, [page]);
-
+  //
   useEffect(() => {
     setPage(1);
-    getParts(1);
-  }, [searchQuery, selectedSupplier]);
+    getParts(1, false);
+  }, [selectedSupplier, searchQuery]);
+
+  useEffect(() => {
+    if (page > 1) getParts(page, true);
+  }, [page]);
 
   const loadMore = () => {
     setPage((prevPage) => {
       const newPage = prevPage + 1;
-      getParts(newPage, true);
       return newPage;
     });
   };
@@ -134,22 +138,27 @@ const AllParts = () => {
                           />
                         ) : null}
                       </div>
-                      <h3 className="p-4 text-lg font-semibold">{part.name}</h3>
+                      <h3
+                        title={part.name}
+                        className="truncate p-4 text-center text-lg font-semibold"
+                      >
+                        {part.name}
+                      </h3>
                     </div>
                   </Link>
                 ))}
               </div>
             </div>
-            {allParts.length < total && total > 0 && (
+            {pagination?.page < pagination?.pageCount ? (
               <div className="flex justify-center md:justify-end">
                 <p
-                  className="w-fit cursor-pointer rounded bg-cyan-400 px-2.5 py-2 text-sm hover:text-black"
+                  className="w-fit cursor-pointer rounded bg-[#000036] px-2.5 py-2 text-sm text-white hover:bg-black hover:text-primary-color"
                   onClick={loadMore}
                 >
                   {isLoadingMore ? "Loading..." : "Load More"}
                 </p>
               </div>
-            )}
+            ) : null}
           </div>
         </>
       ) : (

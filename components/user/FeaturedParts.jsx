@@ -18,7 +18,7 @@ const FeaturedParts = () => {
   const getParts = async () => {
     try {
       setIsLoading(true);
-      let url = `/parts?populate=*&filters[active]=true&filters[featured]=true`;
+      let url = `/parts?populate=*&filters[active]=true&filters[featured]=true&sort=createdAt:desc`;
       const res = await apiClient.GET(url);
       if (res && res.data.length > 0) {
         const parts = res.data.filter((part) => part.supplier.active);
@@ -84,7 +84,12 @@ const FeaturedParts = () => {
                         </div>
                       </div>
                       <div className="p-4">
-                        <h3 className="text-lg font-semibold">{part.name}</h3>
+                        <h3
+                          title={part.name}
+                          className="truncate text-center text-lg font-semibold"
+                        >
+                          {part.name}
+                        </h3>
                       </div>
                     </div>
                   </Link>

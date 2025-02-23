@@ -12,7 +12,7 @@ const EngineeringHome = () => {
     try {
       setIsLoading(true);
       await apiClient
-        .GET("/engineering-components?populate=*&filters[active]=true")
+        .GET("/engineering-components?populate=*&filters[active]=true&sort=createdAt:desc")
         .then(async (res) => {
           if (res && res.data.length > 0) {
             const transformedData = transformMedia(res.data);
