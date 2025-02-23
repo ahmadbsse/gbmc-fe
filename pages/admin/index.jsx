@@ -286,6 +286,7 @@ const AdminDashboard = () => {
           ) : (
             <>
               <ListDashboardData
+                pagination={pagination}
                 data={
                   activeTab.key == "engineering"
                     ? engineering

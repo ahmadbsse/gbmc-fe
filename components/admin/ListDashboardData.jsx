@@ -1,5 +1,5 @@
 import { Eye, EyeOff, Star, Pencil, Trash, Plus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import showToast from "@/utils/toast";
@@ -14,7 +14,7 @@ import apiClient from "@/utils/apiClient";
 import { BaseButton, BaseImage } from "@/components/common";
 // import { convertToReadableDate } from "@/utils";
 
-const ListDashboardData = ({ data, activeTab, getData, total, setData }) => {
+const ListDashboardData = ({ data, activeTab, getData, total, setData, pagination }) => {
   const [showAddItemModal, setShowAddItemModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showActiveModal, setShowActiveModal] = useState(false);
@@ -23,6 +23,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData }) => {
   const [activeID, setActiveID] = useState(null);
   const [activeItem, setActiveItem] = useState(null);
   const currentTab = activeTab.key == "engineering" ? "engineering-components" : activeTab.key;
+  const [paginationInfo, setPaginationInfo] = useState(0);
   const router = useRouter();
 
   const toggleActivation = async () => {
@@ -147,6 +148,12 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData }) => {
       router.push(`/admin/${currentTab}/detail?id=${documentId}`);
     }
   };
+
+  useEffect(() => {
+    if (pagination) {
+      setPaginationInfo(Math.min(pagination.page * pagination.pageSize, pagination.total));
+    }
+  }, [pagination]);
   return (
     <>
       {showAddItemModal ? (
@@ -198,6 +205,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData }) => {
             <h2 className="flex items-center text-lg">
               <span className="font-bold">{activeTab.name}</span>
               {total > 0 ? <span> ({total})</span> : null}
+              <p className="px-2 text-sm">{`Showing 1-${paginationInfo} of ${pagination?.total}`}</p>
             </h2>
             <div className="hidden w-fit sm:flex">
               <BaseButton loading={false} type="submit" handleClick={addNewItem}>
