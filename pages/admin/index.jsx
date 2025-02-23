@@ -46,9 +46,9 @@ const AdminDashboard = () => {
         }
         let url = "";
         if (searchQuery == "") {
-          url = `/parts?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}`;
+          url = `/parts?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=createdAt:desc`;
         } else {
-          url = `/parts?populate=*&filters[name][$containsi]=${searchQuery}`;
+          url = `/parts?populate=*&filters[name][$containsi]=${searchQuery}&sort=createdAt:desc`;
         }
         await apiClient.GET(url).then(async (res) => {
           if (res && res.data.length > 0) {
@@ -86,9 +86,9 @@ const AdminDashboard = () => {
         }
         let url = "";
         if (searchQuery == "") {
-          url = `/engineering-components?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}`;
+          url = `/engineering-components?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=createdAt:desc`;
         } else {
-          url = `/engineering-components?populate=*&filters[name][$containsi]=${searchQuery}`;
+          url = `/engineering-components?populate=*&filters[name][$containsi]=${searchQuery}&sort=createdAt:desc`;
         }
         await apiClient.GET(url).then(async (res) => {
           if (res && res.data.length > 0) {
@@ -127,9 +127,9 @@ const AdminDashboard = () => {
         }
         let url = "";
         if (searchQuery == "") {
-          url = `/sub-assemblies?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}`;
+          url = `/sub-assemblies?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=createdAt:desc`;
         } else {
-          url = `/sub-assemblies?populate=*&filters[name][$containsi]=${searchQuery}`;
+          url = `/sub-assemblies?populate=*&filters[name][$containsi]=${searchQuery}&sort=createdAt:desc`;
         }
         await apiClient.GET(url).then(async (res) => {
           if (res && res.data.length > 0) {
@@ -168,9 +168,9 @@ const AdminDashboard = () => {
         }
         let url = "";
         if (searchQuery == "") {
-          url = `/suppliers?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}`;
+          url = `/suppliers?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=createdAt:desc`;
         } else {
-          url = `/suppliers?populate=*&filters[name][$containsi]=${searchQuery}`;
+          url = `/suppliers?populate=*&filters[name][$containsi]=${searchQuery}&sort=createdAt:desc`;
         }
         await apiClient.GET(url).then(async (res) => {
           if (res && res.data.length > 0) {
