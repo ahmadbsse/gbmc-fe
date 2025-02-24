@@ -19,7 +19,7 @@ const EngineeringListingCard: React.FC<EngineeringCardProps> = ({ id, title, ima
           {title}
         </p>
         {featured ? (
-          <div className="absolute right-2 top-2 rounded bg-primary px-1 text-sm font-bold">
+          <div className="absolute right-2 top-2 rounded bg-primary px-1 text-xs font-semibold">
             <span>Featured</span>
           </div>
         ) : null}
