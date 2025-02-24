@@ -41,7 +41,7 @@ const ContactPage = () => {
           setLoading(false);
           form.current.reset();
         },
-        (error) => {
+        () => {
           showToast("Something went wrong!", "error");
         }
       );

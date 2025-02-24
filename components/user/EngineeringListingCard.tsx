@@ -1,7 +1,6 @@
 import type { EngineeringCardProps } from "@/types";
 import Link from "next/link";
 import { BaseImage } from "../common";
-import { Star } from "lucide-react";
 
 const EngineeringListingCard: React.FC<EngineeringCardProps> = ({ id, title, image, featured }) => {
   return (
