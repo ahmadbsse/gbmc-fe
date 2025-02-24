@@ -254,7 +254,7 @@ const AdminDashboard = () => {
 
         <main className="container mx-auto px-4 py-8">
           <div className="mb-3 flex items-center justify-between md:mb-8">
-            <h1 className="flex gap-2 text-lg font-bold md:text-[1.65rem]">Admin Dashboard</h1>
+            <h1 className="flex gap-2 text-2xl font-bold md:text-[1.65rem]">Admin Dashboard</h1>
             <div className="hidden md:flex">
               {tabData[activeTab.key] > 0 || searchQuery !== "" ? (
                 <BaseSearchbar key={activeTab.key} setSearchQuery={setSearchQuery} />
@@ -320,7 +320,7 @@ const AdminDashboard = () => {
               {pagination?.page < pagination?.pageCount ? (
                 <div className="mt-3 flex justify-center md:justify-end">
                   <p
-                    className="w-fit cursor-pointer rounded bg-[#000036] px-2.5 py-2 text-sm text-white hover:bg-black hover:text-primary-color"
+                    className="w-fit cursor-pointer bg-[#000036] px-2.5 py-2 text-sm text-white hover:bg-black hover:text-primary-color"
                     onClick={loadMore}
                   >
                     {isLoadingMore ? "Loading..." : "Load More"}

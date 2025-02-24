@@ -188,7 +188,7 @@ const EditPart = () => {
           {formData ? (
             <>
               <h1 className="mx-auto mb-10 w-fit text-center text-2xl font-bold">
-                Edit Part - {formData.name || ""}
+                Edit Part - <span className="font-medium">{formData?.name || ""}</span>
               </h1>
               <form
                 onSubmit={handleSubmit}

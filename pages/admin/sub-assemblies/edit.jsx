@@ -176,7 +176,7 @@ const EditSubAssembly = () => {
           {formData ? (
             <>
               <h1 className="mx-auto mb-10 w-fit text-center text-2xl font-bold">
-                Edit Sub Assembly - {formData.name || ""}
+                Edit Sub Assembly - <span className="font-medium">{formData?.name || ""}</span>
               </h1>
               <form
                 onSubmit={handleSubmit}

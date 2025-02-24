@@ -206,7 +206,8 @@ const EditComponent = () => {
           {formData ? (
             <>
               <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">
-                Edit Engineering Component - {formData.name || ""}
+                Edit Engineering Component -{" "}
+                <span className="font-medium">{formData?.name || ""}</span>
               </h1>
               <form
                 onSubmit={handleSubmit}

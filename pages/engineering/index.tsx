@@ -76,7 +76,9 @@ const EngineeringHome = () => {
                     <EngineeringListingCard
                       key={index}
                       id={component?.documentId}
-                      image={component?.media[0]?.formats?.thumbnail?.url}
+                      image={
+                        component?.media[component?.media?.length - 1]?.formats?.thumbnail?.url
+                      }
                       title={component?.name}
                       featured={component?.featured}
                     />

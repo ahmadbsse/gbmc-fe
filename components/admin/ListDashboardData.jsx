@@ -205,7 +205,6 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
             <h2 className="flex items-center text-lg">
               <span className="font-bold">{activeTab.name}</span>
               {total > 0 ? <span> ({total})</span> : null}
-              <p className="px-2 text-sm">{`Showing 1-${paginationInfo} of ${pagination?.total}`}</p>
             </h2>
             <div className="hidden w-fit sm:flex">
               <BaseButton loading={false} type="submit" handleClick={addNewItem}>
@@ -239,9 +238,18 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
                         {item.media ? (
                           Array.isArray(item.media) ? (
                             <BaseImage
-                              width={item.media[0]?.formats?.thumbnail?.width || 160}
-                              height={item.media[0]?.formats?.thumbnail?.height || 112}
-                              src={item?.media[0]?.formats.thumbnail?.url || "/placeholder"}
+                              width={
+                                item.media[item?.media?.length - 1]?.formats?.thumbnail?.width ||
+                                160
+                              }
+                              height={
+                                item.media[item?.media?.length - 1]?.formats?.thumbnail?.height ||
+                                112
+                              }
+                              src={
+                                item?.media[item?.media?.length - 1]?.formats.thumbnail?.url ||
+                                "/placeholder"
+                              }
                               alt={item?.name}
                               priority={true}
                               classes="object-fill w-full h-full"
@@ -260,7 +268,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
                       </div>
                       <h3
                         onClick={() => viewDetails(item.documentId)}
-                        className={`text-sm font-bold sm:text-base ${currentTab == "parts" || currentTab == "sub-assemblies" || currentTab == "engineering-components" ? "cursor-pointer" : ""}`}
+                        className={`text-center text-sm font-bold sm:text-left sm:text-base ${currentTab == "parts" || currentTab == "sub-assemblies" || currentTab == "engineering-components" ? "cursor-pointer" : ""}`}
                       >
                         {item.name}
                       </h3>
@@ -339,6 +347,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
           )}
         </div>
       </div>
+      <p className="mx-auto my-4 ml-auto w-fit px-2 text-sm font-bold sm:text-base md:mr-0">{`Showing 1-${paginationInfo} of ${pagination?.total}`}</p>
     </>
   );
 };

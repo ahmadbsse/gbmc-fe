@@ -129,9 +129,9 @@ const AllParts = () => {
                       <div className="relative h-[200px] w-full border-b border-gray-200">
                         {part.media ? (
                           <BaseImage
-                            width={part.media[0].formats?.actual?.width}
-                            height={part.media[0].formats?.actual?.height}
-                            src={part.media[0].formats?.actual?.url}
+                            width={part.media[part?.media?.length - 1].formats?.actual?.width}
+                            height={part.media[part?.media?.length - 1].formats?.actual?.height}
+                            src={part.media[part?.media?.length - 1].formats?.actual?.url}
                             alt={part.name}
                             priority={true}
                             classes="h-full w-full object-cover rounded-t-lg"
@@ -152,7 +152,7 @@ const AllParts = () => {
             {pagination?.page < pagination?.pageCount ? (
               <div className="flex justify-center md:justify-end">
                 <p
-                  className="w-fit cursor-pointer rounded bg-[#000036] px-2.5 py-2 text-sm text-white hover:bg-black hover:text-primary-color"
+                  className="w-fit cursor-pointer bg-[#000036] px-2.5 py-2 text-sm text-white hover:bg-black hover:text-primary-color"
                   onClick={loadMore}
                 >
                   {isLoadingMore ? "Loading..." : "Load More"}

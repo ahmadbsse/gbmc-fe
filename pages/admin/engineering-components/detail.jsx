@@ -56,7 +56,7 @@ const ViewComponentDetails = () => {
           {formData ? (
             <div className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
               <h1 className="mx-auto mb-10 w-fit text-center text-2xl font-bold">
-                View Engineering Component - {formData.name || ""}
+                View Engineering Component - {formData?.name || ""}
               </h1>
               <div className="w-full text-sm">
                 <label className="required mb-1 block font-medium">Name</label>
