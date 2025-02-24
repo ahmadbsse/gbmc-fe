@@ -8,7 +8,6 @@ const PAGE_SIZE = 8;
 
 const AllParts = () => {
   const [page, setPage] = useState(1);
-  const [total, setTotal] = useState(0);
   const [allParts, setAllParts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -16,6 +15,7 @@ const AllParts = () => {
   const [suppliers, setSuppliers] = useState([]);
   const [selectedSupplier, setSelectedSupplier] = useState("");
   const [pagination, setPagination] = useState(null);
+  const [paginationInfo, setPaginationInfo] = useState(0);
 
   const getParts = async (pageNum, isLoadMore = false) => {
     try {
@@ -39,15 +39,12 @@ const AllParts = () => {
 
       if (res && res.data.length > 0) {
         const parts = res.data.filter((part) => part.supplier.active);
-        console.log(parts);
         const transformedData = transformMedia(parts);
         setAllParts((prev) => (isLoadMore ? [...prev, ...transformedData] : transformedData));
-        setTotal(res.meta.pagination.total);
         setPagination(res.meta.pagination);
       } else {
         setPagination(null);
         setAllParts([]);
-        setTotal(0);
       }
     } catch (error) {
       console.error("Error in GET request:", error.message);
@@ -92,11 +89,21 @@ const AllParts = () => {
   useEffect(() => {
     getSuppliers();
   }, []);
+  useEffect(() => {
+    if (pagination) {
+      setPaginationInfo(Math.min(pagination.page * pagination.pageSize, pagination.total));
+    }
+  }, [pagination]);
+
+  const getBrand = (id) => {
+    const supplier = suppliers.find((brand) => brand.documentId === id);
+    return supplier ? supplier.name : "";
+  };
   return (
     <>
       <div className="mt-5 flex flex-col justify-between lg:flex-row lg:items-center lg:gap-3">
-        <h2 className="my-4 text-lg font-bold md:text-3xl">All Parts</h2>
-        <div className="ml-auto px-4">
+        <h2 className="my-4 text-2xl font-bold md:text-3xl">All Parts</h2>
+        <div className="pr-2 sm:ml-auto sm:px-4 md:pr-0">
           <BaseSearchbar setSearchQuery={setSearchQuery} />
         </div>
       </div>
@@ -104,7 +111,7 @@ const AllParts = () => {
         <p className="mx-auto w-fit">
           <BaseLoader />
         </p>
-      ) : allParts.length ? (
+      ) : allParts.length || selectedSupplier ? (
         <>
           <div className="mb-3 flex flex-wrap justify-start text-xs lg:justify-center lg:gap-5 lg:text-base">
             {suppliers.map((brand, index) => (
@@ -119,13 +126,14 @@ const AllParts = () => {
           </div>
           <div>
             <div className="custom-scrollbar flex max-w-7xl flex-col gap-3 overflow-x-auto pb-2 lg:flex-row">
-              <div className="grid w-fit grid-cols-1 gap-6 pr-3 sm:grid-cols-2 lg:grid-cols-4 lg:pr-0">
+              <div className="mx-auto grid w-fit grid-cols-1 gap-6 pr-3 sm:grid-cols-2 lg:grid-cols-3 lg:pr-0 xl:grid-cols-4">
                 {allParts.map((part, index) => (
                   <Link
+                    className=""
                     href={`/tractor-parts/${part.documentId}`}
                     key={part.id + index + part.documentId}
                   >
-                    <div className="rounded-lg border border-gray-200 bg-white shadow-sm transition">
+                    <div className="w-[360px] rounded-lg border border-gray-200 bg-white shadow-sm transition sm:w-auto">
                       <div className="relative h-[200px] w-full border-b border-gray-200">
                         {part.media ? (
                           <BaseImage
@@ -160,10 +168,16 @@ const AllParts = () => {
               </div>
             ) : null}
           </div>
+          {pagination?.total && (
+            <p className="mx-auto my-4 ml-auto w-fit px-2 text-sm font-bold sm:text-base md:mr-0">{`Showing 1-${paginationInfo} of ${pagination?.total} ${getBrand(selectedSupplier)} Parts`}</p>
+          )}
         </>
       ) : (
         <p className="mt-10 min-h-36 w-fit px-5 text-gray-500">No parts found.</p>
       )}
+      {!allParts.length && selectedSupplier ? (
+        <p className="min-h-36 w-fit px-5 text-gray-500">No parts found.</p>
+      ) : null}
     </>
   );
 };

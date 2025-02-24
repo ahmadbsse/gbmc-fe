@@ -64,11 +64,9 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
               setShowAddItemModal(false);
             })
             .catch((error) => {
-              console.log(error);
               showToast(error.message, "error");
             });
         } catch (error) {
-          console.log(error);
           showToast(error.message, "error");
         } finally {
           setLoading(false);

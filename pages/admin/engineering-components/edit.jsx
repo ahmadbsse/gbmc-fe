@@ -110,24 +110,19 @@ const EditComponent = () => {
     }
   };
   const saveData = () => {
-    console.log(formData);
     try {
       apiClient
         .PUT(`/engineering-components/${id}`, { data: formData })
         .then(async () => {
           showToast(`${formData.name} saved Successfully`, "success");
-          await deleteFilesRequest(idsToRemove).then(() => {
-            console.log("Files deleted successfully");
-          });
+          await deleteFilesRequest(idsToRemove).then(() => {});
           router.push("/admin");
         })
         .catch((error) => {
           showToast(error.message, "error");
-          console.log(error);
         });
     } catch (error) {
       showToast(error.message, "error");
-      console.log(error);
     }
   };
   const deletePreviousImage = async (id, key) => {

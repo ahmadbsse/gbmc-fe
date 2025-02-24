@@ -101,16 +101,12 @@ const EditSubAssembly = () => {
         .then(async () => {
           showToast(`${formData.name} Sub Assembly Saved Successfully`, "success");
           router.push("/admin");
-          await deleteFilesRequest(idsToRemove).then(() => {
-            console.log("Files deleted successfully");
-          });
+          await deleteFilesRequest(idsToRemove).then(() => {});
         })
         .catch((error) => {
-          console.log(error);
           showToast(error.message, "error");
         });
     } catch (error) {
-      console.log(error);
       showToast(error.message, "error");
     }
   };

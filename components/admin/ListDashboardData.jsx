@@ -49,7 +49,6 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
         data.hero_image = data.hero_image.id;
       }
       await apiClient.PUT(url, { data: data }).then((res) => {
-        console.log(data);
         showToast(
           `${data.name} ${" "}${data?.active ? "activated" : "deactivated"} successfully`,
           "success"
@@ -119,7 +118,6 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
           getData();
         })
         .catch((error) => {
-          console.log(error);
           showToast(error.message, "error");
         });
     } catch (error) {

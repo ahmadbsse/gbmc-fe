@@ -71,11 +71,11 @@ const PartDetails = () => {
     <>
       <SeoHead title={data && data?.name ? data?.name : "Part Details"} />
       <Navbar setTab={() => {}} />
-      <PageLayout title="Product Details" breadcrumbs={breadcrumbs}>
+      <PageLayout title="Part Details" breadcrumbs={breadcrumbs}>
         {data ? (
           <div className="px-2">
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-              {/* Product Images Section */}
+              {/* Part Images Section */}
               <div className="space-y-4">
                 {/* Main Image */}
                 <div className="overflow-hidden rounded-lg shadow-md">
@@ -151,7 +151,7 @@ const PartDetails = () => {
                           height={img?.formats.thumbnail.height}
                           width={img?.formats.thumbnail.width}
                           src={img.formats.thumbnail.url}
-                          alt={`Product view ${index + 1}`}
+                          alt={`Part view ${index + 1}`}
                           classes="h-full w-full object-cover"
                         />
                       </button>
@@ -159,14 +159,14 @@ const PartDetails = () => {
                   </div>
                 ) : null}
               </div>
-              {/* Product Details Section */}
+              {/* Part Details Section */}
               <div className="space-y-6">
                 <div className="space-y-2">
-                  <p className="text-sm lg:text-base">PRODUCT CODE: {data?.id}</p>
+                  {/* <p className="text-sm lg:text-base">PART CODE: {data?.id}</p> */}
                   <h1 className="text-xl font-bold capitalize text-[#0060AA] lg:text-3xl">
                     {data?.name}
                   </h1>
-                  <span className="text-xs italic">Registered Number: {data?.number}</span>
+                  {/* <span className="text-xs italic">Registered Number: {data?.number}</span> */}
                 </div>
 
                 <p className="min-h-10" dangerouslySetInnerHTML={{ __html: data?.description }}></p>
@@ -177,24 +177,34 @@ const PartDetails = () => {
               <table className="product-specification-table product-specification-table-striped">
                 <tbody>
                   <tr>
-                    <td className="font-bold capitalize">Name:</td>
-                    <td>{data?.name}</td>
-                  </tr>
-                  <tr>
-                    <td className="font-bold capitalize">Registered Number:</td>
-                    <td>{data?.number}</td>
+                    <td className="font-bold capitalize">OEM Numbers:</td>
+                    <td>
+                      {data?.oem_number.split(",").map((item, index) => (
+                        <p className="text-lg lg:text-xl" key={index}>
+                          {item}
+                        </p>
+                      ))}
+                    </td>
                   </tr>
                   <tr>
                     <td className="font-bold capitalize">Material:</td>
-                    <td>{data?.material}</td>
+                    <td className="text-lg lg:text-xl">{data?.material}</td>
                   </tr>
                   <tr>
                     <td className="font-bold capitalize">Weight:</td>
-                    <td>{data?.weight}</td>
+                    <td className="text-lg lg:text-xl">{data?.weight}</td>
                   </tr>
-                  <tr>
+                  {/* <tr>
+                    <td className="font-bold capitalize">Name:</td>
+                    <td className="text-lg lg:text-xl">{data?.name}</td>
+                  </tr> */}
+                  {/* <tr>
+                    <td className="font-bold capitalize">Registered Number:</td>
+                    <td className="text-lg lg:text-xl">{data?.number}</td>
+                  </tr> */}
+                  {/* <tr>
                     <td className="font-bold capitalize">Published at:</td>
-                    <td>{convertToReadableDate(data?.publishedAt)}</td>
+                    <td className="text-lg lg:text-xl">{convertToReadableDate(data?.publishedAt)}</td>
                   </tr>
                   <tr>
                     <td className="font-bold capitalize">Featured:</td>
@@ -205,15 +215,7 @@ const PartDetails = () => {
                         <X className="text-error" />
                       )}
                     </td>
-                  </tr>
-                  <tr>
-                    <td className="font-bold capitalize">OEM Numbers:</td>
-                    <td>
-                      {data?.oem_number.split(",").map((item, index) => (
-                        <p key={index}>{item}</p>
-                      ))}
-                    </td>
-                  </tr>
+                  </tr> */}
                 </tbody>
               </table>
             </div>

@@ -68,18 +68,14 @@ const CreatePart = () => {
                   router.push("/admin");
                 })
                 .catch((error) => {
-                  console.log(error);
                   showToast(error.message, "error");
                 });
             } catch (error) {
               showToast(error.message, "error");
-              console.log(error);
             }
           }
         })
-        .catch((error) => {
-          console.log(error);
-        })
+        .catch((error) => {})
         .finally(() => {
           setLoading(false);
         });

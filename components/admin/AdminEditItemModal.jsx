@@ -63,17 +63,14 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
                   .then(async () => {
                     showToast(`${formData.name} saved successfully`, "success");
                     await deleteFilesRequest(idsToRemove).then(() => {
-                      console.log("Files deleted successfully");
                       getData();
                       setShowEditModal(false);
                     });
                   })
                   .catch((error) => {
-                    console.log(error);
                     showToast(error.message, "error");
                   });
               } catch (error) {
-                console.log(error);
                 showToast(error.message, "error");
               }
             } else {
@@ -84,17 +81,14 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
                   .then(async () => {
                     showToast(`${formData.name} saved successfully`, "success");
                     await deleteFilesRequest(idsToRemove).then(() => {
-                      console.log("Files deleted successfully");
                       getData();
                       setShowEditModal(false);
                     });
                   })
                   .catch((error) => {
-                    console.log(error);
                     showToast(error.message, "error");
                   });
               } catch (error) {
-                console.log(error);
                 showToast(error.message, "error");
               }
             }

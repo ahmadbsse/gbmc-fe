@@ -98,7 +98,6 @@ const EditPart = () => {
           }
         });
       } catch (error) {
-        console.log(error);
         showToast(error.message, "error");
       } finally {
         setLoading(false);
@@ -111,17 +110,13 @@ const EditPart = () => {
         .PUT(`/parts/${id}`, { data: formData })
         .then(async () => {
           showToast(`${formData.name} Saved Successfully`, "success");
-          await deleteFilesRequest(idsToRemove).then(() => {
-            console.log("Files deleted successfully");
-          });
+          await deleteFilesRequest(idsToRemove).then(() => {});
           router.push("/admin");
         })
         .catch((error) => {
-          console.log(error);
           showToast(error.message, "error");
         });
     } catch (error) {
-      console.log(error);
       showToast(error.message, "error");
     }
   };

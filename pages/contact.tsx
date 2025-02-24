@@ -43,7 +43,6 @@ const ContactPage = () => {
         },
         (error) => {
           showToast("Something went wrong!", "error");
-          console.log(`Failed to send email: ${error.text}`);
         }
       );
   };

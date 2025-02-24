@@ -68,7 +68,7 @@ const Article = () => {
             <div>
               {data?.hero_image ? (
                 data?.hero_image?.type && data?.hero_image?.type == "video" ? (
-                  <BaseVideo src={data?.hero_image.url} autoPlay={true} muted={true} loop={true} />
+                  <BaseVideo src={data?.hero_image?.url} autoPlay={true} muted={true} loop={true} />
                 ) : (
                   <BaseImage
                     width={data?.hero_image?.formats?.large?.width}
@@ -113,7 +113,7 @@ const Article = () => {
                       </p>
                     </div>
                   </div>
-                  {data?.media ? (
+                  {data?.media && data?.media[selectedImage] ? (
                     <BaseImage
                       classes="my-2 h-[400px] rounded-lg lg:z-10 lg:col-span-4 lg:my-16 lg:rounded-lg"
                       height={1100}
@@ -134,25 +134,29 @@ const Article = () => {
                 <div className="flex gap-4">
                   {data?.media ? (
                     data?.media.length > 1 &&
-                    data?.media?.map((img, index) => (
-                      <button
-                        key={index}
-                        className={`relative h-24 w-24 overflow-hidden rounded-lg shadow-sm ${
-                          selectedImage === index
-                            ? "ring-4 ring-primary/50"
-                            : "ring-1 ring-gray-200"
-                        }`}
-                        onClick={() => setSelectedImage(index)}
-                      >
-                        <BaseImage
-                          height={96}
-                          width={96}
-                          src={img?.formats?.thumbnail?.url}
-                          alt={`Product view ${index + 1}`}
-                          classes="h-full w-full object-cover"
-                        />
-                      </button>
-                    ))
+                    data?.media?.map((img, index) => {
+                      if (img && img.formats) {
+                        return (
+                          <button
+                            key={index}
+                            className={`relative h-24 w-24 overflow-hidden rounded-lg shadow-sm ${
+                              selectedImage === index
+                                ? "ring-4 ring-primary/50"
+                                : "ring-1 ring-gray-200"
+                            }`}
+                            onClick={() => setSelectedImage(index)}
+                          >
+                            <BaseImage
+                              height={96}
+                              width={96}
+                              src={img?.formats?.thumbnail?.url}
+                              alt={`Product view ${index + 1}`}
+                              classes="h-full w-full object-cover"
+                            />
+                          </button>
+                        );
+                      }
+                    })
                   ) : (
                     <div className="relative h-24 w-24 overflow-hidden rounded-lg shadow-sm"> </div>
                   )}
