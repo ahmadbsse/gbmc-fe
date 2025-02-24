@@ -40,6 +40,7 @@ const Article = () => {
   };
   useEffect(() => {
     if (router.query.slug) getComponentDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query.slug]);
   const breadcrumbs = [
     { text: "Home", href: "/" },
