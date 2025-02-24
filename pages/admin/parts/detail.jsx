@@ -107,7 +107,7 @@ const ViewPartDetails = () => {
                               height={item?.formats?.thumbnail?.height}
                               src={item?.formats?.thumbnail?.url}
                               alt={item?.name}
-                              classes="object-cover w-full h-full"
+                              classes="object-contain w-full h-full"
                             />
                           </div>
                         );
@@ -120,7 +120,7 @@ const ViewPartDetails = () => {
                         height={formData?.media?.formats?.thumbnail?.height}
                         src={formData?.media?.formats?.thumbnail?.url}
                         alt={formData?.name}
-                        classes="object-cover w-full h-full"
+                        classes="object-contain w-full h-full"
                       />
                     </div>
                   )

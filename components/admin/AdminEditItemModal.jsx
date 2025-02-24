@@ -193,7 +193,7 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
                             height={item?.formats?.thumbnail?.height}
                             src={item?.formats?.thumbnail?.url}
                             alt={item?.name}
-                            classes="object-cover w-full h-full"
+                            classes="object-contain w-full h-full"
                           />
                         </div>
                       );

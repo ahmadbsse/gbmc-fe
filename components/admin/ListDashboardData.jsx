@@ -250,7 +250,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
                               }
                               alt={item?.name}
                               priority={true}
-                              classes="object-fill w-full h-full"
+                              classes="object-contain w-full h-full"
                             />
                           ) : (
                             <BaseImage

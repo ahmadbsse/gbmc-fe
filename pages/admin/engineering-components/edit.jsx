@@ -288,7 +288,7 @@ const EditComponent = () => {
                             autoPlay={true}
                             muted={true}
                             loop={true}
-                            classes="object-cover w-full h-full"
+                            classes="object-contain w-full h-full"
                           />
                         ) : formData.hero_image && formData.hero_image.formats ? (
                           <BaseImage
@@ -296,7 +296,7 @@ const EditComponent = () => {
                             height={formData.hero_image.formats?.thumbnail?.height || 160}
                             src={formData.hero_image.formats?.thumbnail?.url}
                             alt={formData.hero_image.name}
-                            classes="object-cover w-full h-full"
+                            classes="object-contain w-full h-full"
                           />
                         ) : null}
                       </div>
@@ -332,7 +332,7 @@ const EditComponent = () => {
                                   height={item.formats?.thumbnail?.height || 200}
                                   src={item.formats?.thumbnail?.url}
                                   alt={item.name}
-                                  classes="object-cover w-full h-full"
+                                  classes="object-contain w-full h-full"
                                 />
                               </div>
                             );

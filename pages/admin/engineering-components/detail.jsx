@@ -97,7 +97,7 @@ const ViewComponentDetails = () => {
                           autoPlay={true}
                           muted={true}
                           loop={true}
-                          classes="object-cover w-full h-full"
+                          classes="object-contain w-full h-full"
                         />
                       ) : (
                         <BaseImage
@@ -105,7 +105,7 @@ const ViewComponentDetails = () => {
                           height={formData.hero_image.formats.thumbnail.height}
                           src={formData.hero_image.formats.thumbnail.url}
                           alt={formData.hero_image.name}
-                          classes="object-cover w-full h-full"
+                          classes="object-contain w-full h-full"
                         />
                       )
                     ) : null}
@@ -126,7 +126,7 @@ const ViewComponentDetails = () => {
                                   height={item.formats.thumbnail.height}
                                   src={item.formats.thumbnail.url}
                                   alt={item.name}
-                                  classes="object-cover w-full h-full"
+                                  classes="object-contain w-full h-full"
                                 />
                               </div>
                             );
@@ -139,7 +139,7 @@ const ViewComponentDetails = () => {
                             height={formData.media.formats.thumbnail.height}
                             src={formData.media.formats.thumbnail.url}
                             alt={formData.name}
-                            classes="object-cover w-full h-full"
+                            classes="object-contain w-full h-full"
                           />
                         </div>
                       )

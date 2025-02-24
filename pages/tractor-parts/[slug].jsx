@@ -152,7 +152,7 @@ const PartDetails = () => {
                           width={img?.formats.thumbnail.width}
                           src={img.formats.thumbnail.url}
                           alt={`Part view ${index + 1}`}
-                          classes="h-full w-full object-cover"
+                          classes="h-full w-full object-contain"
                         />
                       </button>
                     ))}
