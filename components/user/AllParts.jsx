@@ -113,17 +113,20 @@ const AllParts = () => {
         </p>
       ) : allParts.length || selectedSupplier ? (
         <>
-          <div className="mb-3 flex flex-wrap justify-start text-xs lg:justify-center lg:gap-5 lg:text-base">
+          <div className="mb-3 flex flex-wrap justify-center text-center text-xl lg:justify-center lg:gap-x-5">
             {suppliers.map((brand, index) => (
               <span
                 onClick={() => setSelectedSupplier(brand.documentId)}
-                className={`cursor-pointer p-2 font-medium uppercase hover:text-black md:p-4`}
+                className={`cursor-pointer p-2 font-semibold uppercase hover:text-black md:p-4 ${brand.documentId === selectedSupplier ? "border-b border-b-primary text-black" : ""}`}
                 key={index + brand.name}
               >
                 {brand.name}
               </span>
             ))}
           </div>
+          {pagination?.total && (
+            <p className="mx-auto my-4 ml-auto w-fit px-2 text-sm font-bold sm:text-base md:mr-0">{`Showing 1-${paginationInfo} of ${pagination?.total} ${getBrand(selectedSupplier)} Parts`}</p>
+          )}
           <div>
             <div className="custom-scrollbar flex max-w-7xl flex-col gap-3 overflow-x-auto pb-2 lg:flex-row">
               <div className="mx-auto grid w-fit grid-cols-1 gap-6 pr-3 sm:grid-cols-2 lg:grid-cols-3 lg:pr-0 xl:grid-cols-4">
@@ -168,9 +171,6 @@ const AllParts = () => {
               </div>
             ) : null}
           </div>
-          {pagination?.total && (
-            <p className="mx-auto my-4 ml-auto w-fit px-2 text-sm font-bold sm:text-base md:mr-0">{`Showing 1-${paginationInfo} of ${pagination?.total} ${getBrand(selectedSupplier)} Parts`}</p>
-          )}
         </>
       ) : (
         <p className="mt-10 min-h-36 w-fit px-5 text-gray-500">No parts found.</p>

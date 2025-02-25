@@ -5,7 +5,7 @@ import { BaseImage } from "../common";
 const EngineeringListingCard: React.FC<EngineeringCardProps> = ({ id, title, image, featured }) => {
   return (
     <Link href={`/engineering/${id}`}>
-      <div className="group relative cursor-pointer rounded-lg shadow-md hover:shadow-lg">
+      <div className="group relative w-[250px] cursor-pointer rounded-lg shadow-md hover:shadow-lg">
         {image ? (
           <BaseImage
             height={160}

@@ -99,7 +99,7 @@ const EditSubAssembly = () => {
       apiClient
         .PUT(`/sub-assemblies/${id}`, { data: formData })
         .then(async () => {
-          showToast(`${formData.name} Sub Assembly Saved Successfully`, "success");
+          showToast(`${formData.name} Saved Successfully`, "success");
           router.push("/admin");
           await deleteFilesRequest(idsToRemove).then(() => {});
         })

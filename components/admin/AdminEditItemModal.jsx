@@ -134,9 +134,8 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
       ) : null}
       <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-50">
         <div className="custom-scrollbar relative max-h-[600px] w-full max-w-xl overflow-y-auto rounded-lg bg-white">
-          <div className="fixed flex w-full max-w-[560px] items-center justify-between rounded-tl-lg bg-white py-3 pl-6 pr-2">
-            <h2 className="text-2xl font-bold">
-              {" "}
+          <div className="fixed flex w-full max-w-[560px] items-center justify-between gap-5 rounded-tl-lg bg-white py-3 pl-6 pr-2">
+            <h2 className="truncate text-2xl font-bold">
               Edit Make - <span className="font-medium">{formData?.name || ""}</span>
             </h2>
             <button

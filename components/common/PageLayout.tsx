@@ -19,7 +19,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children, title, breadcrumbs = 
                 </p>
               ))}
             </div>
-            <h1 className="text-2xl font-bold xl:text-3xl">{title}</h1>
+            <h1 className="text-2xl font-bold lg:text-3xl">{title}</h1>
           </div>
           {children}
         </div>

@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import apiClient from "@/utils/apiClient";
 import { transformMedia } from "@/utils";
 import { Navbar, PageLayout, BaseImage, BaseLoader, SeoHead } from "@/components/common";
-import { Check, X } from "lucide-react";
-import { convertToReadableDate } from "@/utils";
+// import { Check, X } from "lucide-react";
+// import { convertToReadableDate } from "@/utils";
 
 const PartDetails = () => {
   const router = useRouter();
@@ -140,7 +140,7 @@ const PartDetails = () => {
                     {data?.media.map((img, index) => (
                       <button
                         key={index}
-                        className={`relative h-24 w-24 overflow-hidden rounded-lg shadow-sm ${
+                        className={`relative overflow-hidden rounded-lg shadow-sm ${
                           selectedImage === index
                             ? "ring-4 ring-primary/50"
                             : "ring-1 ring-gray-200"
@@ -163,13 +163,16 @@ const PartDetails = () => {
               <div className="space-y-6">
                 <div className="space-y-2">
                   {/* <p className="text-sm lg:text-base">PART CODE: {data?.id}</p> */}
-                  <h1 className="text-xl font-bold capitalize text-[#0060AA] lg:text-3xl">
+                  <h1 className="text-xl font-bold capitalize text-[#0060AA] lg:text-2xl">
                     {data?.name}
                   </h1>
                   {/* <span className="text-xs italic">Registered Number: {data?.number}</span> */}
                 </div>
 
-                <p className="min-h-10" dangerouslySetInnerHTML={{ __html: data?.description }}></p>
+                <p
+                  className="min-h-10 text-lg"
+                  dangerouslySetInnerHTML={{ __html: data?.description }}
+                ></p>
               </div>
             </div>
             <div className="mt-8 max-w-3xl">
@@ -177,34 +180,34 @@ const PartDetails = () => {
               <table className="product-specification-table product-specification-table-striped">
                 <tbody>
                   <tr>
-                    <td className="font-bold capitalize">OEM Numbers:</td>
+                    <td className="w-1/3 text-wrap font-bold capitalize">OEM Numbers:</td>
                     <td>
                       {data?.oem_number.split(",").map((item, index) => (
-                        <p className="text-lg lg:text-xl" key={index}>
+                        <p className="" key={index}>
                           {item}
                         </p>
                       ))}
                     </td>
                   </tr>
                   <tr>
-                    <td className="font-bold capitalize">Material:</td>
-                    <td className="text-lg lg:text-xl">{data?.material}</td>
+                    <td className="w-1/3 text-wrap font-bold capitalize">Material:</td>
+                    <td className="">{data?.material}</td>
                   </tr>
                   <tr>
-                    <td className="font-bold capitalize">Weight:</td>
-                    <td className="text-lg lg:text-xl">{data?.weight}</td>
+                    <td className="text-wrapfont-bold w-1/3 capitalize">Weight:</td>
+                    <td className="">{data?.weight}</td>
                   </tr>
                   {/* <tr>
                     <td className="font-bold capitalize">Name:</td>
-                    <td className="text-lg lg:text-xl">{data?.name}</td>
+                    <td className="">{data?.name}</td>
                   </tr> */}
                   {/* <tr>
                     <td className="font-bold capitalize">Registered Number:</td>
-                    <td className="text-lg lg:text-xl">{data?.number}</td>
+                    <td className="">{data?.number}</td>
                   </tr> */}
                   {/* <tr>
                     <td className="font-bold capitalize">Published at:</td>
-                    <td className="text-lg lg:text-xl">{convertToReadableDate(data?.publishedAt)}</td>
+                    <td className="">{convertToReadableDate(data?.publishedAt)}</td>
                   </tr>
                   <tr>
                     <td className="font-bold capitalize">Featured:</td>
