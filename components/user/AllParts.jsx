@@ -102,8 +102,7 @@ const AllParts = () => {
   return (
     <>
       <div className="mt-5 flex flex-col justify-between lg:flex-row lg:items-center lg:gap-3">
-        <h2 className="my-4 text-2xl font-bold md:text-3xl">All Parts</h2>
-        <div className="pr-2 sm:ml-auto sm:px-4 md:pr-0">
+        <div className="mb-4 pr-2 sm:ml-auto sm:px-4 md:pr-0">
           <BaseSearchbar setSearchQuery={setSearchQuery} />
         </div>
       </div>

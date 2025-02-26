@@ -52,6 +52,7 @@ const PartDetails = () => {
           /\*\*(.*?)\*\*/g,
           "<strong>$1</strong>"
         );
+        setSelectedImage(response?.media[response?.media.length - 1]);
         setData(response);
       });
     } catch (error) {
