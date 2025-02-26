@@ -68,20 +68,20 @@ const Article = () => {
           <div className="mt-2 px-2 lg:px-16">
             <div>
               {data?.hero_image ? (
-                data?.hero_image?.type && data?.hero_image?.type == "video" ? (
+                data?.hero_image?.type === "video" ? (
                   <BaseVideo src={data?.hero_image?.url} autoPlay={true} muted={true} loop={true} />
-                ) : (
+                ) : data?.hero_image?.formats?.thumbnail ? (
                   <BaseImage
-                    width={data?.hero_image?.formats?.large?.width}
-                    height={data?.hero_image?.formats?.large?.height}
-                    src={data?.hero_image?.formats?.large?.url}
+                    width={data?.hero_image?.formats?.thumbnail?.width || 1100}
+                    height={data?.hero_image?.formats?.thumbnail?.height || 645}
+                    src={data?.hero_image?.url || data?.hero_image?.formats?.thumbnail?.url}
                     alt={data?.hero_image?.name}
                     classes="w-full max-h-[645px] rounded-lg"
                   />
+                ) : (
+                  <div className="max-h-[645px] w-full rounded-lg"></div>
                 )
-              ) : (
-                <div className="max-h-[645px] w-full rounded-lg"></div>
-              )}
+              ) : null}
             </div>
           </div>
           <div className="mx-auto max-w-6xl px-4 pt-4 lg:py-8">
@@ -93,7 +93,6 @@ const Article = () => {
                 className="mt-5 min-h-10 text-sm lg:text-base"
                 dangerouslySetInnerHTML={{ __html: data?.description }}
               />
-
               <section id="projects" className="pt-5 lg:py-8">
                 <article className="reverse grid grid-cols-1 md:grid-cols-10">
                   <div className="card-details rounded-lg bg-[#707070] p-4 text-sm text-white lg:text-base">
@@ -152,7 +151,7 @@ const Article = () => {
                               width={96}
                               src={img?.formats?.thumbnail?.url}
                               alt={`Product view ${index + 1}`}
-                              classes="h-full w-full object-cover"
+                              classes="h-full w-full object-contain"
                             />
                           </button>
                         );

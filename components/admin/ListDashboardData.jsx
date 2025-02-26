@@ -8,6 +8,7 @@ import {
   DeleteConfirmationModal,
   AdminEditItemModal,
   FeatureConfirmationModal,
+  MakeDetailModal,
   ActiveConfirmationModal,
 } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
@@ -19,6 +20,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showActiveModal, setShowActiveModal] = useState(false);
   const [showFeatureModal, setShowFeatureModal] = useState(false);
+  const [showMakeDetailModal, setShowMakeDetailModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [activeID, setActiveID] = useState(null);
   const [activeItem, setActiveItem] = useState(null);
@@ -145,6 +147,11 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
     ) {
       router.push(`/admin/${currentTab}/detail?id=${documentId}`);
     }
+    console.log(documentId);
+    if (currentTab == "suppliers") {
+      setActiveID(documentId);
+      setShowMakeDetailModal(true);
+    }
   };
 
   useEffect(() => {
@@ -161,6 +168,10 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
           currentTab={currentTab}
           getData={getData}
         />
+      ) : null}
+
+      {showMakeDetailModal ? (
+        <MakeDetailModal activeID={activeID} setShowMakeDetailModal={setShowMakeDetailModal} />
       ) : null}
       {showEditModal ? (
         <AdminEditItemModal
@@ -230,7 +241,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
                   >
                     <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
                       <div
-                        className={`h-32 w-40 min-w-44 max-w-44 ${currentTab == "parts" || currentTab == "sub-assemblies" || currentTab == "engineering-components" ? "cursor-pointer" : ""}`}
+                        className={`h-32 w-40 min-w-44 max-w-44 cursor-pointer`}
                         onClick={() => viewDetails(item.documentId)}
                       >
                         {item.media ? (
@@ -244,10 +255,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
                                 item.media[item?.media?.length - 1]?.formats?.thumbnail?.height ||
                                 112
                               }
-                              src={
-                                item?.media[item?.media?.length - 1]?.formats.thumbnail?.url ||
-                                "/placeholder"
-                              }
+                              src={item?.media[item?.media?.length - 1]?.formats.thumbnail?.url}
                               alt={item?.name}
                               priority={true}
                               classes="object-contain w-full h-full"
@@ -256,7 +264,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
                             <BaseImage
                               width={item.media?.formats?.thumbnail?.width || 160}
                               height={item.media?.formats?.thumbnail?.height || 112}
-                              src={item?.media?.formats.thumbnail?.url || "/placeholder"}
+                              src={item?.media?.formats.thumbnail?.url}
                               alt={item?.name}
                               priority={true}
                               classes="object-fill w-full h-full"
@@ -266,7 +274,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
                       </div>
                       <h3
                         onClick={() => viewDetails(item.documentId)}
-                        className={`text-center text-sm font-bold sm:text-left sm:text-base ${currentTab == "parts" || currentTab == "sub-assemblies" || currentTab == "engineering-components" ? "cursor-pointer" : ""}`}
+                        className={`cursor-pointer text-center text-sm font-bold sm:text-left sm:text-base`}
                       >
                         {item.name}
                       </h3>

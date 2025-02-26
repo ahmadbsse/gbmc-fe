@@ -117,7 +117,7 @@ const ViewComponentDetails = () => {
                     {formData.media ? (
                       Array.isArray(formData.media) ? (
                         formData.media.map((item, index) => {
-                          if (item) {
+                          if (item && item?.formats) {
                             return (
                               <div className="h-28 w-44" key={index}>
                                 <BaseImage

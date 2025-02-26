@@ -85,14 +85,19 @@ const PartDetails = () => {
                     onMouseLeave={handleMouseLeave}
                     onMouseMove={handleMouseMove}
                   >
-                    <BaseImage
-                      height={data?.media[selectedImage]?.formats?.actual?.height}
-                      width={data?.media[selectedImage]?.formats?.actual?.width}
-                      src={data?.media[selectedImage].formats?.actual?.url}
-                      alt={data?.name}
-                      classes="h-[350px] w-full object-cover lg:h-[500px]"
-                      priority={true}
-                    />
+                    {selectedImage &&
+                    data?.media[selectedImage] &&
+                    data?.media[selectedImage]?.formats &&
+                    data?.media[selectedImage]?.formats?.actual ? (
+                      <BaseImage
+                        height={data?.media[selectedImage]?.formats?.actual?.height}
+                        width={data?.media[selectedImage]?.formats?.actual?.width}
+                        src={data?.media[selectedImage].formats?.actual?.url}
+                        alt={data?.name}
+                        classes="object-contain"
+                        priority={true}
+                      />
+                    ) : null}
                     {isHovering && (
                       <>
                         {/* Magnifier Square */}
@@ -114,15 +119,17 @@ const PartDetails = () => {
                 {isHovering ? (
                   <div className="absolute left-1/2 right-1/2 top-40 z-20 ml-4 hidden h-[200px] w-[200px] overflow-hidden border border-gray-200 xl:block">
                     <div
-                      className="relative h-full w-full"
+                      className="relative h-full w-full bg-white"
                       style={{
                         transform: `scale(${zoomLevel})`,
                         transformOrigin: `${mousePosition.boundedX}% ${mousePosition.boundedY}%`,
                       }}
                     >
-                      {data?.media ? (
+                      {data?.media &&
+                      data?.media[selectedImage]?.formats &&
+                      data?.media[selectedImage]?.formats?.actual ? (
                         <BaseImage
-                          src={data?.media[selectedImage]?.formats.actual.url}
+                          src={data?.media[selectedImage]?.formats?.actual?.url}
                           alt={data?.name + "zoomed-view"}
                           classes="object-cover"
                           fill={true}
@@ -135,27 +142,31 @@ const PartDetails = () => {
                 ) : null}
 
                 {/* Thumbnail Images */}
-                {data?.media && data?.media.length > 1 ? (
+                {data?.media && data?.media?.length > 1 ? (
                   <div className="flex gap-4">
-                    {data?.media.map((img, index) => (
-                      <button
-                        key={index}
-                        className={`relative overflow-hidden rounded-lg shadow-sm ${
-                          selectedImage === index
-                            ? "ring-4 ring-primary/50"
-                            : "ring-1 ring-gray-200"
-                        }`}
-                        onClick={() => setSelectedImage(index)}
-                      >
-                        <BaseImage
-                          height={img?.formats.thumbnail.height}
-                          width={img?.formats.thumbnail.width}
-                          src={img.formats.thumbnail.url}
-                          alt={`Part view ${index + 1}`}
-                          classes="h-full w-full object-contain"
-                        />
-                      </button>
-                    ))}
+                    {data?.media.map((img, index) => {
+                      if (img && img?.formats && img?.formats.thumbnail) {
+                        return (
+                          <button
+                            key={index}
+                            className={`relative h-24 w-24 overflow-hidden rounded-lg shadow-sm ${
+                              selectedImage === index
+                                ? "ring-4 ring-primary/50"
+                                : "ring-1 ring-gray-200"
+                            }`}
+                            onClick={() => setSelectedImage(index)}
+                          >
+                            <BaseImage
+                              height={img?.formats?.thumbnail?.height}
+                              width={img?.formats?.thumbnail?.width}
+                              src={img.formats.thumbnail.url}
+                              alt={`Part view ${index + 1}`}
+                              classes="h-full w-full object-contain"
+                            />
+                          </button>
+                        );
+                      }
+                    })}
                   </div>
                 ) : null}
               </div>
@@ -194,7 +205,7 @@ const PartDetails = () => {
                     <td className="">{data?.material}</td>
                   </tr>
                   <tr>
-                    <td className="text-wrapfont-bold w-1/3 capitalize">Weight:</td>
+                    <td className="w-1/3 text-wrap font-bold capitalize">Weight:</td>
                     <td className="">{data?.weight}</td>
                   </tr>
                   {/* <tr>

@@ -123,7 +123,7 @@ const BaseFileUploader = ({
                   <img
                     src={file.preview}
                     alt={file.name}
-                    className="h-full w-full cursor-pointer object-cover"
+                    className="h-full w-full cursor-pointer object-contain"
                     onClick={() => {
                       setPreviewFile(file);
                     }}

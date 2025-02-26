@@ -11,7 +11,7 @@ const showToast = async (msg: string, type: "info" | "success" | "warning" | "er
     return toast(msg.toLowerCase(), {
         type: type,
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 53000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,

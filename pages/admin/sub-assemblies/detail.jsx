@@ -88,7 +88,7 @@ const ViewSubAssemblyDetails = () => {
                   {formData.media ? (
                     Array.isArray(formData.media) ? (
                       formData.media.map((item, index) => {
-                        if (item) {
+                        if (item && item?.formats) {
                           return (
                             <div className="h-32 w-40" key={index}>
                               <BaseImage

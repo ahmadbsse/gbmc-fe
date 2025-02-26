@@ -145,7 +145,7 @@ const AllParts = () => {
                             src={part.media[part?.media?.length - 1].formats?.actual?.url}
                             alt={part.name}
                             priority={true}
-                            classes="h-full w-full object-cover rounded-t-lg"
+                            classes="h-full w-full object-contain rounded-t-lg"
                           />
                         ) : null}
                       </div>
