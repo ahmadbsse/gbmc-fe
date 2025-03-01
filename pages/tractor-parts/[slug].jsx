@@ -52,7 +52,7 @@ const PartDetails = () => {
           /\*\*(.*?)\*\*/g,
           "<strong>$1</strong>"
         );
-        setSelectedImage(response?.media[response?.media.length - 1]);
+        setSelectedImage(response?.media.length - 1);
         setData(response);
       });
     } catch (error) {
@@ -86,8 +86,7 @@ const PartDetails = () => {
                     onMouseLeave={handleMouseLeave}
                     onMouseMove={handleMouseMove}
                   >
-                    {selectedImage &&
-                    data?.media[selectedImage] &&
+                    {data?.media[selectedImage] &&
                     data?.media[selectedImage]?.formats &&
                     data?.media[selectedImage]?.formats?.actual ? (
                       <BaseImage
@@ -103,7 +102,7 @@ const PartDetails = () => {
                       <>
                         {/* Magnifier Square */}
                         <div
-                          className="pointer-events-none absolute hidden border-2 border-primary/50 bg-white bg-opacity-10 xl:block"
+                          className="pointer-events-none absolute hidden border-2 border-primary/50 bg-white bg-opacity-10 sm:block"
                           style={{
                             width: `${magnifierSize}px`,
                             height: `${magnifierSize}px`,
@@ -118,7 +117,7 @@ const PartDetails = () => {
                   {/* Zoomed Image Container */}
                 </div>
                 {isHovering ? (
-                  <div className="absolute left-1/2 right-1/2 top-40 z-20 ml-4 hidden h-[200px] w-[200px] overflow-hidden border border-gray-200 xl:block">
+                  <div className="absolute left-1/2 right-1/2 top-40 z-20 ml-4 hidden h-[200px] w-[200px] overflow-hidden border border-gray-200 sm:block">
                     <div
                       className="relative h-full w-full bg-white"
                       style={{
@@ -136,7 +135,7 @@ const PartDetails = () => {
                           fill={true}
                         />
                       ) : (
-                        <div></div>
+                        <div>a</div>
                       )}
                     </div>
                   </div>
