@@ -15,7 +15,7 @@ const EngineeringListingCard: React.FC<EngineeringCardProps> = ({ id, title, ima
             classes="h-40 w-full object-contain rounded-lg"
           />
         ) : null}
-        <p className="absolute bottom-4 left-2 text-sm font-semibold text-white lg:left-4 lg:text-xl">
+        <p className="absolute bottom-4 left-2 text-sm font-semibold text-white [text-shadow:_0_4px_8px_#2196F3] lg:left-4 lg:text-xl">
           {title}
         </p>
         {featured ? (
