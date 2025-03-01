@@ -114,19 +114,15 @@ const EditComponent = () => {
       apiClient
         .PUT(`/engineering-components/${id}`, { data: formData })
         .then(async () => {
-          showToast("Engineering component saved Successfully", "success");
-          await deleteFilesRequest(idsToRemove).then(() => {
-            console.log("Files deleted successfully");
-          });
+          showToast(`${formData.name} saved Successfully`, "success");
+          await deleteFilesRequest(idsToRemove).then(() => {});
           router.push("/admin");
         })
         .catch((error) => {
-          showToast(error.message, "error");
-          console.log(error);
+          showToast(error.message, "error", true);
         });
     } catch (error) {
-      showToast(error.message, "error");
-      console.log(error);
+      showToast(error.message, "error", true);
     }
   };
   const deletePreviousImage = async (id, key) => {
@@ -205,15 +201,21 @@ const EditComponent = () => {
           {formData ? (
             <>
               <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">
-                Edit Engineering Component - {formData.name || ""}
+                Edit Engineering Component -{" "}
+                <span className="font-medium">{formData?.name || ""}</span>
               </h1>
               <form
                 onSubmit={handleSubmit}
                 className="mx-auto max-w-[810px] space-y-3 lg:space-y-5"
               >
                 <div className="w-full">
-                  <label className="required mb-1 block text-sm font-medium">Name</label>
+                  <label htmlFor="name" className="required mb-1 block text-sm font-medium">
+                    Name
+                  </label>
                   <input
+                    id="name"
+                    title={formData.name}
+                    maxLength={255}
                     required
                     type="text"
                     className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -224,9 +226,13 @@ const EditComponent = () => {
                 </div>
                 <div className="flex flex-col gap-4 md:flex-row">
                   <div className="w-full">
-                    <label className="required mb-1 block text-sm font-medium">Material</label>
+                    <label htmlFor="material" className="required mb-1 block text-sm font-medium">
+                      Material
+                    </label>
                     <input
+                      id="material"
                       required
+                      title={formData.material}
                       type="text"
                       className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                       placeholder={`Type material`}
@@ -235,10 +241,15 @@ const EditComponent = () => {
                     />
                   </div>
                   <div className="w-full">
-                    <label className="required mb-1 block text-sm font-medium"> Weight</label>
+                    <label htmlFor="weight" className="required mb-1 block text-sm font-medium">
+                      {" "}
+                      Weight
+                    </label>
                     <input
+                      id="weight"
                       required
                       type="text"
+                      title={formData.weight}
                       className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                       placeholder={`Type weight`}
                       value={formData.weight}
@@ -280,7 +291,7 @@ const EditComponent = () => {
                             autoPlay={true}
                             muted={true}
                             loop={true}
-                            classes="object-cover w-full h-full"
+                            classes="object-contain w-full h-full"
                           />
                         ) : formData.hero_image && formData.hero_image.formats ? (
                           <BaseImage
@@ -288,7 +299,7 @@ const EditComponent = () => {
                             height={formData.hero_image.formats?.thumbnail?.height || 160}
                             src={formData.hero_image.formats?.thumbnail?.url}
                             alt={formData.hero_image.name}
-                            classes="object-cover w-full h-full"
+                            classes="object-contain w-full h-full"
                           />
                         ) : null}
                       </div>
@@ -324,7 +335,7 @@ const EditComponent = () => {
                                   height={item.formats?.thumbnail?.height || 200}
                                   src={item.formats?.thumbnail?.url}
                                   alt={item.name}
-                                  classes="object-cover w-full h-full"
+                                  classes="object-contain w-full h-full"
                                 />
                               </div>
                             );

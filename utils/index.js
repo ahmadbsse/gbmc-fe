@@ -23,28 +23,18 @@ export function transformMedia(response) {
       documentId: media?.documentId,
       name: media?.name,
       formats: {
-        small: media?.formats?.small
-          ? {
-              url: media?.formats?.small?.url,
-              width: media?.formats?.small?.width || 500,
-              height: media?.formats?.small?.height || 500,
-            }
-          : {
-              url: "/placeholder.com/500",
-              width: 500,
-              height: 500,
-            },
-        thumbnail: media?.formats?.thumbnail
-          ? {
-              url: media?.formats?.thumbnail?.url,
-              width: media?.formats?.thumbnail?.width || 156,
-              height: media?.formats?.thumbnail?.height || 156,
-            }
-          : {
-              url: "/placeholder.com/156",
-              width: 156,
-              height: 156,
-            },
+        small: {
+          url: media?.formats?.small?.url,
+          width: media?.formats?.small?.width || 500,
+          height: media?.formats?.small?.height || 500,
+        },
+
+        thumbnail: {
+          url: media?.formats?.thumbnail?.url,
+          width: media?.formats?.thumbnail?.width || 156,
+          height: media?.formats?.thumbnail?.height || 156,
+        },
+
         actual: { url: media.url, width: media.width || 1080, height: media.height || 1080 },
       },
     });
@@ -111,9 +101,7 @@ export const uploadFilesRequest = async (filesToUpload, multiple = true) => {
 export const deleteFilesRequest = async (fileIds) => {
   fileIds.forEach(async (id) => {
     try {
-      await apiClient.DELETE(`/upload/files/${id}`).then(() => {
-        console.log("File removed successfully");
-      });
+      await apiClient.DELETE(`/upload/files/${id}`).then(() => {});
     } catch (error) {
       console.error("Error deleting resource:", error.message);
     }

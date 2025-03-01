@@ -13,7 +13,12 @@ const QuillEditor = dynamic(
   { ssr: false }
 );
 
-const RichTextEditor = ({ handleChange, defaultValue, label = "Description" }) => {
+const RichTextEditor = ({
+  handleChange,
+  defaultValue,
+  label = "Description",
+  disabled = false,
+}) => {
   const [isQuillLoaded, setIsQuillLoaded] = useState(false);
 
   useEffect(() => {
@@ -62,10 +67,13 @@ const RichTextEditor = ({ handleChange, defaultValue, label = "Description" }) =
   }
 
   return (
-    <div className={`rich-text-editor-wrapper`}>
-      <label className="required mb-1 block text-sm font-medium">{label}</label>
+    <div className={`rich-text-editor-wrapper ${disabled ? "pointer-events-none" : ""}`}>
+      <label htmlFor={label} className="required mb-1 block text-sm font-medium">
+        {label}
+      </label>
       <div>
         <QuillEditor
+          id={label}
           className="quill-editor rounded-lg bg-white"
           theme="snow"
           value={defaultValue}
@@ -73,6 +81,7 @@ const RichTextEditor = ({ handleChange, defaultValue, label = "Description" }) =
           modules={modules}
           onChange={handleChange}
           placeholder={`Type ${label}`}
+          disabled={disabled}
         />
       </div>
     </div>

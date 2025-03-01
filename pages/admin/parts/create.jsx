@@ -64,22 +64,18 @@ const CreatePart = () => {
                 .POST(`/parts`, { data: formData })
                 .then(() => {
                   setFormData(initialFormData);
-                  showToast(`Part created successfully`, "success");
+                  showToast(`${formData.name} created successfully`, "success");
                   router.push("/admin");
                 })
                 .catch((error) => {
-                  console.log(error);
-                  showToast(error.message, "error");
+                  showToast(error.message, "error", true);
                 });
             } catch (error) {
-              showToast(error.message, "error");
-              console.log(error);
+              showToast(error.message, "error", true);
             }
           }
         })
-        .catch((error) => {
-          console.log(error);
-        })
+        .catch((error) => {})
         .finally(() => {
           setLoading(false);
         });
@@ -91,7 +87,7 @@ const CreatePart = () => {
       await apiClient.GET(url).then((res) => {
         setSuppliers(res.data);
         if (res.data.length == 0) {
-          showToast("Please add Make first", "warning");
+          showToast("Please add Make first", "warning", true);
         }
       });
     } catch (error) {
@@ -151,9 +147,14 @@ const CreatePart = () => {
           <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
             <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">Name</label>
+                <label htmlFor="name" className="required mb-1 block text-sm font-medium">
+                  Name
+                </label>
                 <input
                   required
+                  id="name"
+                  title={formData?.name}
+                  maxLength={255}
                   type="text"
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder={`Type name`}
@@ -162,8 +163,11 @@ const CreatePart = () => {
                 />
               </div>
               <div className="relative w-full">
-                <label className="required mb-1 block text-sm font-medium">Make</label>
+                <label htmlFor="make" className="required mb-1 block text-sm font-medium">
+                  Make
+                </label>
                 <select
+                  id="make"
                   className="w-full appearance-none rounded-lg border border-gray-300 bg-white px-2.5 py-2 text-[13px] outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   value={formData.supplier}
                   onChange={(e) => setFormData({ ...formData, supplier: e.target.value })}
@@ -181,9 +185,13 @@ const CreatePart = () => {
               </div>
             </div>
             <div className="w-full">
-              <label className="required mb-1 block text-sm font-medium">OEM Numbers</label>
+              <label htmlFor="oem_numbers" className="required mb-1 block text-sm font-medium">
+                OEM Numbers
+              </label>
               <input
+                id="oem_numbers"
                 required
+                title={formData?.oem_number}
                 type="text"
                 className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                 placeholder={`Type comma seperated numbers...`}
@@ -194,34 +202,49 @@ const CreatePart = () => {
 
             <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">Material</label>
+                <label htmlFor="material" className="required mb-1 block text-sm font-medium">
+                  Material
+                </label>
                 <input
                   required
+                  id="material"
                   type="text"
+                  title={formData?.material}
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder={`Type material`}
-                  value={formData.material}
+                  value={formData?.material}
                   onChange={(e) => setFormData({ ...formData, material: e.target.value })}
                 />
               </div>
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium"> Weight</label>
+                <label htmlFor="weight" className="required mb-1 block text-sm font-medium">
+                  Weight
+                </label>
                 <input
                   required
+                  id="weight"
                   type="text"
+                  title={formData?.weight}
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder={`Type weight`}
-                  value={formData.weight}
+                  value={formData?.weight}
                   onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
                 />
               </div>
 
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">Registered Number</label>
+                <label
+                  htmlFor="registration_number"
+                  className="required mb-1 block text-sm font-medium"
+                >
+                  Registered Number
+                </label>
                 <input
+                  id="registration_number"
                   required
                   type="number"
                   min={1}
+                  title={formData?.number}
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder={`Type number`}
                   value={formData.number}

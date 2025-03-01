@@ -56,7 +56,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
             .then(() => {
               setFormData(initialFormData);
               if (currentTab === "suppliers") {
-                showToast(`Make added successfully`, "success");
+                showToast(`${formData.name} added successfully`, "success");
               } else {
                 showToast(`${currentTab} added successfully`, "success");
               }
@@ -64,18 +64,16 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
               setShowAddItemModal(false);
             })
             .catch((error) => {
-              console.log(error);
-              showToast(error.message, "error");
+              showToast(error.message, "error", true);
             });
         } catch (error) {
-          console.log(error);
-          showToast(error.message, "error");
+          showToast(error.message, "error", true);
         } finally {
           setLoading(false);
         }
       });
     } else {
-      showToast("Please fill all required fields", "error");
+      showToast("Please fill all required fields", "error", true);
     }
   };
 
@@ -115,9 +113,14 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
 
           <form onSubmit={handleSubmit} className="mt-10 space-y-3 p-6 lg:space-y-5">
             <div>
-              <label className="required mb-1 block text-sm font-medium">Name</label>
+              <label htmlFor="name" className="required mb-1 block text-sm font-medium">
+                Name
+              </label>
               <input
+                id="name"
+                maxLength={255}
                 type="text"
+                title={formData?.name}
                 className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                 placeholder="Type name"
                 value={formData?.name}

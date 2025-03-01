@@ -12,7 +12,7 @@ const EngineeringHome = () => {
     try {
       setIsLoading(true);
       await apiClient
-        .GET("/engineering-components?populate=*&filters[active]=true")
+        .GET("/engineering-components?populate=*&filters[active]=true&sort=createdAt:desc")
         .then(async (res) => {
           if (res && res.data.length > 0) {
             const transformedData = transformMedia(res.data);
@@ -67,22 +67,20 @@ const EngineeringHome = () => {
             <BaseLoader />
           </div>
         ) : (
-          <div className="grid h-screen gap-8">
+          <div className="h-screen">
             {/* Featured Components Section */}
             {engineeringComponents?.length != 0 ? (
-              <section>
-                <div className="grid gap-4 md:grid-cols-4">
-                  {engineeringComponents?.map((component, index) => (
-                    <EngineeringListingCard
-                      key={index}
-                      id={component?.documentId}
-                      image={component?.media[0]?.formats?.thumbnail?.url}
-                      title={component?.name}
-                      featured={component?.featured}
-                    />
-                  ))}
-                </div>
-              </section>
+              <div className="mx-auto grid w-fit grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {engineeringComponents?.map((component, index) => (
+                  <EngineeringListingCard
+                    key={index}
+                    id={component?.documentId}
+                    image={component?.media[component?.media?.length - 1]?.formats?.thumbnail?.url}
+                    title={component?.name}
+                    featured={component?.featured}
+                  />
+                ))}
+              </div>
             ) : (
               <p className="min-h-36 w-fit px-5">No Data Found</p>
             )}

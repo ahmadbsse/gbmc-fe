@@ -99,19 +99,15 @@ const EditSubAssembly = () => {
       apiClient
         .PUT(`/sub-assemblies/${id}`, { data: formData })
         .then(async () => {
-          showToast("Sub Assembly Saved Successfully", "success");
+          showToast(`${formData.name} Saved Successfully`, "success");
           router.push("/admin");
-          await deleteFilesRequest(idsToRemove).then(() => {
-            console.log("Files deleted successfully");
-          });
+          await deleteFilesRequest(idsToRemove).then(() => {});
         })
         .catch((error) => {
-          console.log(error);
-          showToast(error.message, "error");
+          showToast(error.message, "error", true);
         });
     } catch (error) {
-      console.log(error);
-      showToast(error.message, "error");
+      showToast(error.message, "error", true);
     }
   };
   const deletePreviousImage = async (id) => {
@@ -175,8 +171,8 @@ const EditSubAssembly = () => {
         <main className="container mx-auto px-4 py-8">
           {formData ? (
             <>
-              <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">
-                Edit Sub Assembly - {formData.name || ""}
+              <h1 className="mx-auto mb-10 w-fit text-center text-2xl font-bold">
+                Edit Sub Assembly - <span className="font-medium">{formData?.name || ""}</span>
               </h1>
               <form
                 onSubmit={handleSubmit}
@@ -184,8 +180,13 @@ const EditSubAssembly = () => {
               >
                 <div className="flex flex-col gap-4 md:flex-row">
                   <div className="w-full">
-                    <label className="required mb-1 block text-sm font-medium">Name</label>
+                    <label htmlFor="name" className="required mb-1 block text-sm font-medium">
+                      Name
+                    </label>
                     <input
+                      maxLength={255}
+                      id="name"
+                      title={formData.name}
                       required
                       type="text"
                       className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -195,11 +196,16 @@ const EditSubAssembly = () => {
                     />
                   </div>
                   <div className="w-full">
-                    <label className="required mb-1 block text-sm font-medium">
+                    <label
+                      htmlFor="registered_number"
+                      className="required mb-1 block text-sm font-medium"
+                    >
                       Registred Number
                     </label>
                     <input
+                      id="registered_number"
                       required
+                      title={formData.number}
                       type="number"
                       min={1}
                       className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -212,9 +218,13 @@ const EditSubAssembly = () => {
 
                 <div className="flex flex-col gap-4 md:flex-row">
                   <div className="w-full">
-                    <label className="required mb-1 block text-sm font-medium">OEM Numbers</label>
+                    <label htmlFor="oem_number" className="required mb-1 block text-sm font-medium">
+                      OEM Numbers
+                    </label>
                     <input
+                      id="oem_number"
                       required
+                      title={formData.oem_number}
                       type="text"
                       className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                       placeholder={`Type comma sepereated numbers..`}
@@ -223,10 +233,15 @@ const EditSubAssembly = () => {
                     />
                   </div>
                   <div className="w-full">
-                    <label className="required mb-1 block text-sm font-medium"> Weight</label>
+                    <label htmlFor="weight" className="required mb-1 block text-sm font-medium">
+                      {" "}
+                      Weight
+                    </label>
                     <input
+                      id="weight"
                       required
                       type="text"
+                      title={formData.weight}
                       className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                       placeholder={`Type weight`}
                       value={formData.weight}
@@ -264,7 +279,7 @@ const EditSubAssembly = () => {
                             height={item?.formats?.thumbnail?.height}
                             src={item?.formats?.thumbnail?.url}
                             alt={item?.name}
-                            classes="object-cover w-full h-full"
+                            classes="object-contain w-full h-full"
                           />
                         </div>
                       );

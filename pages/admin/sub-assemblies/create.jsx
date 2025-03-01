@@ -59,16 +59,14 @@ const CreateSubAssembly = () => {
             .POST(`/sub-assemblies`, { data: formData })
             .then(() => {
               setFormData(initialFormData);
-              showToast("Sub Assembly Created Successfully", "success");
+              showToast(`${formData.name} Created Successfully`, "success");
               router.push("/admin");
             })
             .catch((error) => {
-              console.log(error);
-              showToast(error.message, "error");
+              showToast(error.message, "error", true);
             });
         } catch (error) {
-          console.log(error);
-          showToast(error.message, "error");
+          showToast(error.message, "error", true);
         } finally {
           setLoading(false);
         }
@@ -120,8 +118,13 @@ const CreateSubAssembly = () => {
           <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
             <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">Name</label>
+                <label htmlFor="name" className="required mb-1 block text-sm font-medium">
+                  Name
+                </label>
                 <input
+                  id="name"
+                  title={formData.name}
+                  maxLength={255}
                   required
                   type="text"
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -131,10 +134,17 @@ const CreateSubAssembly = () => {
                 />
               </div>
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">Registered Number</label>
+                <label
+                  htmlFor="registered_number"
+                  className="required mb-1 block text-sm font-medium"
+                >
+                  Registered Number
+                </label>
                 <input
+                  id="registered_number"
                   required
                   type="number"
+                  title={formData.number}
                   min={1}
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder={`Type number`}
@@ -146,8 +156,12 @@ const CreateSubAssembly = () => {
 
             <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">OEM Numbers</label>
+                <label htmlFor="oem_numbers" className="required mb-1 block text-sm font-medium">
+                  OEM Numbers
+                </label>
                 <input
+                  title={formData.oem_number}
+                  id="oem_numbers"
                   required
                   type="text"
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -157,8 +171,13 @@ const CreateSubAssembly = () => {
                 />
               </div>
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium"> Weight</label>
+                <label htmlFor="weight" className="required mb-1 block text-sm font-medium">
+                  {" "}
+                  Weight
+                </label>
                 <input
+                  id="weight"
+                  title={formData.weight}
                   required
                   type="text"
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"

@@ -1,5 +1,5 @@
 import { Eye, EyeOff, Star, Pencil, Trash, Plus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import showToast from "@/utils/toast";
@@ -8,21 +8,24 @@ import {
   DeleteConfirmationModal,
   AdminEditItemModal,
   FeatureConfirmationModal,
+  MakeDetailModal,
   ActiveConfirmationModal,
 } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
 import { BaseButton, BaseImage } from "@/components/common";
 // import { convertToReadableDate } from "@/utils";
 
-const ListDashboardData = ({ data, activeTab, getData, total, setData }) => {
+const ListDashboardData = ({ data, activeTab, getData, total, setData, pagination }) => {
   const [showAddItemModal, setShowAddItemModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showActiveModal, setShowActiveModal] = useState(false);
   const [showFeatureModal, setShowFeatureModal] = useState(false);
+  const [showMakeDetailModal, setShowMakeDetailModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [activeID, setActiveID] = useState(null);
   const [activeItem, setActiveItem] = useState(null);
   const currentTab = activeTab.key == "engineering" ? "engineering-components" : activeTab.key;
+  const [paginationInfo, setPaginationInfo] = useState(0);
   const router = useRouter();
 
   const toggleActivation = async () => {
@@ -48,7 +51,10 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData }) => {
         data.hero_image = data.hero_image.id;
       }
       await apiClient.PUT(url, { data: data }).then((res) => {
-        showToast(`${data.active ? "activated" : "deactivated"} successfully`, "success");
+        showToast(
+          `${data.name} ${" "}${data?.active ? "activated" : "deactivated"} successfully`,
+          "success"
+        );
         setActiveItem(null);
         getData();
       });
@@ -82,28 +88,30 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData }) => {
       await apiClient
         .PUT(url, { data: data })
         .then((res) => {
-          showToast(`${!data.featured ? "unfeatured" : "featured"} successfully`, "success");
+          showToast(
+            `${data.name} ${" "}${!data.featured ? "unfeatured" : "featured"} successfully`,
+            "success"
+          );
           setActiveItem(null);
           getData();
         })
         .catch((error) => {
-          showToast(error.message, "error");
+          showToast(error.message, "error", true);
           console.error(error.message);
         });
     } catch (error) {
-      showToast(error.message, "error");
+      showToast(error.message, "error", true);
       console.error("Error updating resource:", error.message);
     }
   };
   const deleteItem = async () => {
-    console.log(data.length);
     try {
       const url = `/${currentTab}/${activeID}`;
       await apiClient
         .DELETE(url)
         .then((res) => {
           setShowDeleteModal(false);
-          showToast(`deleted succussfully`, "success");
+          showToast(`${activeItem.name} ${" "}deleted succussfully`, "success");
           setActiveID(null);
           setActiveItem(null);
           if (data.length == 1) {
@@ -112,11 +120,10 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData }) => {
           getData();
         })
         .catch((error) => {
-          console.log(error);
-          showToast(error.message, "error");
+          showToast(error.message, "error", true);
         });
     } catch (error) {
-      showToast(error.message, "error");
+      showToast(error.message, "error", true);
       console.error("Error updating resource:", error.message);
     }
   };
@@ -140,7 +147,18 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData }) => {
     ) {
       router.push(`/admin/${currentTab}/detail?id=${documentId}`);
     }
+    console.log(documentId);
+    if (currentTab == "suppliers") {
+      setActiveID(documentId);
+      setShowMakeDetailModal(true);
+    }
   };
+
+  useEffect(() => {
+    if (pagination) {
+      setPaginationInfo(Math.min(pagination.page * pagination.pageSize, pagination.total));
+    }
+  }, [pagination]);
   return (
     <>
       {showAddItemModal ? (
@@ -150,6 +168,10 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData }) => {
           currentTab={currentTab}
           getData={getData}
         />
+      ) : null}
+
+      {showMakeDetailModal ? (
+        <MakeDetailModal activeID={activeID} setShowMakeDetailModal={setShowMakeDetailModal} />
       ) : null}
       {showEditModal ? (
         <AdminEditItemModal
@@ -219,34 +241,40 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData }) => {
                   >
                     <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
                       <div
-                        className="h-32 w-40 max-w-44"
+                        className={`h-32 w-40 min-w-44 max-w-44 cursor-pointer`}
                         onClick={() => viewDetails(item.documentId)}
                       >
                         {item.media ? (
                           Array.isArray(item.media) ? (
                             <BaseImage
-                              width={item.media[0]?.formats?.thumbnail?.width || 160}
-                              height={item.media[0]?.formats?.thumbnail?.height || 112}
-                              src={item?.media[0]?.formats.thumbnail?.url || "/placeholder"}
+                              width={
+                                item.media[item?.media?.length - 1]?.formats?.thumbnail?.width ||
+                                160
+                              }
+                              height={
+                                item.media[item?.media?.length - 1]?.formats?.thumbnail?.height ||
+                                112
+                              }
+                              src={item?.media[item?.media?.length - 1]?.formats.thumbnail?.url}
                               alt={item?.name}
                               priority={true}
-                              classes="object-cover w-full h-full"
+                              classes="object-contain w-full h-full"
                             />
                           ) : (
                             <BaseImage
                               width={item.media?.formats?.thumbnail?.width || 160}
                               height={item.media?.formats?.thumbnail?.height || 112}
-                              src={item?.media?.formats.thumbnail?.url || "/placeholder"}
+                              src={item?.media?.formats.thumbnail?.url}
                               alt={item?.name}
                               priority={true}
-                              classes="object-cover w-full h-full"
+                              classes="object-fill w-full h-full"
                             />
                           )
                         ) : null}
                       </div>
                       <h3
                         onClick={() => viewDetails(item.documentId)}
-                        className={`text-sm font-bold capitalize sm:text-base ${currentTab == "parts" || currentTab == "sub-assemblies" || currentTab == "engineering-components" ? "cursor-pointer" : ""}`}
+                        className={`cursor-pointer text-center text-sm font-bold sm:text-left sm:text-base`}
                       >
                         {item.name}
                       </h3>
@@ -325,6 +353,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData }) => {
           )}
         </div>
       </div>
+      <p className="mx-auto my-4 ml-auto w-fit px-2 text-sm font-bold sm:text-base md:mr-0">{`Showing 1-${paginationInfo} of ${pagination?.total}`}</p>
     </>
   );
 };

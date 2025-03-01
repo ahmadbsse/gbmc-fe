@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import apiClient from "@/utils/apiClient";
-
+import RichTextEditor from "@/components/common/RichTextEditor";
 import { Navbar, BaseLoader, BaseImage, SeoHead } from "@/components/common";
 
 const ViewPartDetails = () => {
@@ -42,56 +42,54 @@ const ViewPartDetails = () => {
         <main className="container mx-auto px-4 py-8">
           {formData ? (
             <div className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
-              <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">
-                View - Part - {formData.name || ""}
+              <h1 className="mx-auto mb-10 w-fit text-center text-2xl font-bold">
+                View Part - {formData?.name || ""}
               </h1>
-              <div className="flex flex-col gap-3 md:flex-row md:gap-5">
+              <div className="flex flex-col gap-3 text-sm md:flex-row md:gap-5">
                 <div className="w-full">
-                  <label className="required mb-1 block text-sm font-medium">Name</label>
+                  <label className="required mb-1 block font-medium">Name</label>
                   <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
                     {formData.name}
                   </div>
                 </div>
                 <div className="w-full">
-                  <label className="required mb-1 block text-sm font-medium">Make</label>
+                  <label className="required mb-1 block font-medium">Make</label>
                   <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
                     {formData.supplier.name}
                   </div>
                 </div>
               </div>
-              <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">OEM Numbers</label>
+              <div className="w-full text-sm">
+                <label className="required mb-1 block font-medium">OEM Numbers</label>
                 <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
                   {formData.oem_number}
                 </div>
               </div>
-              <div className="flex flex-col gap-3 md:flex-row md:gap-5">
+              <div className="flex flex-col gap-3 text-sm md:flex-row md:gap-5">
                 <div className="w-full">
-                  <label className="required mb-1 block text-sm font-medium">Material</label>
+                  <label className="required mb-1 block font-medium">Material</label>
                   <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
                     {formData.material}
                   </div>
                 </div>
                 <div className="w-full">
-                  <label className="required mb-1 block text-sm font-medium"> Weight</label>
+                  <label className="required mb-1 block font-medium"> Weight</label>
                   <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
                     {formData.weight}
                   </div>
                 </div>
                 <div className="w-full">
-                  <label className="required mb-1 block text-sm font-medium">
-                    Registered Number
-                  </label>
+                  <label className="required t mb-1 block font-medium">Registered Number</label>
                   <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
                     {formData.number}
                   </div>
                 </div>
               </div>
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">Description</label>
-                <div
-                  className="product-description min-h-10 rounded-lg border border-gray-300 px-2.5 py-2 text-justify"
-                  dangerouslySetInnerHTML={{ __html: formData.description }}
+                <RichTextEditor
+                  handleChange={() => {}}
+                  defaultValue={formData.description}
+                  disabled={true}
                 />
               </div>
 
@@ -100,7 +98,7 @@ const ViewPartDetails = () => {
                 {formData?.media ? (
                   Array.isArray(formData?.media) ? (
                     formData?.media.map((item, index) => {
-                      if (item) {
+                      if (item && item?.formats) {
                         return (
                           <div className="h-32 w-40" key={index}>
                             <BaseImage
@@ -109,7 +107,7 @@ const ViewPartDetails = () => {
                               height={item?.formats?.thumbnail?.height}
                               src={item?.formats?.thumbnail?.url}
                               alt={item?.name}
-                              classes="object-cover w-full h-full"
+                              classes="object-contain w-full h-full"
                             />
                           </div>
                         );
@@ -122,7 +120,7 @@ const ViewPartDetails = () => {
                         height={formData?.media?.formats?.thumbnail?.height}
                         src={formData?.media?.formats?.thumbnail?.url}
                         alt={formData?.name}
-                        classes="object-cover w-full h-full"
+                        classes="object-contain w-full h-full"
                       />
                     </div>
                   )

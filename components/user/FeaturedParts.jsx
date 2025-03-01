@@ -18,7 +18,7 @@ const FeaturedParts = () => {
   const getParts = async () => {
     try {
       setIsLoading(true);
-      let url = `/parts?populate=*&filters[active]=true&filters[featured]=true`;
+      let url = `/parts?populate=*&filters[active]=true&filters[featured]=true&sort=createdAt:desc`;
       const res = await apiClient.GET(url);
       if (res && res.data.length > 0) {
         const parts = res.data.filter((part) => part.supplier.active);
@@ -44,8 +44,8 @@ const FeaturedParts = () => {
         </p>
       ) : featuredParts?.length ? (
         <div>
-          <h2 className="my-4 text-lg font-bold md:text-3xl">Featured Parts</h2>
-          <div className="custom-scrollbar flex w-[360px] max-w-7xl flex-col gap-3 overflow-x-auto pb-2 sm:w-[590px] md:w-[600px] lg:w-[1024px] lg:flex-row xl:w-[1230px]">
+          <h2 className="my-4 text-2xl font-bold md:text-3xl">Featured Parts</h2>
+          <div className="custom-scrollbar mx-auto flex w-[360px] max-w-7xl flex-col gap-3 overflow-x-auto pb-2 sm:w-[590px] md:w-[600px] lg:w-[1024px] lg:flex-row xl:w-[1230px]">
             <Swiper
               modules={[Navigation, Pagination, Mousewheel]}
               spaceBetween={20}
@@ -71,12 +71,12 @@ const FeaturedParts = () => {
                       <div className="relative h-[200px] w-full border-b border-gray-200">
                         {part.media ? (
                           <BaseImage
-                            width={part.media[0].formats?.actual?.width}
-                            height={part.media[0].formats?.actual?.height}
-                            src={part.media[0].formats?.actual?.url}
+                            width={part.media[part?.media?.length - 1].formats?.actual?.width}
+                            height={part.media[part?.media?.length - 1].formats?.actual?.height}
+                            src={part.media[part?.media?.length - 1].formats?.actual?.url}
                             alt={part.name}
                             priority={true}
-                            classes="h-full w-full object-cover rounded-t-lg"
+                            classes="h-full w-full object-contain rounded-t-lg"
                           />
                         ) : null}
                         <div className="absolute right-2 top-2 rounded bg-primary px-1.5 py-0.5 text-xs">
@@ -84,7 +84,12 @@ const FeaturedParts = () => {
                         </div>
                       </div>
                       <div className="p-4">
-                        <h3 className="text-lg font-semibold">{part.name}</h3>
+                        <h3
+                          title={part.name}
+                          className="truncate text-center text-lg font-semibold"
+                        >
+                          {part.name}
+                        </h3>
                       </div>
                     </div>
                   </Link>

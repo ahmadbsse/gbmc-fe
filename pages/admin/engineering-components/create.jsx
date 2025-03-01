@@ -69,12 +69,11 @@ const CreateEngineeringComponent = () => {
                   .POST(`/engineering-components`, { data: formData })
                   .then(() => {
                     setFormData(initialFormData);
-                    showToast("Engineering component Created Successfully", "success");
+                    showToast(`${formData.name} Created Successfully`, "success");
                     router.push("/admin");
                   })
                   .catch((error) => {
-                    console.log(error);
-                    showToast(error.message, "error");
+                    showToast(error.message, "error", true);
                   });
               } catch (error) {
                 console.error(error);
@@ -151,9 +150,14 @@ const CreateEngineeringComponent = () => {
           <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
             <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">Name</label>
+                <label htmlFor="name" className="required mb-1 block text-sm font-medium">
+                  Name
+                </label>
                 <input
+                  id="name"
+                  maxLength={255}
                   type="text"
+                  title={formData.name}
                   required
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder={`Type name`}
@@ -164,8 +168,12 @@ const CreateEngineeringComponent = () => {
             </div>
             <div className="flex flex-col gap-4 md:flex-row">
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium">Material</label>
+                <label htmlFor="material" className="required mb-1 block text-sm font-medium">
+                  Material
+                </label>
                 <input
+                  id="material"
+                  title={formData.material}
                   type="text"
                   required
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -175,9 +183,14 @@ const CreateEngineeringComponent = () => {
                 />
               </div>
               <div className="w-full">
-                <label className="required mb-1 block text-sm font-medium"> Weight</label>
+                <label htmlFor="weight" className="required mb-1 block text-sm font-medium">
+                  {" "}
+                  Weight
+                </label>
                 <input
+                  id="weight"
                   type="text"
+                  title={formData.weight}
                   required
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder={`Type weight`}

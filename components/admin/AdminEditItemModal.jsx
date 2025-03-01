@@ -61,20 +61,17 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
                 apiClient
                   .PUT(`/${currentTab}/${activeID}`, { data: formData })
                   .then(async () => {
-                    showToast(`Make saved successfully`, "success");
+                    showToast(`${formData.name} saved successfully`, "success");
                     await deleteFilesRequest(idsToRemove).then(() => {
-                      console.log("Files deleted successfully");
                       getData();
                       setShowEditModal(false);
                     });
                   })
                   .catch((error) => {
-                    console.log(error);
-                    showToast(error.message, "error");
+                    showToast(error.message, "error", true);
                   });
               } catch (error) {
-                console.log(error);
-                showToast(error.message, "error");
+                showToast(error.message, "error", true);
               }
             } else {
               try {
@@ -82,20 +79,17 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
                 apiClient
                   .PUT(`/${currentTab}/${activeID}`, { data: formData })
                   .then(async () => {
-                    showToast(`Make saved successfully`, "success");
+                    showToast(`${formData.name} saved successfully`, "success");
                     await deleteFilesRequest(idsToRemove).then(() => {
-                      console.log("Files deleted successfully");
                       getData();
                       setShowEditModal(false);
                     });
                   })
                   .catch((error) => {
-                    console.log(error);
-                    showToast(error.message, "error");
+                    showToast(error.message, "error", true);
                   });
               } catch (error) {
-                console.log(error);
-                showToast(error.message, "error");
+                showToast(error.message, "error", true);
               }
             }
           })
@@ -140,8 +134,10 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
       ) : null}
       <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-50">
         <div className="custom-scrollbar relative max-h-[600px] w-full max-w-xl overflow-y-auto rounded-lg bg-white">
-          <div className="fixed flex w-full max-w-[560px] items-center justify-between rounded-tl-lg bg-white py-3 pl-6 pr-2">
-            <h2 className="text-2xl font-bold"> Edit Make - {formData?.name}</h2>
+          <div className="fixed flex w-full max-w-[560px] items-center justify-between gap-5 rounded-tl-lg bg-white py-3 pl-6 pr-2">
+            <h2 className="truncate text-2xl font-bold">
+              Edit Make - <span className="font-medium">{formData?.name || ""}</span>
+            </h2>
             <button
               onClick={() => {
                 setShowWarning(true);
@@ -153,8 +149,13 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
           {formData ? (
             <form onSubmit={handleSubmit} className="mt-10 space-y-3 p-6 lg:space-y-5">
               <div>
-                <label className="required mb-1 block text-sm font-medium">Name</label>
+                <label htmlFor="name" className="required mb-1 block text-sm font-medium">
+                  Name
+                </label>
                 <input
+                  id="name"
+                  title={formData.name}
+                  maxLength={255}
                   type="text"
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder="Type name"
@@ -192,7 +193,7 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
                             height={item?.formats?.thumbnail?.height}
                             src={item?.formats?.thumbnail?.url}
                             alt={item?.name}
-                            classes="object-cover w-full h-full"
+                            classes="object-contain w-full h-full"
                           />
                         </div>
                       );

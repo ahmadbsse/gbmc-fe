@@ -46,9 +46,9 @@ const AdminDashboard = () => {
         }
         let url = "";
         if (searchQuery == "") {
-          url = `/parts?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}`;
+          url = `/parts?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=createdAt:desc`;
         } else {
-          url = `/parts?populate=*&filters[name][$containsi]=${searchQuery}`;
+          url = `/parts?populate=*&filters[name][$containsi]=${searchQuery}&sort=createdAt:desc`;
         }
         await apiClient.GET(url).then(async (res) => {
           if (res && res.data.length > 0) {
@@ -86,9 +86,9 @@ const AdminDashboard = () => {
         }
         let url = "";
         if (searchQuery == "") {
-          url = `/engineering-components?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}`;
+          url = `/engineering-components?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=createdAt:desc`;
         } else {
-          url = `/engineering-components?populate=*&filters[name][$containsi]=${searchQuery}`;
+          url = `/engineering-components?populate=*&filters[name][$containsi]=${searchQuery}&sort=createdAt:desc`;
         }
         await apiClient.GET(url).then(async (res) => {
           if (res && res.data.length > 0) {
@@ -127,9 +127,9 @@ const AdminDashboard = () => {
         }
         let url = "";
         if (searchQuery == "") {
-          url = `/sub-assemblies?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}`;
+          url = `/sub-assemblies?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=createdAt:desc`;
         } else {
-          url = `/sub-assemblies?populate=*&filters[name][$containsi]=${searchQuery}`;
+          url = `/sub-assemblies?populate=*&filters[name][$containsi]=${searchQuery}&sort=createdAt:desc`;
         }
         await apiClient.GET(url).then(async (res) => {
           if (res && res.data.length > 0) {
@@ -168,9 +168,9 @@ const AdminDashboard = () => {
         }
         let url = "";
         if (searchQuery == "") {
-          url = `/suppliers?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}`;
+          url = `/suppliers?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=createdAt:desc`;
         } else {
-          url = `/suppliers?populate=*&filters[name][$containsi]=${searchQuery}`;
+          url = `/suppliers?populate=*&filters[name][$containsi]=${searchQuery}&sort=createdAt:desc`;
         }
         await apiClient.GET(url).then(async (res) => {
           if (res && res.data.length > 0) {
@@ -236,6 +236,7 @@ const AdminDashboard = () => {
       setPagination(null);
       setActiveTab(tab);
       setTotal(0);
+      setSearchQuery("");
     }
   };
 
@@ -253,16 +254,16 @@ const AdminDashboard = () => {
 
         <main className="container mx-auto px-4 py-8">
           <div className="mb-3 flex items-center justify-between md:mb-8">
-            <h1 className="flex gap-2 text-lg font-bold md:text-3xl">Admin Dashboard</h1>
+            <h1 className="flex gap-2 text-2xl font-bold md:text-[1.65rem]">Admin Dashboard</h1>
             <div className="hidden md:flex">
               {tabData[activeTab.key] > 0 || searchQuery !== "" ? (
-                <BaseSearchbar setSearchQuery={setSearchQuery} />
+                <BaseSearchbar key={activeTab.key} setSearchQuery={setSearchQuery} />
               ) : null}
             </div>
           </div>
           <div className="mb-8 ml-auto w-full md:hidden">
             {tabData[activeTab.key] > 0 || searchQuery !== "" ? (
-              <BaseSearchbar setSearchQuery={setSearchQuery} />
+              <BaseSearchbar key={activeTab.key} setSearchQuery={setSearchQuery} />
             ) : null}
           </div>
           {/* Desktop */}
@@ -285,6 +286,7 @@ const AdminDashboard = () => {
           ) : (
             <>
               <ListDashboardData
+                pagination={pagination}
                 data={
                   activeTab.key == "engineering"
                     ? engineering
@@ -318,7 +320,7 @@ const AdminDashboard = () => {
               {pagination?.page < pagination?.pageCount ? (
                 <div className="mt-3 flex justify-center md:justify-end">
                   <p
-                    className="w-fit cursor-pointer rounded bg-[#000036] px-2.5 py-2 text-sm text-white hover:bg-black hover:text-primary-color"
+                    className="w-fit cursor-pointer bg-[#000036] px-2.5 py-2 text-sm text-white hover:bg-black hover:text-primary-color"
                     onClick={loadMore}
                   >
                     {isLoadingMore ? "Loading..." : "Load More"}

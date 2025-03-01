@@ -10,7 +10,7 @@ const FeatureConfirmationModal = ({ onClose, handleToggle, name, currentTab, sta
         </button>
         <h1 className="mb-2 text-lg font-bold">Confirm</h1>
         <h2 className="mb-16">
-          Are you sure you want to {status ? "Remove" : "Add"} <strong>{name} </strong>{" "}
+          Are you sure you want to {status ? "Remove" : "Add"}{" "}
           {currentTab == "engineering-components"
             ? "Engineering Component"
             : currentTab == "suppliers"
@@ -18,7 +18,7 @@ const FeatureConfirmationModal = ({ onClose, handleToggle, name, currentTab, sta
               : currentTab == "sub-assemblies"
                 ? "Sub Assembly"
                 : "Part"}{" "}
-          {status ? "from" : "to "} featured?
+          <strong>{name} </strong> {status ? "from" : "to "} featured?
         </h2>
         <div className="ml-auto mt-6 flex w-fit">
           <BaseButton loading={false} type="button" handleClick={handleToggle}>

@@ -24,7 +24,7 @@ const ContactPage = () => {
       process.env.NEXT_PUBLIC_EmailJsTemplateId === undefined ||
       process.env.NEXT_PUBLIC_EmailJsPublicKey === undefined
     ) {
-      showToast("EmailJs Credentials not configured!", "error");
+      showToast("EmailJs Credentials not configured!", "error", true);
       return;
     }
     setLoading(true);
@@ -37,13 +37,12 @@ const ContactPage = () => {
       )
       .then(
         () => {
-          showToast("Email successfully sent!", "success");
+          showToast("Email successfully sent!", "success", true);
           setLoading(false);
           form.current.reset();
         },
-        (error) => {
-          showToast("Something went wrong!", "error");
-          console.log(`Failed to send email: ${error.text}`);
+        () => {
+          showToast("Something went wrong!", "error", true);
         }
       );
   };
@@ -87,13 +86,17 @@ const ContactPage = () => {
                 </p>
                 <form ref={form} onSubmit={sendEmail} className="space-y-5">
                   <div>
-                    <label className="required mb-1 block text-sm font-medium text-slate-700">
+                    <label
+                      htmlFor="name"
+                      className="required mb-1 block text-sm font-medium text-slate-700"
+                    >
                       Name
                     </label>
                     <input
+                      id="name"
+                      maxLength={255}
                       name="from_name"
                       type="text"
-                      maxLength={100}
                       required
                       onChange={(e) => {
                         setFormValues({ ...formValues, name: e.target.value });
@@ -102,10 +105,14 @@ const ContactPage = () => {
                     />
                   </div>
                   <div>
-                    <label className="required mb-1 block text-sm font-medium text-slate-700">
+                    <label
+                      htmlFor="email"
+                      className="required mb-1 block text-sm font-medium text-slate-700"
+                    >
                       Email
                     </label>
                     <input
+                      id="email"
                       name="reply_to"
                       type="email"
                       maxLength={100}
@@ -126,10 +133,14 @@ const ContactPage = () => {
                     )}
                   </div>
                   <div>
-                    <label className="required mb-1 block text-sm font-medium text-slate-700">
+                    <label
+                      htmlFor="message"
+                      className="required mb-1 block text-sm font-medium text-slate-700"
+                    >
                       Message
                     </label>
                     <textarea
+                      id="message"
                       name="message"
                       rows={4}
                       onChange={(e) => {
