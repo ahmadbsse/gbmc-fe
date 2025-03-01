@@ -16,6 +16,7 @@ const AllParts = () => {
   const [selectedSupplier, setSelectedSupplier] = useState("");
   const [pagination, setPagination] = useState(null);
   const [paginationInfo, setPaginationInfo] = useState(0);
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(searchQuery);
   const observerRef = useRef(null);
 
   const getParts = async (pageNum, isLoadMore = false) => {
@@ -61,18 +62,33 @@ const AllParts = () => {
   useEffect(() => {
     setPage(1);
     getParts(1, false);
-  }, [selectedSupplier, searchQuery]);
+  }, [selectedSupplier]);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 500); // Adjust debounce delay (500ms) as needed
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchQuery]);
+
+  useEffect(() => {
+    setPage(1);
+    getParts(1, false);
+  }, [debouncedSearchQuery]);
 
   useEffect(() => {
     if (page > 1) getParts(page, true);
   }, [page]);
 
-  const loadMore = () => {
-    setPage((prevPage) => {
-      const newPage = prevPage + 1;
-      return newPage;
-    });
-  };
+  // const loadMore = () => {
+  //   setPage((prevPage) => {
+  //     const newPage = prevPage + 1;
+  //     return newPage;
+  //   });
+  // };
   const getSuppliers = async () => {
     try {
       await apiClient.GET(`/suppliers?filters[active]=true`).then(async (res) => {

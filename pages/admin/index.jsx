@@ -18,6 +18,7 @@ const AdminDashboard = () => {
   const [total, setTotal] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [pagination, setPagination] = useState(null);
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(searchQuery);
 
   const tabsKey = [
     { name: "Makes", key: "suppliers", tag: "make" },
@@ -216,7 +217,22 @@ const AdminDashboard = () => {
   useEffect(() => {
     setPage(1);
     apiCalls(1, false);
-  }, [activeTab, searchQuery]);
+  }, [activeTab]);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 500); // Adjust debounce delay (500ms) as needed
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchQuery]);
+
+  useEffect(() => {
+    setPage(1);
+    apiCalls(1, false);
+  }, [debouncedSearchQuery]);
 
   useEffect(() => {
     if (page > 1) apiCalls(page, true);
