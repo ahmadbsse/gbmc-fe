@@ -81,7 +81,7 @@ const PartDetails = () => {
                 {/* Main Image */}
                 <div className="overflow-hidden rounded-lg shadow-md">
                   <div
-                    className="relative w-full cursor-crosshair lg:h-[400px]"
+                    className="relative flex w-full cursor-crosshair items-center justify-center lg:h-[400px]"
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                     onMouseMove={handleMouseMove}
@@ -94,7 +94,7 @@ const PartDetails = () => {
                         width={data?.media[selectedImage]?.formats?.actual?.width}
                         src={data?.media[selectedImage].formats?.actual?.url}
                         alt={data?.name}
-                        classes="object-contain"
+                        classes="object-contain w-fit m-auto"
                         priority={true}
                       />
                     ) : null}
@@ -161,7 +161,7 @@ const PartDetails = () => {
                               width={img?.formats?.thumbnail?.width}
                               src={img.formats.thumbnail.url}
                               alt={`Part view ${index + 1}`}
-                              classes="h-full w-full object-contain"
+                              classes="object-contain"
                             />
                           </button>
                         );
