@@ -196,3 +196,7 @@ label {
 input {
   font-size: 13px;
 }
+
+.Toastify__toast {
+  padding-right: 35px !important;
+}
