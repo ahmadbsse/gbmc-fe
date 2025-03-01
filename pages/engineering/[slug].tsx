@@ -49,7 +49,7 @@ const Article = () => {
   ];
   return (
     <>
-      <SeoHead title={`Article - ${data?.name}`} />
+      <SeoHead title={`${data?.name} | Engineering Component`} />
       <Navbar setTab={() => {}} />
       {data ? (
         <div className="mx-auto mb-8 max-w-7xl pt-20">

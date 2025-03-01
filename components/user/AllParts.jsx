@@ -169,7 +169,7 @@ const AllParts = () => {
                     href={`/tractor-parts/${part.documentId}`}
                     key={part.id + index + part.documentId}
                   >
-                    <div className="w-[360px] rounded-lg border border-gray-200 bg-white shadow-sm transition sm:w-auto">
+                    <div className="w-[360px] min-w-[290px] rounded-lg border border-gray-200 bg-white shadow-sm transition sm:w-auto">
                       <div className="relative h-[200px] w-full border-b border-gray-200">
                         {part.media ? (
                           <BaseImage
