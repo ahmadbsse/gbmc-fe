@@ -123,6 +123,7 @@ const CreateSubAssembly = () => {
                 </label>
                 <input
                   id="name"
+                  title={formData.name}
                   maxLength={255}
                   required
                   type="text"
@@ -143,6 +144,7 @@ const CreateSubAssembly = () => {
                   id="registered_number"
                   required
                   type="number"
+                  title={formData.number}
                   min={1}
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder={`Type number`}
@@ -158,6 +160,7 @@ const CreateSubAssembly = () => {
                   OEM Numbers
                 </label>
                 <input
+                  title={formData.oem_number}
                   id="oem_numbers"
                   required
                   type="text"
@@ -174,6 +177,7 @@ const CreateSubAssembly = () => {
                 </label>
                 <input
                   id="weight"
+                  title={formData.weight}
                   required
                   type="text"
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"

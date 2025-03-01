@@ -47,7 +47,7 @@ const MakeDetailModal = ({ activeID, setShowMakeDetailModal }) => {
                 <label className="required mb-1 block font-medium">Name</label>
                 <div
                   title={formData?.name}
-                  className="w-full truncate rounded-lg border border-gray-300 px-2.5 py-2"
+                  className="w-full rounded-lg border border-gray-300 px-2.5 py-2"
                 >
                   {formData?.name}
                 </div>

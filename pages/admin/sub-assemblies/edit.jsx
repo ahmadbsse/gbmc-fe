@@ -186,6 +186,7 @@ const EditSubAssembly = () => {
                     <input
                       maxLength={255}
                       id="name"
+                      title={formData.name}
                       required
                       type="text"
                       className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -204,6 +205,7 @@ const EditSubAssembly = () => {
                     <input
                       id="registered_number"
                       required
+                      title={formData.number}
                       type="number"
                       min={1}
                       className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -222,6 +224,7 @@ const EditSubAssembly = () => {
                     <input
                       id="oem_number"
                       required
+                      title={formData.oem_number}
                       type="text"
                       className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                       placeholder={`Type comma sepereated numbers..`}
@@ -238,6 +241,7 @@ const EditSubAssembly = () => {
                       id="weight"
                       required
                       type="text"
+                      title={formData.weight}
                       className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                       placeholder={`Type weight`}
                       value={formData.weight}

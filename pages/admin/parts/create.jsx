@@ -153,6 +153,7 @@ const CreatePart = () => {
                 <input
                   required
                   id="name"
+                  title={formData?.name}
                   maxLength={255}
                   type="text"
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -190,6 +191,7 @@ const CreatePart = () => {
               <input
                 id="oem_numbers"
                 required
+                title={formData?.oem_number}
                 type="text"
                 className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                 placeholder={`Type comma seperated numbers...`}
@@ -207,9 +209,10 @@ const CreatePart = () => {
                   required
                   id="material"
                   type="text"
+                  title={formData?.material}
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder={`Type material`}
-                  value={formData.material}
+                  value={formData?.material}
                   onChange={(e) => setFormData({ ...formData, material: e.target.value })}
                 />
               </div>
@@ -221,9 +224,10 @@ const CreatePart = () => {
                   required
                   id="weight"
                   type="text"
+                  title={formData?.weight}
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder={`Type weight`}
-                  value={formData.weight}
+                  value={formData?.weight}
                   onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
                 />
               </div>
@@ -240,6 +244,7 @@ const CreatePart = () => {
                   required
                   type="number"
                   min={1}
+                  title={formData?.number}
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder={`Type number`}
                   value={formData.number}

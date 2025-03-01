@@ -157,6 +157,7 @@ const CreateEngineeringComponent = () => {
                   id="name"
                   maxLength={255}
                   type="text"
+                  title={formData.name}
                   required
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder={`Type name`}
@@ -172,6 +173,7 @@ const CreateEngineeringComponent = () => {
                 </label>
                 <input
                   id="material"
+                  title={formData.material}
                   type="text"
                   required
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
@@ -188,6 +190,7 @@ const CreateEngineeringComponent = () => {
                 <input
                   id="weight"
                   type="text"
+                  title={formData.weight}
                   required
                   className="w-full text-ellipsis rounded-lg border border-gray-300 px-2.5 py-2 outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
                   placeholder={`Type weight`}
