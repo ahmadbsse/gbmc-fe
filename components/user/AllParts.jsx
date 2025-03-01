@@ -93,6 +93,7 @@ const AllParts = () => {
     try {
       await apiClient.GET(`/suppliers?filters[active]=true`).then(async (res) => {
         if (res && res.data.length > 0) {
+          res.data.unshift({ name: "All", documentId: "" });
           setSuppliers(res.data);
         } else {
           setSuppliers([]);
@@ -135,6 +136,7 @@ const AllParts = () => {
   };
   return (
     <>
+      {selectedSupplier}
       <div className="mt-5 flex flex-col justify-between lg:flex-row lg:items-center lg:gap-3">
         <div className="mb-6 pr-2 sm:ml-auto sm:px-4 md:pr-0">
           <BaseSearchbar setSearchQuery={setSearchQuery} />
