@@ -1,10 +1,10 @@
 import { BaseImage, BaseLoader, BaseSearchbar } from "@/components/common";
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import apiClient from "@/utils/apiClient";
 import { transformMedia } from "@/utils";
 import Link from "next/link";
 
-const PAGE_SIZE = 8;
+const PAGE_SIZE = 4;
 
 const AllParts = () => {
   const [page, setPage] = useState(1);
@@ -16,6 +16,7 @@ const AllParts = () => {
   const [selectedSupplier, setSelectedSupplier] = useState("");
   const [pagination, setPagination] = useState(null);
   const [paginationInfo, setPaginationInfo] = useState(0);
+  const observerRef = useRef(null);
 
   const getParts = async (pageNum, isLoadMore = false) => {
     try {
@@ -86,6 +87,23 @@ const AllParts = () => {
       console.error("Error in POST request:", message);
     }
   };
+  // Infinite Scroll Effect
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && pagination?.page < pagination?.pageCount) {
+          setPage((prevPage) => prevPage + 1);
+        }
+      },
+      { threshold: 1.0 }
+    );
+
+    if (observerRef.current) observer.observe(observerRef.current);
+
+    return () => {
+      if (observerRef.current) observer.unobserve(observerRef.current);
+    };
+  }, [pagination]);
   useEffect(() => {
     getSuppliers();
   }, []);
@@ -159,7 +177,7 @@ const AllParts = () => {
                 ))}
               </div>
             </div>
-            {pagination?.page < pagination?.pageCount ? (
+            {/* {pagination?.page < pagination?.pageCount ? (
               <div className="flex justify-center md:justify-end">
                 <p
                   className="w-fit cursor-pointer bg-[#000036] px-2.5 py-2 text-sm text-white hover:bg-black hover:text-primary-color"
@@ -168,7 +186,10 @@ const AllParts = () => {
                   {isLoadingMore ? "Loading..." : "Load More"}
                 </p>
               </div>
-            ) : null}
+            ) : null} */}
+            <div ref={observerRef} className="h-10"></div>{" "}
+            {/* Observer target for infinite scroll */}
+            {isLoadingMore && <p className="mt-4 text-center text-gray-500">Loading more...</p>}
           </div>
         </>
       ) : (
