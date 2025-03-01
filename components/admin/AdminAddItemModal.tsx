@@ -64,16 +64,16 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
               setShowAddItemModal(false);
             })
             .catch((error) => {
-              showToast(error.message, "error");
+              showToast(error.message, "error", true);
             });
         } catch (error) {
-          showToast(error.message, "error");
+          showToast(error.message, "error", true);
         } finally {
           setLoading(false);
         }
       });
     } else {
-      showToast("Please fill all required fields", "error");
+      showToast("Please fill all required fields", "error", true);
     }
   };
 

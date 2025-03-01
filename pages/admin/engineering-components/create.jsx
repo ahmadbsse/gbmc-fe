@@ -73,7 +73,7 @@ const CreateEngineeringComponent = () => {
                     router.push("/admin");
                   })
                   .catch((error) => {
-                    showToast(error.message, "error");
+                    showToast(error.message, "error", true);
                   });
               } catch (error) {
                 console.error(error);

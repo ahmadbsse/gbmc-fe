@@ -68,10 +68,10 @@ const CreatePart = () => {
                   router.push("/admin");
                 })
                 .catch((error) => {
-                  showToast(error.message, "error");
+                  showToast(error.message, "error", true);
                 });
             } catch (error) {
-              showToast(error.message, "error");
+              showToast(error.message, "error", true);
             }
           }
         })
@@ -87,7 +87,7 @@ const CreatePart = () => {
       await apiClient.GET(url).then((res) => {
         setSuppliers(res.data);
         if (res.data.length == 0) {
-          showToast("Please add Make first", "warning");
+          showToast("Please add Make first", "warning", true);
         }
       });
     } catch (error) {

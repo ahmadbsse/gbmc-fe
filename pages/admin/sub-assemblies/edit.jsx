@@ -104,10 +104,10 @@ const EditSubAssembly = () => {
           await deleteFilesRequest(idsToRemove).then(() => {});
         })
         .catch((error) => {
-          showToast(error.message, "error");
+          showToast(error.message, "error", true);
         });
     } catch (error) {
-      showToast(error.message, "error");
+      showToast(error.message, "error", true);
     }
   };
   const deletePreviousImage = async (id) => {

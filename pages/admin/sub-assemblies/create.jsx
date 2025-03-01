@@ -63,10 +63,10 @@ const CreateSubAssembly = () => {
               router.push("/admin");
             })
             .catch((error) => {
-              showToast(error.message, "error");
+              showToast(error.message, "error", true);
             });
         } catch (error) {
-          showToast(error.message, "error");
+          showToast(error.message, "error", true);
         } finally {
           setLoading(false);
         }

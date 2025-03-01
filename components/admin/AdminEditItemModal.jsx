@@ -68,10 +68,10 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
                     });
                   })
                   .catch((error) => {
-                    showToast(error.message, "error");
+                    showToast(error.message, "error", true);
                   });
               } catch (error) {
-                showToast(error.message, "error");
+                showToast(error.message, "error", true);
               }
             } else {
               try {
@@ -86,10 +86,10 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
                     });
                   })
                   .catch((error) => {
-                    showToast(error.message, "error");
+                    showToast(error.message, "error", true);
                   });
               } catch (error) {
-                showToast(error.message, "error");
+                showToast(error.message, "error", true);
               }
             }
           })

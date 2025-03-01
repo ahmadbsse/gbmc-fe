@@ -24,7 +24,7 @@ const ContactPage = () => {
       process.env.NEXT_PUBLIC_EmailJsTemplateId === undefined ||
       process.env.NEXT_PUBLIC_EmailJsPublicKey === undefined
     ) {
-      showToast("EmailJs Credentials not configured!", "error");
+      showToast("EmailJs Credentials not configured!", "error", true);
       return;
     }
     setLoading(true);
@@ -37,12 +37,12 @@ const ContactPage = () => {
       )
       .then(
         () => {
-          showToast("Email successfully sent!", "success");
+          showToast("Email successfully sent!", "success", true);
           setLoading(false);
           form.current.reset();
         },
         () => {
-          showToast("Something went wrong!", "error");
+          showToast("Something went wrong!", "error", true);
         }
       );
   };

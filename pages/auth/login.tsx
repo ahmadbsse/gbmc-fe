@@ -31,7 +31,7 @@ const Login = () => {
           )
           .then(async (res) => {
             if (res.message == "Login successful") {
-              showToast("Logged In Successfully", "success");
+              showToast("Logged In Successfully", "success", true);
               localStorage.setItem("username", userName);
               localStorage.setItem("email", email);
               apiClient.setAuthToken(jwt);
@@ -43,7 +43,7 @@ const Login = () => {
     } catch (error) {
       const message = (error as Error).message;
 
-      showToast(message, "error");
+      showToast(message, "error", true);
 
       setIsLoading(false);
       console.error("Error in POST request:", message);

@@ -68,7 +68,7 @@ const EditPart = () => {
       await apiClient.GET(url).then((res) => {
         setSuppliers(res.data);
         if (res.data.length == 0) {
-          showToast("Please add Make first", "warning");
+          showToast("Please add Make first", "warning", true);
         }
       });
     } catch (error) {
@@ -98,7 +98,7 @@ const EditPart = () => {
           }
         });
       } catch (error) {
-        showToast(error.message, "error");
+        showToast(error.message, "error", true);
       } finally {
         setLoading(false);
       }
@@ -114,10 +114,10 @@ const EditPart = () => {
           router.push("/admin");
         })
         .catch((error) => {
-          showToast(error.message, "error");
+          showToast(error.message, "error", true);
         });
     } catch (error) {
-      showToast(error.message, "error");
+      showToast(error.message, "error", true);
     }
   };
   const deletePreviousImage = async (id) => {

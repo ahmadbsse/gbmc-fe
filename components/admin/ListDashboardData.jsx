@@ -96,11 +96,11 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
           getData();
         })
         .catch((error) => {
-          showToast(error.message, "error");
+          showToast(error.message, "error", true);
           console.error(error.message);
         });
     } catch (error) {
-      showToast(error.message, "error");
+      showToast(error.message, "error", true);
       console.error("Error updating resource:", error.message);
     }
   };
@@ -120,10 +120,10 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
           getData();
         })
         .catch((error) => {
-          showToast(error.message, "error");
+          showToast(error.message, "error", true);
         });
     } catch (error) {
-      showToast(error.message, "error");
+      showToast(error.message, "error", true);
       console.error("Error updating resource:", error.message);
     }
   };
