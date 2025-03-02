@@ -241,7 +241,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
                   >
                     <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
                       <div
-                        className={`h-32 w-40 min-w-44 max-w-44 cursor-pointer`}
+                        className={`flex h-32 w-44 cursor-pointer items-center justify-center`}
                         onClick={() => viewDetails(item.documentId)}
                       >
                         {item.media ? (
@@ -258,7 +258,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
                               src={item?.media[item?.media?.length - 1]?.formats.thumbnail?.url}
                               alt={item?.name}
                               priority={true}
-                              classes="object-contain w-full h-full"
+                              classes="object-contain max-h-32"
                             />
                           ) : (
                             <BaseImage
@@ -267,7 +267,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
                               src={item?.media?.formats.thumbnail?.url}
                               alt={item?.name}
                               priority={true}
-                              classes="object-fill w-full h-full"
+                              classes="object-contain max-h-32"
                             />
                           )
                         ) : null}

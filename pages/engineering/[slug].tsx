@@ -49,7 +49,7 @@ const Article = () => {
   ];
   return (
     <>
-      <SeoHead title={`${data?.name} | Engineering Component`} />
+      <SeoHead title={data?.name ? data.name : ""} />
       <Navbar setTab={() => {}} />
       {data ? (
         <div className="mx-auto mb-8 max-w-7xl pt-20">
@@ -70,11 +70,23 @@ const Article = () => {
               {data?.hero_image ? (
                 data?.hero_image?.type === "video" ? (
                   <BaseVideo src={data?.hero_image?.url} autoPlay={true} muted={true} loop={true} />
-                ) : data?.hero_image?.formats?.thumbnail ? (
+                ) : data?.hero_image?.formats?.large || data?.hero_image?.formats?.thumbnail ? (
                   <BaseImage
-                    width={data?.hero_image?.formats?.thumbnail?.width || 1100}
-                    height={data?.hero_image?.formats?.thumbnail?.height || 645}
-                    src={data?.hero_image?.url || data?.hero_image?.formats?.thumbnail?.url}
+                    width={
+                      data?.hero_image?.formats?.large?.width ||
+                      data?.hero_image?.formats?.thumbnail.width ||
+                      1100
+                    }
+                    height={
+                      data?.hero_image?.formats?.large?.height ||
+                      data?.hero_image?.formats?.thumbnail.height ||
+                      645
+                    }
+                    src={
+                      data?.hero_image?.formats?.large?.url ||
+                      data?.hero_image?.formats?.thumbnail?.url ||
+                      data?.hero_image?.url
+                    }
                     alt={data?.hero_image?.name}
                     classes="rounded-lg object-contain"
                   />
