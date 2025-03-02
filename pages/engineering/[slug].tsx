@@ -91,8 +91,8 @@ const Article = () => {
                 dangerouslySetInnerHTML={{ __html: data?.description }}
               />
 
-              <div className="mb-3 mt-10 flex">
-                <div className="h-[650px] w-[700px] rounded-lg bg-[#707070] p-4 text-sm text-white lg:text-base">
+              <div className="mb-3 mt-4 flex flex-col gap-3 lg:flex-row lg:gap-10">
+                <div className="rounded-lg bg-[#707070] p-4 text-sm text-white lg:h-[650px] lg:w-[700px] lg:text-base">
                   <div className="flex flex-col gap-2 py-7 lg:w-[700px] lg:gap-5 lg:px-11">
                     <h2 className="text-xl font-bold lg:text-2xl">Key Features</h2>
                     <p>
@@ -107,7 +107,7 @@ const Article = () => {
                     </p>
                   </div>
                 </div>
-                <div className="z-20 my-20 -ml-32 flex h-[500px] w-full items-center justify-center rounded-lg bg-white p-6 text-white shadow-lg">
+                <div className="z-20 flex h-[500px] w-full items-center justify-center rounded-lg bg-white p-6 text-white shadow-lg lg:my-20 lg:-ml-32">
                   {data?.media && data?.media[selectedImage] ? (
                     <BaseImage
                       classes="object-contain rounded-lg max-h-[500px] "
