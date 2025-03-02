@@ -70,20 +70,18 @@ const Article = () => {
               {data?.hero_image ? (
                 data?.hero_image?.type === "video" ? (
                   <BaseVideo src={data?.hero_image?.url} autoPlay={true} muted={true} loop={true} />
-                ) : data?.hero_image?.formats?.large || data?.hero_image?.formats?.thumbnail ? (
+                ) : data?.hero_image?.formats?.medium || data?.hero_image?.formats?.thumbnail ? (
                   <BaseImage
                     width={
-                      data?.hero_image?.formats?.large?.width ||
-                      data?.hero_image?.formats?.thumbnail.width ||
-                      1100
+                      data?.hero_image?.formats?.medium?.width ||
+                      data?.hero_image?.formats?.thumbnail.width
                     }
                     height={
-                      data?.hero_image?.formats?.large?.height ||
-                      data?.hero_image?.formats?.thumbnail.height ||
-                      645
+                      data?.hero_image?.formats?.medium?.height ||
+                      data?.hero_image?.formats?.thumbnail.height
                     }
                     src={
-                      data?.hero_image?.formats?.large?.url ||
+                      data?.hero_image?.formats?.medium?.url ||
                       data?.hero_image?.formats?.thumbnail?.url ||
                       data?.hero_image?.url
                     }
