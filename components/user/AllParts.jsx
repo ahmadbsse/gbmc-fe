@@ -16,6 +16,7 @@ const AllParts = () => {
   const [selectedSupplier, setSelectedSupplier] = useState("");
   const [pagination, setPagination] = useState(null);
   const [paginationInfo, setPaginationInfo] = useState(0);
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(searchQuery);
   const observerRef = useRef(null);
 
   const getParts = async (pageNum, isLoadMore = false) => {
@@ -61,22 +62,38 @@ const AllParts = () => {
   useEffect(() => {
     setPage(1);
     getParts(1, false);
-  }, [selectedSupplier, searchQuery]);
+  }, [selectedSupplier]);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 500); // Adjust debounce delay (500ms) as needed
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchQuery]);
+
+  useEffect(() => {
+    setPage(1);
+    getParts(1, false);
+  }, [debouncedSearchQuery]);
 
   useEffect(() => {
     if (page > 1) getParts(page, true);
   }, [page]);
 
-  const loadMore = () => {
-    setPage((prevPage) => {
-      const newPage = prevPage + 1;
-      return newPage;
-    });
-  };
+  // const loadMore = () => {
+  //   setPage((prevPage) => {
+  //     const newPage = prevPage + 1;
+  //     return newPage;
+  //   });
+  // };
   const getSuppliers = async () => {
     try {
       await apiClient.GET(`/suppliers?filters[active]=true`).then(async (res) => {
         if (res && res.data.length > 0) {
+          res.data.unshift({ name: "All", documentId: "" });
           setSuppliers(res.data);
         } else {
           setSuppliers([]);
@@ -119,8 +136,9 @@ const AllParts = () => {
   };
   return (
     <>
+      {selectedSupplier}
       <div className="mt-5 flex flex-col justify-between lg:flex-row lg:items-center lg:gap-3">
-        <div className="mb-4 pr-2 sm:ml-auto sm:px-4 md:pr-0">
+        <div className="mb-6 pr-2 sm:ml-auto sm:px-4 md:pr-0">
           <BaseSearchbar setSearchQuery={setSearchQuery} />
         </div>
       </div>
@@ -153,7 +171,7 @@ const AllParts = () => {
                     href={`/tractor-parts/${part.documentId}`}
                     key={part.id + index + part.documentId}
                   >
-                    <div className="w-[360px] rounded-lg border border-gray-200 bg-white shadow-sm transition sm:w-auto">
+                    <div className="w-[360px] min-w-[290px] rounded-lg border border-gray-200 bg-white shadow-sm transition sm:w-auto">
                       <div className="relative h-[200px] w-full border-b border-gray-200">
                         {part.media ? (
                           <BaseImage

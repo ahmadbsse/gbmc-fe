@@ -44,16 +44,16 @@ const Article = () => {
   }, [router.query.slug]);
   const breadcrumbs = [
     { text: "Home", href: "/" },
-    { text: "Engineering", href: "/engineering" },
+    { text: "Engineering Components", href: "/engineering" },
     { text: data?.name, href: `/engineering/${router.query.slug}` },
   ];
   return (
     <>
-      <SeoHead title={`Article - ${data?.name}`} />
+      <SeoHead title={`${data?.name} | Engineering Component`} />
       <Navbar setTab={() => {}} />
       {data ? (
         <div className="mx-auto mb-8 max-w-7xl pt-20">
-          <div className="my-4 px-2">
+          <div className="my-4 px-5">
             <div className="mb-8 flex items-center gap-2 text-sm text-gray-500">
               {breadcrumbs.map((crumb, index) => (
                 <p key={index}>
@@ -66,7 +66,7 @@ const Article = () => {
             </div>
           </div>
           <div className="mt-2 px-2 lg:px-16">
-            <div>
+            <div className="flex h-[645px] w-full items-center justify-center overflow-hidden rounded-lg shadow-md">
               {data?.hero_image ? (
                 data?.hero_image?.type === "video" ? (
                   <BaseVideo src={data?.hero_image?.url} autoPlay={true} muted={true} loop={true} />
@@ -76,11 +76,9 @@ const Article = () => {
                     height={data?.hero_image?.formats?.thumbnail?.height || 645}
                     src={data?.hero_image?.url || data?.hero_image?.formats?.thumbnail?.url}
                     alt={data?.hero_image?.name}
-                    classes="w-full max-h-[645px] rounded-lg"
+                    classes="rounded-lg object-contain"
                   />
-                ) : (
-                  <div className="max-h-[645px] w-full rounded-lg"></div>
-                )
+                ) : null
               ) : null}
             </div>
           </div>

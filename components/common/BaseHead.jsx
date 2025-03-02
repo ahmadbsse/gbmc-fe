@@ -2,11 +2,10 @@ import { appData } from "@/constants";
 import Head from "next/head";
 
 const SeoHead = ({ title }) => {
+  const label = `${title.toString()} | ${appData.name.toString()}`;
   return (
     <Head>
-      <title>
-        {title.toString()} | {appData.name.toString()}
-      </title>
+      <title>{label}</title>
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       <meta
         property="og:title"
