@@ -47,24 +47,6 @@ const Article = () => {
     { text: "Engineering", href: "/engineering" },
     { text: data?.name, href: `/engineering/${router.query.slug}` },
   ];
-  const sampleProduct = {
-    name: "Ball Bearing Assembly",
-    features: [
-      { label: "Weight", value: "jaksjdlaksjdasjlk" },
-      { label: "Material", value: "kajhdsklasjlkdjlasde" },
-      { label: "Dimensions", value: "45mm x 85mm x 19mm" },
-      { label: "Load Rating", value: "Dynamic: 52.7kN, Static: 35.1kN" },
-      { label: "Speed Rating", value: "4300 RPM" },
-    ],
-    image: {
-      src: "/images/bearing.jpg", // Replace with your actual image path
-      alt: "Ball Bearing Assembly",
-      width: 500,
-      height: 500,
-    },
-  };
-
-  // Use provided product data or fall back to sample data
 
   return (
     <>
@@ -73,7 +55,7 @@ const Article = () => {
       {data ? (
         <div className="mx-auto mb-8 max-w-7xl pt-20">
           <div className="my-4 px-2">
-            <div className="mb-8 flex items-center gap-2 text-sm text-gray-500">
+            <div className="mb-8 flex items-center gap-2 pl-2 text-sm text-gray-500">
               {breadcrumbs.map((crumb, index) => (
                 <p key={index}>
                   <Link href={crumb?.href} className="pr-2 hover:text-secondary">
