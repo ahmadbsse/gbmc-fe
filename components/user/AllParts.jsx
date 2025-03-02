@@ -164,14 +164,14 @@ const AllParts = () => {
           )}
           <div>
             <div className="custom-scrollbar flex max-w-7xl flex-col gap-3 overflow-x-auto pb-2 lg:flex-row">
-              <div className="mx-auto grid w-fit grid-cols-1 gap-6 pr-3 sm:grid-cols-2 lg:grid-cols-3 lg:pr-0 xl:grid-cols-4">
+              <div className="mx-auto grid w-fit grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:pr-0 xl:grid-cols-4">
                 {allParts.map((part, index) => (
                   <Link
                     className=""
                     href={`/tractor-parts/${part.documentId}`}
                     key={part.id + index + part.documentId}
                   >
-                    <div className="w-[330px] min-w-[290px] rounded-lg border border-gray-200 bg-white shadow-sm transition sm:w-auto">
+                    <div className="xs:w-[330px] w-[280px] min-w-[280px] rounded-lg border border-gray-200 bg-white shadow-sm transition sm:w-auto">
                       <div className="relative h-[200px] w-full border-b border-gray-200">
                         {part.media ? (
                           <BaseImage
