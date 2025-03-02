@@ -44,13 +44,13 @@ const Article = () => {
   }, [router.query.slug]);
   const breadcrumbs = [
     { text: "Home", href: "/" },
-    { text: "Engineering", href: "/engineering" },
+    { text: "Engineering Components", href: "/engineering" },
     { text: data?.name, href: `/engineering/${router.query.slug}` },
   ];
 
   return (
     <>
-      <SeoHead title={`Article - ${data?.name}`} />
+      <SeoHead title={`${data?.name}`} />
       <Navbar setTab={() => {}} />
       {data ? (
         <div className="mx-auto mb-8 max-w-7xl pt-20">
