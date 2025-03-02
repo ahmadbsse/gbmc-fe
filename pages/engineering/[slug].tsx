@@ -84,24 +84,20 @@ const Article = () => {
               ))}
             </div>
           </div>
-          <div className="mt-2 px-2 lg:px-16">
-            <div>
-              {data?.hero_image ? (
-                data?.hero_image?.type === "video" ? (
-                  <BaseVideo src={data?.hero_image?.url} autoPlay={true} muted={true} loop={true} />
-                ) : data?.hero_image?.formats?.thumbnail ? (
-                  <BaseImage
-                    width={data?.hero_image?.formats?.thumbnail?.width || 1100}
-                    height={data?.hero_image?.formats?.thumbnail?.height || 645}
-                    src={data?.hero_image?.url || data?.hero_image?.formats?.thumbnail?.url}
-                    alt={data?.hero_image?.name}
-                    classes="w-full max-h-[645px] rounded-lg"
-                  />
-                ) : (
-                  <div className="max-h-[645px] w-full rounded-lg"></div>
-                )
-              ) : null}
-            </div>
+          <div className="mt-2 flex h-[645px] w-full items-center justify-center rounded-lg bg-white px-2 shadow-lg lg:px-16">
+            {data?.hero_image ? (
+              data?.hero_image?.type === "video" ? (
+                <BaseVideo src={data?.hero_image?.url} autoPlay={true} muted={true} loop={true} />
+              ) : data?.hero_image?.formats?.thumbnail ? (
+                <BaseImage
+                  width={data?.hero_image?.formats?.medium?.width || 1100}
+                  height={data?.hero_image?.formats?.medium?.height || 645}
+                  src={data?.hero_image?.url || data?.hero_image?.formats?.medium?.url}
+                  alt={data?.hero_image?.name}
+                  classes="object-contain max-h-[645px] rounded-lg"
+                />
+              ) : null
+            ) : null}
           </div>
           <div className="mx-auto max-w-6xl px-4 pt-4 lg:py-8">
             <div className="container">
@@ -132,7 +128,7 @@ const Article = () => {
                 <div className="z-20 my-20 -ml-32 flex h-[500px] w-full items-center justify-center rounded-lg bg-white p-6 text-white shadow-lg">
                   {data?.media && data?.media[selectedImage] ? (
                     <BaseImage
-                      classes="object-contain rounded-lg"
+                      classes="object-contain rounded-lg max-h-[500px] "
                       height={data?.media[selectedImage]?.formats?.actual?.height}
                       width={data?.media[selectedImage]?.formats?.actual?.width}
                       src={data?.media[selectedImage]?.formats?.actual?.url}
