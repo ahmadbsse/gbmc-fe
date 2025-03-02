@@ -241,7 +241,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
                   >
                     <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
                       <div
-                        className={`flex h-32 w-44 cursor-pointer items-center justify-center`}
+                        className={`flex h-32 min-w-44 max-w-44 cursor-pointer items-center justify-center`}
                         onClick={() => viewDetails(item.documentId)}
                       >
                         {item.media ? (

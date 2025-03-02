@@ -48,13 +48,13 @@ const ViewSubAssemblyDetails = () => {
               <div className="flex flex-col gap-3 text-sm md:flex-row md:gap-5">
                 <div className="w-full">
                   <label className="required tfont-medium mb-1 block">Name</label>
-                  <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
+                  <div className="w-full rounded-lg border border-gray-300 bg-white px-2.5 py-2">
                     {formData.name}
                   </div>
                 </div>
                 <div className="w-full">
                   <label className="required mb-1 block font-medium">Registered Number</label>
-                  <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
+                  <div className="w-full rounded-lg border border-gray-300 bg-white px-2.5 py-2">
                     {formData.number}
                   </div>
                 </div>
@@ -63,13 +63,13 @@ const ViewSubAssemblyDetails = () => {
               <div className="flex flex-col gap-3 text-sm md:flex-row md:gap-5">
                 <div className="w-full">
                   <label className="required mb-1 block font-medium">OEM Numbers</label>
-                  <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
+                  <div className="w-full rounded-lg border border-gray-300 bg-white px-2.5 py-2">
                     {formData.oem_number}
                   </div>
                 </div>
                 <div className="w-full">
                   <label className="required mb-1 block font-medium"> Weight</label>
-                  <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
+                  <div className="w-full rounded-lg border border-gray-300 bg-white px-2.5 py-2">
                     {formData.weight}
                   </div>
                 </div>
@@ -90,7 +90,7 @@ const ViewSubAssemblyDetails = () => {
                       formData.media.map((item, index) => {
                         if (item && item?.formats) {
                           return (
-                            <div className="h-32 w-40" key={index}>
+                            <div className="h-32 w-40 rounded-md bg-white" key={index}>
                               <BaseImage
                                 key={index}
                                 width={item.formats.thumbnail.width}
