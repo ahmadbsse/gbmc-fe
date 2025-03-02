@@ -44,16 +44,35 @@ const Article = () => {
   }, [router.query.slug]);
   const breadcrumbs = [
     { text: "Home", href: "/" },
-    { text: "Engineering Components", href: "/engineering" },
+    { text: "Engineering", href: "/engineering" },
     { text: data?.name, href: `/engineering/${router.query.slug}` },
   ];
+  const sampleProduct = {
+    name: "Ball Bearing Assembly",
+    features: [
+      { label: "Weight", value: "jaksjdlaksjdasjlk" },
+      { label: "Material", value: "kajhdsklasjlkdjlasde" },
+      { label: "Dimensions", value: "45mm x 85mm x 19mm" },
+      { label: "Load Rating", value: "Dynamic: 52.7kN, Static: 35.1kN" },
+      { label: "Speed Rating", value: "4300 RPM" },
+    ],
+    image: {
+      src: "/images/bearing.jpg", // Replace with your actual image path
+      alt: "Ball Bearing Assembly",
+      width: 500,
+      height: 500,
+    },
+  };
+
+  // Use provided product data or fall back to sample data
+
   return (
     <>
-      <SeoHead title={data?.name ? data.name : ""} />
+      <SeoHead title={`Article - ${data?.name}`} />
       <Navbar setTab={() => {}} />
       {data ? (
         <div className="mx-auto mb-8 max-w-7xl pt-20">
-          <div className="my-4 px-5">
+          <div className="my-4 px-2">
             <div className="mb-8 flex items-center gap-2 text-sm text-gray-500">
               {breadcrumbs.map((crumb, index) => (
                 <p key={index}>
@@ -66,29 +85,21 @@ const Article = () => {
             </div>
           </div>
           <div className="mt-2 px-2 lg:px-16">
-            <div className="flex h-[645px] w-full items-center justify-center overflow-hidden rounded-lg shadow-md">
+            <div>
               {data?.hero_image ? (
                 data?.hero_image?.type === "video" ? (
                   <BaseVideo src={data?.hero_image?.url} autoPlay={true} muted={true} loop={true} />
-                ) : data?.hero_image?.formats?.medium || data?.hero_image?.formats?.thumbnail ? (
+                ) : data?.hero_image?.formats?.thumbnail ? (
                   <BaseImage
-                    width={
-                      data?.hero_image?.formats?.medium?.width ||
-                      data?.hero_image?.formats?.thumbnail.width
-                    }
-                    height={
-                      data?.hero_image?.formats?.medium?.height ||
-                      data?.hero_image?.formats?.thumbnail.height
-                    }
-                    src={
-                      data?.hero_image?.formats?.medium?.url ||
-                      data?.hero_image?.formats?.thumbnail?.url ||
-                      data?.hero_image?.url
-                    }
+                    width={data?.hero_image?.formats?.thumbnail?.width || 1100}
+                    height={data?.hero_image?.formats?.thumbnail?.height || 645}
+                    src={data?.hero_image?.url || data?.hero_image?.formats?.thumbnail?.url}
                     alt={data?.hero_image?.name}
-                    classes="rounded-lg object-contain"
+                    classes="w-full max-h-[645px] rounded-lg"
                   />
-                ) : null
+                ) : (
+                  <div className="max-h-[645px] w-full rounded-lg"></div>
+                )
               ) : null}
             </div>
           </div>
@@ -101,39 +112,35 @@ const Article = () => {
                 className="mt-5 min-h-10 text-sm lg:text-base"
                 dangerouslySetInnerHTML={{ __html: data?.description }}
               />
-              <section id="projects" className="pt-5 lg:py-8">
-                <article className="reverse grid grid-cols-1 md:grid-cols-10">
-                  <div className="card-details rounded-lg bg-[#707070] p-4 text-sm text-white lg:text-base">
-                    <div className="flex flex-col gap-2 py-7 lg:w-[400px] lg:gap-5 lg:px-11">
-                      <h2 className="text-xl font-bold lg:text-2xl">Key Features</h2>
 
-                      <p>
-                        <strong>Weight:</strong>
-                        <br />
-                        {data?.weight ? <span>{data?.weight}</span> : null}
-                      </p>
-
-                      <p>
-                        <strong>Material:</strong>
-                        <br />
-
-                        {data.material ? <span>{data.material}</span> : null}
-                      </p>
-                    </div>
+              <div className="mb-3 mt-10 flex">
+                <div className="h-[650px] w-[700px] rounded-lg bg-[#707070] p-4 text-sm text-white lg:text-base">
+                  <div className="flex flex-col gap-2 py-7 lg:w-[700px] lg:gap-5 lg:px-11">
+                    <h2 className="text-xl font-bold lg:text-2xl">Key Features</h2>
+                    <p>
+                      <strong>Weight:</strong>
+                      <br />
+                      {data?.weight ? <span>{data?.weight}</span> : null}
+                    </p>
+                    <p>
+                      <strong>Material:</strong>
+                      <br />
+                      {data.material ? <span>{data.material}</span> : null}
+                    </p>
                   </div>
+                </div>
+                <div className="z-20 my-20 -ml-32 flex h-[500px] w-full items-center justify-center rounded-lg bg-white p-6 text-white shadow-lg">
                   {data?.media && data?.media[selectedImage] ? (
                     <BaseImage
-                      classes="my-2 h-[400px] rounded-lg lg:z-10 lg:col-span-4 lg:my-16 lg:rounded-lg"
-                      height={1100}
-                      width={1100}
+                      classes="object-contain rounded-lg"
+                      height={data?.media[selectedImage]?.formats?.actual?.height}
+                      width={data?.media[selectedImage]?.formats?.actual?.width}
                       src={data?.media[selectedImage]?.formats?.actual?.url}
                       alt="Engineering Images"
                     />
-                  ) : (
-                    <div className="my-2 h-[500px] rounded-lg lg:z-10 lg:col-span-4 lg:my-20 lg:rounded-lg"></div>
-                  )}
-                </article>
-              </section>
+                  ) : null}
+                </div>
+              </div>
             </div>
             <div className="space-y-4">
               {/* Main Image */}
