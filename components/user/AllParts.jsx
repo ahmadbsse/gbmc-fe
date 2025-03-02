@@ -160,7 +160,7 @@ const AllParts = () => {
             ))}
           </div>
           {pagination?.total && (
-            <p className="mx-auto my-4 ml-auto w-fit px-2 text-sm font-bold sm:text-base">{`Showing 1-${paginationInfo} of ${pagination?.total} ${getBrand(selectedSupplier)} Parts`}</p>
+            <p className="my-4 w-fit px-2 text-base font-bold sm:text-[19px] lg:px-0">{`Showing 1-${paginationInfo} of ${pagination?.total} ${getBrand(selectedSupplier)} Parts`}</p>
           )}
           <div>
             <div className="custom-scrollbar flex max-w-7xl flex-col gap-3 overflow-x-auto pb-2 lg:flex-row">
@@ -186,7 +186,7 @@ const AllParts = () => {
                       </div>
                       <h3
                         title={part.name}
-                        className="truncate p-4 text-center text-lg font-semibold"
+                        className="truncate p-4 text-center text-base font-semibold sm:text-lg"
                       >
                         {part.name}
                       </h3>
