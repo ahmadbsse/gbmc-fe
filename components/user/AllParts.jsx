@@ -87,12 +87,6 @@ const AllParts = () => {
     if (page > 1) getParts(page, true);
   }, [page]);
 
-  // const loadMore = () => {
-  //   setPage((prevPage) => {
-  //     const newPage = prevPage + 1;
-  //     return newPage;
-  //   });
-  // };
   const getSuppliers = async () => {
     try {
       await apiClient.GET(`/suppliers?filters[active]=true`).then(async (res) => {
@@ -174,7 +168,7 @@ const AllParts = () => {
                     href={`/tractor-parts/${part.documentId}`}
                     key={part.id + index + part.documentId}
                   >
-                    <div className="xs:w-[330px] w-[280px] min-w-[280px] rounded-lg border border-gray-200 bg-white shadow-sm transition sm:w-auto">
+                    <div className="w-[280px] min-w-[280px] rounded-lg border border-gray-200 bg-white shadow-sm transition xs:w-[330px] sm:w-auto">
                       <div className="relative h-[200px] w-full border-b border-gray-200">
                         {part.media ? (
                           <BaseImage
@@ -198,16 +192,6 @@ const AllParts = () => {
                 ))}
               </div>
             </div>
-            {/* {pagination?.page < pagination?.pageCount ? (
-              <div className="flex justify-center md:justify-end">
-                <p
-                  className="w-fit cursor-pointer bg-[#000036] px-2.5 py-2 text-sm text-white hover:bg-black hover:text-primary-color"
-                  onClick={loadMore}
-                >
-                  {isLoadingMore ? "Loading..." : "Load More"}
-                </p>
-              </div>
-            ) : null} */}
             <div ref={observerRef} className="h-10"></div>{" "}
             {/* Observer target for infinite scroll */}
             {isLoadingMore && <p className="mt-4 text-center text-gray-500">Loading more...</p>}

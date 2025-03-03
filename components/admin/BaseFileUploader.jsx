@@ -137,7 +137,9 @@ const BaseFileUploader = ({
 
               {/* File Info */}
               <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-medium text-gray-900">{file.name}</p>
+                <p className="max-w-[200px] truncate text-sm font-medium text-gray-900">
+                  {file.name}
+                </p>
 
                 {/* Progress Bar */}
                 <div className="mt-2 h-2.5 w-full rounded-full bg-gray-200">

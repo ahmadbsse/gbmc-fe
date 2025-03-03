@@ -71,42 +71,39 @@ const EditComponent = () => {
     e.preventDefault();
 
     if (engineeringComponentValidator(formData)) {
-      setLoading(true);
+      delete formData.documentId;
+      const heroUpdated = Array.isArray(formData.hero_image);
       const flattenedMediaData = formData.media
         .flat()
         .filter((item) => item && typeof item === "object" && !item.id);
-      const flattenedHeroData = formData.media
-        .flat()
-        .filter((item) => item && typeof item === "object" && !item.id);
 
-      const previousHero = formData.media.filter((item) => item && item.id);
       const previousMedia = formData.media.filter((item) => item && item.id);
       const newMediaIds = previousMedia.map((file) => file.id);
-
-      const newHeroIds = previousHero.map((file) => file.id);
-
-      delete formData.documentId;
-      if (flattenedHeroData.length !== 0 && flattenedMediaData.length !== 0) {
-        await uploadFilesRequest(flattenedMediaData, true).then(async (res) => {
+      if (heroUpdated) {
+        await uploadFilesRequest(formData.hero_image, true).then((res) => {
+          if (res) {
+            formData.hero_image = res[0];
+            return res;
+          } else {
+            return formData.hero_image;
+          }
+        });
+      } else {
+        formData.hero_image = formData.hero_image.id;
+      }
+      if (flattenedMediaData.length > 0) {
+        await uploadFilesRequest(flattenedMediaData, true).then((res) => {
           if (res) {
             formData.media = [...res, ...newMediaIds];
           } else {
             formData.media = newMediaIds;
           }
-          await uploadFilesRequest(flattenedHeroData, true).then((res) => {
-            if (res) {
-              formData.hero_image = [...res, ...newHeroIds];
-              saveData();
-            } else {
-              formData.hero_image = newHeroIds;
-            }
-          });
         });
       } else {
         formData.media = newMediaIds;
-        formData.hero_image = newHeroIds;
-        saveData();
       }
+
+      saveData();
     }
   };
   const saveData = () => {
@@ -299,7 +296,7 @@ const EditComponent = () => {
                             height={formData.hero_image.formats?.thumbnail?.height || 160}
                             src={formData.hero_image.formats?.thumbnail?.url}
                             alt={formData.hero_image.name}
-                            classes="object-contain w-full h-full"
+                            classes="object-contain w-full h-full rounded-lg"
                           />
                         ) : null}
                       </div>

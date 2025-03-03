@@ -22,6 +22,7 @@ export function transformMedia(response) {
       id: media?.id,
       documentId: media?.documentId,
       name: media?.name,
+      createdAt: media?.createdAt,
       formats: {
         small: {
           url: media?.formats?.small?.url,
@@ -56,6 +57,9 @@ export function transformMedia(response) {
     arr.forEach((item) => {
       transform(item);
     });
+  }
+  if (response.media) {
+    response.media = response.media.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
   }
   return response;
 }

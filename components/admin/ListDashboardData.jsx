@@ -353,7 +353,9 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
           )}
         </div>
       </div>
-      <p className="mx-auto my-4 ml-auto w-fit px-2 text-sm font-bold sm:text-base md:mr-0">{`Showing 1-${paginationInfo} of ${pagination?.total}`}</p>
+      {pagination?.total ? (
+        <p className="mx-auto my-4 ml-auto w-fit px-2 text-sm font-bold sm:text-base md:mr-0">{`Showing 1-${paginationInfo} of ${pagination?.total}`}</p>
+      ) : null}
     </>
   );
 };
