@@ -52,7 +52,7 @@ const PartDetails = () => {
           /\*\*(.*?)\*\*/g,
           "<strong>$1</strong>"
         );
-        setSelectedImage(response?.media.length - 1);
+        setSelectedImage(0);
         setData(response);
       });
     } catch (error) {
@@ -191,45 +191,29 @@ const PartDetails = () => {
               <table className="product-specification-table product-specification-table-striped">
                 <tbody>
                   <tr>
-                    <td className="w-1/3 text-wrap font-bold capitalize">OEM Numbers:</td>
+                    <td className="w-1/3 text-wrap text-base font-bold capitalize lg:text-lg">
+                      OEM Numbers:
+                    </td>
                     <td>
                       {data?.oem_number.split(",").map((item, index) => (
-                        <p className="" key={index}>
+                        <p className="text-base lg:text-lg" key={index}>
                           {item}
                         </p>
                       ))}
                     </td>
                   </tr>
                   <tr>
-                    <td className="w-1/3 text-wrap font-bold capitalize">Material:</td>
-                    <td className="">{data?.material}</td>
-                  </tr>
-                  <tr>
-                    <td className="w-1/3 text-wrap font-bold capitalize">Weight:</td>
-                    <td className="">{data?.weight}</td>
-                  </tr>
-                  {/* <tr>
-                    <td className="font-bold capitalize">Name:</td>
-                    <td className="">{data?.name}</td>
-                  </tr> */}
-                  {/* <tr>
-                    <td className="font-bold capitalize">Registered Number:</td>
-                    <td className="">{data?.number}</td>
-                  </tr> */}
-                  {/* <tr>
-                    <td className="font-bold capitalize">Published at:</td>
-                    <td className="">{convertToReadableDate(data?.publishedAt)}</td>
-                  </tr>
-                  <tr>
-                    <td className="font-bold capitalize">Featured:</td>
-                    <td>
-                      {data?.featured ? (
-                        <Check className="text-success" />
-                      ) : (
-                        <X className="text-error" />
-                      )}
+                    <td className="w-1/3 text-wrap text-base font-bold capitalize lg:text-lg">
+                      Material:
                     </td>
-                  </tr> */}
+                    <td className="text-base lg:text-lg">{data?.material}</td>
+                  </tr>
+                  <tr>
+                    <td className="w-1/3 text-wrap text-base font-bold capitalize lg:text-lg">
+                      Weight:
+                    </td>
+                    <td className="text-base lg:text-lg">{data?.weight}</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
