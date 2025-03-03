@@ -200,7 +200,7 @@ const EditComponent = () => {
         <main className="container mx-auto mt-20 px-4 py-8">
           {formData ? (
             <>
-              <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">
+              <h1 className="mx-auto mb-10 w-fit max-w-[810px] text-2xl font-bold">
                 Edit Engineering Component -{" "}
                 <span className="font-medium">{formData?.name || ""}</span>
               </h1>
@@ -275,7 +275,7 @@ const EditComponent = () => {
                     {formData.hero_image &&
                     Object.keys(formData.hero_image).length !== 0 &&
                     (formData.hero_image?.url || formData.hero_image?.formats) ? (
-                      <div className="relative mt-2 h-32 w-48">
+                      <div className="relative mt-2 h-32 w-48 rounded-md bg-white">
                         <button
                           onClick={(e) => {
                             e.preventDefault();
@@ -291,7 +291,7 @@ const EditComponent = () => {
                             autoPlay={true}
                             muted={true}
                             loop={true}
-                            classes="object-contain w-full h-full"
+                            classes="object-contain w-full h-full "
                           />
                         ) : formData.hero_image && formData.hero_image.formats ? (
                           <BaseImage
@@ -318,7 +318,7 @@ const EditComponent = () => {
                           if (item && item?.formats) {
                             return (
                               <div
-                                className="relative mt-2 h-32 w-48"
+                                className="relative mt-2 h-32 w-48 rounded-md bg-white"
                                 key={item.documentId + index + item.id}
                               >
                                 <button
@@ -335,7 +335,7 @@ const EditComponent = () => {
                                   height={item.formats?.thumbnail?.height || 200}
                                   src={item.formats?.thumbnail?.url}
                                   alt={item.name}
-                                  classes="object-contain w-full h-full"
+                                  classes="object-contain w-full h-full rounded-md"
                                 />
                               </div>
                             );

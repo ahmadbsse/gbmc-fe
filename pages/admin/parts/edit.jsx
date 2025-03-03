@@ -182,7 +182,7 @@ const EditPart = () => {
         <main className="container mx-auto px-4 py-8">
           {formData ? (
             <>
-              <h1 className="mx-auto mb-10 w-fit text-center text-2xl font-bold">
+              <h1 className="mx-auto mb-10 w-fit max-w-[810px] text-center text-2xl font-bold">
                 Edit Part - <span className="font-medium">{formData?.name || ""}</span>
               </h1>
               <form
@@ -313,7 +313,10 @@ const EditPart = () => {
                   {formData?.media?.map((item) => {
                     if (item && item?.formats) {
                       return (
-                        <div className="relative h-32 w-44" key={item.documentId}>
+                        <div
+                          className="relative h-32 w-44 rounded-md bg-white"
+                          key={item.documentId}
+                        >
                           <button
                             onClick={(e) => {
                               e.preventDefault();

@@ -37,9 +37,9 @@ const ViewPartDetails = () => {
   return (
     <>
       <SeoHead title="Admin" />
-      <div className="bg-gray-5 mt-20 min-h-screen">
+      <div className="mt-20 min-h-screen bg-gray-50">
         <Navbar isAdmin setTab={setTab} activeTab={"Parts"} />
-        <main className="container mx-auto px-4 py-8">
+        <main className="bg-gray-5 container mx-auto px-4 py-8">
           {formData ? (
             <div className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
               <h1 className="mx-auto mb-10 w-fit text-center text-2xl font-bold">
@@ -48,39 +48,39 @@ const ViewPartDetails = () => {
               <div className="flex flex-col gap-3 text-sm md:flex-row md:gap-5">
                 <div className="w-full">
                   <label className="required mb-1 block font-medium">Name</label>
-                  <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
+                  <div className="w-full rounded-lg border border-gray-300 bg-white px-2.5 py-2">
                     {formData.name}
                   </div>
                 </div>
                 <div className="w-full">
                   <label className="required mb-1 block font-medium">Make</label>
-                  <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
+                  <div className="w-full rounded-lg border border-gray-300 bg-white px-2.5 py-2">
                     {formData.supplier.name}
                   </div>
                 </div>
               </div>
               <div className="w-full text-sm">
                 <label className="required mb-1 block font-medium">OEM Numbers</label>
-                <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
+                <div className="w-full rounded-lg border border-gray-300 bg-white px-2.5 py-2">
                   {formData.oem_number}
                 </div>
               </div>
               <div className="flex flex-col gap-3 text-sm md:flex-row md:gap-5">
                 <div className="w-full">
                   <label className="required mb-1 block font-medium">Material</label>
-                  <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
+                  <div className="w-full rounded-lg border border-gray-300 bg-white px-2.5 py-2">
                     {formData.material}
                   </div>
                 </div>
                 <div className="w-full">
                   <label className="required mb-1 block font-medium"> Weight</label>
-                  <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
+                  <div className="w-full rounded-lg border border-gray-300 bg-white px-2.5 py-2">
                     {formData.weight}
                   </div>
                 </div>
                 <div className="w-full">
                   <label className="required t mb-1 block font-medium">Registered Number</label>
-                  <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
+                  <div className="w-full rounded-lg border border-gray-300 bg-white px-2.5 py-2">
                     {formData.number}
                   </div>
                 </div>
@@ -100,7 +100,7 @@ const ViewPartDetails = () => {
                     formData?.media.map((item, index) => {
                       if (item && item?.formats) {
                         return (
-                          <div className="h-32 w-40" key={index}>
+                          <div className="h-32 w-40 rounded-md bg-white" key={index}>
                             <BaseImage
                               key={index}
                               width={item?.formats?.thumbnail?.width}

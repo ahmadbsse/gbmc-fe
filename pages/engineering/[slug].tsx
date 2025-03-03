@@ -47,14 +47,15 @@ const Article = () => {
     { text: "Engineering Components", href: "/engineering" },
     { text: data?.name, href: `/engineering/${router.query.slug}` },
   ];
+
   return (
     <>
-      <SeoHead title={`${data?.name} | Engineering Component`} />
+      <SeoHead title={`${data?.name}`} />
       <Navbar setTab={() => {}} />
       {data ? (
         <div className="mx-auto mb-8 max-w-7xl pt-20">
-          <div className="my-4 px-5">
-            <div className="mb-8 flex items-center gap-2 text-sm text-gray-500">
+          <div className="my-4 px-2">
+            <div className="mb-8 flex items-center gap-2 pl-2 text-sm text-gray-500">
               {breadcrumbs.map((crumb, index) => (
                 <p key={index}>
                   <Link href={crumb?.href} className="pr-2 hover:text-secondary">
@@ -65,22 +66,20 @@ const Article = () => {
               ))}
             </div>
           </div>
-          <div className="mt-2 px-2 lg:px-16">
-            <div className="flex h-[645px] w-full items-center justify-center overflow-hidden rounded-lg shadow-md">
-              {data?.hero_image ? (
-                data?.hero_image?.type === "video" ? (
-                  <BaseVideo src={data?.hero_image?.url} autoPlay={true} muted={true} loop={true} />
-                ) : data?.hero_image?.formats?.thumbnail ? (
-                  <BaseImage
-                    width={data?.hero_image?.formats?.thumbnail?.width || 1100}
-                    height={data?.hero_image?.formats?.thumbnail?.height || 645}
-                    src={data?.hero_image?.url || data?.hero_image?.formats?.thumbnail?.url}
-                    alt={data?.hero_image?.name}
-                    classes="rounded-lg object-contain"
-                  />
-                ) : null
-              ) : null}
-            </div>
+          <div className="mt-2 flex h-[645px] w-full items-center justify-center rounded-lg bg-white px-2 shadow-lg lg:px-16">
+            {data?.hero_image ? (
+              data?.hero_image?.type === "video" ? (
+                <BaseVideo src={data?.hero_image?.url} autoPlay={true} muted={true} loop={true} />
+              ) : data?.hero_image?.formats?.thumbnail ? (
+                <BaseImage
+                  width={data?.hero_image?.formats?.medium?.width || 1100}
+                  height={data?.hero_image?.formats?.medium?.height || 645}
+                  src={data?.hero_image?.url || data?.hero_image?.formats?.medium?.url}
+                  alt={data?.hero_image?.name}
+                  classes="object-contain max-h-[645px] rounded-lg"
+                />
+              ) : null
+            ) : null}
           </div>
           <div className="mx-auto max-w-6xl px-4 pt-4 lg:py-8">
             <div className="container">
@@ -91,39 +90,35 @@ const Article = () => {
                 className="mt-5 min-h-10 text-sm lg:text-base"
                 dangerouslySetInnerHTML={{ __html: data?.description }}
               />
-              <section id="projects" className="pt-5 lg:py-8">
-                <article className="reverse grid grid-cols-1 md:grid-cols-10">
-                  <div className="card-details rounded-lg bg-[#707070] p-4 text-sm text-white lg:text-base">
-                    <div className="flex flex-col gap-2 py-7 lg:w-[400px] lg:gap-5 lg:px-11">
-                      <h2 className="text-xl font-bold lg:text-2xl">Key Features</h2>
 
-                      <p>
-                        <strong>Weight:</strong>
-                        <br />
-                        {data?.weight ? <span>{data?.weight}</span> : null}
-                      </p>
-
-                      <p>
-                        <strong>Material:</strong>
-                        <br />
-
-                        {data.material ? <span>{data.material}</span> : null}
-                      </p>
-                    </div>
+              <div className="mb-3 mt-4 flex flex-col gap-3 lg:flex-row lg:gap-10">
+                <div className="rounded-lg bg-[#707070] p-4 text-sm text-white lg:h-[650px] lg:w-[700px] lg:text-base">
+                  <div className="flex flex-col gap-2 py-7 lg:w-[700px] lg:gap-5 lg:px-11">
+                    <h2 className="text-xl font-bold lg:text-2xl">Key Features</h2>
+                    <p>
+                      <strong>Weight:</strong>
+                      <br />
+                      {data?.weight ? <span>{data?.weight}</span> : null}
+                    </p>
+                    <p>
+                      <strong>Material:</strong>
+                      <br />
+                      {data.material ? <span>{data.material}</span> : null}
+                    </p>
                   </div>
+                </div>
+                <div className="z-20 flex h-[500px] w-full items-center justify-center rounded-lg bg-white p-6 text-white shadow-lg lg:my-20 lg:-ml-32">
                   {data?.media && data?.media[selectedImage] ? (
                     <BaseImage
-                      classes="my-2 h-[400px] rounded-lg lg:z-10 lg:col-span-4 lg:my-16 lg:rounded-lg"
-                      height={1100}
-                      width={1100}
+                      classes="object-contain rounded-lg max-h-[500px] "
+                      height={data?.media[selectedImage]?.formats?.actual?.height}
+                      width={data?.media[selectedImage]?.formats?.actual?.width}
                       src={data?.media[selectedImage]?.formats?.actual?.url}
                       alt="Engineering Images"
                     />
-                  ) : (
-                    <div className="my-2 h-[500px] rounded-lg lg:z-10 lg:col-span-4 lg:my-20 lg:rounded-lg"></div>
-                  )}
-                </article>
-              </section>
+                  ) : null}
+                </div>
+              </div>
             </div>
             <div className="space-y-4">
               {/* Main Image */}

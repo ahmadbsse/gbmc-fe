@@ -34,7 +34,11 @@ const AllParts = () => {
           url = `/parts?populate=*&filters[active]=true&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=createdAt:desc`;
         }
       } else {
-        url = `/parts?populate=*&filters[active]=true&filters[$or][0][name][$containsi]=${searchQuery}&filters[$or][1][oem_number][$containsi]=${searchQuery}&sort=createdAt:desc`;
+        if (selectedSupplier === "") {
+          url = `/parts?populate=*&filters[active]=true&filters[$or][0][name][$containsi]=${searchQuery}&filters[$or][1][oem_number][$containsi]=${searchQuery}&sort=createdAt:desc`;
+        } else {
+          url = `/parts?populate=*&filters[active]=true&filters[$or][0][name][$containsi]=${searchQuery}&filters[$or][1][oem_number][$containsi]=${searchQuery}&filters[supplier][documentId]=${selectedSupplier}&sort=createdAt:desc`;
+        }
       }
 
       const res = await apiClient.GET(url);
@@ -136,7 +140,6 @@ const AllParts = () => {
   };
   return (
     <>
-      {selectedSupplier}
       <div className="mt-5 flex flex-col justify-between lg:flex-row lg:items-center lg:gap-3">
         <div className="mb-6 pr-2 sm:ml-auto sm:px-4 md:pr-0">
           <BaseSearchbar setSearchQuery={setSearchQuery} />
@@ -160,18 +163,18 @@ const AllParts = () => {
             ))}
           </div>
           {pagination?.total && (
-            <p className="mx-auto my-4 ml-auto w-fit px-2 text-sm font-bold sm:text-base md:mr-0">{`Showing 1-${paginationInfo} of ${pagination?.total} ${getBrand(selectedSupplier)} Parts`}</p>
+            <p className="my-4 w-fit px-2 text-base font-bold sm:text-[19px] lg:px-0">{`Showing 1-${paginationInfo} of ${pagination?.total} ${getBrand(selectedSupplier)} Parts`}</p>
           )}
           <div>
             <div className="custom-scrollbar flex max-w-7xl flex-col gap-3 overflow-x-auto pb-2 lg:flex-row">
-              <div className="mx-auto grid w-fit grid-cols-1 gap-6 pr-3 sm:grid-cols-2 lg:grid-cols-3 lg:pr-0 xl:grid-cols-4">
+              <div className="mx-auto grid w-fit grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:pr-0 xl:grid-cols-4">
                 {allParts.map((part, index) => (
                   <Link
                     className=""
                     href={`/tractor-parts/${part.documentId}`}
                     key={part.id + index + part.documentId}
                   >
-                    <div className="w-[360px] min-w-[290px] rounded-lg border border-gray-200 bg-white shadow-sm transition sm:w-auto">
+                    <div className="xs:w-[330px] w-[280px] min-w-[280px] rounded-lg border border-gray-200 bg-white shadow-sm transition sm:w-auto">
                       <div className="relative h-[200px] w-full border-b border-gray-200">
                         {part.media ? (
                           <BaseImage
@@ -186,7 +189,7 @@ const AllParts = () => {
                       </div>
                       <h3
                         title={part.name}
-                        className="truncate p-4 text-center text-lg font-semibold"
+                        className="truncate p-4 text-center text-base font-semibold sm:text-lg"
                       >
                         {part.name}
                       </h3>

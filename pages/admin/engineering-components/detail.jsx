@@ -60,20 +60,20 @@ const ViewComponentDetails = () => {
               </h1>
               <div className="w-full text-sm">
                 <label className="required mb-1 block font-medium">Name</label>
-                <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
+                <div className="w-full rounded-lg border border-gray-300 bg-white px-2.5 py-2">
                   {formData.name}
                 </div>
               </div>
               <div className="flex flex-col gap-3 text-sm md:flex-row md:gap-5">
                 <div className="w-full">
                   <label className="required mb-1 block font-medium">Material</label>
-                  <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
+                  <div className="w-full rounded-lg border border-gray-300 bg-white px-2.5 py-2">
                     {formData.material}
                   </div>
                 </div>
                 <div className="w-full">
                   <label className="required mb-1 block font-medium"> Weight</label>
-                  <div className="w-full rounded-lg border border-gray-300 px-2.5 py-2">
+                  <div className="w-full rounded-lg border border-gray-300 bg-white px-2.5 py-2">
                     {formData.weight}
                   </div>
                 </div>
@@ -89,7 +89,7 @@ const ViewComponentDetails = () => {
               <div className="flex flex-col gap-3 md:flex-row md:gap-5">
                 <div className="basis-1/2">
                   <label className="required mb-1 block text-sm font-medium">Hero Image</label>
-                  <div className="h-28 w-44">
+                  <div className="h-28 w-44 rounded-md bg-white">
                     {formData.hero_image ? (
                       formData.hero_image.type === "video" ? (
                         <BaseVideo
@@ -119,7 +119,7 @@ const ViewComponentDetails = () => {
                         formData.media.map((item, index) => {
                           if (item && item?.formats) {
                             return (
-                              <div className="h-28 w-44" key={index}>
+                              <div className="h-28 w-44 rounded-md bg-white" key={index}>
                                 <BaseImage
                                   key={index}
                                   width={item.formats.thumbnail.width}
