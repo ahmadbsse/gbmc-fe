@@ -87,7 +87,7 @@ const Article = () => {
                 {data?.name}
               </p>
               <p
-                className="mt-5 min-h-10 text-sm lg:text-base"
+                className="mt-5 min-h-10 text-lg"
                 dangerouslySetInnerHTML={{ __html: data?.description }}
               />
 
