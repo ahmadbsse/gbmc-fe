@@ -26,7 +26,7 @@ const Article = () => {
         if (response.hero_image.mime?.includes("video")) {
           response.hero_image = transformHeroVideo(response.hero_image);
         } else {
-          response.hero_image = transformMedia(response.hero_image);
+          response.hero_image = transformMedia([response.hero_image])[0];
         }
         response.description = response.description.replace(
           /\*\*(.*?)\*\*/g,
@@ -72,8 +72,8 @@ const Article = () => {
                 <BaseVideo src={data?.hero_image?.url} autoPlay={true} muted={true} loop={true} />
               ) : data?.hero_image?.formats?.thumbnail ? (
                 <BaseImage
-                  width={data?.hero_image?.formats?.medium?.width || 1100}
-                  height={data?.hero_image?.formats?.medium?.height || 645}
+                  width={data?.hero_image?.width || data?.hero_image?.formats?.medium?.width}
+                  height={data?.hero_image?.height || data?.hero_image?.formats?.medium?.height}
                   src={data?.hero_image?.url || data?.hero_image?.formats?.medium?.url}
                   alt={data?.hero_image?.name}
                   classes="object-contain max-h-[645px] rounded-lg"
@@ -107,6 +107,7 @@ const Article = () => {
                     </p>
                   </div>
                 </div>
+
                 <div className="z-20 flex h-[500px] w-full items-center justify-center rounded-lg bg-white p-6 text-white shadow-lg lg:my-20 lg:-ml-32">
                   {data?.media && data?.media[selectedImage] ? (
                     <BaseImage
