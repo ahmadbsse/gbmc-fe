@@ -215,7 +215,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
               <span className="font-bold">{activeTab.name}</span>
               {total > 0 ? <span> ({total})</span> : null}
             </h2>
-            <div className="hidden w-fit sm:flex">
+            <div className="ml-4 hidden w-fit sm:flex">
               <BaseButton loading={false} type="submit" handleClick={addNewItem}>
                 <p className="mx-auto flex w-fit gap-2">
                   <Plus className="mt-0.5 h-4 w-4" />
@@ -223,7 +223,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
                 </p>
               </BaseButton>
             </div>
-            <div className="w-fit sm:hidden">
+            <div className="ml-4 w-fit sm:hidden">
               <div onClick={addNewItem}>
                 <Plus className="h-5 w-5" />
               </div>

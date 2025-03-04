@@ -9,7 +9,7 @@ interface CustomVideoProps {
 const BaseVideo = ({ src, autoPlay, muted, loop, classes = "" }: CustomVideoProps) => {
   const fullUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}${src}`;
   return (
-    <video className={`${classes} h-auto w-full`} autoPlay={autoPlay} muted={muted} loop={loop}>
+    <video className={`${classes} h-full w-full`} autoPlay={autoPlay} muted={muted} loop={loop}>
       <source src={fullUrl} />
       Your browser does not support the video tag.
     </video>
