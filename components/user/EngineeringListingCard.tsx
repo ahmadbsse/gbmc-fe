@@ -1,19 +1,36 @@
 import type { EngineeringCardProps } from "@/types";
 import Link from "next/link";
-import { BaseImage } from "../common";
+import { BaseImage, BaseVideo } from "../common";
 
-const EngineeringListingCard: React.FC<EngineeringCardProps> = ({ id, title, image, featured }) => {
+const EngineeringListingCard: React.FC<EngineeringCardProps> = ({
+  id,
+  title,
+  image,
+  featured,
+  isImage,
+  heroVideo,
+}) => {
   return (
     <Link href={`/engineering/${id}`}>
       <div className="rounded-lg bg-white shadow-md hover:shadow-lg">
-        <div className="relative max-h-[180px] w-[250px] cursor-pointer border-b border-gray-200">
-          {image ? (
-            <BaseImage
-              height={160}
-              width={240}
-              src={image}
-              alt={title}
-              classes="h-40 w-full object-contain rounded-lg"
+        <div className="relative cursor-pointer border-b border-gray-200">
+          {isImage && image ? (
+            <div className="mx-auto max-h-[180px] w-[250px]">
+              <BaseImage
+                height={160}
+                width={240}
+                src={image}
+                alt={title}
+                classes="h-40 w-full object-contain rounded-t-lg"
+              />
+            </div>
+          ) : heroVideo ? (
+            <BaseVideo
+              src={heroVideo}
+              autoPlay={false}
+              muted={true}
+              loop={false}
+              classes="object-contain w-full h-full rounded-t-lg"
             />
           ) : null}
           {featured ? (

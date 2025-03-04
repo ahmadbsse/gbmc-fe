@@ -58,7 +58,7 @@ export function transformMedia(response) {
       transform(item);
     });
   }
-  if (response.media) {
+  if (response.media && Array.isArray(response.media)) {
     response.media = response.media.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
   }
   return response;

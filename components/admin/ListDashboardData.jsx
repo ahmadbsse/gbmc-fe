@@ -211,7 +211,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
       <div className="rounded-lg bg-white shadow">
         <div className="border-b border-gray-200 px-6 py-4">
           <div className="mb-8 flex items-center justify-between">
-            <h2 className="flex items-center text-lg">
+            <h2 className="flex items-center text-xl">
               <span className="font-bold">{activeTab.name}</span>
               {total > 0 ? <span> ({total})</span> : null}
             </h2>
@@ -233,13 +233,16 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
         <div className="p-3 sm:p-6">
           {data && data.length > 0 ? (
             <div className="grid gap-3 sm:gap-4">
+              {pagination?.total ? (
+                <p className="w-fit px-2 text-lg font-bold">{`Showing 1-${paginationInfo} of ${pagination?.total}`}</p>
+              ) : null}
               {data &&
                 data.map((item, index) => (
                   <div
                     key={item.documentId}
-                    className={`flex flex-col justify-between gap-2 rounded-lg bg-gray-50 p-4 sm:flex-row sm:items-center`}
+                    className={`flex w-[265px] flex-col justify-between gap-2 rounded-lg bg-gray-50 p-4 xs:w-[320px] sm:w-full sm:flex-row sm:items-center`}
                   >
-                    <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
+                    <div className="flex w-full flex-col items-center gap-2 sm:flex-row sm:gap-4">
                       <div
                         className={`flex h-32 min-w-44 max-w-44 cursor-pointer items-center justify-center`}
                         onClick={() => viewDetails(item.documentId)}
@@ -353,9 +356,6 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
           )}
         </div>
       </div>
-      {pagination?.total ? (
-        <p className="mx-auto my-4 ml-auto w-fit px-2 text-sm font-bold sm:text-base md:mr-0">{`Showing 1-${paginationInfo} of ${pagination?.total}`}</p>
-      ) : null}
     </>
   );
 };

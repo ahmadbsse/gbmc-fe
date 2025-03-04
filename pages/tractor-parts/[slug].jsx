@@ -173,11 +173,9 @@ const PartDetails = () => {
               {/* Part Details Section */}
               <div className="space-y-6">
                 <div className="space-y-2">
-                  {/* <p className="text-sm lg:text-base">PART CODE: {data?.id}</p> */}
-                  <h1 className="text-xl font-bold capitalize text-[#0060AA] lg:text-2xl">
+                  <h1 className="text-xl font-medium capitalize text-[#0060AA] lg:text-2xl">
                     {data?.name}
                   </h1>
-                  {/* <span className="text-xs italic">Registered Number: {data?.number}</span> */}
                 </div>
 
                 <p
@@ -187,7 +185,7 @@ const PartDetails = () => {
               </div>
             </div>
             <div className="mt-8 max-w-3xl">
-              <h2 className="mb-3 font-semibold lg:text-xl">Specifications</h2>
+              <h2 className="mb-3 text-lg font-semibold lg:text-xl">Specifications</h2>
               <table className="product-specification-table product-specification-table-striped">
                 <tbody>
                   <tr>

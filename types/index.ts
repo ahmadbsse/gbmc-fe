@@ -48,6 +48,8 @@ export interface EngineeringCardProps {
   title: string;
   image: string;
   featured: boolean;
+  isImage: boolean;
+  heroVideo: string;
 }
 
 export type Category = {
