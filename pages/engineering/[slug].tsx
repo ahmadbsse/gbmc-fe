@@ -53,9 +53,9 @@ const Article = () => {
       <SeoHead title={`${data?.name}`} />
       <Navbar setTab={() => {}} />
       {data ? (
-        <div className="mx-auto mb-8 max-w-7xl pt-20">
-          <div className="my-4 px-2">
-            <div className="mb-8 flex items-center gap-2 pl-2 text-sm text-gray-500">
+        <div className="mx-auto mb-8 max-w-7xl px-2 pt-20">
+          <div className="my-4">
+            <div className="mb-8 flex items-center gap-2 text-sm text-gray-500">
               {breadcrumbs.map((crumb, index) => (
                 <p key={index}>
                   <Link href={crumb?.href} className="pr-2 hover:text-secondary">
@@ -66,7 +66,7 @@ const Article = () => {
               ))}
             </div>
           </div>
-          <div className="mx-auto mt-2 flex h-[645px] w-full max-w-[1024px] items-center justify-center rounded-lg bg-white px-2 shadow-lg lg:px-16">
+          <div className="mx-auto mt-2 flex h-[645px] w-full max-w-7xl items-center justify-center rounded-lg bg-white shadow-lg lg:px-16">
             {data?.hero_image ? (
               data?.hero_image?.type === "video" ? (
                 <BaseVideo src={data?.hero_image?.url} autoPlay={true} muted={true} loop={true} />
@@ -81,9 +81,9 @@ const Article = () => {
               ) : null
             ) : null}
           </div>
-          <div className="mx-auto max-w-6xl px-4 pt-4 lg:py-8">
+          <div className="mx-auto max-w-7xl px-4 pt-4 lg:py-8">
             <div className="container">
-              <p className="text-xl font-semibold lg:bottom-0 lg:left-20 lg:top-20 lg:text-4xl">
+              <p className="text-xl font-semibold lg:bottom-0 lg:left-20 lg:top-20 lg:text-2xl">
                 {data?.name}
               </p>
               <p
@@ -94,7 +94,7 @@ const Article = () => {
               <div className="mb-3 mt-4 flex flex-col gap-3 lg:flex-row lg:gap-10">
                 <div className="rounded-lg bg-[#707070] p-4 text-sm text-white lg:h-[650px] lg:w-[700px] lg:text-base">
                   <div className="flex flex-col gap-2 py-7 lg:w-[700px] lg:gap-5 lg:px-11">
-                    <h2 className="text-xl font-bold lg:text-2xl">Key Features</h2>
+                    <h2 className="text-lg font-bold lg:text-2xl">Key Features</h2>
                     <p>
                       <strong>Weight:</strong>
                       <br />
