@@ -89,7 +89,7 @@ const ViewComponentDetails = () => {
               <div className="flex flex-col gap-3 md:flex-row md:gap-5">
                 <div className="basis-1/2">
                   <label className="required mb-1 block text-sm font-medium">Hero Image</label>
-                  <div className="h-28 w-44 rounded-md bg-white">
+                  <div className="h-28 w-44 rounded-lg bg-white">
                     {formData.hero_image ? (
                       formData.hero_image.type === "video" ? (
                         <BaseVideo

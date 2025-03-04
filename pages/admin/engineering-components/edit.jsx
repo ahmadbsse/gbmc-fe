@@ -288,7 +288,7 @@ const EditComponent = () => {
                             autoPlay={true}
                             muted={true}
                             loop={true}
-                            classes="object-contain w-full h-full "
+                            classes="object-contain w-full h-full rounded-lg"
                           />
                         ) : formData.hero_image && formData.hero_image.formats ? (
                           <BaseImage
