@@ -26,19 +26,20 @@ const AdminDashboard = () => {
     { name: "Sub Assemblies", key: "sub-assemblies", tag: "sub assembly" },
     { name: "Engineering Components", key: "engineering", tag: "engineering component" },
   ];
-  const [activeTab, setActiveTab] = useState(tabsKey[1]);
+  const [activeTab, setActiveTab] = useState();
 
   useEffect(() => {
     const storedTab = localStorage.getItem("activeTab");
     if (storedTab) {
       setActiveTab(JSON.parse(storedTab));
+      setPagination(null);
     } else {
       setActiveTab(tabsKey[0]);
     }
   }, []);
 
   const getParts = async (pageNum, isLoadMore = false) => {
-    if (activeTab.key == "parts") {
+    if (activeTab?.key == "parts") {
       try {
         if (isLoadMore) {
           setIsLoadingMore(true);
@@ -52,6 +53,7 @@ const AdminDashboard = () => {
           url = `/parts?populate=*&filters[name][$containsi]=${searchQuery}&sort=createdAt:desc`;
         }
         await apiClient.GET(url).then(async (res) => {
+          setPagination(null);
           if (res && res.data.length > 0) {
             const transformedData = transformMedia(res.data);
             setParts((prev) => (isLoadMore ? [...prev, ...transformedData] : transformedData));
@@ -78,7 +80,7 @@ const AdminDashboard = () => {
   };
 
   const getEngineering = async (pageNum, isLoadMore = false) => {
-    if (activeTab.key == "engineering") {
+    if (activeTab?.key == "engineering") {
       try {
         if (isLoadMore) {
           setIsLoadingMore(true);
@@ -92,6 +94,7 @@ const AdminDashboard = () => {
           url = `/engineering-components?populate=*&filters[name][$containsi]=${searchQuery}&sort=createdAt:desc`;
         }
         await apiClient.GET(url).then(async (res) => {
+          setPagination(null);
           if (res && res.data.length > 0) {
             const transformedData = transformMedia(res.data);
             setEngineering((prev) =>
@@ -119,7 +122,7 @@ const AdminDashboard = () => {
   };
 
   const getSubAssemblies = async (pageNum, isLoadMore = false) => {
-    if (activeTab.key == "sub-assemblies") {
+    if (activeTab?.key == "sub-assemblies") {
       try {
         if (isLoadMore) {
           setIsLoadingMore(true);
@@ -133,6 +136,7 @@ const AdminDashboard = () => {
           url = `/sub-assemblies?populate=*&filters[name][$containsi]=${searchQuery}&sort=createdAt:desc`;
         }
         await apiClient.GET(url).then(async (res) => {
+          setPagination(null);
           if (res && res.data.length > 0) {
             const transformedData = transformMedia(res.data);
             setSubAssemblies((prev) =>
@@ -160,7 +164,7 @@ const AdminDashboard = () => {
   };
 
   const getSuppliers = async (pageNum, isLoadMore) => {
-    if (activeTab.key == "suppliers") {
+    if (activeTab?.key == "suppliers") {
       try {
         if (isLoadMore) {
           setIsLoadingMore(true);
@@ -174,6 +178,7 @@ const AdminDashboard = () => {
           url = `/suppliers?populate=*&filters[name][$containsi]=${searchQuery}&sort=createdAt:desc`;
         }
         await apiClient.GET(url).then(async (res) => {
+          setPagination(null);
           if (res && res.data.length > 0) {
             const transformedData = transformMedia(res.data);
             setSuppliers((prev) => (isLoadMore ? [...prev, ...transformedData] : transformedData));
@@ -200,21 +205,22 @@ const AdminDashboard = () => {
   };
 
   const apiCalls = (page, isLoadMore) => {
-    if (activeTab.key == "suppliers") {
+    if (activeTab?.key == "suppliers") {
       getSuppliers(page, isLoadMore);
     }
-    if (activeTab.key == "parts") {
+    if (activeTab?.key == "parts") {
       getParts(page, isLoadMore);
     }
-    if (activeTab.key == "sub-assemblies") {
+    if (activeTab?.key == "sub-assemblies") {
       getSubAssemblies(page, isLoadMore);
     }
-    if (activeTab.key == "engineering") {
+    if (activeTab?.key == "engineering") {
       getEngineering(page, isLoadMore);
     }
   };
 
   useEffect(() => {
+    setPagination(null);
     setPage(1);
     apiCalls(1, false);
   }, [activeTab]);
@@ -231,11 +237,15 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     setPage(1);
+    setPagination(null);
     apiCalls(1, false);
   }, [debouncedSearchQuery]);
 
   useEffect(() => {
-    if (page > 1) apiCalls(page, true);
+    if (page > 1) {
+      setPagination(null);
+      apiCalls(page, true);
+    }
   }, [page]);
 
   const loadMore = () => {
@@ -266,28 +276,28 @@ const AdminDashboard = () => {
     <>
       <SeoHead title="Admin" />
       <div className="mt-20 min-h-screen bg-gray-50">
-        <Navbar isAdmin setTab={setTab} activeTab={activeTab.name} />
+        <Navbar isAdmin setTab={setTab} activeTab={activeTab?.name} />
 
         <main className="container mx-auto px-4 py-8">
           <div className="mb-3 flex items-center justify-between md:mb-8">
             <h1 className="flex gap-2 text-2xl font-bold md:text-[1.65rem]">Admin Dashboard</h1>
             <div className="hidden md:flex">
-              {tabData[activeTab.key] > 0 || searchQuery !== "" ? (
-                <BaseSearchbar key={activeTab.key} setSearchQuery={setSearchQuery} />
+              {tabData[activeTab?.key] > 0 || searchQuery !== "" ? (
+                <BaseSearchbar key={activeTab?.key} setSearchQuery={setSearchQuery} />
               ) : null}
             </div>
           </div>
           <div className="mb-8 ml-auto w-full md:hidden">
-            {tabData[activeTab.key] > 0 || searchQuery !== "" ? (
-              <BaseSearchbar key={activeTab.key} setSearchQuery={setSearchQuery} />
+            {tabData[activeTab?.key] > 0 || searchQuery !== "" ? (
+              <BaseSearchbar key={activeTab?.key} setSearchQuery={setSearchQuery} />
             ) : null}
           </div>
           {/* Desktop */}
           <div className="mb-6 hidden gap-4 md:flex">
             {tabsKey.map((tab) => (
               <AdminTabs
-                key={tab.key}
-                active={activeTab.name === tab.name}
+                key={tab?.key}
+                active={activeTab?.name === tab?.name}
                 onClick={() => setTab(tab)}
               >
                 {tab.name}
@@ -304,31 +314,31 @@ const AdminDashboard = () => {
               <ListDashboardData
                 pagination={pagination}
                 data={
-                  activeTab.key == "engineering"
+                  activeTab?.key == "engineering"
                     ? engineering
-                    : activeTab.key == "suppliers"
+                    : activeTab?.key == "suppliers"
                       ? suppliers
-                      : activeTab.key == "sub-assemblies"
+                      : activeTab?.key == "sub-assemblies"
                         ? subAssemblies
                         : parts
                 }
                 total={total}
                 activeTab={activeTab}
                 setData={
-                  activeTab.key == "engineering"
+                  activeTab?.key == "engineering"
                     ? setEngineering
-                    : activeTab.key == "suppliers"
+                    : activeTab?.key == "suppliers"
                       ? setSuppliers
-                      : activeTab.key == "sub-assemblies"
+                      : activeTab?.key == "sub-assemblies"
                         ? setSubAssemblies
                         : setParts
                 }
                 getData={
-                  activeTab.key === "engineering"
+                  activeTab?.key === "engineering"
                     ? () => getEngineering(1, false)
-                    : activeTab.key === "suppliers"
+                    : activeTab?.key === "suppliers"
                       ? () => getSuppliers(1, false)
-                      : activeTab.key === "sub-assemblies"
+                      : activeTab?.key === "sub-assemblies"
                         ? () => getSubAssemblies(1, false)
                         : () => getParts(1, false)
                 }

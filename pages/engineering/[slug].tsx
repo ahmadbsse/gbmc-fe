@@ -108,7 +108,7 @@ const Article = () => {
                   </div>
                 </div>
 
-                <div className="z-20 flex h-[500px] w-full items-center justify-center rounded-lg bg-white p-6 text-white shadow-lg lg:my-20 lg:-ml-32">
+                <div className="z-20 flex max-h-[500px] w-full items-center justify-center rounded-lg bg-white p-6 text-white shadow-lg lg:my-20 lg:-ml-32">
                   {data?.media && data?.media[selectedImage] ? (
                     <BaseImage
                       classes="object-contain rounded-lg max-h-[500px] "
