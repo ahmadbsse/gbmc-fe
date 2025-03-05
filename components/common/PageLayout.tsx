@@ -16,7 +16,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
           <div className="mb-4">
             <div className="mb-8 flex items-center gap-2 text-sm capitalize text-gray-500">
               {breadcrumbs.map((crumb, index) => (
-                <p key={index}>
+                <p className="max-w-[100px] truncate text-nowrap md:max-w-[200px]" key={index}>
                   <Link href={crumb.href} className="pr-2 hover:text-secondary">
                     {crumb.text}
                   </Link>
