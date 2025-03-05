@@ -8,6 +8,7 @@ export interface PageLayoutProps {
   children: ReactNode;
   title: string;
   breadcrumbs?: Breadcrumb[];
+  paddingTop?: boolean;
 }
 export type TabProps = {
   active: boolean;
