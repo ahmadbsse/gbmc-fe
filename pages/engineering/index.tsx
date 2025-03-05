@@ -70,19 +70,16 @@ const EngineeringHome = () => {
         ) : (
           <div className="h-screen">
             {/* Featured Components Section */}
-
             {engineeringComponents?.length != 0 ? (
               <div className="mx-auto grid w-fit grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:pr-0 xl:grid-cols-4">
                 {engineeringComponents?.map((component, index) => (
                   <EngineeringListingCard
                     key={index}
                     id={component?.documentId}
-                    image={component?.hero_image?.formats?.thumbnail?.url}
+                    image={component?.hero_image}
                     isImage={component?.hero_image?.mime?.includes("image")}
                     heroVideo={
-                      component?.hero_image?.mime?.includes("image")
-                        ? null
-                        : component?.hero_image?.url
+                      component?.hero_image?.mime?.includes("image") ? null : component?.hero_image
                     }
                     title={component?.name}
                     featured={component?.featured}

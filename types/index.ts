@@ -47,10 +47,18 @@ export interface ScrollingMarqueeProps {
 export interface EngineeringCardProps {
   id: string;
   title: string;
-  image: string;
+  image: {
+    formats: {
+      thumbnail: {
+        width: number;
+        height: number;
+        url: string;
+      };
+    };
+  };
   featured: boolean;
   isImage: boolean;
-  heroVideo: string;
+  heroVideo: { url: string; } | null;
 }
 
 export type Category = {
