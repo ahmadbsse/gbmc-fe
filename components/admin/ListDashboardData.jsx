@@ -213,7 +213,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
           <div className="mb-8 flex items-center justify-between">
             <h2 className="flex items-center text-xl">
               <span className="font-bold">{activeTab.name}</span>
-              {total > 0 ? <span> ({total})</span> : null}
+              {/* {total > 0 ? <span> ({total})</span> : null} */}
             </h2>
             <div className="ml-4 hidden w-fit sm:flex">
               <BaseButton loading={false} type="submit" handleClick={addNewItem}>
