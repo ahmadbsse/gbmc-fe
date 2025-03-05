@@ -25,13 +25,15 @@ const EngineeringListingCard: React.FC<EngineeringCardProps> = ({
               />
             </div>
           ) : heroVideo ? (
-            <BaseVideo
-              src={heroVideo}
-              autoPlay={false}
-              muted={true}
-              loop={false}
-              classes="object-contain w-full h-full rounded-t-lg"
-            />
+            <div className="mx-auto h-[160px] w-[250px]">
+              <BaseVideo
+                src={heroVideo}
+                autoPlay={false}
+                muted={true}
+                loop={false}
+                classes="object-contain rounded-t-lg"
+              />
+            </div>
           ) : null}
           {featured ? (
             <div className="absolute right-2 top-2 rounded bg-primary px-1 text-xs font-semibold">

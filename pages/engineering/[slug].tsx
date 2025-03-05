@@ -53,7 +53,7 @@ const Article = () => {
       <SeoHead title={`${data?.name}`} />
       <Navbar setTab={() => {}} />
       {data ? (
-        <div className="mx-auto mb-8 max-w-7xl px-2 pt-20">
+        <div className="mx-auto mb-8 max-w-7xl px-4 pt-20">
           <div className="my-4">
             <div className="mb-8 flex items-center gap-2 text-sm text-gray-500">
               {breadcrumbs.map((crumb, index) => (
@@ -94,7 +94,7 @@ const Article = () => {
               <div className="mb-3 mt-4 flex flex-col gap-3 lg:flex-row lg:gap-10">
                 <div className="rounded-lg bg-[#707070] p-4 text-sm text-white lg:h-[650px] lg:w-[700px] lg:text-base">
                   <div className="flex flex-col gap-2 py-7 lg:w-[700px] lg:gap-5 lg:px-11">
-                    <h2 className="text-lg font-bold lg:text-2xl">Key Features</h2>
+                    <p className="text-lg font-bold lg:text-xl">Key Features</p>
                     <p>
                       <strong>Weight:</strong>
                       <br />
