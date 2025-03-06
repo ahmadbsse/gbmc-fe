@@ -233,7 +233,9 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
           {data && data.length > 0 ? (
             <div className="grid gap-3 sm:gap-4">
               {pagination?.total ? (
-                <p className="w-fit px-2 text-lg font-bold">{`Showing 1-${paginationInfo} of ${pagination?.total}`}</p>
+                <p className="w-fit px-2 text-lg font-bold">
+                  {`Showing 1-${paginationInfo} of ${pagination?.total} ${activeTab?.name}`}
+                </p>
               ) : null}
               {data &&
                 data.map((item, index) => (

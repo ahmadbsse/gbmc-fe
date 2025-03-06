@@ -130,7 +130,6 @@ const ImageMagnifier = ({ image, title }) => {
         style={isHovering ? {} : { display: "none" }}
       />
 
-      {/* <pre>{JSON.stringify(driftInstanceRef, null, 2)}</pre> */}
       {/* Add custom styles */}
       <style jsx global>{`
         .drift-bounding-box {

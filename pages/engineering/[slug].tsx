@@ -57,7 +57,7 @@ const Article = () => {
           <div className="my-4">
             <div className="mb-8 flex items-center gap-2 text-sm text-gray-500">
               {breadcrumbs.map((crumb, index) => (
-                <p key={index}>
+                <p className="max-w-[100px] truncate text-nowrap md:max-w-[200px]" key={index}>
                   <Link href={crumb?.href} className="pr-2 hover:text-secondary">
                     {crumb?.text}
                   </Link>
@@ -81,7 +81,7 @@ const Article = () => {
               ) : null
             ) : null}
           </div>
-          <div className="mx-auto max-w-7xl px-4 pt-4 lg:py-8">
+          <div className="mx-auto max-w-7xl pt-4 lg:py-8">
             <div className="container">
               <p className="text-xl font-semibold lg:bottom-0 lg:left-20 lg:top-20 lg:text-2xl">
                 {data?.name}
@@ -93,30 +93,34 @@ const Article = () => {
 
               <div className="mb-3 mt-4 flex flex-col gap-3 lg:flex-row lg:gap-10">
                 <div className="rounded-lg bg-[#707070] p-4 text-sm text-white lg:h-[650px] lg:w-[700px] lg:text-base">
-                  <div className="flex flex-col gap-2 py-7 lg:w-[700px] lg:gap-5 lg:px-11">
-                    <p className="text-lg font-bold lg:text-xl">Key Features</p>
-                    <p>
-                      <strong>Weight:</strong>
-                      <br />
-                      {data?.weight ? <span>{data?.weight}</span> : null}
-                    </p>
-                    <p>
-                      <strong>Material:</strong>
-                      <br />
-                      {data.material ? <span>{data.material}</span> : null}
-                    </p>
+                  <div className="py-7 lg:w-[750px] lg:gap-5 lg:px-11">
+                    <div className="flex flex-col gap-2 lg:w-[500px]">
+                      <p className="text-lg font-bold lg:text-xl">Key Features</p>
+                      <p>
+                        <strong>Weight:</strong>
+                        <br />
+                        {data?.weight ? <span>{data?.weight}</span> : null}
+                      </p>
+                      <p>
+                        <strong>Material:</strong>
+                        <br />
+                        {data.material ? <span>{data.material}</span> : null}
+                      </p>
+                    </div>
                   </div>
                 </div>
 
                 <div className="z-20 flex max-h-[500px] w-full items-center justify-center rounded-lg bg-white p-6 text-white shadow-lg lg:my-20 lg:-ml-32">
                   {data?.media && data?.media[selectedImage] ? (
-                    <BaseImage
-                      classes="object-contain rounded-lg max-h-[500px] "
-                      height={data?.media[selectedImage]?.formats?.actual?.height}
-                      width={data?.media[selectedImage]?.formats?.actual?.width}
-                      src={data?.media[selectedImage]?.formats?.actual?.url}
-                      alt="Engineering Images"
-                    />
+                    <div className="m-1 text-black">
+                      <BaseImage
+                        classes="object-contain rounded-lg max-h-[500px] "
+                        height={data?.media[selectedImage]?.formats?.actual?.height}
+                        width={data?.media[selectedImage]?.formats?.actual?.width}
+                        src={data?.media[selectedImage]?.formats?.actual?.url}
+                        alt="Engineering Images"
+                      />
+                    </div>
                   ) : null}
                 </div>
               </div>
@@ -125,7 +129,7 @@ const Article = () => {
               {/* Main Image */}
               <div className="overflow-hiddend relative">
                 {/* Thumbnail Images */}
-                <div className="flex gap-4">
+                <div className="flex flex-wrap gap-4">
                   {data?.media ? (
                     data?.media.length > 1 &&
                     data?.media?.map((img, index) => {
@@ -133,7 +137,7 @@ const Article = () => {
                         return (
                           <button
                             key={index}
-                            className={`relative h-24 w-24 overflow-hidden rounded-lg shadow-sm ${
+                            className={`relative h-20 w-20 overflow-hidden rounded-lg shadow-sm md:h-24 md:w-24 ${
                               selectedImage === index
                                 ? "ring-4 ring-primary/50"
                                 : "ring-1 ring-gray-200"
