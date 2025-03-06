@@ -71,7 +71,7 @@ const EngineeringHome = () => {
           <div className="h-screen">
             {/* Featured Components Section */}
             {engineeringComponents?.length != 0 ? (
-              <div className="mx-auto grid w-fit grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:pr-0 xl:grid-cols-4">
+              <div className="grid w-fit grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:pr-0 xl:grid-cols-4">
                 {engineeringComponents?.map((component, index) => (
                   <EngineeringListingCard
                     key={index}

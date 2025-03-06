@@ -45,7 +45,7 @@ const FeaturedParts = () => {
       ) : featuredParts?.length ? (
         <div>
           <h2 className="my-4 text-2xl font-bold md:text-3xl">Featured Parts</h2>
-          <div className="custom-scrollbar xs:w-[340px] mx-auto flex w-[280px] max-w-7xl flex-col gap-3 overflow-x-auto pb-2 sm:w-[590px] md:w-[600px] lg:w-[1024px] lg:flex-row xl:w-[1230px]">
+          <div className="custom-scrollbar flex w-[280px] max-w-7xl flex-col gap-3 overflow-x-auto pb-2 xs:w-[340px] sm:w-[590px] md:w-[600px] lg:w-[1024px] lg:flex-row xl:w-[1230px]">
             <Swiper
               modules={[Navigation, Pagination, Mousewheel]}
               spaceBetween={20}
