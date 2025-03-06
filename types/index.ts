@@ -8,6 +8,7 @@ export interface PageLayoutProps {
   children: ReactNode;
   title: string;
   breadcrumbs?: Breadcrumb[];
+  paddingTop?: boolean;
 }
 export type TabProps = {
   active: boolean;
@@ -46,10 +47,18 @@ export interface ScrollingMarqueeProps {
 export interface EngineeringCardProps {
   id: string;
   title: string;
-  image: string;
+  image: {
+    formats: {
+      thumbnail: {
+        width: number;
+        height: number;
+        url: string;
+      };
+    };
+  };
   featured: boolean;
   isImage: boolean;
-  heroVideo: string;
+  heroVideo: { url: string; } | null;
 }
 
 export type Category = {

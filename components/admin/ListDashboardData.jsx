@@ -24,7 +24,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
   const [showEditModal, setShowEditModal] = useState(false);
   const [activeID, setActiveID] = useState(null);
   const [activeItem, setActiveItem] = useState(null);
-  const currentTab = activeTab.key == "engineering" ? "engineering-components" : activeTab.key;
+  const currentTab = activeTab?.key == "engineering" ? "engineering-components" : activeTab?.key;
   const [paginationInfo, setPaginationInfo] = useState(0);
   const router = useRouter();
 
@@ -212,8 +212,8 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
         <div className="border-b border-gray-200 px-6 py-4">
           <div className="mb-8 flex items-center justify-between">
             <h2 className="flex items-center text-xl">
-              <span className="font-bold">{activeTab.name}</span>
-              {total > 0 ? <span> ({total})</span> : null}
+              <span className="font-bold">{activeTab?.name}</span>
+              {/* {total > 0 ? <span> ({total})</span> : null} */}
             </h2>
             <div className="ml-4 hidden w-fit sm:flex">
               <BaseButton loading={false} type="submit" handleClick={addNewItem}>

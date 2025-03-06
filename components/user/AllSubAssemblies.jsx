@@ -6,20 +6,18 @@ import Link from "next/link";
 
 const PAGE_SIZE = 8;
 
-const AllParts = () => {
+const AllSubAssemblies = () => {
   const [page, setPage] = useState(1);
-  const [allParts, setAllParts] = useState([]);
+  const [AllSubAssemblies, setAllSubAssemblies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [suppliers, setSuppliers] = useState([]);
-  const [selectedSupplier, setSelectedSupplier] = useState("");
   const [pagination, setPagination] = useState(null);
   const [paginationInfo, setPaginationInfo] = useState(0);
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(searchQuery);
   const observerRef = useRef(null);
 
-  const getParts = async (pageNum, isLoadMore = false) => {
+  const getSubAssemblies = async (pageNum, isLoadMore = false) => {
     try {
       if (isLoadMore) {
         setIsLoadingMore(true);
@@ -28,29 +26,22 @@ const AllParts = () => {
       }
       let url = "";
       if (searchQuery == "") {
-        if (selectedSupplier) {
-          url = `/parts?populate=*&filters[active]=true&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&filters[supplier][documentId]=${selectedSupplier}&sort=createdAt:desc`;
-        } else {
-          url = `/parts?populate=*&filters[active]=true&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=createdAt:desc`;
-        }
+        url = `/sub-assemblies?populate=*&filters[active]=true&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=createdAt:desc`;
       } else {
-        if (selectedSupplier === "") {
-          url = `/parts?populate=*&filters[active]=true&filters[$or][0][name][$containsi]=${searchQuery}&filters[$or][1][oem_number][$containsi]=${searchQuery}&sort=createdAt:desc`;
-        } else {
-          url = `/parts?populate=*&filters[active]=true&filters[$or][0][name][$containsi]=${searchQuery}&filters[$or][1][oem_number][$containsi]=${searchQuery}&filters[supplier][documentId]=${selectedSupplier}&sort=createdAt:desc`;
-        }
+        url = `/sub-assemblies?populate=*&filters[active]=true&filters[$or][0][name][$containsi]=${searchQuery}&filters[$or][1][oem_number][$containsi]=${searchQuery}&sort=createdAt:desc`;
       }
 
       const res = await apiClient.GET(url);
 
       if (res && res.data.length > 0) {
-        const parts = res.data.filter((part) => part.supplier.active);
-        const transformedData = transformMedia(parts);
-        setAllParts((prev) => (isLoadMore ? [...prev, ...transformedData] : transformedData));
+        const transformedData = transformMedia(res.data);
+        setAllSubAssemblies((prev) =>
+          isLoadMore ? [...prev, ...transformedData] : transformedData
+        );
         setPagination(res.meta.pagination);
       } else {
         setPagination(null);
-        setAllParts([]);
+        setAllSubAssemblies([]);
       }
     } catch (error) {
       console.error("Error in GET request:", error.message);
@@ -62,11 +53,6 @@ const AllParts = () => {
       }
     }
   };
-  //
-  useEffect(() => {
-    setPage(1);
-    getParts(1, false);
-  }, [selectedSupplier]);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -80,28 +66,13 @@ const AllParts = () => {
 
   useEffect(() => {
     setPage(1);
-    getParts(1, false);
+    getSubAssemblies(1, false);
   }, [debouncedSearchQuery]);
 
   useEffect(() => {
-    if (page > 1) getParts(page, true);
+    if (page > 1) getSubAssemblies(page, true);
   }, [page]);
 
-  const getSuppliers = async () => {
-    try {
-      await apiClient.GET(`/suppliers?filters[active]=true`).then(async (res) => {
-        if (res && res.data.length > 0) {
-          res.data.unshift({ name: "All", documentId: "" });
-          setSuppliers(res.data);
-        } else {
-          setSuppliers([]);
-        }
-      });
-    } catch (error) {
-      const message = error.message;
-      console.error("Error in POST request:", message);
-    }
-  };
   // Infinite Scroll Effect
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -119,19 +90,12 @@ const AllParts = () => {
       if (observerRef.current) observer.unobserve(observerRef.current);
     };
   }, [pagination]);
-  useEffect(() => {
-    getSuppliers();
-  }, []);
+
   useEffect(() => {
     if (pagination) {
       setPaginationInfo(Math.min(pagination.page * pagination.pageSize, pagination.total));
     }
   }, [pagination]);
-
-  const getBrand = (id) => {
-    const supplier = suppliers.find((brand) => brand.documentId === id);
-    return supplier ? supplier.name : "";
-  };
 
   return (
     <>
@@ -144,49 +108,46 @@ const AllParts = () => {
         <p className="mx-auto w-fit">
           <BaseLoader />
         </p>
-      ) : allParts.length || selectedSupplier ? (
+      ) : AllSubAssemblies.length ? (
         <>
-          <div className="mb-3 flex flex-wrap justify-center text-center text-xl lg:justify-center lg:gap-x-5">
-            {suppliers.map((brand, index) => (
-              <span
-                onClick={() => setSelectedSupplier(brand.documentId)}
-                className={`cursor-pointer p-2 font-semibold uppercase hover:text-black md:p-4 ${brand.documentId === selectedSupplier ? "border-b border-b-primary text-black" : ""}`}
-                key={index + brand.name}
-              >
-                {brand.name}
-              </span>
-            ))}
-          </div>
           {pagination?.total && (
-            <p className="my-4 w-fit px-2 text-base font-bold sm:text-[19px] lg:px-0">{`Showing 1-${paginationInfo} of ${pagination?.total} ${getBrand(selectedSupplier)} Parts`}</p>
+            <p className="mb-6 mt-3 w-fit px-2 text-base font-bold sm:text-[19px] lg:px-0">{`Showing 1-${paginationInfo} of ${pagination?.total} Sub Assemblies`}</p>
           )}
           <div>
             <div className="custom-scrollbar flex max-w-7xl flex-col gap-3 overflow-x-auto pb-2 lg:flex-row">
               <div className="mx-auto grid w-fit grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:pr-0 xl:grid-cols-4">
-                {allParts.map((part, index) => (
+                {AllSubAssemblies.map((subAssembly, index) => (
                   <Link
                     className=""
-                    href={`/tractor-parts/${part.documentId}`}
-                    key={part.id + index + part.documentId}
+                    href={`/sub-assemblies/${subAssembly.documentId}`}
+                    key={subAssembly.id + index + subAssembly.documentId}
                   >
                     <div className="w-[280px] min-w-[280px] rounded-lg border border-gray-200 bg-white shadow-sm transition xs:w-[330px] sm:w-auto">
                       <div className="relative h-[200px] w-full border-b border-gray-200">
-                        {part.media ? (
+                        {subAssembly.media ? (
                           <BaseImage
-                            width={part.media[part?.media?.length - 1].formats?.actual?.width}
-                            height={part.media[part?.media?.length - 1].formats?.actual?.height}
-                            src={part.media[part?.media?.length - 1].formats?.actual?.url}
-                            alt={part.name}
+                            width={
+                              subAssembly.media[subAssembly?.media?.length - 1].formats?.actual
+                                ?.width
+                            }
+                            height={
+                              subAssembly.media[subAssembly?.media?.length - 1].formats?.actual
+                                ?.height
+                            }
+                            src={
+                              subAssembly.media[subAssembly?.media?.length - 1].formats?.actual?.url
+                            }
+                            alt={subAssembly.name}
                             priority={true}
                             classes="h-full w-full object-contain rounded-t-lg"
                           />
                         ) : null}
                       </div>
                       <h3
-                        title={part.name}
+                        title={subAssembly.name}
                         className="truncate p-4 text-center text-base font-semibold sm:text-lg"
                       >
-                        {part.name}
+                        {subAssembly.name}
                       </h3>
                     </div>
                   </Link>
@@ -199,13 +160,10 @@ const AllParts = () => {
           </div>
         </>
       ) : (
-        <p className="mt-10 min-h-36 w-fit px-5 text-gray-500">No parts found.</p>
+        <p className="mt-10 min-h-36 w-fit px-5 text-gray-500">No sub assemblies found.</p>
       )}
-      {!allParts.length && selectedSupplier ? (
-        <p className="min-h-36 w-fit px-5 text-gray-500">No parts found.</p>
-      ) : null}
     </>
   );
 };
 
-export default AllParts;
+export default AllSubAssemblies;
