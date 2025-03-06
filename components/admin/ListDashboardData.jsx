@@ -147,7 +147,6 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
     ) {
       router.push(`/admin/${currentTab}/detail?id=${documentId}`);
     }
-    console.log(documentId);
     if (currentTab == "suppliers") {
       setActiveID(documentId);
       setShowMakeDetailModal(true);
