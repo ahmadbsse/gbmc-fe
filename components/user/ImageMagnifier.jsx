@@ -9,7 +9,28 @@ const ImageMagnifier = ({ image, title }) => {
   const imageWrapperRef = useRef(null);
   const zoomRef = useRef(null);
   const driftInstanceRef = useRef(null);
+  const imageUrl = process.env.NEXT_PUBLIC_API_BASE_URL + image.formats.actual.url;
 
+  const destroyDrift = () => {
+    if (driftInstanceRef.current) {
+      driftInstanceRef.current.destroy();
+      driftInstanceRef.current = null;
+    }
+  };
+  const setDrift = (imgElement) => {
+    driftInstanceRef.current = new window.Drift(imgElement, {
+      paneContainer: zoomRef.current,
+      inlinePane: false,
+      containInline: false,
+      hoverBoundingBox: true,
+      zoomFactor: 1.5,
+      handleTouch: true,
+      inlineOffsetX: 0,
+      inlineOffsetY: 0,
+      touchDelay: 100,
+      sourceAttribute: "data-zoom",
+    });
+  };
   useEffect(() => {
     // Initialize Drift zoom when the component mounts and the script is loaded
     const initDrift = () => {
@@ -22,10 +43,7 @@ const ImageMagnifier = ({ image, title }) => {
         image?.formats?.actual
       ) {
         // Clean up any existing instance
-        if (driftInstanceRef.current) {
-          driftInstanceRef.current.destroy();
-          driftInstanceRef.current = null;
-        }
+        destroyDrift();
 
         // Find the img element inside the Next.js Image component
         const imgElement = imageWrapperRef.current.querySelector("img");
@@ -33,22 +51,10 @@ const ImageMagnifier = ({ image, title }) => {
         if (!imgElement) return;
 
         // Set the data-zoom attribute on the actual img element
-        const fullImageUrl = process.env.NEXT_PUBLIC_API_BASE_URL + image.formats.actual.url;
-        imgElement.setAttribute("data-zoom", fullImageUrl);
-
+        imgElement.setAttribute("data-zoom", imageUrl);
+        console.log(imgElement);
         // Create new Drift instance
-        driftInstanceRef.current = new window.Drift(imgElement, {
-          paneContainer: zoomRef.current,
-          inlinePane: false,
-          containInline: false,
-          hoverBoundingBox: true,
-          zoomFactor: 1.5,
-          handleTouch: true,
-          inlineOffsetX: 0,
-          inlineOffsetY: 0,
-          touchDelay: 100,
-          sourceAttribute: "data-zoom",
-        });
+        setDrift(imgElement);
       }
     };
 
@@ -76,8 +82,6 @@ const ImageMagnifier = ({ image, title }) => {
   if (!image?.formats?.actual) {
     return null;
   }
-
-  const imageUrl = process.env.NEXT_PUBLIC_API_BASE_URL + image.formats.actual.url;
 
   return (
     <>
@@ -114,16 +118,20 @@ const ImageMagnifier = ({ image, title }) => {
 
         {/* Zoom pane container */}
       </div>
+
       <div
         ref={zoomRef}
         className="drift-zoom-pane absolute z-20 hidden h-[200px] w-[200px] rounded-md border border-gray-200 bg-white shadow-lg sm:ml-[350px] sm:block md:ml-[350px] lg:ml-[480px] xl:ml-[610px]"
       />
 
+      {/* <pre>{JSON.stringify(driftInstanceRef, null, 2)}</pre> */}
       {/* Add custom styles */}
       <style jsx global>{`
         .drift-bounding-box {
           background-color: rgba(0, 0, 0, 0.15);
           border: 1px solid #ffbf32;
+          height: 100px !important;
+          width: 100px !important;
         }
       `}</style>
     </>
