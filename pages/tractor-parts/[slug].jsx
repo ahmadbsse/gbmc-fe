@@ -78,7 +78,7 @@ const PartDetails = () => {
           <div className="px-2">
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
               {/* Part Images Section */}
-              <div className="space-y-4">
+              <div className="relative space-y-4">
                 <ImageMagnifier image={data?.media[selectedImage]} title={data?.name} />
 
                 {/* Thumbnail Images */}

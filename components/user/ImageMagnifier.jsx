@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Script from "next/script";
 
@@ -9,6 +9,7 @@ const ImageMagnifier = ({ image, title }) => {
   const imageWrapperRef = useRef(null);
   const zoomRef = useRef(null);
   const driftInstanceRef = useRef(null);
+  const [isHovering, setIsHovering] = useState(false);
   const imageUrl = process.env.NEXT_PUBLIC_API_BASE_URL + image.formats.actual.url;
 
   const destroyDrift = () => {
@@ -52,7 +53,7 @@ const ImageMagnifier = ({ image, title }) => {
 
         // Set the data-zoom attribute on the actual img element
         imgElement.setAttribute("data-zoom", imageUrl);
-        console.log(imgElement);
+
         // Create new Drift instance
         setDrift(imgElement);
       }
@@ -101,7 +102,12 @@ const ImageMagnifier = ({ image, title }) => {
           {image?.formats?.actual && (
             <div className="w-full lg:h-96">
               {/* Image wrapper with ref */}
-              <div className="h-full w-full" ref={imageWrapperRef}>
+              <div
+                className="h-full w-full"
+                ref={imageWrapperRef}
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
+              >
                 <Image
                   width={image.formats.actual.width}
                   height={image.formats.actual.height}
@@ -118,10 +124,10 @@ const ImageMagnifier = ({ image, title }) => {
 
         {/* Zoom pane container */}
       </div>
-
       <div
         ref={zoomRef}
-        className="drift-zoom-pane absolute z-20 hidden h-[200px] w-[200px] rounded-md border border-gray-200 bg-white shadow-lg sm:ml-[350px] sm:block md:ml-[350px] lg:ml-[480px] xl:ml-[610px]"
+        className="drift-zoom-pane absolute z-20 h-[200px] w-[200px] rounded-md border border-gray-200 bg-white shadow-lg sm:ml-[350px] md:ml-[350px] lg:ml-[480px] xl:ml-[610px]"
+        style={isHovering ? {} : { display: "none" }}
       />
 
       {/* <pre>{JSON.stringify(driftInstanceRef, null, 2)}</pre> */}
