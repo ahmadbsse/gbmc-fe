@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import apiClient from "@/utils/apiClient";
 import { transformMedia } from "@/utils";
 import { Navbar, PageLayout, BaseImage, BaseLoader, SeoHead } from "@/components/common";
+import { ImageMagnifier } from "@/components/user";
 // import { Check, X } from "lucide-react";
 // import { convertToReadableDate } from "@/utils";
 
@@ -10,33 +11,8 @@ const SubAssemblyDetails = () => {
   const router = useRouter();
   const [selectedImage, setSelectedImage] = useState(0);
   const [data, setData] = useState(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0, boundedX: 0, boundedY: 0 });
-  const [isHovering, setIsHovering] = useState(false);
   // Size of the magnifier square
-  const magnifierSize = 60;
-  // Zoom level
-  const zoomLevel = 2;
 
-  const handleMouseEnter = () => setIsHovering(true);
-  const handleMouseLeave = () => setIsHovering(false);
-  const handleMouseMove = (e) => {
-    const bounds = e.currentTarget.getBoundingClientRect();
-
-    // Calculate cursor position relative to the image
-    const x = e.clientX - bounds.left;
-    const y = e.clientY - bounds.top;
-
-    // Ensure the magnifier square stays within the image bounds
-    const magnifierX = Math.max(magnifierSize / 2, Math.min(x, bounds.width - magnifierSize / 2));
-    const magnifierY = Math.max(magnifierSize / 2, Math.min(y, bounds.height - magnifierSize / 2));
-
-    setMousePosition({
-      x: magnifierX,
-      y: magnifierY,
-      boundedX: (magnifierX / bounds.width) * 100,
-      boundedY: (magnifierY / bounds.height) * 100,
-    });
-  };
   const getSubAssemblyDetails = async () => {
     try {
       const url = `/sub-assemblies/${router.query.slug}?populate=*`;
@@ -78,69 +54,7 @@ const SubAssemblyDetails = () => {
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
               {/* Sub Assembly Images Section */}
               <div className="space-y-4">
-                {/* Main Image */}
-                <div className="overflow-hidden rounded-lg shadow-md">
-                  <div
-                    className="relative flex w-full cursor-crosshair items-center justify-center lg:h-[400px]"
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                    onMouseMove={handleMouseMove}
-                  >
-                    {data?.media[selectedImage] &&
-                    data?.media[selectedImage]?.formats &&
-                    data?.media[selectedImage]?.formats?.actual ? (
-                      <BaseImage
-                        height={data?.media[selectedImage]?.formats?.actual?.height}
-                        width={data?.media[selectedImage]?.formats?.actual?.width}
-                        src={data?.media[selectedImage].formats?.actual?.url}
-                        alt={data?.name}
-                        classes="object-contain w-fit m-auto"
-                        priority={true}
-                      />
-                    ) : null}
-                    {isHovering && (
-                      <>
-                        {/* Magnifier Square */}
-                        <div
-                          className="pointer-events-none absolute hidden border-2 border-primary/50 bg-white bg-opacity-10 sm:block"
-                          style={{
-                            width: `${magnifierSize}px`,
-                            height: `${magnifierSize}px`,
-                            top: mousePosition.y,
-                            left: mousePosition.x,
-                            transform: "translate(-50%, -50%)",
-                          }}
-                        ></div>
-                      </>
-                    )}
-                  </div>
-                  {/* Zoomed Image Container */}
-                </div>
-                {isHovering ? (
-                  <div className="absolute left-1/2 right-1/2 top-40 z-20 ml-4 hidden h-[200px] w-[200px] overflow-hidden border border-gray-200 sm:block">
-                    <div
-                      className="relative h-full w-full bg-white"
-                      style={{
-                        transform: `scale(${zoomLevel})`,
-                        transformOrigin: `${mousePosition.boundedX}% ${mousePosition.boundedY}%`,
-                      }}
-                    >
-                      {data?.media &&
-                      data?.media[selectedImage]?.formats &&
-                      data?.media[selectedImage]?.formats?.actual ? (
-                        <BaseImage
-                          src={data?.media[selectedImage]?.formats?.actual?.url}
-                          alt={data?.name + "zoomed-view"}
-                          classes="object-cover"
-                          fill={true}
-                        />
-                      ) : (
-                        <div>a</div>
-                      )}
-                    </div>
-                  </div>
-                ) : null}
-
+                <ImageMagnifier image={data?.media[selectedImage]} title={data?.name} />
                 {/* Thumbnail Images */}
                 {data?.media && data?.media?.length > 1 ? (
                   <div className="flex gap-4">

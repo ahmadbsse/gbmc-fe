@@ -4,3 +4,4 @@ export { default as AllParts } from './AllParts';
 export { default as GoogleMap } from './GoogleMap';
 export { default as FeaturedSubAssemblies } from './FeaturedSubAssemblies';
 export { default as AllSubAssemblies } from './AllSubAssemblies';
+export { default as ImageMagnifier } from './ImageMagnifier';
