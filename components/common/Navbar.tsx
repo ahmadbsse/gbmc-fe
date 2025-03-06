@@ -103,7 +103,7 @@ const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
                     </div>
                   )}
                 </div>
-              ) : router.route == "/about" || router.route == "/" || router.route == "/contact" ? (
+              ) : (
                 <>
                   <div className="hidden items-center justify-between gap-6 text-black md:flex">
                     {userRoutes.map((item, index) => (
@@ -172,7 +172,7 @@ const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
                     </div>
                   </>
                 </>
-              ) : null}
+              )}
             </div>
           </div>
         </div>

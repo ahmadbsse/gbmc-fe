@@ -40,7 +40,7 @@ const Home = () => {
 
                 <Link href="/engineering">
                   <BaseButton loading={false} type="submit" handleClick={() => {}}>
-                    <p className="flex items-center gap-2 px-[70px] py-3">
+                    <p className="flex items-center gap-2 px-[70px] py-3 text-[11px] xs:text-sm">
                       Explore
                       <ChevronRight size={20} />
                     </p>
@@ -65,7 +65,7 @@ const Home = () => {
               <Link href="/tractor-parts">
                 <button
                   type="submit"
-                  className="group relative h-[42px] w-full overflow-hidden rounded bg-[#363633] px-10 text-sm font-bold uppercase text-white transition-all duration-300 hover:bg-[#4a4a46] md:min-w-[7rem] lg:min-w-[8rem]"
+                  className="group relative h-[42px] w-full overflow-hidden rounded bg-[#363633] px-10 text-[11px] font-bold uppercase text-white transition-all duration-300 hover:bg-[#4a4a46] xs:text-sm md:min-w-[7rem] lg:min-w-[8rem]"
                 >
                   <p className="flex items-center justify-center gap-2 px-7 py-3">
                     View Catalog
