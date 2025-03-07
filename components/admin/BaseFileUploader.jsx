@@ -39,7 +39,16 @@ const BaseFileUploader = ({
 
   // Handle file selection
   const handleFiles = (selectedFiles) => {
-    const newFiles = Array.from(selectedFiles).map((file) => ({
+    const validFiles = Array.from(selectedFiles).filter(
+      (file) => file.type.startsWith("image/") || file.type.startsWith("video/")
+    );
+
+    if (validFiles.length === 0) {
+      alert("Only images and videos are allowed.");
+      return;
+    }
+
+    const newFiles = validFiles.map((file) => ({
       file,
       name: file.name,
       preview: file.type.startsWith("image/") ? URL.createObjectURL(file) : null,
@@ -101,6 +110,7 @@ const BaseFileUploader = ({
           <input
             ref={fileInputRef}
             type="file"
+            accept="image/*, video/*"
             disabled={disabled}
             multiple={multiple}
             className={`hidden`}
