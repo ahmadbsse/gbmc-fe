@@ -36,11 +36,11 @@ const SubAssemblies = () => {
         <div className="grid overflow-x-hidden lg:gap-8">
           {/* Categories Section */}
 
-          <div className="flex w-full min-w-[280px] max-w-[280px] flex-col gap-6 sm:max-w-[300px] md:max-w-max md:flex-row lg:w-auto">
+          <div className="flex w-full flex-col gap-6 sm:min-w-[280px] sm:max-w-max sm:flex-row lg:w-auto">
             {categories.map((category, index) => (
               <Link key={index} href={category?.key}>
                 <div
-                  className={`w-full min-w-[280px] cursor-pointer rounded-lg p-6 shadow-md transition-all duration-300 hover:shadow-lg ${
+                  className={`w-full min-w-[285px] cursor-pointer rounded-lg p-6 pr-10 shadow-md transition-all duration-300 hover:shadow-lg ${
                     category?.title == categories[1]?.title
                       ? "border-2 border-secondary/50 bg-secondary/20"
                       : "bg-white"

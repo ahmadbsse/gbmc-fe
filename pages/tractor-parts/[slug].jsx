@@ -73,7 +73,7 @@ const PartDetails = () => {
     <>
       <SeoHead title={data && data?.name ? data?.name : "Part Details"} />
       <Navbar setTab={() => {}} />
-      <PageLayout title="Part Details" breadcrumbs={breadcrumbs}>
+      <PageLayout title="" breadcrumbs={breadcrumbs}>
         {data ? (
           <div className="px-2">
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -83,13 +83,13 @@ const PartDetails = () => {
 
                 {/* Thumbnail Images */}
                 {data?.media && data?.media?.length > 1 ? (
-                  <div className="flex gap-4">
+                  <div className="flex flex-wrap gap-4">
                     {data?.media.map((img, index) => {
                       if (img && img?.formats && img?.formats.thumbnail) {
                         return (
                           <button
                             key={index}
-                            className={`relative h-24 w-24 overflow-hidden rounded-lg shadow-sm ${
+                            className={`relative h-20 w-20 overflow-hidden rounded-lg shadow-sm md:h-24 md:w-24 ${
                               selectedImage === index
                                 ? "ring-4 ring-primary/50"
                                 : "ring-1 ring-gray-200"
