@@ -25,7 +25,6 @@ const MakeDetailModal = ({ activeID, setShowMakeDetailModal }) => {
   useEffect(() => {
     if (activeID) {
       getMakeDetails();
-      console.log(activeID);
     }
   }, [activeID]);
 

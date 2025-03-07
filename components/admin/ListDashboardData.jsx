@@ -147,7 +147,6 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
     ) {
       router.push(`/admin/${currentTab}/detail?id=${documentId}`);
     }
-    console.log(documentId);
     if (currentTab == "suppliers") {
       setActiveID(documentId);
       setShowMakeDetailModal(true);
@@ -234,7 +233,9 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
           {data && data.length > 0 ? (
             <div className="grid gap-3 sm:gap-4">
               {pagination?.total ? (
-                <p className="w-fit px-2 text-lg font-bold">{`Showing 1-${paginationInfo} of ${pagination?.total}`}</p>
+                <p className="w-fit px-2 text-lg font-bold">
+                  {`Showing 1-${paginationInfo} of ${pagination?.total} ${activeTab?.name}`}
+                </p>
               ) : null}
               {data &&
                 data.map((item, index) => (
@@ -247,18 +248,27 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
                         className={`flex h-32 min-w-44 max-w-44 cursor-pointer items-center justify-center`}
                         onClick={() => viewDetails(item.documentId)}
                       >
-                        {item.media ? (
-                          Array.isArray(item.media) ? (
+                        {activeTab.key === "engineering" ? (
+                          item?.hero_image?.formats?.thumbnail ? (
+                            <BaseImage
+                              width={item.hero_image?.formats?.thumbnail?.width || 160}
+                              height={item.hero_image?.formats?.thumbnail?.height || 112}
+                              src={item.hero_image?.formats?.thumbnail?.url}
+                              alt={item?.name}
+                              priority={true}
+                              classes="object-contain max-h-32"
+                            />
+                          ) : null
+                        ) : item?.media ? (
+                          Array.isArray(item.media) && item.media.length > 0 ? (
                             <BaseImage
                               width={
-                                item.media[item?.media?.length - 1]?.formats?.thumbnail?.width ||
-                                160
+                                item.media[item.media.length - 1]?.formats?.thumbnail?.width || 160
                               }
                               height={
-                                item.media[item?.media?.length - 1]?.formats?.thumbnail?.height ||
-                                112
+                                item.media[item.media.length - 1]?.formats?.thumbnail?.height || 112
                               }
-                              src={item?.media[item?.media?.length - 1]?.formats.thumbnail?.url}
+                              src={item.media[item.media.length - 1]?.formats?.thumbnail?.url}
                               alt={item?.name}
                               priority={true}
                               classes="object-contain max-h-32"
@@ -267,7 +277,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
                             <BaseImage
                               width={item.media?.formats?.thumbnail?.width || 160}
                               height={item.media?.formats?.thumbnail?.height || 112}
-                              src={item?.media?.formats.thumbnail?.url}
+                              src={item.media?.formats?.thumbnail?.url}
                               alt={item?.name}
                               priority={true}
                               classes="object-contain max-h-32"

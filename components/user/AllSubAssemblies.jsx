@@ -160,7 +160,9 @@ const AllSubAssemblies = () => {
           </div>
         </>
       ) : (
-        <p className="mt-10 min-h-36 w-fit px-5 text-gray-500">No sub assemblies found.</p>
+        <p className="mt-10 min-h-36 w-fit px-5 text-gray-500">
+          {searchQuery ? "No search results found" : "No sub assemblies found."}
+        </p>
       )}
     </>
   );

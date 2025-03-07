@@ -140,23 +140,23 @@ const AllParts = () => {
           <BaseSearchbar setSearchQuery={setSearchQuery} />
         </div>
       </div>
+      <div className="mb-3 flex flex-wrap justify-center text-center text-xl lg:justify-center lg:gap-x-5">
+        {suppliers.map((brand, index) => (
+          <span
+            onClick={() => setSelectedSupplier(brand.documentId)}
+            className={`cursor-pointer p-2 font-semibold uppercase hover:text-black md:p-4 ${brand.documentId === selectedSupplier ? "border-b border-b-primary text-black" : ""}`}
+            key={index + brand.name}
+          >
+            {brand.name}
+          </span>
+        ))}
+      </div>
       {isLoading ? (
         <p className="mx-auto w-fit">
           <BaseLoader />
         </p>
       ) : allParts.length || selectedSupplier ? (
         <>
-          <div className="mb-3 flex flex-wrap justify-center text-center text-xl lg:justify-center lg:gap-x-5">
-            {suppliers.map((brand, index) => (
-              <span
-                onClick={() => setSelectedSupplier(brand.documentId)}
-                className={`cursor-pointer p-2 font-semibold uppercase hover:text-black md:p-4 ${brand.documentId === selectedSupplier ? "border-b border-b-primary text-black" : ""}`}
-                key={index + brand.name}
-              >
-                {brand.name}
-              </span>
-            ))}
-          </div>
           {pagination?.total && (
             <p className="my-4 w-fit px-2 text-base font-bold sm:text-[19px] lg:px-0">{`Showing 1-${paginationInfo} of ${pagination?.total} ${getBrand(selectedSupplier)} Parts`}</p>
           )}
@@ -199,10 +199,14 @@ const AllParts = () => {
           </div>
         </>
       ) : (
-        <p className="mt-10 min-h-36 w-fit px-5 text-gray-500">No parts found.</p>
+        <p className="mt-10 min-h-36 w-fit px-5 text-gray-500">
+          {searchQuery ? "No search results found" : "No parts found."}
+        </p>
       )}
       {!allParts.length && selectedSupplier ? (
-        <p className="min-h-36 w-fit px-5 text-gray-500">No parts found.</p>
+        <p className="min-h-36 w-fit px-5 text-gray-500">
+          {searchQuery ? "No search results found" : "No parts found."}
+        </p>
       ) : null}
     </>
   );
