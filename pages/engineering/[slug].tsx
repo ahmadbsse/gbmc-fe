@@ -57,7 +57,10 @@ const Article = () => {
           <div className="my-4">
             <div className="mb-8 flex items-center gap-2 text-sm text-gray-500">
               {breadcrumbs.map((crumb, index) => (
-                <p className="max-w-[100px] truncate text-nowrap md:max-w-[200px]" key={index}>
+                <p
+                  className={`text-nowrap ${index == 2 ? "max-w-[100px] truncate md:max-w-[200px]" : ""}`}
+                  key={index}
+                >
                   <Link href={crumb?.href} className="pr-2 hover:text-secondary">
                     {crumb?.text}
                   </Link>
