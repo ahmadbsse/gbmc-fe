@@ -60,7 +60,7 @@ const Login = () => {
     <>
       <SeoHead title="Login" />
 
-      <section className="h-screen bg-gray-50">
+      <section className="min-h-screen bg-gray-50">
         <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
           <div className="mb-4 lg:mb-8">
             <Image height={70} width={150} src="/assets/logo.svg" alt="logo" priority />

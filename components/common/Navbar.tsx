@@ -12,10 +12,10 @@ const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const tabsKey = [
-    { name: "Makes", key: "suppliers" },
-    { name: "Parts", key: "parts" },
-    { name: "Sub Assemblies", key: "sub-assemblies" },
-    { name: "Engineering Components", key: "engineering" },
+    { name: "Makes", key: "suppliers", tag: "make" },
+    { name: "Parts", key: "parts", tag: "part" },
+    { name: "Sub Assemblies", key: "sub-assemblies", tag: "sub assembly" },
+    { name: "Engineering Components", key: "engineering", tag: "engineering component" },
   ];
   const toggleMenu = () => {
     setIsOpen(!isOpen);
