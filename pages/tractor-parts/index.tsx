@@ -33,10 +33,10 @@ const TractorPartsHome = () => {
       <SeoHead title={categories[0]?.title} />
       <Navbar setTab={() => {}} />
       <PageLayout title={``} breadcrumbs={breadcrumbs}>
-        <div className="grid overflow-x-hidden lg:gap-8">
+        <div className="grid gap-8 overflow-x-hidden">
           {/* Categories Section */}
 
-          <div className="flex w-full flex-col gap-6 sm:min-w-[280px] sm:max-w-max sm:flex-row lg:w-auto">
+          <div className="flex w-full flex-col gap-3 sm:min-w-[280px] sm:max-w-max sm:flex-row lg:w-auto lg:gap-6">
             {categories.map((category, index) => (
               <Link key={index} href={category?.key}>
                 <div

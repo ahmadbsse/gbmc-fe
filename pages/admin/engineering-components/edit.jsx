@@ -194,7 +194,7 @@ const EditComponent = () => {
       <SeoHead title="Admin" />
       <div className="min-h-screen bg-gray-50">
         <Navbar isAdmin setTab={setTab} activeTab={"Engineering Components"} />
-        <main className="container mx-auto mt-20 px-4 py-8">
+        <main className="mx-auto mt-20 px-4 py-8 sm:container">
           {formData ? (
             <>
               <h1 className="mx-auto mb-10 w-fit max-w-[810px] break-all text-2xl font-bold">

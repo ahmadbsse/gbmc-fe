@@ -39,7 +39,7 @@ const ViewSubAssemblyDetails = () => {
       <SeoHead title="Admin" />
       <div className="mt-20 min-h-screen bg-gray-50">
         <Navbar isAdmin setTab={setTab} activeTab={"Sub Assemblies"} />
-        <main className="container mx-auto px-4 py-8">
+        <main className="mx-auto px-4 py-8 sm:container">
           {formData ? (
             <div className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
               <h1 className="mx-auto mb-10 w-fit break-all text-center text-2xl font-bold">
