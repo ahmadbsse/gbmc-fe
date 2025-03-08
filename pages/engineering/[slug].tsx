@@ -86,7 +86,7 @@ const Article = () => {
           </div>
           <div className="mx-auto max-w-7xl pt-4 lg:py-8">
             <div className="container">
-              <p className="text-xl font-semibold lg:bottom-0 lg:left-20 lg:top-20 lg:text-2xl">
+              <p className="text-xl font-bold lg:bottom-0 lg:left-20 lg:top-20 lg:text-2xl">
                 {data?.name}
               </p>
               <p

@@ -100,7 +100,7 @@ const ImageMagnifier = ({ image, title }) => {
       <div className="overflow-hidden rounded-lg shadow-md" ref={containerRef}>
         <div className="flex w-full items-center justify-center">
           {image?.formats?.actual && (
-            <div className="w-full lg:h-96">
+            <div className="h-60 w-full lg:h-96">
               {/* Image wrapper with ref */}
               <div
                 className="h-full w-full"

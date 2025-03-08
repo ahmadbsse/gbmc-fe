@@ -113,7 +113,7 @@ const PartDetails = () => {
               {/* Part Details Section */}
               <div className="space-y-6">
                 <div className="space-y-2">
-                  <h1 className="text-xl font-medium capitalize text-[#0060AA] lg:text-2xl">
+                  <h1 className="text-xl font-bold capitalize  lg:text-2xl">
                     {data?.name}
                   </h1>
                 </div>
