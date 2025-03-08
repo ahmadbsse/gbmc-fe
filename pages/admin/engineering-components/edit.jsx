@@ -197,7 +197,7 @@ const EditComponent = () => {
         <main className="container mx-auto mt-20 px-4 py-8">
           {formData ? (
             <>
-              <h1 className="mx-auto mb-10 w-fit max-w-[810px] text-2xl font-bold">
+              <h1 className="mx-auto mb-10 w-fit max-w-[810px] break-all text-2xl font-bold">
                 Edit Engineering Component -{" "}
                 <span className="font-medium">{formData?.name || ""}</span>
               </h1>

@@ -171,7 +171,7 @@ const EditSubAssembly = () => {
         <main className="container mx-auto px-4 py-8">
           {formData ? (
             <>
-              <h1 className="mx-auto mb-10 w-fit max-w-[810px] text-center text-2xl font-bold">
+              <h1 className="mx-auto mb-10 w-fit max-w-[810px] break-all text-center text-2xl font-bold">
                 Edit Sub Assembly - <span className="font-medium">{formData?.name || ""}</span>
               </h1>
               <form

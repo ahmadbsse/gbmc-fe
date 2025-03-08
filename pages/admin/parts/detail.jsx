@@ -42,13 +42,13 @@ const ViewPartDetails = () => {
         <main className="bg-gray-5 container mx-auto px-4 py-8">
           {formData ? (
             <div className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
-              <h1 className="mx-auto mb-10 w-fit text-center text-2xl font-bold">
+              <h1 className="mx-auto mb-10 w-fit break-all text-center text-2xl font-bold">
                 View Part - <span className="font-medium">{formData?.name || ""}</span>
               </h1>
               <div className="flex flex-col gap-3 text-sm md:flex-row md:gap-5">
                 <div className="w-full">
                   <label className="required mb-1 block font-medium">Name</label>
-                  <div className="w-full rounded-lg border border-gray-300 bg-white px-2.5 py-2">
+                  <div className="w-full break-all rounded-lg border border-gray-300 bg-white px-2.5 py-2">
                     {formData.name}
                   </div>
                 </div>

@@ -34,7 +34,7 @@ const MakeDetailModal = ({ activeID, setShowMakeDetailModal }) => {
         {formData ? (
           <>
             <div className="fixed flex w-full max-w-[560px] items-center justify-between gap-5 rounded-tl-lg bg-white py-3 pl-6 pr-2">
-              <h2 className="truncate text-2xl font-bold">
+              <h2 className="truncate break-all text-2xl font-bold">
                 View Make - <span className="font-medium">{formData?.name || ""}</span>
               </h2>
               <button onClick={() => setShowMakeDetailModal(false)}>
@@ -46,7 +46,7 @@ const MakeDetailModal = ({ activeID, setShowMakeDetailModal }) => {
                 <label className="required mb-1 block font-medium">Name</label>
                 <div
                   title={formData?.name}
-                  className="w-full rounded-lg border border-gray-300 px-2.5 py-2"
+                  className="w-full break-all rounded-lg border border-gray-300 px-2.5 py-2"
                 >
                   {formData?.name}
                 </div>

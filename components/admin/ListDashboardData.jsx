@@ -287,7 +287,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
                       </div>
                       <h3
                         onClick={() => viewDetails(item.documentId)}
-                        className={`cursor-pointer text-center text-sm font-bold sm:text-left sm:text-base`}
+                        className={`cursor-pointer break-all text-center text-sm font-bold sm:text-left sm:text-base`}
                       >
                         {item.name}
                       </h3>

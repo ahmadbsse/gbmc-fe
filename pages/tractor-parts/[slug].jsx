@@ -11,33 +11,7 @@ const PartDetails = () => {
   const router = useRouter();
   const [selectedImage, setSelectedImage] = useState(0);
   const [data, setData] = useState(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0, boundedX: 0, boundedY: 0 });
-  const [isHovering, setIsHovering] = useState(false);
-  // Size of the magnifier square
-  const magnifierSize = 60;
-  // Zoom level
-  const zoomLevel = 2;
 
-  const handleMouseEnter = () => setIsHovering(true);
-  const handleMouseLeave = () => setIsHovering(false);
-  const handleMouseMove = (e) => {
-    const bounds = e.currentTarget.getBoundingClientRect();
-
-    // Calculate cursor position relative to the image
-    const x = e.clientX - bounds.left;
-    const y = e.clientY - bounds.top;
-
-    // Ensure the magnifier square stays within the image bounds
-    const magnifierX = Math.max(magnifierSize / 2, Math.min(x, bounds.width - magnifierSize / 2));
-    const magnifierY = Math.max(magnifierSize / 2, Math.min(y, bounds.height - magnifierSize / 2));
-
-    setMousePosition({
-      x: magnifierX,
-      y: magnifierY,
-      boundedX: (magnifierX / bounds.width) * 100,
-      boundedY: (magnifierY / bounds.height) * 100,
-    });
-  };
   const getPartDetails = async () => {
     try {
       const url = `/parts/${router.query.slug}?populate=*`;
@@ -73,7 +47,7 @@ const PartDetails = () => {
     <>
       <SeoHead title={data && data?.name ? data?.name : "Part Details"} />
       <Navbar setTab={() => {}} />
-      <PageLayout title="" breadcrumbs={breadcrumbs}>
+      <PageLayout title="" breadcrumbs={breadcrumbs} isDetailsPage={true}>
         {data ? (
           <div className="px-2">
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -113,7 +87,7 @@ const PartDetails = () => {
               {/* Part Details Section */}
               <div className="space-y-6">
                 <div className="space-y-2">
-                  <h1 className="text-xl font-bold capitalize  lg:text-2xl">
+                  <h1 className="break-all text-xl font-bold capitalize lg:text-2xl">
                     {data?.name}
                   </h1>
                 </div>

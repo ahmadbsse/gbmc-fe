@@ -5,6 +5,7 @@
 body {
   color: #463e2c;
   font-family: "Albert Sans";
+  background-color: f9fafb;
 }
 
 .btn-sec-anim:hover::after {

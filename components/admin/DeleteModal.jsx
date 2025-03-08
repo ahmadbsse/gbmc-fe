@@ -9,7 +9,7 @@ const DeleteConfirmationModal = ({ onClose, handleDelete, name, currentTab }) =>
           <X className="h-6 w-6" />
         </button>
         <h1 className="mb-2 text-lg font-bold">Confirm</h1>
-        <h2 className="mb-16">
+        <h2 className="mb-16 break-all">
           Are you sure you want to delete{" "}
           {currentTab == "engineering-components"
             ? "Engineering Component"

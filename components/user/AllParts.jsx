@@ -144,7 +144,7 @@ const AllParts = () => {
         {suppliers.map((brand, index) => (
           <span
             onClick={() => setSelectedSupplier(brand.documentId)}
-            className={`cursor-pointer p-2 font-semibold uppercase hover:text-black md:p-4 ${brand.documentId === selectedSupplier ? "border-b border-b-primary text-black" : ""}`}
+            className={`cursor-pointer break-all p-2 font-semibold uppercase hover:text-black md:p-4 ${brand.documentId === selectedSupplier ? "border-b border-b-primary text-black" : ""}`}
             key={index + brand.name}
           >
             {brand.name}

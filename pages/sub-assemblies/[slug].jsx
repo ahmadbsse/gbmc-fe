@@ -48,7 +48,7 @@ const SubAssemblyDetails = () => {
     <>
       <SeoHead title={data && data?.name ? data?.name : "Sub Assembly Details"} />
       <Navbar setTab={() => {}} />
-      <PageLayout title="" breadcrumbs={breadcrumbs}>
+      <PageLayout title="" breadcrumbs={breadcrumbs} isDetailsPage={true}>
         {data ? (
           <div className="px-2">
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -87,7 +87,9 @@ const SubAssemblyDetails = () => {
               {/* Sub Assembly Details Section */}
               <div className="space-y-6">
                 <div className="space-y-2">
-                  <h1 className="text-xl font-bold capitalize lg:text-2xl">{data?.name}</h1>
+                  <h1 className="break-all text-xl font-bold capitalize lg:text-2xl">
+                    {data?.name}
+                  </h1>
                 </div>
 
                 <p
