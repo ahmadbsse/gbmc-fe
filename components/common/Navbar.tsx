@@ -37,7 +37,7 @@ const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
         speed={30}
       /> */}
       <nav className="fixed top-0 z-50 w-full bg-white drop-shadow-xl">
-        <div className="container mx-auto px-4">
+        <div className={`mx-auto px-4 sm:container`}>
           <div className="flex h-[74px] items-center justify-between">
             <div className="flex w-full items-center justify-between gap-8">
               <Link
@@ -105,7 +105,7 @@ const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
                 </div>
               ) : (
                 <>
-                  <div className="hidden items-center justify-between gap-6 text-black md:flex">
+                  <div className="hidden items-center justify-between gap-6 text-black sm:flex">
                     {userRoutes.map((item, index) => (
                       <Link
                         key={index}
@@ -123,13 +123,13 @@ const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
                   </div>
                   {/* Mobile menu */}
                   <>
-                    <button onClick={toggleMenu} className="z-50 p-2 md:hidden">
+                    <button onClick={toggleMenu} className="z-50 p-2 sm:hidden">
                       {isOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
 
                     {/* Sliding menu */}
                     <div
-                      className={`fixed left-0 top-0 z-40 h-screen w-screen transform bg-white shadow-lg transition-transform duration-300 ease-in-out md:hidden ${
+                      className={`fixed left-0 top-0 z-40 h-screen w-screen transform bg-white shadow-lg transition-transform duration-300 ease-in-out sm:hidden ${
                         isOpen ? "translate-x-0" : "-translate-x-full"
                       }`}
                     >

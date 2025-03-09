@@ -52,16 +52,16 @@ const ViewComponentDetails = () => {
       <SeoHead title="Admin" />
       <div className="mt-20 min-h-screen bg-gray-50">
         <Navbar isAdmin setTab={setTab} activeTab={"Engineering Components"} />
-        <main className="container mx-auto px-4 py-8">
+        <main className="mx-auto px-4 py-8 sm:container">
           {formData ? (
             <div className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
-              <h1 className="mx-auto mb-10 w-fit text-center text-2xl font-bold">
+              <h1 className="mx-auto mb-10 w-fit break-all text-center text-2xl font-bold">
                 View Engineering Component -{" "}
                 <span className="font-medium">{formData?.name || ""}</span>
               </h1>
               <div className="w-full text-sm">
                 <label className="required mb-1 block font-medium">Name</label>
-                <div className="w-full rounded-lg border border-gray-300 bg-white px-2.5 py-2">
+                <div className="w-full break-all rounded-lg border border-gray-300 bg-white px-2.5 py-2">
                   {formData.name}
                 </div>
               </div>

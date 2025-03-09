@@ -85,8 +85,8 @@ const Article = () => {
             ) : null}
           </div>
           <div className="mx-auto max-w-7xl pt-4 lg:py-8">
-            <div className="container">
-              <p className="text-xl font-semibold lg:bottom-0 lg:left-20 lg:top-20 lg:text-2xl">
+            <div className="sm:container">
+              <p className="break-all text-xl font-bold lg:bottom-0 lg:left-20 lg:top-20 lg:text-2xl">
                 {data?.name}
               </p>
               <p
@@ -94,7 +94,7 @@ const Article = () => {
                 dangerouslySetInnerHTML={{ __html: data?.description }}
               />
 
-              <div className="mb-3 mt-4 flex flex-col gap-3 lg:flex-row lg:gap-10">
+              <div className="mb-3 mt-4 flex flex-col gap-4 lg:flex-row lg:gap-10">
                 <div className="rounded-lg bg-[#707070] p-4 text-sm text-white lg:h-[650px] lg:w-[700px] lg:text-base">
                   <div className="py-7 lg:w-[750px] lg:gap-5 lg:px-11">
                     <div className="flex flex-col gap-2 lg:w-[500px]">

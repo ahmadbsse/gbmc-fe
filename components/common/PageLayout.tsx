@@ -8,11 +8,12 @@ const PageLayout: React.FC<PageLayoutProps> = ({
   title,
   breadcrumbs = [],
   paddingTop = true,
+  isDetailsPage = false,
 }) => {
   return (
     <div className={`min-h-screen bg-gray-50 ${paddingTop ? "pt-20" : ""}`}>
       <div className="mx-auto max-w-7xl">
-        <div className="container mx-auto px-4 pb-12 pt-4">
+        <div className={`${isDetailsPage ? "sm:container" : "container"} mx-auto px-4 pb-12 pt-4`}>
           <div className="mb-4">
             <div className="mb-8 flex items-center gap-2 text-sm capitalize text-gray-500">
               {breadcrumbs.map((crumb, index) => (

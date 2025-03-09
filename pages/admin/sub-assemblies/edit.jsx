@@ -168,10 +168,10 @@ const EditSubAssembly = () => {
       <SeoHead title="Admin" />
       <div className="mt-20 min-h-screen bg-gray-50">
         <Navbar isAdmin setTab={setTab} activeTab={"Sub Assemblies"} />
-        <main className="container mx-auto px-4 py-8">
+        <main className="mx-auto px-4 py-8 sm:container">
           {formData ? (
             <>
-              <h1 className="mx-auto mb-10 w-fit max-w-[810px] text-center text-2xl font-bold">
+              <h1 className="mx-auto mb-10 w-fit max-w-[810px] break-all text-center text-2xl font-bold">
                 Edit Sub Assembly - <span className="font-medium">{formData?.name || ""}</span>
               </h1>
               <form
