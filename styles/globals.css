@@ -4,8 +4,25 @@
 
 body {
   color: #463e2c;
-  font-family: "Albert Sans";
   background-color: f9fafb;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  /* font-family: "Roboto"; */
+  font-family: "Albert Sans";
+}
+
+p,
+a,
+button,
+input,
+label {
+  font-family: "Albert Sans";
 }
 
 .btn-sec-anim:hover::after {
