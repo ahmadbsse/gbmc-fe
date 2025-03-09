@@ -4,7 +4,7 @@ import apiClient from "@/utils/apiClient";
 import { transformMedia } from "@/utils";
 import Link from "next/link";
 
-const PAGE_SIZE = 8;
+const PAGE_SIZE = 10;
 
 const AllParts = () => {
   const [page, setPage] = useState(1);

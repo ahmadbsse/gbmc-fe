@@ -5,18 +5,13 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 // import ScrollingMarquee from "@/components/common/Marquee";
 
-import { userRoutes } from "@/data";
+import { userRoutes, tabsKey } from "@/data";
 import apiClient from "@/utils/apiClient";
 
 const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const tabsKey = [
-    { name: "Makes", key: "suppliers", tag: "make" },
-    { name: "Parts", key: "parts", tag: "part" },
-    { name: "Sub Assemblies", key: "sub-assemblies", tag: "sub assembly" },
-    { name: "Engineering Components", key: "engineering", tag: "engineering component" },
-  ];
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };

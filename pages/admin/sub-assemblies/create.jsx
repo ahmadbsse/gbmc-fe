@@ -78,7 +78,12 @@ const CreateSubAssembly = () => {
     setFormData({ ...formData, description: content });
   };
   const setMedia = (media) => {
-    setFormData({ ...formData, media: media });
+    if (typeof media === "object") {
+      setFormData((prevData) => ({
+        ...prevData,
+        media: [...prevData?.media, ...media],
+      }));
+    }
   };
   const setTab = (tab) => {
     //store tab object to local storage
