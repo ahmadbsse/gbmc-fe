@@ -5,8 +5,9 @@ import ListDashboardData from "@/components/admin/ListDashboardData";
 import { BaseLoader } from "@/components/common";
 import apiClient from "@/utils/apiClient";
 import { transformMedia } from "@/utils";
+import { tabsKey } from "@/data";
 
-const PAGE_SIZE = 6;
+const PAGE_SIZE = 10;
 const AdminDashboard = () => {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -20,12 +21,6 @@ const AdminDashboard = () => {
   const [pagination, setPagination] = useState(null);
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(searchQuery);
 
-  const tabsKey = [
-    { name: "Makes", key: "suppliers", tag: "make" },
-    { name: "Parts", key: "parts", tag: "part" },
-    { name: "Sub Assemblies", key: "sub-assemblies", tag: "sub assembly" },
-    { name: "Engineering Components", key: "engineering", tag: "engineering component" },
-  ];
   const [activeTab, setActiveTab] = useState();
 
   useEffect(() => {
