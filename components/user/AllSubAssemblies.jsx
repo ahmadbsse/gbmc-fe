@@ -148,7 +148,12 @@ const AllSubAssemblies = () => {
             </div>
             <div ref={observerRef} className="h-10"></div>{" "}
             {/* Observer target for infinite scroll */}
-            {isLoadingMore && <p className="mt-4 text-center text-gray-500">Loading more...</p>}
+            {isLoadingMore && (
+              <p className="mx-auto mt-4 flex w-fit items-center gap-2 text-center text-gray-500">
+                <BaseLoader />
+                <span>Loading more</span>
+              </p>
+            )}
           </div>
         </>
       ) : (
