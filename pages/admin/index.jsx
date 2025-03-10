@@ -278,13 +278,21 @@ const AdminDashboard = () => {
             <h1 className="flex gap-2 text-2xl font-bold md:text-[1.65rem]">Admin Dashboard</h1>
             <div className="hidden md:flex">
               {tabData[activeTab?.key] > 0 || searchQuery !== "" ? (
-                <BaseSearchbar key={activeTab?.key} setSearchQuery={setSearchQuery} />
+                <BaseSearchbar
+                  key={activeTab?.key}
+                  setSearchQuery={setSearchQuery}
+                  searchQuery={searchQuery}
+                />
               ) : null}
             </div>
           </div>
           <div className="mb-8 ml-auto w-full md:hidden">
             {tabData[activeTab?.key] > 0 || searchQuery !== "" ? (
-              <BaseSearchbar key={activeTab?.key} setSearchQuery={setSearchQuery} />
+              <BaseSearchbar
+                key={activeTab?.key}
+                setSearchQuery={setSearchQuery}
+                searchQuery={searchQuery}
+              />
             ) : null}
           </div>
           {/* Desktop */}

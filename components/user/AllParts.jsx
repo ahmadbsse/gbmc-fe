@@ -137,7 +137,7 @@ const AllParts = () => {
     <>
       <div className="mt-5 flex flex-col justify-between lg:flex-row lg:items-center lg:gap-3">
         <div className="mb-6 pr-2 sm:ml-auto sm:px-4 md:pr-0">
-          <BaseSearchbar setSearchQuery={setSearchQuery} />
+          <BaseSearchbar setSearchQuery={setSearchQuery} searchQuery={searchQuery} />
         </div>
       </div>
       <div className="mb-3 flex flex-wrap justify-center text-center text-xl lg:justify-center lg:gap-x-5">
