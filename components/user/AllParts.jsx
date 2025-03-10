@@ -12,7 +12,7 @@ const AllParts = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [suppliers, setSuppliers] = useState([]);
+  const [makes, setMakes] = useState([]);
   const [selectedSupplier, setSelectedSupplier] = useState("");
   const [pagination, setPagination] = useState(null);
   const [paginationInfo, setPaginationInfo] = useState(0);
@@ -87,14 +87,14 @@ const AllParts = () => {
     if (page > 1) getParts(page, true);
   }, [page]);
 
-  const getSuppliers = async () => {
+  const getMakes = async () => {
     try {
       await apiClient.GET(`/suppliers?filters[active]=true`).then(async (res) => {
         if (res && res.data.length > 0) {
           res.data.unshift({ name: "All", documentId: "" });
-          setSuppliers(res.data);
+          setMakes(res.data);
         } else {
-          setSuppliers([]);
+          setMakes([]);
         }
       });
     } catch (error) {
@@ -120,7 +120,7 @@ const AllParts = () => {
     };
   }, [pagination]);
   useEffect(() => {
-    getSuppliers();
+    getMakes();
   }, []);
   useEffect(() => {
     if (pagination) {
@@ -129,7 +129,7 @@ const AllParts = () => {
   }, [pagination]);
 
   const getBrand = (id) => {
-    const supplier = suppliers.find((brand) => brand.documentId === id);
+    const supplier = makes.find((brand) => brand.documentId === id);
     return supplier ? supplier.name : "";
   };
 
@@ -141,7 +141,7 @@ const AllParts = () => {
         </div>
       </div>
       <div className="mb-3 flex flex-wrap justify-center text-center text-xl lg:justify-center lg:gap-x-5">
-        {suppliers.map((brand, index) => (
+        {makes.map((brand, index) => (
           <span
             onClick={() => setSelectedSupplier(brand.documentId)}
             className={`cursor-pointer break-all p-2 font-semibold uppercase hover:text-black md:p-4 ${brand.documentId === selectedSupplier ? "border-b border-b-primary text-black" : ""}`}

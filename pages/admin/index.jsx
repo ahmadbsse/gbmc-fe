@@ -13,7 +13,7 @@ const AdminDashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [parts, setParts] = useState([]);
-  const [suppliers, setSuppliers] = useState([]);
+  const [makes, setMakes] = useState([]);
   const [engineering, setEngineering] = useState([]);
   const [subAssemblies, setSubAssemblies] = useState([]);
   const [total, setTotal] = useState(0);
@@ -141,7 +141,7 @@ const AdminDashboard = () => {
             setPagination(res.meta.pagination);
           } else {
             setPagination(null);
-            setSuppliers([]);
+            setSubAssemblies([]);
             setTotal(0);
           }
         });
@@ -158,7 +158,7 @@ const AdminDashboard = () => {
     }
   };
 
-  const getSuppliers = async (pageNum, isLoadMore) => {
+  const getMakes = async (pageNum, isLoadMore) => {
     if (activeTab?.key == "suppliers") {
       try {
         if (isLoadMore) {
@@ -176,12 +176,12 @@ const AdminDashboard = () => {
           setPagination(null);
           if (res && res.data.length > 0) {
             const transformedData = transformMedia(res.data);
-            setSuppliers((prev) => (isLoadMore ? [...prev, ...transformedData] : transformedData));
+            setMakes((prev) => (isLoadMore ? [...prev, ...transformedData] : transformedData));
             setTotal(res.meta.pagination.total);
             setPagination(res.meta.pagination);
           } else {
             setPagination(null);
-            setSuppliers([]);
+            setMakes([]);
             setTotal(0);
           }
         });
@@ -201,7 +201,7 @@ const AdminDashboard = () => {
 
   const apiCalls = (page, isLoadMore) => {
     if (activeTab?.key == "suppliers") {
-      getSuppliers(page, isLoadMore);
+      getMakes(page, isLoadMore);
     }
     if (activeTab?.key == "parts") {
       getParts(page, isLoadMore);
@@ -264,7 +264,7 @@ const AdminDashboard = () => {
   const tabData = {
     parts: parts?.length,
     engineering: engineering?.length,
-    suppliers: suppliers?.length,
+    suppliers: makes?.length,
     "sub-assemblies": subAssemblies?.length,
   };
   return (
@@ -312,7 +312,7 @@ const AdminDashboard = () => {
                   activeTab?.key == "engineering"
                     ? engineering
                     : activeTab?.key == "suppliers"
-                      ? suppliers
+                      ? makes
                       : activeTab?.key == "sub-assemblies"
                         ? subAssemblies
                         : parts
@@ -323,7 +323,7 @@ const AdminDashboard = () => {
                   activeTab?.key == "engineering"
                     ? setEngineering
                     : activeTab?.key == "suppliers"
-                      ? setSuppliers
+                      ? setMakes
                       : activeTab?.key == "sub-assemblies"
                         ? setSubAssemblies
                         : setParts
@@ -332,7 +332,7 @@ const AdminDashboard = () => {
                   activeTab?.key === "engineering"
                     ? () => getEngineering(1, false)
                     : activeTab?.key === "suppliers"
-                      ? () => getSuppliers(1, false)
+                      ? () => getMakes(1, false)
                       : activeTab?.key === "sub-assemblies"
                         ? () => getSubAssemblies(1, false)
                         : () => getParts(1, false)

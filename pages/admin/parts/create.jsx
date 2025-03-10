@@ -28,7 +28,7 @@ const CreatePart = () => {
   };
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
-  const [suppliers, setSuppliers] = useState([]);
+  const [makes, setMakes] = useState([]);
   const [isFormValid, setIsFormValid] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
   const deepCopy = structuredClone(initialFormData);
@@ -81,11 +81,11 @@ const CreatePart = () => {
         });
     }
   };
-  const getSuppliers = async () => {
+  const getMakes = async () => {
     try {
       const url = `/suppliers?fields=name&filters[active]=true`;
       await apiClient.GET(url).then((res) => {
-        setSuppliers(res.data);
+        setMakes(res.data);
         if (res.data.length == 0) {
           showToast("Please add Make first", "warning", true);
         }
@@ -96,7 +96,7 @@ const CreatePart = () => {
   };
 
   useEffect(() => {
-    getSuppliers();
+    getMakes();
   }, []);
   const handleChange = (content) => {
     setFormData({ ...formData, description: content });
@@ -173,7 +173,7 @@ const CreatePart = () => {
                   onChange={(e) => setFormData({ ...formData, supplier: e.target.value })}
                 >
                   <option value="">Select a make</option>
-                  {suppliers.map((supplier) => (
+                  {makes.map((supplier) => (
                     <option key={supplier.id} value={supplier.documentId}>
                       {supplier.name}
                     </option>
