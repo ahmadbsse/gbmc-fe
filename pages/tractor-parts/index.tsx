@@ -50,7 +50,7 @@ const TractorPartsHome = () => {
                     <category.icon
                       className={`h-8 w-8 ${category?.title == categories[0]?.title ? "text-secondary" : ""}`}
                     />
-                    <h3 className="text-lg font-semibold">{category?.title}</h3>
+                    <h3 className="text-lg font-bold">{category?.title}</h3>
                   </div>
                 </div>
               </Link>

@@ -21,7 +21,7 @@ const EditPart = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(null);
   const [showWarning, setShowWarning] = useState(false);
-  const [suppliers, setSuppliers] = useState([]);
+  const [makes, setMakes] = useState([]);
   const [idsToRemove, setIdsToRemove] = useState([]);
   const [isFormValid, setIsFormValid] = useState(false);
 
@@ -62,11 +62,11 @@ const EditPart = () => {
       console.error("Error fetching resource:", error.message);
     }
   };
-  const getSuppliers = async () => {
+  const getMakes = async () => {
     try {
       const url = `/suppliers?fields=name&filters[active]=true`;
       await apiClient.GET(url).then((res) => {
-        setSuppliers(res.data);
+        setMakes(res.data);
         if (res.data.length == 0) {
           showToast("Please add Make first", "warning", true);
         }
@@ -133,7 +133,7 @@ const EditPart = () => {
   useEffect(() => {
     if (id) {
       getPartDetails();
-      getSuppliers();
+      getMakes();
     }
   }, [id]);
   const handleChange = (content) => {
@@ -223,7 +223,7 @@ const EditPart = () => {
                       }}
                     >
                       <option value="">Select a make</option>
-                      {suppliers.map((supplier) => (
+                      {makes.map((supplier) => (
                         <option key={supplier.id} value={JSON.stringify(supplier.documentId)}>
                           {supplier.name}
                         </option>

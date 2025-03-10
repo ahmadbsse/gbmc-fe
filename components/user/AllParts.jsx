@@ -12,7 +12,7 @@ const AllParts = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [suppliers, setSuppliers] = useState([]);
+  const [makes, setMakes] = useState([]);
   const [selectedSupplier, setSelectedSupplier] = useState("");
   const [pagination, setPagination] = useState(null);
   const [paginationInfo, setPaginationInfo] = useState(0);
@@ -87,14 +87,14 @@ const AllParts = () => {
     if (page > 1) getParts(page, true);
   }, [page]);
 
-  const getSuppliers = async () => {
+  const getMakes = async () => {
     try {
       await apiClient.GET(`/suppliers?filters[active]=true`).then(async (res) => {
         if (res && res.data.length > 0) {
           res.data.unshift({ name: "All", documentId: "" });
-          setSuppliers(res.data);
+          setMakes(res.data);
         } else {
-          setSuppliers([]);
+          setMakes([]);
         }
       });
     } catch (error) {
@@ -120,7 +120,7 @@ const AllParts = () => {
     };
   }, [pagination]);
   useEffect(() => {
-    getSuppliers();
+    getMakes();
   }, []);
   useEffect(() => {
     if (pagination) {
@@ -129,22 +129,22 @@ const AllParts = () => {
   }, [pagination]);
 
   const getBrand = (id) => {
-    const supplier = suppliers.find((brand) => brand.documentId === id);
-    return supplier ? supplier.name : "";
+    const make = makes.find((brand) => brand.documentId === id);
+    return make ? make.name : "";
   };
 
   return (
     <>
       <div className="mt-5 flex flex-col justify-between lg:flex-row lg:items-center lg:gap-3">
         <div className="mb-6 pr-2 sm:ml-auto sm:px-4 md:pr-0">
-          <BaseSearchbar setSearchQuery={setSearchQuery} />
+          <BaseSearchbar setSearchQuery={setSearchQuery} searchQuery={searchQuery} />
         </div>
       </div>
       <div className="mb-3 flex flex-wrap justify-center text-center text-xl lg:justify-center lg:gap-x-5">
-        {suppliers.map((brand, index) => (
+        {makes.map((brand, index) => (
           <span
             onClick={() => setSelectedSupplier(brand.documentId)}
-            className={`cursor-pointer break-all p-2 font-semibold uppercase hover:text-black md:p-4 ${brand.documentId === selectedSupplier ? "border-b border-b-primary text-black" : ""}`}
+            className={`cursor-pointer break-all p-2 font-bold uppercase hover:text-black md:p-4 ${brand.documentId === selectedSupplier ? "border-b border-b-primary text-black" : ""}`}
             key={index + brand.name}
           >
             {brand.name}
@@ -173,9 +173,9 @@ const AllParts = () => {
                       <div className="relative h-[200px] w-full border-b border-gray-200">
                         {part.media ? (
                           <BaseImage
-                            width={part.media[part?.media?.length - 1].formats?.actual?.width}
-                            height={part.media[part?.media?.length - 1].formats?.actual?.height}
-                            src={part.media[part?.media?.length - 1].formats?.actual?.url}
+                            width={part.media[0].formats?.actual?.width}
+                            height={part.media[0].formats?.actual?.height}
+                            src={part.media[0].formats?.actual?.url}
                             alt={part.name}
                             priority={true}
                             classes="h-full w-full object-contain rounded-t-lg"
@@ -184,7 +184,7 @@ const AllParts = () => {
                       </div>
                       <h3
                         title={part.name}
-                        className="truncate p-4 text-center text-base font-semibold sm:text-lg"
+                        className="truncate p-4 text-center text-base font-bold sm:text-lg"
                       >
                         {part.name}
                       </h3>
@@ -195,7 +195,12 @@ const AllParts = () => {
             </div>
             <div ref={observerRef} className="h-10"></div>{" "}
             {/* Observer target for infinite scroll */}
-            {isLoadingMore && <p className="mt-4 text-center text-gray-500">Loading more...</p>}
+            {isLoadingMore && (
+              <p className="mx-auto mt-4 flex w-fit items-center gap-2 text-center text-gray-500">
+                <BaseLoader />
+                <span>Loading more</span>
+              </p>
+            )}
           </div>
         </>
       ) : (

@@ -44,7 +44,7 @@ const FeaturedSubAssemblies = () => {
       ) : featuredSubAssemblies?.length ? (
         <div>
           <h2 className="my-4 mt-10 text-2xl font-bold">Featured Sub Assemblies</h2>
-          <div className="custom-scrollbar flex w-[280px] max-w-7xl flex-col gap-3 overflow-x-auto pb-2 xs:w-[340px] sm:w-[590px] md:w-[600px] lg:w-[1024px] lg:flex-row xl:w-[1230px]">
+          <div className="custom-scrollbar flex w-[280px] max-w-7xl flex-col gap-3 overflow-x-auto pb-2 xs:w-[340px] sm:w-[590px] md:w-[600px] lg:w-[990px] lg:flex-row xl:w-[1230px]">
             <Swiper
               modules={[Navigation, Pagination, Mousewheel]}
               spaceBetween={20}
@@ -70,17 +70,9 @@ const FeaturedSubAssemblies = () => {
                       <div className="relative h-[200px] w-full border-b border-gray-200">
                         {subAssembly.media ? (
                           <BaseImage
-                            width={
-                              subAssembly.media[subAssembly?.media?.length - 1].formats?.actual
-                                ?.width
-                            }
-                            height={
-                              subAssembly.media[subAssembly?.media?.length - 1].formats?.actual
-                                ?.height
-                            }
-                            src={
-                              subAssembly.media[subAssembly?.media?.length - 1].formats?.actual?.url
-                            }
+                            width={subAssembly.media[0].formats?.actual?.width}
+                            height={subAssembly.media[0].formats?.actual?.height}
+                            src={subAssembly.media[0].formats?.actual?.url}
                             alt={subAssembly.name}
                             priority={true}
                             classes="h-full w-full object-contain rounded-t-lg"
@@ -90,7 +82,7 @@ const FeaturedSubAssemblies = () => {
                       <div className="p-4">
                         <h3
                           title={subAssembly.name}
-                          className="truncate text-center text-lg font-semibold"
+                          className="truncate text-center text-lg font-bold"
                         >
                           {subAssembly.name}
                         </h3>

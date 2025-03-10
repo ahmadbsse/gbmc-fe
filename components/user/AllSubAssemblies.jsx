@@ -101,7 +101,7 @@ const AllSubAssemblies = () => {
     <>
       <div className="mt-5 flex flex-col justify-between lg:flex-row lg:items-center lg:gap-3">
         <div className="mb-6 pr-2 sm:ml-auto sm:px-4 md:pr-0">
-          <BaseSearchbar setSearchQuery={setSearchQuery} />
+          <BaseSearchbar setSearchQuery={setSearchQuery} searchQuery={searchQuery} />
         </div>
       </div>
       {isLoading ? (
@@ -126,17 +126,9 @@ const AllSubAssemblies = () => {
                       <div className="relative h-[200px] w-full border-b border-gray-200">
                         {subAssembly.media ? (
                           <BaseImage
-                            width={
-                              subAssembly.media[subAssembly?.media?.length - 1].formats?.actual
-                                ?.width
-                            }
-                            height={
-                              subAssembly.media[subAssembly?.media?.length - 1].formats?.actual
-                                ?.height
-                            }
-                            src={
-                              subAssembly.media[subAssembly?.media?.length - 1].formats?.actual?.url
-                            }
+                            width={subAssembly.media[0].formats?.actual?.width}
+                            height={subAssembly.media[0].formats?.actual?.height}
+                            src={subAssembly.media[0].formats?.actual?.url}
                             alt={subAssembly.name}
                             priority={true}
                             classes="h-full w-full object-contain rounded-t-lg"
@@ -145,7 +137,7 @@ const AllSubAssemblies = () => {
                       </div>
                       <h3
                         title={subAssembly.name}
-                        className="truncate p-4 text-center text-base font-semibold sm:text-lg"
+                        className="truncate p-4 text-center text-base font-bold sm:text-lg"
                       >
                         {subAssembly.name}
                       </h3>
@@ -156,7 +148,12 @@ const AllSubAssemblies = () => {
             </div>
             <div ref={observerRef} className="h-10"></div>{" "}
             {/* Observer target for infinite scroll */}
-            {isLoadingMore && <p className="mt-4 text-center text-gray-500">Loading more...</p>}
+            {isLoadingMore && (
+              <p className="mx-auto mt-4 flex w-fit items-center gap-2 text-center text-gray-500">
+                <BaseLoader />
+                <span>Loading more</span>
+              </p>
+            )}
           </div>
         </>
       ) : (

@@ -37,7 +37,11 @@ const ContactPage = () => {
       )
       .then(
         () => {
-          showToast("Email successfully sent!", "success", true);
+          showToast(
+            "Thank you for reaching out! We’ve received your message and will get back to you as soon as possible.",
+            "success",
+            true
+          );
           setLoading(false);
           form.current.reset();
         },
@@ -73,7 +77,7 @@ const ContactPage = () => {
         {/* Navigation */}
         <Navbar setTab={() => {}} />
 
-        <div className="container mx-auto mt-20 p-4">
+        <div className="mx-auto mt-20 p-4 md:container">
           <div className="mx-auto max-w-4xl">
             <h1 className="mb-4 text-3xl font-bold text-slate-900">Contact Us</h1>
             <div className="grid gap-4 md:grid-cols-2 lg:gap-8 xl:gap-12">
