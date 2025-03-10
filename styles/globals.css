@@ -4,7 +4,7 @@
 
 body {
   color: #463e2c;
-  background-color: f9fafb;
+  background-color: #f9fafb;
 }
 
 h1,
@@ -13,8 +13,7 @@ h3,
 h4,
 h5,
 h6 {
-  /* font-family: "Roboto"; */
-  font-family: "Albert Sans";
+  font-family: "Roboto";
 }
 
 p,

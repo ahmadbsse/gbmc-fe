@@ -34,7 +34,7 @@ const AboutPage = () => {
           {/* Company Stats */}
           <div className="rounded-lg bg-white p-8 shadow-md">
             <h2 className="mb-8 text-center text-2xl font-bold text-slate-800">About Us</h2>
-            <ul className="flex list-inside list-disc flex-col gap-3">
+            <ul className="flex list-inside flex-col gap-3">
               <li>
                 <strong className="uppercase">{appData.name}</strong> is an industrial manufacturing
                 network specializing in wide variety of processes .Thus we manufacture and deliver

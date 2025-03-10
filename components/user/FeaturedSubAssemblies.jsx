@@ -44,7 +44,7 @@ const FeaturedSubAssemblies = () => {
       ) : featuredSubAssemblies?.length ? (
         <div>
           <h2 className="my-4 mt-10 text-2xl font-bold">Featured Sub Assemblies</h2>
-          <div className="custom-scrollbar flex w-[280px] max-w-7xl flex-col gap-3 overflow-x-auto pb-2 xs:w-[340px] sm:w-[590px] md:w-[600px] lg:w-[1024px] lg:flex-row xl:w-[1230px]">
+          <div className="custom-scrollbar flex w-[280px] max-w-7xl flex-col gap-3 overflow-x-auto pb-2 xs:w-[340px] sm:w-[590px] md:w-[600px] lg:w-[990px] lg:flex-row xl:w-[1230px]">
             <Swiper
               modules={[Navigation, Pagination, Mousewheel]}
               spaceBetween={20}

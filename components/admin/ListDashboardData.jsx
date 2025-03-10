@@ -262,12 +262,8 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
                         ) : item?.media ? (
                           Array.isArray(item.media) && item.media.length > 0 ? (
                             <BaseImage
-                              width={
-                                item.media[item.media.length - 1]?.formats?.thumbnail?.width || 160
-                              }
-                              height={
-                                item.media[item.media.length - 1]?.formats?.thumbnail?.height || 112
-                              }
+                              width={item.media[0]?.formats?.thumbnail?.width || 160}
+                              height={item.media[0]?.formats?.thumbnail?.height || 112}
                               src={item.media[item.media.length - 1]?.formats?.thumbnail?.url}
                               alt={item?.name}
                               priority={true}
