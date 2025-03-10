@@ -50,7 +50,7 @@ const TractorPage = () => {
                         className={`h-8 w-8 ${category.title == categories[2].title ? "text-secondary" : ""}`}
                       />
                     </div>
-                    <h3 className="mb-2 text-lg font-semibold">{category.title}</h3>
+                    <h3 className="mb-2 text-lg font-bold">{category.title}</h3>
                     <p className="mb-4">{category.description}</p>
                   </div>
                 </Link>

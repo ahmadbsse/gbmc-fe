@@ -38,7 +38,7 @@ const EngineeringListingCard: React.FC<EngineeringCardProps> = ({
             />
           ) : null}
         </div>
-        <h3 title={title} className="truncate p-4 text-center text-base font-semibold sm:text-lg">
+        <h3 title={title} className="truncate p-4 text-center text-base font-bold sm:text-lg">
           {title}
         </h3>
       </div>

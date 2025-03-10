@@ -82,7 +82,7 @@ const FeaturedSubAssemblies = () => {
                       <div className="p-4">
                         <h3
                           title={subAssembly.name}
-                          className="truncate text-center text-lg font-semibold"
+                          className="truncate text-center text-lg font-bold"
                         >
                           {subAssembly.name}
                         </h3>

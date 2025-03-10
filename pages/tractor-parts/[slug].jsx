@@ -97,7 +97,7 @@ const PartDetails = () => {
               </div>
             </div>
             <div className="mt-8 max-w-3xl">
-              <h2 className="mb-3 text-xl font-semibold">Specifications</h2>
+              <h2 className="mb-3 text-xl font-bold">Specifications</h2>
               <table className="product-specification-table product-specification-table-striped">
                 <tbody>
                   <tr>

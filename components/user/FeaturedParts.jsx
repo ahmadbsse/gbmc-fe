@@ -84,10 +84,7 @@ const FeaturedParts = () => {
                         </div>
                       </div>
                       <div className="p-4">
-                        <h3
-                          title={part.name}
-                          className="truncate text-center text-lg font-semibold"
-                        >
+                        <h3 title={part.name} className="truncate text-center text-lg font-bold">
                           {part.name}
                         </h3>
                       </div>

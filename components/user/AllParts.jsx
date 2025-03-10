@@ -129,8 +129,8 @@ const AllParts = () => {
   }, [pagination]);
 
   const getBrand = (id) => {
-    const supplier = makes.find((brand) => brand.documentId === id);
-    return supplier ? supplier.name : "";
+    const make = makes.find((brand) => brand.documentId === id);
+    return make ? make.name : "";
   };
 
   return (
@@ -144,7 +144,7 @@ const AllParts = () => {
         {makes.map((brand, index) => (
           <span
             onClick={() => setSelectedSupplier(brand.documentId)}
-            className={`cursor-pointer break-all p-2 font-semibold uppercase hover:text-black md:p-4 ${brand.documentId === selectedSupplier ? "border-b border-b-primary text-black" : ""}`}
+            className={`cursor-pointer break-all p-2 font-bold uppercase hover:text-black md:p-4 ${brand.documentId === selectedSupplier ? "border-b border-b-primary text-black" : ""}`}
             key={index + brand.name}
           >
             {brand.name}
@@ -184,7 +184,7 @@ const AllParts = () => {
                       </div>
                       <h3
                         title={part.name}
-                        className="truncate p-4 text-center text-base font-semibold sm:text-lg"
+                        className="truncate p-4 text-center text-base font-bold sm:text-lg"
                       >
                         {part.name}
                       </h3>

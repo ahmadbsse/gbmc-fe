@@ -137,7 +137,7 @@ const AllSubAssemblies = () => {
                       </div>
                       <h3
                         title={subAssembly.name}
-                        className="truncate p-4 text-center text-base font-semibold sm:text-lg"
+                        className="truncate p-4 text-center text-base font-bold sm:text-lg"
                       >
                         {subAssembly.name}
                       </h3>
