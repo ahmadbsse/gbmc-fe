@@ -71,9 +71,9 @@ const FeaturedParts = () => {
                       <div className="relative h-[200px] w-full border-b border-gray-200">
                         {part.media ? (
                           <BaseImage
-                            width={part.media[part?.media?.length - 1].formats?.actual?.width}
-                            height={part.media[part?.media?.length - 1].formats?.actual?.height}
-                            src={part.media[part?.media?.length - 1].formats?.actual?.url}
+                            width={part.media[0].formats?.actual?.width}
+                            height={part.media[0].formats?.actual?.height}
+                            src={part.media[0].formats?.actual?.url}
                             alt={part.name}
                             priority={true}
                             classes="h-full w-full object-contain rounded-t-lg"

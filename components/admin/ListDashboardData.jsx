@@ -264,7 +264,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
                             <BaseImage
                               width={item.media[0]?.formats?.thumbnail?.width || 160}
                               height={item.media[0]?.formats?.thumbnail?.height || 112}
-                              src={item.media[item.media.length - 1]?.formats?.thumbnail?.url}
+                              src={item.media[0]?.formats?.thumbnail?.url}
                               alt={item?.name}
                               priority={true}
                               classes="object-contain max-h-32"

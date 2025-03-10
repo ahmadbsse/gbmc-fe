@@ -126,17 +126,9 @@ const AllSubAssemblies = () => {
                       <div className="relative h-[200px] w-full border-b border-gray-200">
                         {subAssembly.media ? (
                           <BaseImage
-                            width={
-                              subAssembly.media[subAssembly?.media?.length - 1].formats?.actual
-                                ?.width
-                            }
-                            height={
-                              subAssembly.media[subAssembly?.media?.length - 1].formats?.actual
-                                ?.height
-                            }
-                            src={
-                              subAssembly.media[subAssembly?.media?.length - 1].formats?.actual?.url
-                            }
+                            width={subAssembly.media[0].formats?.actual?.width}
+                            height={subAssembly.media[0].formats?.actual?.height}
+                            src={subAssembly.media[0].formats?.actual?.url}
                             alt={subAssembly.name}
                             priority={true}
                             classes="h-full w-full object-contain rounded-t-lg"
