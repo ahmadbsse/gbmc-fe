@@ -69,7 +69,7 @@ const Article = () => {
               ))}
             </div>
           </div>
-          <div className="mx-auto mt-2 flex h-[645px] w-full max-w-7xl items-center justify-center rounded-lg bg-white shadow-lg lg:px-16">
+          <div className="mx-auto mt-2 flex w-full max-w-7xl items-center justify-center rounded-lg bg-white shadow-lg lg:h-[645px] lg:px-16">
             {data?.hero_image ? (
               data?.hero_image?.type === "video" ? (
                 <BaseVideo src={data?.hero_image?.url} autoPlay={true} muted={true} loop={true} />
@@ -85,8 +85,8 @@ const Article = () => {
             ) : null}
           </div>
           <div className="mx-auto max-w-7xl pt-4 lg:py-8">
-            <div className="sm:container">
-              <p className="break-all text-xl font-bold lg:bottom-0 lg:left-20 lg:top-20 lg:text-2xl">
+            <div className="lg:container">
+              <p className="break-all text-2xl font-bold lg:bottom-0 lg:left-20 lg:top-20">
                 {data?.name}
               </p>
               <p
@@ -98,7 +98,7 @@ const Article = () => {
                 <div className="rounded-lg bg-[#707070] p-4 text-sm text-white lg:h-[650px] lg:w-[700px] lg:text-base">
                   <div className="py-7 lg:w-[750px] lg:gap-5 lg:px-11">
                     <div className="flex flex-col gap-2 lg:w-[500px]">
-                      <p className="text-lg font-bold lg:text-xl">Key Features</p>
+                      <p className="text-xl font-bold">Key Features</p>
                       <p>
                         <strong>Weight:</strong>
                         <br />
@@ -113,11 +113,11 @@ const Article = () => {
                   </div>
                 </div>
 
-                <div className="z-20 flex max-h-[500px] w-full items-center justify-center rounded-lg bg-white p-6 text-white shadow-lg lg:my-20 lg:-ml-32">
+                <div className="z-20 flex h-[200px] w-full items-center justify-center rounded-lg bg-white p-6 text-white shadow-lg md:h-auto md:max-h-[400px] lg:my-20 lg:-ml-32 lg:max-h-[500px]">
                   {data?.media && data?.media[selectedImage] ? (
-                    <div className="m-1 text-black">
+                    <div className="m-1 h-[200px] text-black md:h-auto md:max-h-[400px] lg:max-h-[500px]">
                       <BaseImage
-                        classes="object-contain rounded-lg max-h-[500px] "
+                        classes="object-contain rounded-lg lg:max-h-[500px] md:max-h-[400px] h-[200px] md:h-auto"
                         height={data?.media[selectedImage]?.formats?.actual?.height}
                         width={data?.media[selectedImage]?.formats?.actual?.width}
                         src={data?.media[selectedImage]?.formats?.actual?.url}

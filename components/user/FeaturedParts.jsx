@@ -45,7 +45,7 @@ const FeaturedParts = () => {
       ) : featuredParts?.length ? (
         <div>
           <h2 className="my-4 text-2xl font-bold">Featured Parts</h2>
-          <div className="custom-scrollbar flex w-[280px] max-w-7xl flex-col gap-3 overflow-x-auto pb-2 xs:w-[340px] sm:w-[590px] md:w-[600px] lg:w-[1024px] lg:flex-row xl:w-[1230px]">
+          <div className="custom-scrollbar flex w-[280px] max-w-7xl flex-col gap-3 overflow-x-auto pb-2 xs:w-[340px] sm:w-[590px] md:w-[600px] lg:w-[990px] lg:flex-row xl:w-[1230px]">
             <Swiper
               modules={[Navigation, Pagination, Mousewheel]}
               spaceBetween={20}
@@ -71,9 +71,9 @@ const FeaturedParts = () => {
                       <div className="relative h-[200px] w-full border-b border-gray-200">
                         {part.media ? (
                           <BaseImage
-                            width={part.media[part?.media?.length - 1].formats?.actual?.width}
-                            height={part.media[part?.media?.length - 1].formats?.actual?.height}
-                            src={part.media[part?.media?.length - 1].formats?.actual?.url}
+                            width={part.media[0].formats?.actual?.width}
+                            height={part.media[0].formats?.actual?.height}
+                            src={part.media[0].formats?.actual?.url}
                             alt={part.name}
                             priority={true}
                             classes="h-full w-full object-contain rounded-t-lg"
@@ -84,10 +84,7 @@ const FeaturedParts = () => {
                         </div>
                       </div>
                       <div className="p-4">
-                        <h3
-                          title={part.name}
-                          className="truncate text-center text-lg font-semibold"
-                        >
+                        <h3 title={part.name} className="truncate text-center text-lg font-bold">
                           {part.name}
                         </h3>
                       </div>

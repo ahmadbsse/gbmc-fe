@@ -87,9 +87,7 @@ const SubAssemblyDetails = () => {
               {/* Sub Assembly Details Section */}
               <div className="space-y-6">
                 <div className="space-y-2">
-                  <h1 className="break-all text-xl font-bold capitalize lg:text-2xl">
-                    {data?.name}
-                  </h1>
+                  <h1 className="break-all text-2xl font-bold capitalize">{data?.name}</h1>
                 </div>
 
                 <p
@@ -99,7 +97,7 @@ const SubAssemblyDetails = () => {
               </div>
             </div>
             <div className="mt-8 max-w-3xl">
-              <h2 className="mb-3 text-lg font-semibold lg:text-xl">Specifications</h2>
+              <h2 className="mb-3 text-xl font-bold">Specifications</h2>
               <table className="product-specification-table product-specification-table-striped">
                 <tbody>
                   <tr>
