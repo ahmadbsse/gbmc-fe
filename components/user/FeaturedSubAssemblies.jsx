@@ -67,7 +67,7 @@ const FeaturedSubAssemblies = () => {
                 <SwiperSlide key={subAssembly.id + index + subAssembly.documentId}>
                   <Link href={`/sub-assemblies/${subAssembly.documentId}`}>
                     <div className="rounded-lg border border-gray-200 bg-white shadow-sm transition">
-                      <div className="relative h-[200px] w-full border-b border-gray-200">
+                      <div className="relative h-[200px] w-full border-b border-gray-200 p-1">
                         {subAssembly.media ? (
                           <BaseImage
                             width={subAssembly.media[0].formats?.actual?.width}

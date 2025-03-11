@@ -18,10 +18,10 @@ const SearchBar = ({ setSearchQuery, searchQuery }) => {
         ref={inputRef}
         placeholder="Search..."
         className="w-full rounded-lg py-2 pr-4 outline-none focus:border-transparent focus:outline-none"
-        onChange={(e) => setSearchQuery(e.target.value)}
+        onChange={(e) => setSearchQuery(e.target.value.trim())}
       />
       {searchQuery != "" ? (
-        <X className="h-6 w-6 pr-2 text-slate-600" onClick={clearSearch} />
+        <X className="h-8 w-8 pr-2 text-slate-600" onClick={clearSearch} />
       ) : null}
     </div>
   );

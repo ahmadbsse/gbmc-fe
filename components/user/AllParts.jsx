@@ -140,11 +140,11 @@ const AllParts = () => {
           <BaseSearchbar setSearchQuery={setSearchQuery} searchQuery={searchQuery} />
         </div>
       </div>
-      <div className="mb-3 flex flex-wrap justify-center text-center text-xl lg:justify-center lg:gap-x-5">
+      <div className="mb-7 flex flex-wrap justify-center text-center text-xl lg:justify-center lg:gap-x-5">
         {makes.map((brand, index) => (
           <span
             onClick={() => setSelectedSupplier(brand.documentId)}
-            className={`cursor-pointer break-all p-2 font-bold uppercase hover:text-black md:p-4 ${brand.documentId === selectedSupplier ? "border-b border-b-primary text-black" : ""}`}
+            className={`cursor-pointer break-all px-2 py-2 pb-1 font-bold uppercase hover:text-black md:px-4 md:py-1 ${brand.documentId === selectedSupplier ? "border-b-2 border-b-primary text-black" : ""}`}
             key={index + brand.name}
           >
             {brand.name}
@@ -170,7 +170,7 @@ const AllParts = () => {
                     key={part.id + index + part.documentId}
                   >
                     <div className="w-[280px] min-w-[280px] rounded-lg border border-gray-200 bg-white shadow-sm transition xs:w-[330px] sm:w-auto">
-                      <div className="relative h-[200px] w-full border-b border-gray-200">
+                      <div className="relative h-[200px] w-full border-b border-gray-200 p-1">
                         {part.media ? (
                           <BaseImage
                             width={part.media[0].formats?.actual?.width}
