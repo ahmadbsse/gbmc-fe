@@ -139,3 +139,15 @@ export function richTextHasOnlySpaces(html) {
   // Check if the remaining content is only whitespace
   return textContent.trim().length === 0;
 }
+
+export function sanitizeText(input) {
+  if (typeof input !== "string") return input;
+
+  return input
+    .trim() // Remove leading and trailing spaces
+    .replace(/</g, "&lt;") // Escape `<` to prevent XSS
+    .replace(/>/g, "&gt;") // Escape `>` to prevent XSS
+    .replace(/"/g, "&quot;") // Escape `"`
+    .replace(/'/g, "&#39;") // Escape `'`
+    .replace(/\\/g, "&#92;"); // Escape backslashes
+}

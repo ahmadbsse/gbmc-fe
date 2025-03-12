@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Navbar } from "@/components/common";
 
-import { uploadFilesRequest, deepEqual, richTextHasOnlySpaces } from "@/utils";
+import { uploadFilesRequest, deepEqual, richTextHasOnlySpaces, sanitizeText } from "@/utils";
 import { BaseButton, SeoHead } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
@@ -46,6 +46,15 @@ const CreateSubAssembly = () => {
       }
     }
   }, [formData]);
+  const sanitizedFormData = () => {
+    return {
+      ...formData,
+      name: sanitizeText(formData.name),
+      number: sanitizeText(formData.number),
+      oem_number: sanitizeText(formData.oem_number),
+      weight: sanitizeText(formData.weight),
+    };
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (subAssemblyValidator(formData)) {
@@ -56,7 +65,7 @@ const CreateSubAssembly = () => {
         }
         try {
           apiClient
-            .POST(`/sub-assemblies`, { data: formData })
+            .POST(`/sub-assemblies`, { data: sanitizedFormData() })
             .then(() => {
               setFormData(initialFormData);
               showToast(`${formData.name} Created Successfully`, "success");

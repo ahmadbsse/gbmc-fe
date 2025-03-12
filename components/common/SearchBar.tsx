@@ -1,5 +1,6 @@
 import { Search, X } from "lucide-react";
 import { useRef } from "react";
+import { sanitizeText } from "@/utils";
 
 const SearchBar = ({ setSearchQuery, searchQuery }) => {
   const inputRef = useRef(null);
@@ -18,7 +19,7 @@ const SearchBar = ({ setSearchQuery, searchQuery }) => {
         ref={inputRef}
         placeholder="Search..."
         className="w-full rounded-lg py-2 pr-4 outline-none focus:border-transparent focus:outline-none"
-        onChange={(e) => setSearchQuery(e.target.value.trim())}
+        onChange={(e) => setSearchQuery(sanitizeText(e.target.value.trim()))}
       />
       {searchQuery != "" ? (
         <X className="h-8 w-8 pr-2 text-slate-600" onClick={clearSearch} />

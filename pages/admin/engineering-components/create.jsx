@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Navbar } from "@/components/common";
-
+import { sanitizeText } from "@/utils";
 import WarningModal from "@/components/admin/WarningModal";
 import { BaseButton, SeoHead } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
@@ -48,6 +48,15 @@ const CreateEngineeringComponent = () => {
       setIsFormValid(true);
     }
   }, [formData]);
+  const sanitizedFormData = () => {
+    return {
+      ...formData,
+      name: sanitizeText(formData.name),
+      description: formData.description,
+      material: sanitizeText(formData.material),
+      weight: sanitizeText(formData.weight),
+    };
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (engineeringComponentValidator(formData)) {
@@ -66,7 +75,7 @@ const CreateEngineeringComponent = () => {
               }
               try {
                 apiClient
-                  .POST(`/engineering-components`, { data: formData })
+                  .POST(`/engineering-components`, { data: sanitizedFormData() })
                   .then(() => {
                     setFormData(initialFormData);
                     showToast(`${formData.name} Created Successfully`, "success");

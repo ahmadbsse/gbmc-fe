@@ -2,7 +2,7 @@ import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import showToast from "@/utils/toast";
-import { transformMedia, uploadFilesRequest, deleteFilesRequest } from "@/utils";
+import { transformMedia, uploadFilesRequest, deleteFilesRequest, sanitizeText } from "@/utils";
 import apiClient from "@/utils/apiClient";
 import { BaseButton, BaseLoader, BaseImage } from "@/components/common";
 import BaseFileUploader from "./BaseFileUploader";
@@ -46,7 +46,12 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
   useEffect(() => {
     if (activeID) getMakeDetails();
   }, []);
-
+  const sanitizedFormData = () => {
+    return {
+      ...formData,
+      name: sanitizeText(formData.name),
+    };
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (makeValidator(formData)) {
@@ -59,7 +64,7 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
               formData.media = res;
               try {
                 apiClient
-                  .PUT(`/${currentTab}/${activeID}`, { data: formData })
+                  .PUT(`/${currentTab}/${activeID}`, { data: sanitizedFormData() })
                   .then(async () => {
                     showToast(`${formData.name} saved successfully`, "success");
                     await deleteFilesRequest(idsToRemove).then(() => {

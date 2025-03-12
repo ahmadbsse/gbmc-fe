@@ -10,6 +10,7 @@ import { partValidator } from "@/utils/validators";
 import { uploadFilesRequest, deepEqual, richTextHasOnlySpaces } from "@/utils";
 import RichTextEditor from "@/components/common/RichTextEditor";
 
+import { sanitizeText } from "@/utils";
 import WarningModal from "@/components/admin/WarningModal";
 
 const CreatePart = () => {
@@ -51,6 +52,16 @@ const CreatePart = () => {
       setIsFormValid(true);
     }
   }, [formData]);
+  const sanitizedFormData = () => {
+    return {
+      ...formData,
+      name: sanitizeText(formData.name),
+      number: sanitizeText(formData.number),
+      material: sanitizeText(formData.material),
+      weight: sanitizeText(formData.weight),
+      oem_number: sanitizeText(formData.oem_number),
+    };
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (partValidator(formData)) {
@@ -61,7 +72,7 @@ const CreatePart = () => {
             formData.media = res;
             try {
               apiClient
-                .POST(`/parts`, { data: formData })
+                .POST(`/parts`, { data: sanitizedFormData() })
                 .then(() => {
                   setFormData(initialFormData);
                   showToast(`${formData.name} created successfully`, "success");
