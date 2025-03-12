@@ -117,7 +117,7 @@ const Article = () => {
                   {data?.media && data?.media[selectedImage] ? (
                     <div className="m-1 h-[200px] p-1 text-black md:h-auto md:max-h-[400px] lg:max-h-[500px]">
                       <BaseImage
-                        classes="object-contain rounded-lg lg:max-h-[500px] md:max-h-[400px] h-[200px] md:h-auto"
+                        classes="object-contain rounded-lg lg:max-h-[490px] md:max-h-[390px] h-[190px] md:h-auto"
                         height={data?.media[selectedImage]?.formats?.actual?.height}
                         width={data?.media[selectedImage]?.formats?.actual?.width}
                         src={data?.media[selectedImage]?.formats?.actual?.url}
@@ -148,11 +148,11 @@ const Article = () => {
                             onClick={() => setSelectedImage(index)}
                           >
                             <BaseImage
-                              height={96}
-                              width={96}
+                              height={img?.formats?.thumbnail?.height || 96}
+                              width={img?.formats?.thumbnail?.width || 96}
                               src={img?.formats?.thumbnail?.url}
                               alt={`Product view ${index + 1}`}
-                              classes="h-full w-full object-contain"
+                              classes="object-contain max-h-20"
                             />
                           </button>
                         );

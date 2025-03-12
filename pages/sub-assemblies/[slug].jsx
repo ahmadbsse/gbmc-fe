@@ -75,7 +75,7 @@ const SubAssemblyDetails = () => {
                               width={img?.formats?.thumbnail?.width}
                               src={img.formats.thumbnail.url}
                               alt={`Sub Assembly view ${index + 1}`}
-                              classes="object-contain"
+                              classes="object-contain max-h-20"
                             />
                           </button>
                         );

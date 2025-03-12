@@ -111,7 +111,7 @@ const AllSubAssemblies = () => {
       ) : AllSubAssemblies.length ? (
         <>
           {pagination?.total && (
-            <p className="mb-6 mt-3 w-fit px-2 text-base font-bold sm:text-[19px] lg:px-0">{`Showing 1-${paginationInfo} of ${pagination?.total} Sub Assemblies`}</p>
+            <p className="mb-6 mt-3 w-fit px-2 text-lg font-bold lg:px-0">{`Showing 1-${paginationInfo} of ${pagination?.total} Sub Assemblies`}</p>
           )}
           <div>
             <div className="custom-scrollbar flex max-w-7xl flex-col gap-3 overflow-x-auto pb-2 lg:flex-row">

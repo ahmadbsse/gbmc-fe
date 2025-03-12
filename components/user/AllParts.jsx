@@ -158,7 +158,7 @@ const AllParts = () => {
       ) : allParts.length || selectedSupplier ? (
         <>
           {pagination?.total && (
-            <p className="my-4 w-fit px-2 text-base font-bold sm:text-[19px] lg:px-0">{`Showing 1-${paginationInfo} of ${pagination?.total} ${getBrand(selectedSupplier) != "All" ? getBrand(selectedSupplier) : ""} parts`}</p>
+            <p className="my-4 w-fit px-2 text-lg font-bold lg:px-0">{`Showing 1-${paginationInfo} of ${pagination?.total} ${getBrand(selectedSupplier) != "All" ? getBrand(selectedSupplier) : ""} parts`}</p>
           )}
           <div>
             <div className="custom-scrollbar flex max-w-7xl flex-col gap-3 overflow-x-auto pb-2 lg:flex-row">
