@@ -69,7 +69,7 @@ const Article = () => {
               ))}
             </div>
           </div>
-          <div className="mx-auto mt-2 flex w-full max-w-7xl items-center justify-center rounded-lg bg-white p-1 shadow-lg lg:h-[645px] lg:px-16">
+          <div className="mx-auto mt-2 flex h-[190px] w-full max-w-7xl items-center justify-center rounded-lg bg-white p-1 shadow-lg sm:h-[350px] lg:h-[645px] lg:px-16">
             {data?.hero_image ? (
               data?.hero_image?.type === "video" ? (
                 <BaseVideo src={data?.hero_image?.url} autoPlay={true} muted={true} loop={true} />
@@ -79,7 +79,7 @@ const Article = () => {
                   height={data?.hero_image?.height || data?.hero_image?.formats?.medium?.height}
                   src={data?.hero_image?.url || data?.hero_image?.formats?.medium?.url}
                   alt={data?.hero_image?.name}
-                  classes="object-contain max-h-[645px] rounded-lg"
+                  classes="object-contain lg:max-h-[645px] p-1 sm:max-h-[350px] max-h-[190px] rounded-lg"
                 />
               ) : null
             ) : null}
@@ -117,7 +117,7 @@ const Article = () => {
                   {data?.media && data?.media[selectedImage] ? (
                     <div className="m-1 h-[200px] p-1 text-black md:h-auto md:max-h-[400px] lg:max-h-[500px]">
                       <BaseImage
-                        classes="object-contain rounded-lg lg:max-h-[490px] md:max-h-[390px] h-[190px] md:h-auto"
+                        classes="object-contain rounded-lg p-1 lg:max-h-[490px] md:max-h-[390px] h-[190px] md:h-auto"
                         height={data?.media[selectedImage]?.formats?.actual?.height}
                         width={data?.media[selectedImage]?.formats?.actual?.width}
                         src={data?.media[selectedImage]?.formats?.actual?.url}
@@ -152,7 +152,7 @@ const Article = () => {
                               width={img?.formats?.thumbnail?.width || 96}
                               src={img?.formats?.thumbnail?.url}
                               alt={`Product view ${index + 1}`}
-                              classes="object-contain max-h-20"
+                              classes="object-contain max-h-20 p-1"
                             />
                           </button>
                         );
