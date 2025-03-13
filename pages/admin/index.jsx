@@ -215,12 +215,6 @@ const AdminDashboard = () => {
   };
 
   useEffect(() => {
-    setPagination(null);
-    setPage(1);
-    apiCalls(1, false);
-  }, [activeTab]);
-
-  useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearchQuery(searchQuery);
     }, 500); // Adjust debounce delay (500ms) as needed
@@ -229,12 +223,6 @@ const AdminDashboard = () => {
       clearTimeout(handler);
     };
   }, [searchQuery]);
-
-  useEffect(() => {
-    setPage(1);
-    setPagination(null);
-    apiCalls(1, false);
-  }, [debouncedSearchQuery]);
 
   useEffect(() => {
     if (page > 1) {
@@ -249,15 +237,20 @@ const AdminDashboard = () => {
       return newPage;
     });
   };
+  useEffect(() => {
+    setPagination(null);
+    setPage(1);
+    setTotal(0);
+    apiCalls(1, false);
+  }, [activeTab, debouncedSearchQuery]);
 
   const setTab = (tab) => {
     //store tab object to local storage
     if (tab) {
-      localStorage.setItem("activeTab", JSON.stringify(tab));
-      setPagination(null);
-      setActiveTab(tab);
-      setTotal(0);
+      setDebouncedSearchQuery("");
       setSearchQuery("");
+      localStorage.setItem("activeTab", JSON.stringify(tab));
+      setActiveTab(tab);
     }
   };
 
