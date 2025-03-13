@@ -42,7 +42,14 @@ const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
                 href={`${isAdmin ? "/admin" : "/"}`}
                 className="text-xl font-extrabold text-black md:text-2xl"
               >
-                <Image height={70} width={150} src="/assets/logo.svg" alt="logo" priority />
+                <Image
+                  height={70}
+                  width={150}
+                  src="/assets/logo.svg"
+                  alt="logo"
+                  priority
+                  className="h-[70px] w-[150px]"
+                />
               </Link>
               {isAdmin ? (
                 <div className="flex items-center gap-4 pl-4">

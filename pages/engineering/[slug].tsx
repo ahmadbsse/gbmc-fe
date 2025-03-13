@@ -80,6 +80,7 @@ const Article = () => {
                   src={data?.hero_image?.url || data?.hero_image?.formats?.medium?.url}
                   alt={data?.hero_image?.name}
                   classes="object-contain lg:max-h-[645px] p-1 sm:max-h-[350px] max-h-[190px] rounded-lg"
+                  priority={true}
                 />
               ) : null
             ) : null}
