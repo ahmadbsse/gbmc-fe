@@ -52,7 +52,7 @@ const FeaturedSubAssemblies = () => {
               navigation
               mousewheel={true}
               direction={"horizontal"}
-              pagination={{ clickable: true }}
+              pagination={{ clickable: true, el: ".custom-pagination" }}
               breakpoints={{
                 640: {
                   slidesPerView: 2,
@@ -61,7 +61,7 @@ const FeaturedSubAssemblies = () => {
                   slidesPerView: 4,
                 },
               }}
-              className="w-full"
+              className="swiper-container w-full"
             >
               {featuredSubAssemblies.map((subAssembly, index) => (
                 <SwiperSlide key={subAssembly.id + index + subAssembly.documentId}>
@@ -93,6 +93,7 @@ const FeaturedSubAssemblies = () => {
               ))}
             </Swiper>
           </div>
+          <div className="custom-pagination mt-4 flex justify-center"></div>
         </div>
       ) : null}
     </>
