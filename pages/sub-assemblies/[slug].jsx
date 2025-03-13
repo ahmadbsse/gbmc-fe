@@ -1,17 +1,17 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import apiClient from "@/utils/apiClient";
 import { transformMedia } from "@/utils";
 import { Navbar, PageLayout, BaseImage, BaseLoader, SeoHead } from "@/components/common";
 import { ImageMagnifier } from "@/components/user";
-// import { Check, X } from "lucide-react";
-// import { convertToReadableDate } from "@/utils";
 
 const SubAssemblyDetails = () => {
   const router = useRouter();
   const [selectedImage, setSelectedImage] = useState(0);
   const [data, setData] = useState(null);
-  // Size of the magnifier square
+  const [isOverflowing, setIsOverflowing] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const contentRef = useRef(null);
 
   const getSubAssemblyDetails = async () => {
     try {
@@ -44,6 +44,27 @@ const SubAssemblyDetails = () => {
     { text: data?.name, href: `/sub-assemblies/${router.query.slug}` },
   ];
 
+  useEffect(() => {
+    const checkOverflow = () => {
+      if (contentRef.current) {
+        // Get the scroll height (full content height) and client height (visible height)
+        const isContentOverflowing =
+          contentRef.current.scrollHeight > contentRef.current.clientHeight;
+        setIsOverflowing(isContentOverflowing);
+      }
+    };
+
+    // Check initially
+    checkOverflow();
+
+    // Check on window resize
+    window.addEventListener("resize", checkOverflow);
+    return () => window.removeEventListener("resize", checkOverflow);
+  }, [data?.description]);
+
+  const toggleExpand = () => {
+    setExpanded(!expanded);
+  };
   return (
     <>
       <SeoHead title={data && data?.name ? data?.name : "Sub Assembly Details"} />
@@ -89,11 +110,27 @@ const SubAssemblyDetails = () => {
                 <div className="space-y-2">
                   <h1 className="break-all text-2xl font-bold capitalize">{data?.name}</h1>
                 </div>
-
-                <p
-                  className="min-h-10 text-lg"
-                  dangerouslySetInnerHTML={{ __html: data?.description }}
-                ></p>
+                <div
+                  ref={contentRef}
+                  className={`relative ${expanded ? "" : "h-auto overflow-y-auto sm:h-[170px] md:overflow-y-hidden lg:h-[310px]"}`}
+                >
+                  <p
+                    className="min-h-10 text-lg"
+                    dangerouslySetInnerHTML={{ __html: data?.description }}
+                  ></p>
+                  {isOverflowing && (
+                    <div
+                      className={`hidden w-fit md:block ${expanded ? "" : "absolute bottom-0 right-1.5 bg-gradient-to-t from-white to-transparent"}`}
+                    >
+                      <button
+                        onClick={toggleExpand}
+                        className="text-blac rounded-md bg-gray-50 py-1 pr-4 underline"
+                      >
+                        {expanded ? "" : "...See More"}
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
             <div className="mt-8 max-w-3xl">
