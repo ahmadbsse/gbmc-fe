@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
-
+import { sanitizeText } from "@/utils";
 import WarningModal from "@/components/admin/WarningModal";
 import apiClient from "@/utils/apiClient";
 import {
@@ -71,6 +71,7 @@ const EditComponent = () => {
     e.preventDefault();
 
     if (engineeringComponentValidator(formData)) {
+      setLoading(true);
       delete formData.documentId;
       const heroUpdated = Array.isArray(formData.hero_image);
       const flattenedMediaData = formData.media
@@ -106,13 +107,22 @@ const EditComponent = () => {
       saveData();
     }
   };
+  const sanitizedFormData = () => {
+    return {
+      ...formData,
+      name: sanitizeText(formData.name),
+      material: sanitizeText(formData.material),
+      weight: sanitizeText(formData.weight),
+    };
+  };
   const saveData = () => {
     try {
       apiClient
-        .PUT(`/engineering-components/${id}`, { data: formData })
+        .PUT(`/engineering-components/${id}`, { data: sanitizedFormData() })
         .then(async () => {
           showToast(`${formData.name} saved Successfully`, "success");
           await deleteFilesRequest(idsToRemove).then(() => {});
+          setLoading(false);
           router.push("/admin");
         })
         .catch((error) => {

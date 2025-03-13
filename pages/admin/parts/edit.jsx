@@ -11,6 +11,7 @@ import {
 import { Navbar, BaseLoader, BaseImage, BaseButton, SeoHead } from "@/components/common";
 import BaseFileUploader from "@/components/admin/BaseFileUploader";
 import showToast from "@/utils/toast";
+import { sanitizeText } from "@/utils";
 import RichTextEditor from "@/components/common/RichTextEditor";
 import { partValidator } from "@/utils/validators";
 import WarningModal from "@/components/admin/WarningModal";
@@ -104,10 +105,20 @@ const EditPart = () => {
       }
     }
   };
+  const sanitizedFormData = () => {
+    return {
+      ...formData,
+      name: sanitizeText(formData.name),
+      number: sanitizeText(formData.number),
+      material: sanitizeText(formData.material),
+      weight: sanitizeText(formData.weight),
+      oem_number: sanitizeText(formData.oem_number),
+    };
+  };
   const saveData = () => {
     try {
       apiClient
-        .PUT(`/parts/${id}`, { data: formData })
+        .PUT(`/parts/${id}`, { data: sanitizedFormData() })
         .then(async () => {
           showToast(`${formData.name} Saved Successfully`, "success");
           await deleteFilesRequest(idsToRemove).then(() => {});

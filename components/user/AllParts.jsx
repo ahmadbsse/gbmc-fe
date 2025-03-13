@@ -140,11 +140,11 @@ const AllParts = () => {
           <BaseSearchbar setSearchQuery={setSearchQuery} searchQuery={searchQuery} />
         </div>
       </div>
-      <div className="mb-3 flex flex-wrap justify-center text-center text-xl lg:justify-center lg:gap-x-5">
+      <div className="mb-7 flex flex-wrap justify-center text-center text-xl lg:justify-center lg:gap-x-5">
         {makes.map((brand, index) => (
           <span
             onClick={() => setSelectedSupplier(brand.documentId)}
-            className={`cursor-pointer break-all p-2 font-bold uppercase hover:text-black md:p-4 ${brand.documentId === selectedSupplier ? "border-b border-b-primary text-black" : ""}`}
+            className={`cursor-pointer break-all px-2 py-2 pb-1 font-bold uppercase hover:text-black md:px-4 md:py-1 ${brand.documentId === selectedSupplier ? "border-b-2 border-b-primary text-black" : ""}`}
             key={index + brand.name}
           >
             {brand.name}
@@ -158,7 +158,7 @@ const AllParts = () => {
       ) : allParts.length || selectedSupplier ? (
         <>
           {pagination?.total && (
-            <p className="my-4 w-fit px-2 text-base font-bold sm:text-[19px] lg:px-0">{`Showing 1-${paginationInfo} of ${pagination?.total} ${getBrand(selectedSupplier) != "All" ? getBrand(selectedSupplier) : ""} parts`}</p>
+            <p className="my-4 w-fit px-2 text-lg font-bold lg:px-0">{`Showing 1-${paginationInfo} of ${pagination?.total} ${getBrand(selectedSupplier) != "All" ? getBrand(selectedSupplier) : ""} parts`}</p>
           )}
           <div>
             <div className="custom-scrollbar flex max-w-7xl flex-col gap-3 overflow-x-auto pb-2 lg:flex-row">
@@ -170,7 +170,7 @@ const AllParts = () => {
                     key={part.id + index + part.documentId}
                   >
                     <div className="w-[280px] min-w-[280px] rounded-lg border border-gray-200 bg-white shadow-sm transition xs:w-[330px] sm:w-auto">
-                      <div className="relative h-[200px] w-full border-b border-gray-200">
+                      <div className="relative h-[200px] w-full border-b border-gray-200 p-1">
                         {part.media ? (
                           <BaseImage
                             width={part.media[0].formats?.actual?.width}

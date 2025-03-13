@@ -241,7 +241,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
                 data.map((item, index) => (
                   <div
                     key={item.documentId}
-                    className={`flex w-[265px] flex-col justify-between gap-2 rounded-lg bg-gray-50 p-4 xs:w-[320px] sm:w-full sm:flex-row sm:items-center`}
+                    className={`flex w-[265px] flex-col justify-between gap-6 rounded-lg bg-gray-50 p-4 xs:w-[320px] sm:w-full sm:flex-row sm:items-center`}
                   >
                     <div className="flex w-full flex-col items-center gap-2 sm:flex-row sm:gap-4">
                       <div

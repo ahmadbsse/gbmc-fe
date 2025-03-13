@@ -69,7 +69,7 @@ const Article = () => {
               ))}
             </div>
           </div>
-          <div className="mx-auto mt-2 flex w-full max-w-7xl items-center justify-center rounded-lg bg-white shadow-lg lg:h-[645px] lg:px-16">
+          <div className="mx-auto mt-2 flex w-full max-w-7xl items-center justify-center rounded-lg bg-white p-1 shadow-lg lg:h-[645px] lg:px-16">
             {data?.hero_image ? (
               data?.hero_image?.type === "video" ? (
                 <BaseVideo src={data?.hero_image?.url} autoPlay={true} muted={true} loop={true} />
@@ -96,7 +96,7 @@ const Article = () => {
 
               <div className="mb-3 mt-4 flex flex-col gap-4 lg:flex-row lg:gap-10">
                 <div className="rounded-lg bg-[#707070] p-4 text-sm text-white lg:h-[650px] lg:w-[700px] lg:text-base">
-                  <div className="py-7 lg:w-[750px] lg:gap-5 lg:px-11">
+                  <div className="lg:w-[750px] lg:gap-5 lg:px-11 lg:py-7">
                     <div className="flex flex-col gap-2 lg:w-[500px]">
                       <p className="text-xl font-bold">Key Features</p>
                       <p>
@@ -115,9 +115,9 @@ const Article = () => {
 
                 <div className="z-20 flex h-[200px] w-full items-center justify-center rounded-lg bg-white p-6 text-white shadow-lg md:h-auto md:max-h-[400px] lg:my-20 lg:-ml-32 lg:max-h-[500px]">
                   {data?.media && data?.media[selectedImage] ? (
-                    <div className="m-1 h-[200px] text-black md:h-auto md:max-h-[400px] lg:max-h-[500px]">
+                    <div className="m-1 h-[200px] p-1 text-black md:h-auto md:max-h-[400px] lg:max-h-[500px]">
                       <BaseImage
-                        classes="object-contain rounded-lg lg:max-h-[500px] md:max-h-[400px] h-[200px] md:h-auto"
+                        classes="object-contain rounded-lg lg:max-h-[490px] md:max-h-[390px] h-[190px] md:h-auto"
                         height={data?.media[selectedImage]?.formats?.actual?.height}
                         width={data?.media[selectedImage]?.formats?.actual?.width}
                         src={data?.media[selectedImage]?.formats?.actual?.url}
@@ -140,7 +140,7 @@ const Article = () => {
                         return (
                           <button
                             key={index}
-                            className={`relative h-20 w-20 overflow-hidden rounded-lg shadow-sm md:h-24 md:w-24 ${
+                            className={`relative h-20 w-20 overflow-hidden rounded-lg p-1 shadow-sm md:h-24 md:w-24 ${
                               selectedImage === index
                                 ? "ring-4 ring-primary/50"
                                 : "ring-1 ring-gray-200"
@@ -148,11 +148,11 @@ const Article = () => {
                             onClick={() => setSelectedImage(index)}
                           >
                             <BaseImage
-                              height={96}
-                              width={96}
+                              height={img?.formats?.thumbnail?.height || 96}
+                              width={img?.formats?.thumbnail?.width || 96}
                               src={img?.formats?.thumbnail?.url}
                               alt={`Product view ${index + 1}`}
-                              classes="h-full w-full object-contain"
+                              classes="object-contain max-h-20"
                             />
                           </button>
                         );

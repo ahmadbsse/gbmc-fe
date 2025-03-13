@@ -63,7 +63,7 @@ const SubAssemblyDetails = () => {
                         return (
                           <button
                             key={index}
-                            className={`relative h-20 w-20 overflow-hidden rounded-lg shadow-sm md:h-24 md:w-24 ${
+                            className={`relative h-20 w-20 overflow-hidden rounded-lg p-1 shadow-sm md:h-24 md:w-24 ${
                               selectedImage === index
                                 ? "ring-4 ring-primary/50"
                                 : "ring-1 ring-gray-200"
@@ -75,7 +75,7 @@ const SubAssemblyDetails = () => {
                               width={img?.formats?.thumbnail?.width}
                               src={img.formats.thumbnail.url}
                               alt={`Sub Assembly view ${index + 1}`}
-                              classes="object-contain"
+                              classes="object-contain max-h-20"
                             />
                           </button>
                         );

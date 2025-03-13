@@ -83,7 +83,7 @@ const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
                                   <div
                                     className={`w-fit hover:text-solidGray ${
                                       activeTab == tab.name
-                                        ? "border-b border-primary-color font-medium text-black"
+                                        ? "border-b-2 border-primary-color font-medium text-black"
                                         : ""
                                     }`}
                                   >
@@ -108,7 +108,7 @@ const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
                         className={`hover:text-solidGray ${
                           item.routeName.toLowerCase() === router.route.toLowerCase() ||
                           router.route.toLowerCase().includes(item.routeName.toLowerCase())
-                            ? "border-b border-primary-color font-medium text-black"
+                            ? "border-b-2 border-primary-color font-medium text-black"
                             : ""
                         }`}
                       >
@@ -154,7 +154,7 @@ const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
                                       router.route
                                         .toLowerCase()
                                         .includes(item.routeName.toLowerCase())
-                                        ? "border-b border-primary-color font-medium text-black"
+                                        ? "border-b-2 border-primary-color font-medium text-black"
                                         : ""
                                     }`}
                                   >

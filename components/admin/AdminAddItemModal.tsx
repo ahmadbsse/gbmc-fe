@@ -6,7 +6,7 @@ import { BaseButton } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
 import { makeValidator } from "@/utils/validators";
-import { uploadFilesRequest, deepEqual } from "@/utils";
+import { uploadFilesRequest, deepEqual, sanitizeText } from "@/utils";
 import type { AdminAddItemModalProps } from "@/types";
 import WarningModal from "@/components/admin/WarningModal";
 
@@ -42,6 +42,12 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
     }
   }, [formData]);
 
+  const sanitizedFormData = () => {
+    return {
+      ...formData,
+      name: sanitizeText(formData.name),
+    };
+  };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (makeValidator(formData)) {
@@ -52,7 +58,7 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
         }
         try {
           apiClient
-            .POST(`/${currentTab}`, { data: formData })
+            .POST(`/${currentTab}`, { data: sanitizedFormData() })
             .then(() => {
               setFormData(initialFormData);
               if (currentTab === "suppliers") {

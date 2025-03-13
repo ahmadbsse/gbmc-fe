@@ -110,8 +110,9 @@ const AllSubAssemblies = () => {
         </p>
       ) : AllSubAssemblies.length ? (
         <>
+          <h2 className="my-4 text-2xl font-bold">All Sub Assemblies</h2>
           {pagination?.total && (
-            <p className="mb-6 mt-3 w-fit px-2 text-base font-bold sm:text-[19px] lg:px-0">{`Showing 1-${paginationInfo} of ${pagination?.total} Sub Assemblies`}</p>
+            <p className="mb-6 mt-3 w-fit px-2 text-lg font-bold lg:px-0">{`Showing 1-${paginationInfo} of ${pagination?.total} Sub Assemblies`}</p>
           )}
           <div>
             <div className="custom-scrollbar flex max-w-7xl flex-col gap-3 overflow-x-auto pb-2 lg:flex-row">
@@ -123,7 +124,7 @@ const AllSubAssemblies = () => {
                     key={subAssembly.id + index + subAssembly.documentId}
                   >
                     <div className="w-[280px] min-w-[280px] rounded-lg border border-gray-200 bg-white shadow-sm transition xs:w-[330px] sm:w-auto">
-                      <div className="relative h-[200px] w-full border-b border-gray-200">
+                      <div className="relative h-[200px] w-full border-b border-gray-200 p-1">
                         {subAssembly.media ? (
                           <BaseImage
                             width={subAssembly.media[0].formats?.actual?.width}

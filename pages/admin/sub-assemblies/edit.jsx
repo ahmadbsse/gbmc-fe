@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
 import apiClient from "@/utils/apiClient";
+import { sanitizeText } from "@/utils";
 import {
   transformMedia,
   uploadFilesRequest,
@@ -94,10 +95,19 @@ const EditSubAssembly = () => {
       }
     }
   };
+  const sanitizedFormData = () => {
+    return {
+      ...formData,
+      name: sanitizeText(formData.name),
+      number: sanitizeText(formData.number),
+      oem_number: sanitizeText(formData.oem_number),
+      weight: sanitizeText(formData.weight),
+    };
+  };
   const saveData = () => {
     try {
       apiClient
-        .PUT(`/sub-assemblies/${id}`, { data: formData })
+        .PUT(`/sub-assemblies/${id}`, { data: sanitizedFormData() })
         .then(async () => {
           showToast(`${formData.name} Saved Successfully`, "success");
           router.push("/admin");

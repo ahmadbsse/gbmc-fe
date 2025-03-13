@@ -68,7 +68,7 @@ const FeaturedParts = () => {
                 <SwiperSlide key={part.id + index + part.documentId}>
                   <Link href={`/tractor-parts/${part.documentId}`}>
                     <div className="rounded-lg border border-gray-200 bg-white shadow-sm transition">
-                      <div className="relative h-[200px] w-full border-b border-gray-200">
+                      <div className="relative h-[200px] w-full border-b border-gray-200 p-1">
                         {part.media ? (
                           <BaseImage
                             width={part.media[0].formats?.actual?.width}
