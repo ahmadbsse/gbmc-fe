@@ -22,6 +22,7 @@ const AllParts = () => {
 
   const getParts = async (pageNum, isLoadMore = false) => {
     try {
+      setMessage("");
       if (isLoadMore) {
         setIsLoadingMore(true);
       } else {

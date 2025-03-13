@@ -16,9 +16,11 @@ const AllSubAssemblies = () => {
   const [paginationInfo, setPaginationInfo] = useState(0);
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(searchQuery);
   const observerRef = useRef(null);
+  const [message, setMessage] = useState("");
 
   const getSubAssemblies = async (pageNum, isLoadMore = false) => {
     try {
+      setMessage("");
       if (isLoadMore) {
         setIsLoadingMore(true);
       } else {
@@ -42,6 +44,13 @@ const AllSubAssemblies = () => {
       } else {
         setPagination(null);
         setAllSubAssemblies([]);
+        setMessage(() => {
+          if (searchQuery) {
+            return "No search results found";
+          } else {
+            return "No sub assemblies found.";
+          }
+        });
       }
     } catch (error) {
       console.error("Error in GET request:", error.message);
@@ -157,11 +166,8 @@ const AllSubAssemblies = () => {
             )}
           </div>
         </>
-      ) : (
-        <p className="mt-10 min-h-36 w-fit px-5 text-gray-500">
-          {searchQuery ? "No search results found" : "No sub assemblies found."}
-        </p>
-      )}
+      ) : null}
+      {message ? <p className="min-h-36 w-fit px-5 text-gray-500">{message}</p> : null}
     </>
   );
 };
