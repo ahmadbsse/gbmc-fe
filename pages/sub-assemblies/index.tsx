@@ -57,7 +57,7 @@ const SubAssemblies = () => {
               </Link>
             ))}
           </div>
-          <section className="min-h-[300px]">
+          <section className="min-h-[300px] overflow-y-hidden">
             <FeaturedSubAssemblies />
             <AllSubAssemblies />
           </section>
