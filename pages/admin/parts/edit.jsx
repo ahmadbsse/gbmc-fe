@@ -92,7 +92,9 @@ const EditPart = () => {
           .filter((item) => item && typeof item === "object" && !item.id);
         const previousMedia = formData.media.filter((item) => item && item.id);
         const newMediaIds = previousMedia.map((file) => file.id);
-        formData.supplier = formData.supplier?.documentId;
+        formData.supplier = formData.supplier?.documentId
+          ? formData.supplier?.documentId
+          : formData.supplier;
         delete formData?.documentId;
         await uploadFilesRequest(flattenedData, true).then((res) => {
           if (res) {
@@ -122,6 +124,7 @@ const EditPart = () => {
   };
   const saveData = () => {
     try {
+      console.log(sanitizedFormData());
       apiClient
         .PUT(`/parts/${id}`, { data: sanitizedFormData() })
         .then(async () => {
@@ -198,6 +201,7 @@ const EditPart = () => {
         <main className="mx-auto px-4 py-8 sm:container">
           {formData ? (
             <>
+              <pre>{JSON.stringify(formData.supplier)}</pre>
               <h1 className="mx-auto mb-10 w-fit max-w-[810px] break-all text-center text-2xl font-bold">
                 Edit Part - <span className="font-medium">{formData?.name || ""}</span>
               </h1>
