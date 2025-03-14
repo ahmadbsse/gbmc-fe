@@ -50,7 +50,7 @@ const FeaturedSubAssemblies = () => {
           <div className="custom-scrollbar flex w-[280px] max-w-7xl flex-col gap-3 overflow-x-auto pb-2 xs:w-[340px] sm:w-[590px] md:w-[600px] lg:w-[990px] lg:flex-row xl:w-[1230px]">
             <Swiper
               modules={[Navigation, Pagination, Mousewheel]}
-              spaceBetween={20}
+              spaceBetween={24}
               slidesPerView={1}
               navigation
               mousewheel={true}

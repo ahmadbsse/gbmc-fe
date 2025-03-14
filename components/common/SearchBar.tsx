@@ -15,6 +15,7 @@ const SearchBar = ({ setSearchQuery, searchQuery }) => {
     <div className="flex w-full items-center gap-3 rounded-lg border border-gray-300 bg-white pl-2 focus:border-primary focus:ring-1 focus:ring-primary md:w-64">
       <Search className="h-8 w-8 pl-1 text-primary" />
       <input
+        id="searchbar"
         type="text"
         ref={inputRef}
         placeholder="Search..."
