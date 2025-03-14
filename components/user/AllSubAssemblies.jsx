@@ -16,9 +16,11 @@ const AllSubAssemblies = () => {
   const [paginationInfo, setPaginationInfo] = useState(0);
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(searchQuery);
   const observerRef = useRef(null);
+  const [message, setMessage] = useState("");
 
   const getSubAssemblies = async (pageNum, isLoadMore = false) => {
     try {
+      setMessage("");
       if (isLoadMore) {
         setIsLoadingMore(true);
       } else {
@@ -42,6 +44,13 @@ const AllSubAssemblies = () => {
       } else {
         setPagination(null);
         setAllSubAssemblies([]);
+        setMessage(() => {
+          if (searchQuery) {
+            return "No search results found";
+          } else {
+            return "No sub assemblies found.";
+          }
+        });
       }
     } catch (error) {
       console.error("Error in GET request:", error.message);
@@ -112,7 +121,7 @@ const AllSubAssemblies = () => {
         <>
           <h2 className="my-4 text-2xl font-bold">All Sub Assemblies</h2>
           {pagination?.total && (
-            <p className="mb-6 mt-3 w-fit px-2 text-lg font-bold lg:px-0">{`Showing 1-${paginationInfo} of ${pagination?.total} Sub Assemblies`}</p>
+            <p className="mb-6 mt-3 w-fit text-lg font-bold lg:px-0">{`Showing 1-${paginationInfo} of ${pagination?.total} Sub Assemblies`}</p>
           )}
           <div>
             <div className="custom-scrollbar flex max-w-7xl flex-col gap-3 overflow-x-auto pb-2 lg:flex-row">
@@ -157,11 +166,8 @@ const AllSubAssemblies = () => {
             )}
           </div>
         </>
-      ) : (
-        <p className="mt-10 min-h-36 w-fit px-5 text-gray-500">
-          {searchQuery ? "No search results found" : "No sub assemblies found."}
-        </p>
-      )}
+      ) : null}
+      {message ? <p className="min-h-36 w-fit px-5 text-gray-500">{message}</p> : null}
     </>
   );
 };

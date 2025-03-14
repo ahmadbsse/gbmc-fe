@@ -18,9 +18,11 @@ const AllParts = () => {
   const [paginationInfo, setPaginationInfo] = useState(0);
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(searchQuery);
   const observerRef = useRef(null);
+  const [message, setMessage] = useState("");
 
   const getParts = async (pageNum, isLoadMore = false) => {
     try {
+      setMessage("");
       if (isLoadMore) {
         setIsLoadingMore(true);
       } else {
@@ -51,6 +53,13 @@ const AllParts = () => {
       } else {
         setPagination(null);
         setAllParts([]);
+        setMessage(() => {
+          if (searchQuery) {
+            return "No search results found";
+          } else {
+            return "No parts found.";
+          }
+        });
       }
     } catch (error) {
       console.error("Error in GET request:", error.message);
@@ -119,9 +128,11 @@ const AllParts = () => {
       if (observerRef.current) observer.unobserve(observerRef.current);
     };
   }, [pagination]);
+
   useEffect(() => {
     getMakes();
   }, []);
+
   useEffect(() => {
     if (pagination) {
       setPaginationInfo(Math.min(pagination.page * pagination.pageSize, pagination.total));
@@ -203,16 +214,8 @@ const AllParts = () => {
             )}
           </div>
         </>
-      ) : (
-        <p className="mt-10 min-h-36 w-fit px-5 text-gray-500">
-          {searchQuery ? "No search results found" : "No parts found."}
-        </p>
-      )}
-      {!allParts.length && selectedSupplier ? (
-        <p className="min-h-36 w-fit px-5 text-gray-500">
-          {searchQuery ? "No search results found" : "No parts found."}
-        </p>
       ) : null}
+      {message ? <p className="min-h-36 w-fit px-5 text-gray-500">{message}</p> : null}
     </>
   );
 };

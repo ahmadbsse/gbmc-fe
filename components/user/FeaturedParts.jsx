@@ -53,7 +53,10 @@ const FeaturedParts = () => {
               navigation
               mousewheel={true}
               direction={"horizontal"}
-              pagination={{ clickable: true }}
+              pagination={{
+                clickable: true,
+                el: ".custom-pagination",
+              }}
               breakpoints={{
                 640: {
                   slidesPerView: 2,
@@ -62,7 +65,7 @@ const FeaturedParts = () => {
                   slidesPerView: 4,
                 },
               }}
-              className="w-full"
+              className="swiper-container w-full"
             >
               {featuredParts.map((part, index) => (
                 <SwiperSlide key={part.id + index + part.documentId}>
@@ -94,6 +97,7 @@ const FeaturedParts = () => {
               ))}
             </Swiper>
           </div>
+          <div className="custom-pagination mt-4 flex justify-center"></div>
         </div>
       ) : null}
     </>

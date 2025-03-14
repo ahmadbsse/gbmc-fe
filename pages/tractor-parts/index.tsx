@@ -58,7 +58,7 @@ const TractorPartsHome = () => {
           </div>
           {/* Featured Parts Section */}
 
-          <section className="min-h-[300px]">
+          <section className="min-h-[300px] overflow-y-hidden">
             <FeaturedParts />
             <AllParts />
           </section>

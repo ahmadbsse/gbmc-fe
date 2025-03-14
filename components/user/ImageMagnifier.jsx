@@ -113,7 +113,7 @@ const ImageMagnifier = ({ image, title }) => {
                   height={image.formats.actual.height}
                   src={imageUrl}
                   alt={title || "Product image"}
-                  className="h-full w-full cursor-crosshair object-contain"
+                  className="h-full w-full cursor-crosshair object-contain p-1"
                   priority={true}
                   unoptimized={true} // Important: prevents Next.js from optimizing this image
                 />
