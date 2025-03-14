@@ -14,7 +14,7 @@ const EngineeringListingCard: React.FC<EngineeringCardProps> = ({
     <Link className="" href={`/engineering/${id}`}>
       <div className="relative w-[280px] min-w-[280px] rounded-lg border border-gray-200 bg-white shadow-sm transition xs:w-[330px] sm:w-auto">
         {featured ? (
-          <div className="absolute right-2 top-4 rounded bg-primary px-1 text-xs font-semibold">
+          <div className="absolute right-2 top-4 rounded bg-primary px-1 text-xs font-bold">
             <span>Featured</span>
           </div>
         ) : null}
