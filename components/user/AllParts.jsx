@@ -74,11 +74,6 @@ const AllParts = () => {
       }
     }
   };
-  //
-  useEffect(() => {
-    setPage(1);
-    getParts(1, false);
-  }, [selectedSupplier]);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -93,8 +88,16 @@ const AllParts = () => {
   useEffect(() => {
     setPage(1);
     getParts(1, false);
-  }, [debouncedSearchQuery]);
+  }, [debouncedSearchQuery, selectedSupplier]);
 
+  const setTab = (id) => {
+    if (document.getElementById("searchbar").value) {
+      document.getElementById("searchbar").value = "";
+    }
+    setDebouncedSearchQuery("");
+    setSearchQuery("");
+    setSelectedSupplier(id);
+  };
   useEffect(() => {
     if (page > 1) getParts(page, true);
   }, [page]);
@@ -160,7 +163,7 @@ const AllParts = () => {
       <div className="mb-7 flex flex-wrap justify-center text-center text-xl lg:justify-center lg:gap-x-5">
         {makes.map((brand, index) => (
           <span
-            onClick={() => setSelectedSupplier(brand.documentId)}
+            onClick={() => setTab(brand.documentId)}
             className={`cursor-pointer break-all px-2 py-2 pb-1 font-bold uppercase hover:text-black md:px-4 md:py-1 ${brand.documentId === selectedSupplier ? "border-b-2 border-b-primary text-black" : ""}`}
             key={index + brand.name}
           >
