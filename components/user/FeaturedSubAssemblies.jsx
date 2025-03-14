@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import apiClient from "@/utils/apiClient";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Mousewheel } from "swiper/modules";
-import { transformMedia } from "@/utils";
+import { transformMedia, decodeText } from "@/utils";
 import Link from "next/link";
 
 // Import Swiper styles
@@ -22,6 +22,9 @@ const FeaturedSubAssemblies = () => {
       const res = await apiClient.GET(url);
       if (res && res.data.length > 0) {
         const transformedData = transformMedia(res.data);
+        transformedData.forEach((subAssembly) => {
+          subAssembly.name = decodeText(subAssembly.name);
+        });
         setFeaturedSubAssemblies(transformedData);
       }
     } catch (error) {

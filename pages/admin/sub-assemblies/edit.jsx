@@ -9,6 +9,7 @@ import {
   uploadFilesRequest,
   deleteFilesRequest,
   richTextHasOnlySpaces,
+  decodeText,
 } from "@/utils";
 import { Navbar, BaseLoader, BaseImage, BaseButton, SeoHead } from "@/components/common";
 import BaseFileUploader from "@/components/admin/BaseFileUploader";
@@ -56,6 +57,11 @@ const EditSubAssembly = () => {
         if (!Array.isArray(response.media)) {
           response.media = [response.media];
         }
+        response.name = decodeText(response.name);
+        response.number = decodeText(response.number);
+        response.oem_number = decodeText(response.oem_number);
+        response.weight = decodeText(response.weight);
+
         setFormData(response);
       });
     } catch (error) {

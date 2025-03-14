@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import apiClient from "@/utils/apiClient";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Mousewheel } from "swiper/modules";
-import { transformMedia } from "@/utils";
+import { transformMedia, decodeText } from "@/utils";
 import Link from "next/link";
 
 // Import Swiper styles
@@ -23,6 +23,10 @@ const FeaturedParts = () => {
       if (res && res.data.length > 0) {
         const parts = res.data.filter((part) => part.supplier.active);
         const transformedData = transformMedia(parts);
+        transformedData.forEach((part) => {
+          part.name = decodeText(part.name);
+          part.supplier.name = decodeText(part.supplier.name);
+        });
         setFeaturedParts(transformedData);
       }
     } catch (error) {

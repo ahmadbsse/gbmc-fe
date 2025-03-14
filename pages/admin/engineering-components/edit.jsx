@@ -10,6 +10,7 @@ import {
   uploadFilesRequest,
   deleteFilesRequest,
   richTextHasOnlySpaces,
+  decodeText,
 } from "@/utils";
 import { Navbar, BaseLoader, BaseImage, BaseButton, BaseVideo, SeoHead } from "@/components/common";
 import BaseFileUploader from "@/components/admin/BaseFileUploader";
@@ -60,6 +61,10 @@ const EditComponent = () => {
         if (response.hero_image && response.hero_image.mime?.includes("video")) {
           response.hero_image = transformHeroVideo(response.hero_image);
         }
+        response.name = decodeText(response.name);
+        response.material = decodeText(response.material);
+        response.weight = decodeText(response.weight);
+
         setFormData(response);
       });
     } catch (error) {

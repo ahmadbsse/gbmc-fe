@@ -1,7 +1,7 @@
 import { BaseImage, BaseLoader, BaseSearchbar } from "@/components/common";
 import { useState, useRef, useEffect } from "react";
 import apiClient from "@/utils/apiClient";
-import { transformMedia } from "@/utils";
+import { transformMedia, decodeText } from "@/utils";
 import Link from "next/link";
 
 const PAGE_SIZE = 10;
@@ -48,6 +48,9 @@ const AllParts = () => {
       if (res && res.data.length > 0) {
         const parts = res.data.filter((part) => part.supplier.active);
         const transformedData = transformMedia(parts);
+        transformedData.forEach((part) => {
+          part.name = decodeText(part.name);
+        });
         setAllParts((prev) => (isLoadMore ? [...prev, ...transformedData] : transformedData));
         setPagination(res.meta.pagination);
       } else {
@@ -101,6 +104,9 @@ const AllParts = () => {
       await apiClient.GET(`/suppliers?filters[active]=true`).then(async (res) => {
         if (res && res.data.length > 0) {
           res.data.unshift({ name: "All", documentId: "" });
+          res.data.forEach((brand) => {
+            brand.name = decodeText(brand.name);
+          });
           setMakes(res.data);
         } else {
           setMakes([]);

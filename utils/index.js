@@ -151,3 +151,14 @@ export function sanitizeText(input) {
     .replace(/'/g, "&#39;") // Escape `'`
     .replace(/\\/g, "&#92;"); // Escape backslashes
 }
+
+export function decodeText(input) {
+  if (typeof input !== "string") return input;
+
+  return input
+    .replace(/&lt;/g, "<") // Convert `&lt;` back to `<`
+    .replace(/&gt;/g, ">") // Convert `&gt;` back to `>`
+    .replace(/&quot;/g, '"') // Convert `&quot;` back to `"`
+    .replace(/&#39;/g, "'") // Convert `&#39;` back to `'`
+    .replace(/&#92;/g, "\\"); // Convert `&#92;` back to `\`
+}

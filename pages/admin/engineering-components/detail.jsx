@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import apiClient from "@/utils/apiClient";
 import RichTextEditor from "@/components/common/RichTextEditor";
 import { Navbar, BaseLoader, BaseImage, BaseVideo, SeoHead } from "@/components/common";
-import { transformHeroVideo } from "@/utils";
+import { transformHeroVideo, decodeText } from "@/utils";
 
 const ViewComponentDetails = () => {
   const router = useRouter();
@@ -30,6 +30,10 @@ const ViewComponentDetails = () => {
           /\*\*(.*?)\*\*/g,
           "<strong>$1</strong>"
         );
+        response.name = decodeText(response.name);
+        response.material = decodeText(response.material);
+        response.weight = decodeText(response.weight);
+
         setFormData(response);
       });
     } catch (error) {

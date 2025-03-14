@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { BaseImage, BaseLoader, BaseVideo, Navbar, SeoHead } from "@/components/common";
 import apiClient from "@/utils/apiClient";
-import { transformHeroVideo, transformMedia } from "@/utils";
+import { transformHeroVideo, transformMedia, decodeText } from "@/utils";
 import type { EngineeringComponent } from "@/types";
 import Link from "next/link";
 
@@ -32,6 +32,9 @@ const Article = () => {
           /\*\*(.*?)\*\*/g,
           "<strong>$1</strong>"
         );
+        response.name = decodeText(response.name);
+        response.material = decodeText(response.material);
+        response.weight = decodeText(response.weight);
         setData(response);
       });
     } catch (error) {

@@ -1,7 +1,7 @@
 import { BaseImage, BaseLoader, BaseSearchbar } from "@/components/common";
 import { useState, useRef, useEffect } from "react";
 import apiClient from "@/utils/apiClient";
-import { transformMedia } from "@/utils";
+import { transformMedia, decodeText } from "@/utils";
 import Link from "next/link";
 
 const PAGE_SIZE = 10;
@@ -37,6 +37,9 @@ const AllSubAssemblies = () => {
 
       if (res && res.data.length > 0) {
         const transformedData = transformMedia(res.data);
+        transformedData.forEach((subAssembly) => {
+          subAssembly.name = decodeText(subAssembly.name);
+        });
         setAllSubAssemblies((prev) =>
           isLoadMore ? [...prev, ...transformedData] : transformedData
         );

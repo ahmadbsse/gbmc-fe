@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BaseLoader, Navbar, PageLayout, SeoHead } from "@/components/common";
 import EngineeringListingCard from "@/components/user/EngineeringListingCard";
 import apiClient from "@/utils/apiClient";
-import { transformMedia } from "@/utils";
+import { decodeText, transformMedia } from "@/utils";
 import Image from "next/image";
 
 const EngineeringHome = () => {
@@ -16,6 +16,9 @@ const EngineeringHome = () => {
         .then(async (res) => {
           if (res && res.data.length > 0) {
             const transformedData = transformMedia(res.data);
+            transformedData.forEach((data) => {
+              data.name = decodeText(data.name);
+            });
             setEngineeringComponents(transformedData);
           } else {
             setEngineeringComponents([]);

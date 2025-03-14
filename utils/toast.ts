@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { decodeText } from "@/utils";
 
 // function capitalizeFirstLetter(sentence: string) {
 //     return sentence
@@ -15,6 +16,7 @@ const showToast = async (msg: string, type: "info" | "success" | "warning" | "er
     else {
         message = msg.toLowerCase();
     }
+    message = decodeText(message);
     return toast(message, {
         type: type,
         position: "top-right",
