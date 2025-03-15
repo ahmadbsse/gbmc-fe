@@ -211,3 +211,18 @@ input {
   opacity: 1;
   background-color: #3b82f6;
 }
+
+@media (max-width: 640px) {
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    width: 24px !important;
+    height: 24px !important;
+  }
+
+  .swiper-button-prev::after,
+  .swiper-button-next::after {
+    font-size: 20px !important;
+    /* Adjust arrow size */
+  }
+}
