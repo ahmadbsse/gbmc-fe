@@ -15,7 +15,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
       <div className="mx-auto max-w-7xl">
         <div className={`${isDetailsPage ? "sm:container" : "container"} mx-auto px-4 pb-12 pt-4`}>
           <div className="mb-4">
-            <div className="mb-8 flex items-center gap-2 text-sm capitalize text-gray-500">
+            <div className="mb-8 flex items-center gap-2 text-sm text-gray-500">
               {breadcrumbs.map((crumb, index) => (
                 <p
                   className={`${index == 2 ? "max-w-[100px] truncate text-nowrap md:max-w-[200px]" : ""}`}

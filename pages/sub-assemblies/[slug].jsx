@@ -111,7 +111,7 @@ const SubAssemblyDetails = () => {
               {/* Sub Assembly Details Section */}
               <div className="space-y-6">
                 <div className="space-y-2">
-                  <h1 className="break-all text-2xl font-bold capitalize">{data?.name}</h1>
+                  <h1 className="break-all text-2xl font-bold">{data?.name}</h1>
                 </div>
                 <div
                   ref={contentRef}
@@ -141,9 +141,7 @@ const SubAssemblyDetails = () => {
               <table className="product-specification-table product-specification-table-striped">
                 <tbody>
                   <tr>
-                    <td className="w-1/3 text-wrap text-base font-bold capitalize lg:text-lg">
-                      OEM Numbers:
-                    </td>
+                    <td className="w-1/3 text-wrap text-base font-bold lg:text-lg">OEM Numbers:</td>
                     <td>
                       {data?.oem_number.split(",").map((item, index) => (
                         <p className="text-base lg:text-lg" key={index}>
@@ -153,9 +151,7 @@ const SubAssemblyDetails = () => {
                     </td>
                   </tr>
                   <tr>
-                    <td className="w-1/3 text-wrap text-base font-bold capitalize lg:text-lg">
-                      Weight:
-                    </td>
+                    <td className="w-1/3 text-wrap text-base font-bold lg:text-lg">Weight:</td>
                     <td className="text-base lg:text-lg">{data?.weight}</td>
                   </tr>
                 </tbody>
