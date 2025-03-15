@@ -89,7 +89,7 @@ const FeaturedParts = () => {
                             classes="h-full w-full object-contain rounded-t-lg"
                           />
                         ) : null}
-                        <div className="absolute right-2 top-2 rounded bg-primary px-1.5 py-0.5 text-xs">
+                        <div className="absolute right-2 top-2 rounded bg-primary px-1.5 py-0.5 text-xs font-bold">
                           {part.supplier.name}
                         </div>
                       </div>

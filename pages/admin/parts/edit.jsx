@@ -72,6 +72,9 @@ const EditPart = () => {
     try {
       const url = `/suppliers?fields=name&filters[active]=true`;
       await apiClient.GET(url).then((res) => {
+        res.data.forEach((supplier) => {
+          supplier.name = decodeText(supplier.name);
+        });
         setMakes(res.data);
         if (res.data.length == 0) {
           showToast("Please add Make first", "warning", true);
