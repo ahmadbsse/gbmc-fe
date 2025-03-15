@@ -13,7 +13,7 @@ import {
 } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
 import { BaseButton, BaseImage } from "@/components/common";
-// import { convertToReadableDate } from "@/utils";
+import { decodeText } from "@/utils";
 
 const ListDashboardData = ({ data, activeTab, getData, total, setData, pagination }) => {
   const [showAddItemModal, setShowAddItemModal] = useState(false);
@@ -41,14 +41,14 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
       if (Array.isArray(data.media)) {
         data.media = data.media.map((item) => item.id);
       } else {
-        data.media = data.media.id;
+        data.media = data.media?.id;
       }
       data.active = !data.active;
       if (currentTab == "parts") {
-        data.supplier = data.supplier.id;
+        data.supplier = data?.supplier?.id;
       }
       if (currentTab == "engineering-components") {
-        data.hero_image = data.hero_image.id;
+        data.hero_image = data.hero_image?.id;
       }
       await apiClient.PUT(url, { data: data }).then((res) => {
         showToast(
@@ -285,7 +285,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
                         onClick={() => viewDetails(item.documentId)}
                         className={`cursor-pointer break-all text-center text-sm font-bold sm:text-left sm:text-base`}
                       >
-                        {item.name}
+                        {decodeText(item.name)}
                       </h3>
                     </div>
 

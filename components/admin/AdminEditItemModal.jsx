@@ -2,7 +2,13 @@ import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import showToast from "@/utils/toast";
-import { transformMedia, uploadFilesRequest, deleteFilesRequest, sanitizeText } from "@/utils";
+import {
+  transformMedia,
+  uploadFilesRequest,
+  deleteFilesRequest,
+  sanitizeText,
+  decodeText,
+} from "@/utils";
 import apiClient from "@/utils/apiClient";
 import { BaseButton, BaseLoader, BaseImage } from "@/components/common";
 import BaseFileUploader from "./BaseFileUploader";
@@ -37,6 +43,7 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
         if (!Array.isArray(response.media)) {
           response.media = [response.media];
         }
+        response.name = decodeText(response.name);
         setFormData(response);
       });
     } catch (error) {

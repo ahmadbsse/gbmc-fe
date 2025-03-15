@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import apiClient from "@/utils/apiClient";
 import RichTextEditor from "@/components/common/RichTextEditor";
 import { Navbar, BaseLoader, BaseImage, SeoHead } from "@/components/common";
+import { decodeText } from "@/utils";
 
 const ViewSubAssemblyDetails = () => {
   const router = useRouter();
@@ -17,6 +18,10 @@ const ViewSubAssemblyDetails = () => {
         if (!Array.isArray(response.media)) {
           response.media = [response.media];
         }
+        response.name = decodeText(response.name);
+        response.weight = decodeText(response.weight);
+        response.oem_number = decodeText(response.oem_number);
+        response.number = decodeText(response.number);
         setFormData(response);
       });
     } catch (error) {

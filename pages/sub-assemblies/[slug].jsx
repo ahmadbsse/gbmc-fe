@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
 import apiClient from "@/utils/apiClient";
-import { transformMedia } from "@/utils";
+import { transformMedia, decodeText } from "@/utils";
 import { Navbar, PageLayout, BaseImage, BaseLoader, SeoHead } from "@/components/common";
 import { ImageMagnifier } from "@/components/user";
 
@@ -29,6 +29,9 @@ const SubAssemblyDetails = () => {
           "<strong>$1</strong>"
         );
         setSelectedImage(0);
+        response.name = decodeText(response.name);
+        response.weight = decodeText(response.weight);
+        response.oem_number = decodeText(response.oem_number);
         setData(response);
       });
     } catch (error) {

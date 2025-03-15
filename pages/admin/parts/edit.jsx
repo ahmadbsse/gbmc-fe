@@ -11,7 +11,7 @@ import {
 import { Navbar, BaseLoader, BaseImage, BaseButton, SeoHead } from "@/components/common";
 import BaseFileUploader from "@/components/admin/BaseFileUploader";
 import showToast from "@/utils/toast";
-import { sanitizeText } from "@/utils";
+import { sanitizeText, decodeText } from "@/utils";
 import RichTextEditor from "@/components/common/RichTextEditor";
 import { partValidator } from "@/utils/validators";
 import WarningModal from "@/components/admin/WarningModal";
@@ -57,6 +57,11 @@ const EditPart = () => {
         if (!Array.isArray(response.media)) {
           response.media = [response.media];
         }
+        response.name = decodeText(response.name);
+        response.weight = decodeText(response.weight);
+        response.material = decodeText(response.material);
+        response.oem_number = decodeText(response.oem_number);
+        response.number = decodeText(response.number);
         setFormData(response);
       });
     } catch (error) {
@@ -87,8 +92,10 @@ const EditPart = () => {
           .filter((item) => item && typeof item === "object" && !item.id);
         const previousMedia = formData.media.filter((item) => item && item.id);
         const newMediaIds = previousMedia.map((file) => file.id);
-        formData.supplier = formData.supplier.documentId;
-        delete formData.documentId;
+        formData.supplier = formData.supplier?.documentId
+          ? formData.supplier?.documentId
+          : formData.supplier;
+        delete formData?.documentId;
         await uploadFilesRequest(flattenedData, true).then((res) => {
           if (res) {
             formData.media = [...res, ...newMediaIds];
@@ -117,6 +124,7 @@ const EditPart = () => {
   };
   const saveData = () => {
     try {
+      console.log(sanitizedFormData());
       apiClient
         .PUT(`/parts/${id}`, { data: sanitizedFormData() })
         .then(async () => {
@@ -225,7 +233,7 @@ const EditPart = () => {
                     <select
                       id="make"
                       className="w-full appearance-none rounded-lg border border-gray-300 bg-white px-2.5 py-2 text-[13px] outline-none focus:border-primary focus:border-transparent focus:ring-1 focus:ring-primary"
-                      value={JSON.stringify(formData.supplier.documentId)}
+                      value={JSON.stringify(formData?.supplier?.documentId)}
                       onChange={(e) => {
                         setFormData({
                           ...formData,
@@ -235,7 +243,7 @@ const EditPart = () => {
                     >
                       <option value="">Select a make</option>
                       {makes.map((supplier) => (
-                        <option key={supplier.id} value={JSON.stringify(supplier.documentId)}>
+                        <option key={supplier.id} value={JSON.stringify(supplier?.documentId)}>
                           {supplier.name}
                         </option>
                       ))}
@@ -326,7 +334,7 @@ const EditPart = () => {
                       return (
                         <div
                           className="relative h-32 w-44 rounded-md bg-white"
-                          key={item.documentId}
+                          key={item?.documentId}
                         >
                           <button
                             onClick={(e) => {

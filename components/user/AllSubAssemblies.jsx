@@ -1,7 +1,7 @@
 import { BaseImage, BaseLoader, BaseSearchbar } from "@/components/common";
 import { useState, useRef, useEffect } from "react";
 import apiClient from "@/utils/apiClient";
-import { transformMedia } from "@/utils";
+import { transformMedia, decodeText } from "@/utils";
 import Link from "next/link";
 
 const PAGE_SIZE = 10;
@@ -37,6 +37,9 @@ const AllSubAssemblies = () => {
 
       if (res && res.data.length > 0) {
         const transformedData = transformMedia(res.data);
+        transformedData.forEach((subAssembly) => {
+          subAssembly.name = decodeText(subAssembly.name);
+        });
         setAllSubAssemblies((prev) =>
           isLoadMore ? [...prev, ...transformedData] : transformedData
         );
@@ -132,7 +135,7 @@ const AllSubAssemblies = () => {
                     href={`/sub-assemblies/${subAssembly.documentId}`}
                     key={subAssembly.id + index + subAssembly.documentId}
                   >
-                    <div className="w-[280px] min-w-[280px] rounded-lg border border-gray-200 bg-white shadow-sm transition xs:w-[330px] sm:w-auto">
+                    <div className="w-[280px] min-w-[280px] rounded-lg border border-gray-200 bg-white shadow-sm transition xs:w-[330px] sm:w-[290px] sm:min-w-[290px]">
                       <div className="relative h-[200px] w-full border-b border-gray-200 p-1">
                         {subAssembly.media ? (
                           <BaseImage

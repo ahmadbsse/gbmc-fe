@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import apiClient from "@/utils/apiClient";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Mousewheel } from "swiper/modules";
-import { transformMedia } from "@/utils";
+import { transformMedia, decodeText } from "@/utils";
 import Link from "next/link";
 
 // Import Swiper styles
@@ -23,6 +23,10 @@ const FeaturedParts = () => {
       if (res && res.data.length > 0) {
         const parts = res.data.filter((part) => part.supplier.active);
         const transformedData = transformMedia(parts);
+        transformedData.forEach((part) => {
+          part.name = decodeText(part.name);
+          part.supplier.name = decodeText(part.supplier.name);
+        });
         setFeaturedParts(transformedData);
       }
     } catch (error) {
@@ -43,12 +47,12 @@ const FeaturedParts = () => {
           <BaseLoader />
         </p>
       ) : featuredParts?.length ? (
-        <div>
+        <div className="mb-9 sm:mb-0">
           <h2 className="my-4 text-2xl font-bold">Featured Parts</h2>
           <div className="custom-scrollbar flex w-[280px] max-w-7xl flex-col gap-3 overflow-x-auto pb-2 xs:w-[340px] sm:w-[590px] md:w-[600px] lg:w-[990px] lg:flex-row xl:w-[1230px]">
             <Swiper
               modules={[Navigation, Pagination, Mousewheel]}
-              spaceBetween={20}
+              spaceBetween={24}
               slidesPerView={1}
               navigation
               mousewheel={true}
@@ -62,6 +66,9 @@ const FeaturedParts = () => {
                   slidesPerView: 2,
                 },
                 1024: {
+                  slidesPerView: 3,
+                },
+                1280: {
                   slidesPerView: 4,
                 },
               }}

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import apiClient from "@/utils/apiClient";
 import { BaseImage, BaseLoader } from "@/components/common";
+import { decodeText } from "@/utils";
 
 const MakeDetailModal = ({ activeID, setShowMakeDetailModal }) => {
   const [formData, setFormData] = useState(null);
@@ -14,6 +15,7 @@ const MakeDetailModal = ({ activeID, setShowMakeDetailModal }) => {
         if (!Array.isArray(response.media)) {
           response.media = [response.media];
         }
+        response.name = decodeText(response.name);
         setFormData(response);
       });
     } catch (error) {
