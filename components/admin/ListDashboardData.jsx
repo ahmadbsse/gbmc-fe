@@ -183,7 +183,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
       {showDeleteModal ? (
         <DeleteConfirmationModal
           handleDelete={deleteItem}
-          name={activeItem?.name}
+          name={decodeText(activeItem?.name)}
           currentTab={currentTab}
           onClose={() => setShowDeleteModal(false)}
         />
@@ -192,7 +192,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
         <ActiveConfirmationModal
           handleToggle={toggleActivation}
           status={activeItem?.active}
-          name={activeItem?.name}
+          name={decodeText(activeItem?.name)}
           currentTab={currentTab}
           onClose={() => setShowActiveModal(false)}
         />
@@ -201,7 +201,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
         <FeatureConfirmationModal
           handleToggle={toggleFeatured}
           status={activeItem?.featured}
-          name={activeItem?.name}
+          name={decodeText(activeItem?.name)}
           currentTab={currentTab}
           onClose={() => setShowFeatureModal(false)}
         />

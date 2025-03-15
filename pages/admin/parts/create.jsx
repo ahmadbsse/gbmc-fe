@@ -7,7 +7,7 @@ import { BaseButton, SeoHead } from "@/components/common";
 import { BaseFileUploader } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
 import { partValidator } from "@/utils/validators";
-import { uploadFilesRequest, deepEqual, richTextHasOnlySpaces } from "@/utils";
+import { uploadFilesRequest, deepEqual, richTextHasOnlySpaces, decodeText } from "@/utils";
 import RichTextEditor from "@/components/common/RichTextEditor";
 
 import { sanitizeText } from "@/utils";
@@ -96,6 +96,9 @@ const CreatePart = () => {
     try {
       const url = `/suppliers?fields=name&filters[active]=true`;
       await apiClient.GET(url).then((res) => {
+        res.data.forEach((supplier) => {
+          supplier.name = decodeText(supplier.name);
+        });
         setMakes(res.data);
         if (res.data.length == 0) {
           showToast("Please add Make first", "warning", true);
