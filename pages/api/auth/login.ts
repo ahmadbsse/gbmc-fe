@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             httpOnly: true,
             secure: Boolean(process.env.NODE_ENV === 'production'),
             maxAge: 3600,
-            sameSite: 'strict',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
             path: '/',
           })
         );

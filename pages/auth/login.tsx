@@ -30,13 +30,20 @@ const Login = () => {
             { withCredentials: true }
           )
           .then(async (res) => {
-            if (res.message == "Login successful") {
-              showToast("Logged In Successfully", "success", true);
-              localStorage.setItem("username", userName);
-              localStorage.setItem("email", email);
-              apiClient.setAuthToken(jwt);
+            try {
+              if (res.message == "Login successful") {
+                showToast("Logged In Successfully", "success", true);
+                localStorage.setItem("username", userName);
+                localStorage.setItem("email", email);
+                apiClient.setAuthToken(jwt);
+                setIsLoading(false);
+
+                router.push("/admin");
+              }
+            } catch (error) {
+              console.error("Error handling login response:", error);
+              showToast("An unexpected error occurred. Please try again.", "error", true);
               setIsLoading(false);
-              router.push("/admin");
             }
           });
       }
