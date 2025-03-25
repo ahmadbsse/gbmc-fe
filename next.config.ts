@@ -9,7 +9,22 @@ const nextConfig = {
       {
         protocol: "http",
         hostname: process.env.NEXT_PUBLIC_API_BASE_URL,
-      }, {
+        port: "",
+        pathname: "**",
+      },
+      {
+        protocol: "http",
+        hostname: process.env.NEXT_PUBLIC_BASE_URL,
+        port: "",
+        pathname: "**",
+      },
+      {
+        protocol: "http",
+        hostname: "**",
+        port: "",
+        pathname: "**",
+      },
+      {
         protocol: "http",
         hostname: 'localhost',
       },

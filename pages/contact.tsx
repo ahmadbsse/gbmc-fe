@@ -78,7 +78,7 @@ const ContactPage = () => {
         <Navbar setTab={() => {}} />
 
         <div className="mx-auto mt-20 p-4 md:container">
-          <div className="mx-auto max-w-4xl">
+          <div className="mx-auto max-w-6xl">
             <h1 className="mb-4 text-3xl font-bold text-slate-900">Contact Us</h1>
             <div className="grid gap-4 md:grid-cols-2 lg:gap-8 xl:gap-12">
               {/* Contact Form */}
