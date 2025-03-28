@@ -38,7 +38,7 @@ const SeoHead = ({ title }) => {
       <meta name="twitter:description" content={SEODescription} />
 
       {/* Favicon */}
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" href="/min-logo.svg" />
       {/* Additional SEO tags */}
       <meta name="robots" content="index, follow" />
     </Head>
