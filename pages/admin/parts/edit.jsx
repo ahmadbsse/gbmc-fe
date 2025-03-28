@@ -2,12 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { X, ChevronDown } from "lucide-react";
 import apiClient from "@/utils/apiClient";
-import {
-  transformMedia,
-  uploadFilesRequest,
-  deleteFilesRequest,
-  richTextHasOnlySpaces,
-} from "@/utils";
+import { transformMedia, uploadFilesRequest, deleteFilesRequest } from "@/utils";
 import { Navbar, BaseLoader, BaseImage, BaseButton, SeoHead } from "@/components/common";
 import BaseFileUploader from "@/components/admin/BaseFileUploader";
 import showToast from "@/utils/toast";
@@ -35,8 +30,6 @@ const EditPart = () => {
         formData.supplier === "" ||
         formData.oem_number.trim() === "" ||
         formData.weight.trim() === "" ||
-        formData.description === `<p><br></p>` ||
-        richTextHasOnlySpaces(formData.description) ||
         formData?.media?.length === 0
       ) {
         setIsFormValid(false);
