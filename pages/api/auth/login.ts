@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           error: "Request body incomplete",
         });
       }
-      const token = sign({ jwt: jwt, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      const token = sign({ jwt: jwt, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1d' });
       try {
         res.setHeader('Access-Control-Allow-Credentials', 'true');
         res.setHeader(
