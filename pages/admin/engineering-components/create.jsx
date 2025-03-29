@@ -10,7 +10,7 @@ import showToast from "@/utils/toast";
 import { engineeringComponentValidator } from "@/utils/validators";
 import RichTextEditor from "@/components/common/RichTextEditor";
 
-import { uploadFilesRequest, deepEqual, richTextHasOnlySpaces } from "@/utils";
+import { uploadFilesRequest, deepEqual } from "@/utils";
 
 const CreateEngineeringComponent = () => {
   const router = useRouter();
@@ -36,8 +36,6 @@ const CreateEngineeringComponent = () => {
       formData.name.trim() === "" ||
       formData.material.trim() === "" ||
       formData.weight.trim() === "" ||
-      formData.description == `<p><br></p>` ||
-      richTextHasOnlySpaces(formData.description) ||
       formData.media.length === 0 ||
       formData.media == "" ||
       formData.hero_image == "" ||

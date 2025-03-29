@@ -36,10 +36,6 @@ export const partValidator = (formData) => {
     showToast(`Please enter supplier`, "error", true);
     return false;
   }
-  if (formData.description == "") {
-    showToast(`Please enter description`, "error", true);
-    return false;
-  }
   if (formData.media.length == 0) {
     showToast(`Please upload an image`, "error", true);
     return false;
@@ -63,10 +59,6 @@ export const subAssemblyValidator = (formData) => {
     showToast(`Please enter oem numbers`, "error", true);
     return false;
   }
-  if (formData.description == "") {
-    showToast(`Please enter description`, "error", true);
-    return false;
-  }
   if (formData.media.length == 0) {
     showToast(`Please upload an image`, "error", true);
     return false;
@@ -77,10 +69,6 @@ export const subAssemblyValidator = (formData) => {
 export const engineeringComponentValidator = (formData) => {
   if (formData.name == "") {
     showToast(`Please enter name`, "error", true);
-    return false;
-  }
-  if (formData.description == "") {
-    showToast(`Please enter description`, "error", true);
     return false;
   }
   if (!formData.media || formData.media.length == 0 || formData.media == "") {

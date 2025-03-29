@@ -4,13 +4,7 @@ import { X } from "lucide-react";
 
 import apiClient from "@/utils/apiClient";
 import { sanitizeText } from "@/utils";
-import {
-  transformMedia,
-  uploadFilesRequest,
-  deleteFilesRequest,
-  richTextHasOnlySpaces,
-  decodeText,
-} from "@/utils";
+import { transformMedia, uploadFilesRequest, deleteFilesRequest, decodeText } from "@/utils";
 import { Navbar, BaseLoader, BaseImage, BaseButton, SeoHead } from "@/components/common";
 import BaseFileUploader from "@/components/admin/BaseFileUploader";
 import showToast from "@/utils/toast";
@@ -34,8 +28,6 @@ const EditSubAssembly = () => {
         formData.number.trim() === "" ||
         formData.oem_number.trim() === "" ||
         formData.weight.trim() === "" ||
-        formData.description === `<p><br></p>` ||
-        richTextHasOnlySpaces(formData.description) ||
         formData?.media?.length === 0 ||
         formData?.media === ""
       ) {

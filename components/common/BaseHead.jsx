@@ -1,9 +1,16 @@
 import { appData } from "@/constants";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import { SEOkeywords, SEODescription, SEOLogo } from "@/data/seo";
 
 const SeoHead = ({ title }) => {
-  const pageTitle = `${title} | ${appData.name}`;
+  const [pageTitle, setPageTitle] = useState(appData.name);
+
+  useEffect(() => {
+    if (title) {
+      setPageTitle(`${title} | ${appData.name}`);
+    }
+  }, [title]);
   const siteUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   return (
@@ -31,7 +38,7 @@ const SeoHead = ({ title }) => {
       <meta name="twitter:description" content={SEODescription} />
 
       {/* Favicon */}
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" href="/min-logo.svg" />
       {/* Additional SEO tags */}
       <meta name="robots" content="index, follow" />
     </Head>

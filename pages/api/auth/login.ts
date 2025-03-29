@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           serialize('authToken', token, {
             httpOnly: true,
             secure: Boolean(process.env.NODE_ENV === 'production'),
-            maxAge: 3600,
+            maxAge: 86400,
             sameSite: 'strict',
             path: '/',
           })

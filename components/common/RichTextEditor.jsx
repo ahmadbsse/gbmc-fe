@@ -68,7 +68,7 @@ const RichTextEditor = ({
 
   return (
     <div className={`rich-text-editor-wrapper ${disabled ? "pointer-events-none" : ""}`}>
-      <label htmlFor={label} className="required mb-1 block text-sm font-medium">
+      <label htmlFor={label} className="mb-1 block text-sm font-medium">
         {label}
       </label>
       <div>
