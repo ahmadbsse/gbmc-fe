@@ -85,7 +85,7 @@ const ViewPartDetails = () => {
                   </div>
                 </div>
                 <div className="w-full">
-                  <label className="required t mb-1 block font-medium">Registered Number</label>
+                  <label className="required t mb-1 block font-medium">GM part number</label>
                   <div className="w-full rounded-lg border border-gray-300 bg-white px-2.5 py-2">
                     {formData.number}
                   </div>

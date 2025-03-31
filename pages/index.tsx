@@ -34,8 +34,7 @@ const Home = () => {
                   Engineering Components
                 </h2>
                 <p className="mb-8 max-w-md text-center text-lg">
-                  Precision-engineered components for industrial applications. Built to your exact
-                  specifications.
+                  Precision-engineered components for industrial applications.
                 </p>
 
                 <Link href="/engineering">
@@ -58,8 +57,7 @@ const Home = () => {
               <Tractor size={64} className="mb-6" />
               <h2 className="mb-4 text-center text-2xl font-bold lg:text-4xl">Tractor Parts</h2>
               <p className="mb-8 max-w-md text-center text-lg text-black">
-                High-quality replacement parts for agricultural machinery. Reliable and durable
-                solutions.
+                High-quality replacement parts for agricultural machinery.
               </p>
 
               <Link href="/tractor-parts">

@@ -300,7 +300,7 @@ const EditPart = () => {
                       htmlFor="registered_number"
                       className="required mb-1 block text-sm font-medium"
                     >
-                      Registered Number
+                      GM part number
                     </label>
                     <input
                       id="registered_number"
