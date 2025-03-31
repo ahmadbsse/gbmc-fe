@@ -59,6 +59,25 @@ function MyApp({ Component, pageProps, authToken }: AppProps & { authToken?: str
       </button>
     );
   };
+  useEffect(() => {
+    const disableRightClick = (event) => event.preventDefault();
+    const disableKeys = (event) => {
+      if (event.ctrlKey && (event.key === "u" || event.key === "U")) {
+        event.preventDefault();
+      }
+      if (event.ctrlKey && event.shiftKey && (event.key === "i" || event.key === "I")) {
+        event.preventDefault();
+      }
+    };
+
+    document.addEventListener("contextmenu", disableRightClick);
+    document.addEventListener("keydown", disableKeys);
+
+    return () => {
+      document.removeEventListener("contextmenu", disableRightClick);
+      document.removeEventListener("keydown", disableKeys);
+    };
+  }, []);
   return (
     <div>
       <ToastContainer closeButton={CustomCloseButton} className="text-xs font-medium" />
