@@ -17,7 +17,7 @@ const ActiveConfirmationModal = ({ onClose, handleToggle, name, currentTab, stat
             : currentTab == "suppliers"
               ? "Make"
               : currentTab == "sub-assemblies"
-                ? "Sub Assembly"
+                ? "Assembly"
                 : "Part"}{" "}
           <strong>{name} </strong>?
         </h2>

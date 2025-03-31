@@ -123,9 +123,9 @@ const CreateSubAssembly = () => {
       ) : null}
       <SeoHead title="Admin" />
       <div className="mt-20 min-h-screen bg-gray-50">
-        <Navbar isAdmin setTab={setTab} activeTab={"Sub Assemblies"} />
+        <Navbar isAdmin setTab={setTab} activeTab={"Assemblies"} />
         <main className="mx-auto px-4 py-8 sm:container">
-          <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">Create Sub Assembly</h1>
+          <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">Create Assembly</h1>
 
           <form onSubmit={handleSubmit} className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
             <div className="flex flex-col gap-4 md:flex-row">

@@ -6,6 +6,6 @@ export const userRoutes = [
 export const tabsKey = [
     { name: "Makes", key: "suppliers", tag: "make" },
     { name: "Parts", key: "parts", tag: "part" },
-    { name: "Sub Assemblies", key: "sub-assemblies", tag: "sub assembly" },
+    { name: "Assemblies", key: "sub-assemblies", tag: "assembly" },
     { name: "Engineering Components", key: "engineering", tag: "engineering component" },
 ];
