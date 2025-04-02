@@ -99,7 +99,7 @@ const Article = () => {
               />
 
               <div className="mb-3 mt-4 flex flex-col gap-4 lg:flex-row lg:gap-10">
-                <div className="rounded-lg bg-[#707070] p-4 text-sm text-white lg:h-[650px] lg:w-[700px] lg:text-base">
+                <div className="rounded-lg bg-[rgb(175,164,164)] p-4 text-sm text-white lg:h-[650px] lg:w-[700px] lg:text-base">
                   <div className="lg:w-[750px] lg:gap-5 lg:px-11 lg:py-7">
                     <div className="flex flex-col gap-2 lg:w-[500px]">
                       <p className="text-xl font-bold">Key Features</p>
