@@ -54,7 +54,7 @@ const ViewComponentDetails = () => {
   return (
     <>
       <SeoHead title="Admin" />
-      <div className="[#f3f3f3] mt-20 min-h-screen">
+      <div className="mt-20 min-h-screen bg-[#f3f3f3]">
         <Navbar isAdmin setTab={setTab} activeTab={"Engineering Components"} />
         <main className="mx-auto px-4 py-8 sm:container">
           {formData ? (
