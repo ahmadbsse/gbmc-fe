@@ -157,7 +157,7 @@ const ContactPage = () => {
                   </div>
 
                   <div className="mx-auto w-fit pt-6">
-                    <BaseButton loading={false} type="submit" disabled={loading || !formIsValid}>
+                    <BaseButton loading={loading} type="submit" disabled={loading || !formIsValid}>
                       {loading ? (
                         "Sending...."
                       ) : (
