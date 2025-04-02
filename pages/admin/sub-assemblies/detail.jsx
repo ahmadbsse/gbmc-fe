@@ -42,7 +42,7 @@ const ViewSubAssemblyDetails = () => {
   return (
     <>
       <SeoHead title="Admin" />
-      <div className="mt-20 min-h-screen bg-gray-50">
+      <div className="mt-20 min-h-screen bg-[#f3f3f3]">
         <Navbar isAdmin setTab={setTab} activeTab={"Assemblies"} />
         <main className="mx-auto px-4 py-8 sm:container">
           {formData ? (
