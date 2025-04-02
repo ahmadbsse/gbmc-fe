@@ -60,23 +60,25 @@ function MyApp({ Component, pageProps, authToken }: AppProps & { authToken?: str
     );
   };
   useEffect(() => {
-    const disableRightClick = (event) => event.preventDefault();
-    const disableKeys = (event) => {
-      if (event.ctrlKey && (event.key === "u" || event.key === "U")) {
-        event.preventDefault();
-      }
-      if (event.ctrlKey && event.shiftKey && (event.key === "i" || event.key === "I")) {
-        event.preventDefault();
-      }
-    };
+    if (process.env.NODE_ENV === "production") {
+      const disableRightClick = (event) => event.preventDefault();
+      const disableKeys = (event) => {
+        if (event.ctrlKey && (event.key === "u" || event.key === "U")) {
+          event.preventDefault();
+        }
+        if (event.ctrlKey && event.shiftKey && (event.key === "i" || event.key === "I")) {
+          event.preventDefault();
+        }
+      };
 
-    document.addEventListener("contextmenu", disableRightClick);
-    document.addEventListener("keydown", disableKeys);
+      document.addEventListener("contextmenu", disableRightClick);
+      document.addEventListener("keydown", disableKeys);
 
-    return () => {
-      document.removeEventListener("contextmenu", disableRightClick);
-      document.removeEventListener("keydown", disableKeys);
-    };
+      return () => {
+        document.removeEventListener("contextmenu", disableRightClick);
+        document.removeEventListener("keydown", disableKeys);
+      };
+    }
   }, []);
   return (
     <div>
