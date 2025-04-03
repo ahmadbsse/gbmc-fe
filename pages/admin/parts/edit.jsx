@@ -192,7 +192,7 @@ const EditPart = () => {
         />
       ) : null}
       <SeoHead title="Admin" />
-      <div className="mt-20 min-h-screen bg-gray-50">
+      <div className="mt-20 min-h-screen bg-[#f3f3f3]">
         <Navbar isAdmin setTab={setTab} activeTab={"Parts"} />
         <main className="mx-auto px-4 py-8 sm:container">
           {formData ? (
@@ -300,7 +300,7 @@ const EditPart = () => {
                       htmlFor="registered_number"
                       className="required mb-1 block text-sm font-medium"
                     >
-                      Registered Number
+                      GM part number
                     </label>
                     <input
                       id="registered_number"

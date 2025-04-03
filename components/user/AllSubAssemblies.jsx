@@ -51,7 +51,7 @@ const AllSubAssemblies = () => {
           if (searchQuery) {
             return "No search results found";
           } else {
-            return "No sub assemblies found.";
+            return "No assemblies found.";
           }
         });
       }
@@ -122,9 +122,9 @@ const AllSubAssemblies = () => {
         </p>
       ) : AllSubAssemblies.length ? (
         <>
-          <h2 className="my-4 text-2xl font-bold">All Sub Assemblies</h2>
+          <h2 className="my-4 text-2xl font-bold">All Assemblies</h2>
           {pagination?.total && (
-            <p className="mb-6 mt-3 w-fit text-lg font-bold lg:px-0">{`Showing 1-${paginationInfo} of ${pagination?.total} Sub Assemblies`}</p>
+            <p className="mb-6 mt-3 w-fit text-lg font-bold lg:px-0">{`Showing 1-${paginationInfo} of ${pagination?.total} Assemblies`}</p>
           )}
           <div>
             <div className="custom-scrollbar flex max-w-7xl flex-col gap-3 overflow-x-auto pb-2 lg:flex-row">

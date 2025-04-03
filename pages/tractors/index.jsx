@@ -12,7 +12,7 @@ const TractorPage = () => {
       description: "Complete range of engine components",
     },
     {
-      title: "TXL (Sub Assemblies)",
+      title: "Assemblies",
       key: "sub-assemblies",
       description: "Gearbox and transmission components",
     },

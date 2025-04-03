@@ -43,7 +43,7 @@ const ViewPartDetails = () => {
   return (
     <>
       <SeoHead title="Admin" />
-      <div className="mt-20 min-h-screen bg-gray-50">
+      <div className="mt-20 min-h-screen bg-[#f3f3f3]">
         <Navbar isAdmin setTab={setTab} activeTab={"Parts"} />
         <main className="bg-gray-5 mx-auto px-4 py-8 sm:container">
           {formData ? (
@@ -85,7 +85,7 @@ const ViewPartDetails = () => {
                   </div>
                 </div>
                 <div className="w-full">
-                  <label className="required t mb-1 block font-medium">Registered Number</label>
+                  <label className="required t mb-1 block font-medium">GM part number</label>
                   <div className="w-full rounded-lg border border-gray-300 bg-white px-2.5 py-2">
                     {formData.number}
                   </div>

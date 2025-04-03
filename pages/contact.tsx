@@ -157,7 +157,7 @@ const ContactPage = () => {
                   </div>
 
                   <div className="mx-auto w-fit pt-6">
-                    <BaseButton loading={false} type="submit" disabled={loading || !formIsValid}>
+                    <BaseButton loading={loading} type="submit" disabled={loading || !formIsValid}>
                       {loading ? (
                         "Sending...."
                       ) : (
@@ -192,7 +192,7 @@ const ContactPage = () => {
                     <div className="flex items-start gap-4">
                       <Phone className="h-6 w-6 text-primary" />
                       <div>
-                        <h3 className="font-medium text-slate-900">Office Number</h3>
+                        <h3 className="font-medium text-slate-900">Landline</h3>
                         <a
                           href={`tel:${appData.officeNumber}`}
                           className="text-slate-600 hover:underline"
@@ -204,7 +204,7 @@ const ContactPage = () => {
                     <div className="flex items-start gap-4">
                       <Phone className="h-6 w-6 text-primary" />
                       <div>
-                        <h3 className="font-medium text-slate-900">Mobile Number</h3>
+                        <h3 className="font-medium text-slate-900">Cell</h3>
                         <a
                           href={`tel:${appData.mobileNumber}`}
                           className="text-slate-600 hover:underline"

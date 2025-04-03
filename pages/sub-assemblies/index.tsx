@@ -12,7 +12,7 @@ const SubAssemblies = () => {
       icon: Tractor,
     },
     {
-      title: "TXL (Sub Assemblies)",
+      title: "Assemblies",
       key: "sub-assemblies",
       icon: Cog,
     },

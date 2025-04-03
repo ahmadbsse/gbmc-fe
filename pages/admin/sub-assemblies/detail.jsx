@@ -42,13 +42,13 @@ const ViewSubAssemblyDetails = () => {
   return (
     <>
       <SeoHead title="Admin" />
-      <div className="mt-20 min-h-screen bg-gray-50">
-        <Navbar isAdmin setTab={setTab} activeTab={"Sub Assemblies"} />
+      <div className="mt-20 min-h-screen bg-[#f3f3f3]">
+        <Navbar isAdmin setTab={setTab} activeTab={"Assemblies"} />
         <main className="mx-auto px-4 py-8 sm:container">
           {formData ? (
             <div className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">
               <h1 className="mx-auto mb-10 w-fit break-all text-center text-2xl font-bold">
-                View Sub Assembly - <span className="font-medium">{formData?.name || ""}</span>
+                View Assembly - <span className="font-medium">{formData?.name || ""}</span>
               </h1>
               <div className="flex flex-col gap-3 text-sm md:flex-row md:gap-5">
                 <div className="w-full">
@@ -58,7 +58,7 @@ const ViewSubAssemblyDetails = () => {
                   </div>
                 </div>
                 <div className="w-full">
-                  <label className="required mb-1 block font-medium">Registered Number</label>
+                  <label className="required mb-1 block font-medium">GM part number</label>
                   <div className="w-full rounded-lg border border-gray-300 bg-white px-2.5 py-2">
                     {formData.number}
                   </div>

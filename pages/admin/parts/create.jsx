@@ -151,7 +151,7 @@ const CreatePart = () => {
         />
       ) : null}
       <SeoHead title="Admin" />
-      <div className="mt-20 min-h-screen bg-gray-50">
+      <div className="mt-20 min-h-screen bg-[#f3f3f3]">
         <Navbar isAdmin setTab={setTab} activeTab={"Parts"} />
         <main className="mx-auto px-4 py-8 sm:container">
           <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">Create Part</h1>
@@ -250,7 +250,7 @@ const CreatePart = () => {
                   htmlFor="registration_number"
                   className="required mb-1 block text-sm font-medium"
                 >
-                  Registered Number
+                  GM part number
                 </label>
                 <input
                   id="registration_number"

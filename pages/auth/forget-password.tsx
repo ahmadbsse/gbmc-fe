@@ -3,7 +3,7 @@ import Image from "next/image";
 import { BaseButton } from "@/components/common";
 
 const ForgetPassword = () => (
-  <section className="h-screen bg-gray-50">
+  <section className="h-screen bg-[#f3f3f3]">
     <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
       <div className="mb-4 lg:mb-8">
         <Image height={70} width={150} src="/assets/logo.svg" alt="logo" priority />

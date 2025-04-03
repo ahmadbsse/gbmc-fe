@@ -12,7 +12,7 @@ import {
   ActiveConfirmationModal,
 } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
-import { BaseButton, BaseImage } from "@/components/common";
+import { BaseButton, BaseImage, BaseVideo } from "@/components/common";
 import { decodeText } from "@/utils";
 
 const ListDashboardData = ({ data, activeTab, getData, total, setData, pagination }) => {
@@ -212,7 +212,6 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
           <div className="mb-8 flex items-center justify-between">
             <h2 className="flex items-center text-xl">
               <span className="font-bold">{activeTab?.name}</span>
-              {/* {total > 0 ? <span> ({total})</span> : null} */}
             </h2>
             <div className="ml-4 hidden w-fit sm:flex">
               <BaseButton loading={false} type="submit" handleClick={addNewItem}>
@@ -257,6 +256,13 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
                               alt={item?.name}
                               priority={true}
                               classes="object-contain max-h-32"
+                            />
+                          ) : item?.hero_image?.mime.includes("video") ? (
+                            <BaseVideo
+                              src={item?.hero_image?.url}
+                              autoPlay={false}
+                              muted={true}
+                              loop={false}
                             />
                           ) : null
                         ) : item?.media ? (

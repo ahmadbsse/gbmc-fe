@@ -16,7 +16,7 @@ const DeleteConfirmationModal = ({ onClose, handleDelete, name, currentTab }) =>
             : currentTab == "suppliers"
               ? "Make"
               : currentTab == "sub-assemblies"
-                ? "Sub Assembly"
+                ? "Assembly"
                 : "Part"}{" "}
           <strong>{name} </strong>?
         </h2>

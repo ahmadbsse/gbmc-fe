@@ -16,7 +16,7 @@ const FeatureConfirmationModal = ({ onClose, handleToggle, name, currentTab, sta
             : currentTab == "suppliers"
               ? "Make"
               : currentTab == "sub-assemblies"
-                ? "Sub Assembly"
+                ? "Assembly"
                 : "Part"}{" "}
           <strong>{name} </strong> {status ? "from" : "to "} featured?
         </h2>

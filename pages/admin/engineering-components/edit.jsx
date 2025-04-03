@@ -204,7 +204,7 @@ const EditComponent = () => {
         />
       ) : null}
       <SeoHead title="Admin" />
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-[#f3f3f3]">
         <Navbar isAdmin setTab={setTab} activeTab={"Engineering Components"} />
         <main className="mx-auto mt-20 px-4 py-8 sm:container">
           {formData ? (

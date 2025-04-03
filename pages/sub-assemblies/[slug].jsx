@@ -43,7 +43,7 @@ const SubAssemblyDetails = () => {
   }, [router.query.slug]);
   const breadcrumbs = [
     { text: "Home", href: "/" },
-    { text: "TXL (Sub Assemblies)", href: "/sub-assemblies" },
+    { text: "Assemblies", href: "/sub-assemblies" },
     { text: data?.name, href: `/sub-assemblies/${router.query.slug}` },
   ];
 
@@ -70,13 +70,13 @@ const SubAssemblyDetails = () => {
   };
   return (
     <>
-      <SeoHead title={data && data?.name ? data?.name : "Sub Assembly Details"} />
+      <SeoHead title={data && data?.name ? data?.name : "Assembly Details"} />
       <Navbar setTab={() => {}} />
       <PageLayout title="" breadcrumbs={breadcrumbs} isDetailsPage={true}>
         {data ? (
           <div className="px-2">
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-              {/* Sub Assembly Images Section */}
+              {/* Assembly Images Section */}
               <div className="relative space-y-4">
                 <ImageMagnifier image={data?.media[selectedImage]} title={data?.name} />
                 {/* Thumbnail Images */}
@@ -98,7 +98,7 @@ const SubAssemblyDetails = () => {
                               height={img?.formats?.thumbnail?.height}
                               width={img?.formats?.thumbnail?.width}
                               src={img.formats.thumbnail.url}
-                              alt={`Sub Assembly view ${index + 1}`}
+                              alt={`Assembly view ${index + 1}`}
                               classes="object-contain max-h-20 p-1"
                             />
                           </button>
@@ -108,7 +108,7 @@ const SubAssemblyDetails = () => {
                   </div>
                 ) : null}
               </div>
-              {/* Sub Assembly Details Section */}
+              {/* Assembly Details Section */}
               <div className="space-y-6">
                 <div className="space-y-2">
                   <h1 className="break-all text-2xl font-bold">{data?.name}</h1>

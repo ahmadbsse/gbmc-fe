@@ -17,7 +17,7 @@ const WarningModal = ({ onClose, currentTab, type }) => {
               : currentTab == "suppliers"
                 ? "Make"
                 : currentTab == "sub-assemblies"
-                  ? "Sub Assembly"
+                  ? "Assembly"
                   : "Part"}{" "}
           </strong>
           will be lost.
