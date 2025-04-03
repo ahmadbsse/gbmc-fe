@@ -99,19 +99,24 @@ const Article = () => {
               />
 
               <div className="mb-3 mt-4 flex flex-col gap-4 lg:flex-row lg:gap-10">
-                <div className="rounded-lg bg-[rgb(175,164,164)] p-4 text-sm text-white lg:h-[650px] lg:w-[700px] lg:text-base">
+                <div className="rounded-lg bg-[rgb(175,164,164)] p-4 text-sm text-white lg:h-[450px] lg:w-[700px] lg:text-base">
                   <div className="lg:w-[750px] lg:gap-5 lg:px-11 lg:py-7">
                     <div className="flex flex-col gap-2 lg:w-[500px]">
-                      <p className="text-xl font-bold">Key Features</p>
+                      <p className="text-2xl font-bold">Key Features</p>
                       <p>
-                        <strong>Weight:</strong>
+                        <span className="text-base font-bold lg:text-lg">Weight:</span>
                         <br />
-                        {data?.weight ? <span>{data?.weight}</span> : null}
+
+                        {data?.weight ? (
+                          <span className="text-base lg:text-lg">{data?.weight}</span>
+                        ) : null}
                       </p>
                       <p>
-                        <strong>Material:</strong>
+                        <span className="text-base font-bold lg:text-lg">Material:</span>
                         <br />
-                        {data.material ? <span>{data.material}</span> : null}
+                        {data.material ? (
+                          <span className="text-base lg:text-lg">{data.material}</span>
+                        ) : null}
                       </p>
                     </div>
                   </div>
