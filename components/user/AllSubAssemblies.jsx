@@ -135,8 +135,8 @@ const AllSubAssemblies = () => {
                     href={`/sub-assemblies/${subAssembly.documentId}`}
                     key={subAssembly.id + index + subAssembly.documentId}
                   >
-                    <div className="w-[280px] min-w-[280px] rounded-lg border border-gray-200 bg-white shadow-sm transition xs:w-[330px] sm:w-[290px] sm:min-w-[290px]">
-                      <div className="relative h-[200px] w-full border-b border-gray-200 p-1">
+                    <div className="w-[280px] min-w-[280px] rounded-lg border border-gray-400 bg-white shadow-sm transition xs:w-[330px] sm:w-[290px] sm:min-w-[290px]">
+                      <div className="relative h-[200px] w-full border-b border-gray-400 p-1">
                         {subAssembly.media ? (
                           <BaseImage
                             width={subAssembly.media[0].formats?.actual?.width}
