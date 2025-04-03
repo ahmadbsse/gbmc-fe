@@ -17,7 +17,7 @@ const Home = () => {
         {/* Main Split Screen Sections */}
         <div className="md-mt-0 mt-16 flex flex-1 flex-col md:flex-row">
           {/* Engineering Components Section */}
-          <div className="relative order-2 cursor-pointer md:order-1 md:h-screen md:w-1/2">
+          <div className="relative cursor-pointer md:h-screen md:w-1/2">
             <div className="absolute inset-0" />
             <Image
               src="/assets/banner01.jpg"
@@ -50,7 +50,7 @@ const Home = () => {
           </div>
 
           {/* Tractor Parts Section */}
-          <div className="relative order-1 cursor-pointer md:order-2 md:h-screen md:w-1/2">
+          <div className="relative cursor-pointer md:h-screen md:w-1/2">
             <div className="absolute inset-0 bg-primary" />
 
             <div className="relative flex h-full flex-col items-center justify-center p-8 text-black">
