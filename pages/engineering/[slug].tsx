@@ -99,7 +99,7 @@ const Article = () => {
               />
 
               <div className="mb-3 mt-4 flex flex-col gap-4 lg:flex-row lg:gap-10">
-                <div className="rounded-lg bg-[rgb(175,164,164)] p-4 text-sm text-white lg:h-[450px] lg:w-[700px] lg:text-base">
+                <div className="rounded-lg bg-[rgb(175,164,164)] p-4 text-sm text-white lg:h-[470px] lg:w-[700px] lg:text-base">
                   <div className="lg:w-[750px] lg:gap-5 lg:px-11 lg:py-7">
                     <div className="flex flex-col gap-2 lg:w-[500px]">
                       <p className="text-2xl font-bold">Key Features</p>
@@ -122,11 +122,11 @@ const Article = () => {
                   </div>
                 </div>
 
-                <div className="z-20 flex h-[200px] w-full items-center justify-center rounded-lg bg-white p-6 text-white shadow-lg md:h-auto md:max-h-[400px] lg:my-20 lg:-ml-32 lg:max-h-[500px]">
+                <div className="z-20 flex h-[200px] w-full items-center justify-center rounded-lg bg-white p-6 text-white shadow-lg md:h-auto md:max-h-[300px] lg:my-8 lg:-ml-32 lg:max-h-[400px]">
                   {data?.media && data?.media[selectedImage] ? (
-                    <div className="m-1 h-[200px] p-1 text-black md:h-auto md:max-h-[400px] lg:max-h-[500px]">
+                    <div className="m-1 h-[100px] p-1 text-black md:h-auto md:max-h-[300px] lg:max-h-[400px]">
                       <BaseImage
-                        classes="object-contain rounded-lg p-1 lg:max-h-[490px] md:max-h-[390px] h-[190px] md:h-auto"
+                        classes="object-contain rounded-lg p-1 lg:max-h-[390px] md:max-h-[290px] h-[90px] md:h-auto"
                         height={data?.media[selectedImage]?.formats?.actual?.height}
                         width={data?.media[selectedImage]?.formats?.actual?.width}
                         src={data?.media[selectedImage]?.formats?.actual?.url}
