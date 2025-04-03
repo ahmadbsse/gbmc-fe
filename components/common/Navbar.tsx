@@ -31,7 +31,9 @@ const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
                     nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
         speed={30}
       /> */}
-      <nav className="fixed top-0 z-50 w-full bg-white drop-shadow-xl">
+      <nav
+        className={`fixed top-0 z-50 w-full drop-shadow-xl ${router.pathname == "/" ? "bg-[linear-gradient(to_right,#ffffff_50%,#FFBF32_50%)]" : "bg-white"}`}
+      >
         <div className={`mx-auto px-4 sm:container`}>
           <div className="flex h-[74px] items-center justify-between">
             <div className="flex w-full items-center justify-between gap-8">
