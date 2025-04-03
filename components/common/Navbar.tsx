@@ -23,6 +23,7 @@ const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
       window.location.href = "/admin";
     });
   };
+
   return (
     <>
       {/* <ScrollingMarquee
@@ -32,7 +33,7 @@ const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
         speed={30}
       /> */}
       <nav
-        className={`fixed top-0 z-50 w-full drop-shadow-xl ${router.pathname == "/" ? "bg-[linear-gradient(to_right,#ffffff_50%,#FFBF32_50%)]" : "bg-white"}`}
+        className={`fixed top-0 z-50 w-full drop-shadow-xl ${router?.pathname == "/" ? "bg-[linear-gradient(to_right,#ffffff_50%,#FFBF32_50%)]" : "bg-white"}`}
       >
         <div className={`mx-auto px-4 sm:container`}>
           <div className="flex h-[74px] items-center justify-between">

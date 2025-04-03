@@ -88,7 +88,7 @@ label {
 }
 
 .product-specification-table-striped tbody tr:nth-of-type(odd) {
-  background: #f3f3f3;
+  background: #f7f7f7;
   border-top: 1px solid #e5e5e5;
   border-bottom: 1px solid #e5e5e5;
 }
