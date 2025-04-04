@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Menu, LogOut, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
-// import ScrollingMarquee from "@/components/common/Marquee";
+import ScrollingMarquee from "@/components/common/Marquee";
 
 import { userRoutes, tabsKey } from "@/data";
 import apiClient from "@/utils/apiClient";
@@ -11,6 +11,28 @@ import apiClient from "@/utils/apiClient";
 const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [marqueeData, setMarqueeData] = useState(null);
+
+  const getMarqueeText = async () => {
+    try {
+      await apiClient.GET("/marquee").then(async (res) => {
+        if (res.data) {
+          if (res.data.active) {
+            setMarqueeData(res.data);
+            localStorage.setItem("hasMarquee", JSON.stringify(true));
+          } else {
+            setMarqueeData(null);
+            localStorage.setItem("hasMarquee", JSON.stringify(false));
+          }
+        } else {
+          setMarqueeData(null);
+          console.error("Error fetching marquee text:", res);
+        }
+      });
+    } catch (error) {
+      console.error("Error fetching marquee text:", error);
+    }
+  };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -23,18 +45,15 @@ const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
       window.location.href = "/admin";
     });
   };
-
+  useEffect(() => {
+    getMarqueeText();
+  }, []);
   return (
     <>
-      {/* <ScrollingMarquee
-        text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                    nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
-        speed={30}
-      /> */}
       <nav
-        className={`fixed top-0 z-50 w-full drop-shadow-xl ${router?.pathname == "/" ? "bg-[linear-gradient(to_right,#ffffff_50%,#FFBF32_50%)]" : "bg-white"}`}
+        className={`fixed top-0 z-50 w-full drop-shadow-xl ${router?.pathname == "/" ? "bg-[linear-gradient(to_right,#ffffff_50%,#FFBF32_50%)]" : "bg-white"} `}
       >
+        {marqueeData ? <ScrollingMarquee text={marqueeData?.text} speed={30} /> : null}
         <div className={`mx-auto px-4 sm:container`}>
           <div className="flex h-[74px] items-center justify-between">
             <div className="flex w-full items-center justify-between gap-8">

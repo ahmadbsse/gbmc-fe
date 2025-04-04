@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 
 import type { PageLayoutProps } from "@/types";
@@ -10,8 +10,17 @@ const PageLayout: React.FC<PageLayoutProps> = ({
   paddingTop = true,
   isDetailsPage = false,
 }) => {
+  const [hasMarquee, setHasMarquee] = React.useState(false);
+  useEffect(() => {
+    const hasMarquee = localStorage.getItem("hasMarquee");
+    if (hasMarquee) {
+      setHasMarquee(JSON.parse(hasMarquee));
+    }
+  }, []);
   return (
-    <div className={`min-h-screen bg-[#f3f3f3] ${paddingTop ? "pt-20" : ""}`}>
+    <div
+      className={`min-h-screen bg-[#f3f3f3] ${paddingTop ? "pt-20" : ""} ${hasMarquee ? "mt-10" : ""}`}
+    >
       <div className="mx-auto max-w-7xl">
         <div className={`${isDetailsPage ? "sm:container" : "container"} mx-auto px-4 pb-12 pt-4`}>
           <div className="mb-4">

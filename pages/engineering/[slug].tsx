@@ -10,6 +10,7 @@ const Article = () => {
   const router = useRouter();
   const [selectedImage, setSelectedImage] = useState(0);
   const [data, setData] = useState<EngineeringComponent | null>(null);
+  const [hasMarquee, setHasMarquee] = useState(false);
 
   const getComponentDetails = async () => {
     try {
@@ -50,13 +51,18 @@ const Article = () => {
     { text: "Engineering Components", href: "/engineering" },
     { text: data?.name, href: `/engineering/${router.query.slug}` },
   ];
-
+  useEffect(() => {
+    const hasMarquee = localStorage.getItem("hasMarquee");
+    if (hasMarquee) {
+      setHasMarquee(JSON.parse(hasMarquee));
+    }
+  }, []);
   return (
     <>
       <SeoHead title={`${data?.name}`} />
       <Navbar setTab={() => {}} />
       {data ? (
-        <div className="mx-auto mb-8 max-w-7xl px-4 pt-20">
+        <div className={`mx-auto mb-8 max-w-7xl px-4 pt-20 ${hasMarquee ? "pt-32" : "pt-20"}`}>
           <div className="my-4">
             <div className="mb-8 flex items-center gap-2 text-sm text-gray-500">
               {breadcrumbs.map((crumb, index) => (
