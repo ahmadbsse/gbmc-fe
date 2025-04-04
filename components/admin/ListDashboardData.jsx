@@ -111,7 +111,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
         .DELETE(url)
         .then((res) => {
           setShowDeleteModal(false);
-          showToast(`${activeItem.name} ${" "}deleted succussfully`, "success");
+          showToast(`${activeItem.name} ${" "}deleted successfully`, "success");
           setActiveID(null);
           setActiveItem(null);
           if (data.length == 1) {

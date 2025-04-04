@@ -63,7 +63,7 @@ export default function MarqueeDetails() {
         .DELETE(url)
         .then((res) => {
           setShowDeleteModal(false);
-          showToast(`marquee deleted succussfully`, "success");
+          showToast(`marquee deleted successfully`, "success");
           setMarqueeData(null);
         })
         .catch((error) => {
