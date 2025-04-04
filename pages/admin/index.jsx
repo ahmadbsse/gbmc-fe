@@ -47,7 +47,7 @@ const AdminDashboard = () => {
         if (searchQuery == "") {
           url = `/parts?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=createdAt:desc`;
         } else {
-          url = `/parts?populate=*&filters[name][$containsi]=${searchQuery}&sort=createdAt:desc`;
+          url = `/parts?populate=*&filters[$or][0][name][$containsi]=${searchQuery}&filters[$or][1][oem_number][$containsi]=${searchQuery}&sort=createdAt:desc`;
         }
         await apiClient.GET(url).then(async (res) => {
           setPagination(null);
