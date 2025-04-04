@@ -8,4 +8,5 @@ export const tabsKey = [
     { name: "Parts", key: "parts", tag: "part" },
     { name: "Assemblies", key: "sub-assemblies", tag: "assembly" },
     { name: "Engineering Components", key: "engineering", tag: "engineering component" },
+    { name: 'Marquee', key: 'marquee', tag: 'marquee' },
 ];

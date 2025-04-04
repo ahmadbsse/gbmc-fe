@@ -6,6 +6,7 @@ import { BaseLoader } from "@/components/common";
 import apiClient from "@/utils/apiClient";
 import { transformMedia } from "@/utils";
 import { tabsKey } from "@/data";
+import MarqueeDetails from "@/components/admin/MarqueeDetails";
 
 const PAGE_SIZE = 10;
 const AdminDashboard = () => {
@@ -305,6 +306,8 @@ const AdminDashboard = () => {
             <div className="mx-auto mt-10 w-fit">
               <BaseLoader width={40} height={40} />
             </div>
+          ) : activeTab?.key == "marquee" ? (
+            <MarqueeDetails />
           ) : (
             <>
               <ListDashboardData
