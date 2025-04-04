@@ -51,7 +51,7 @@ const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
   return (
     <>
       <nav
-        className={`fixed top-0 z-50 w-full drop-shadow-xl ${router?.pathname == "/" ? "bg-[linear-gradient(to_right,#ffffff_50%,#FFBF32_50%)]" : "bg-white"} `}
+        className={`fixed top-0 z-40 w-full drop-shadow-xl ${router?.pathname == "/" ? "bg-[linear-gradient(to_right,#ffffff_50%,#FFBF32_50%)]" : "bg-white"} `}
       >
         {marqueeData ? <ScrollingMarquee text={marqueeData?.text} speed={30} /> : null}
         <div className={`mx-auto px-4 sm:container`}>

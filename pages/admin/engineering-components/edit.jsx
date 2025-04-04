@@ -25,6 +25,7 @@ const EditComponent = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [idsToRemove, setIdsToRemove] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [hasMarquee, setHasMarquee] = useState(false);
 
   useEffect(() => {
     if (formData) {
@@ -187,6 +188,12 @@ const EditComponent = () => {
       router.push("/admin");
     }
   };
+  useEffect(() => {
+    const hasMarquee = localStorage.getItem("hasMarquee");
+    if (hasMarquee) {
+      setHasMarquee(JSON.parse(hasMarquee));
+    }
+  }, []);
   return (
     <>
       {showWarning ? (
@@ -204,8 +211,8 @@ const EditComponent = () => {
         />
       ) : null}
       <SeoHead title="Admin" />
-      <div className="min-h-screen bg-[#f3f3f3]">
-        <Navbar isAdmin setTab={setTab} activeTab={"Engineering Components"} />
+      <Navbar isAdmin setTab={setTab} activeTab={"Engineering Components"} />
+      <div className={`min-h-screen bg-[#f3f3f3] ${hasMarquee ? "mt-28" : "mt-20"}`}>
         <main className="mx-auto mt-20 px-4 py-8 sm:container">
           {formData ? (
             <>
