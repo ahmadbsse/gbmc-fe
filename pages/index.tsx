@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Settings, Tractor, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,6 +6,13 @@ import Link from "next/link";
 import { Navbar, BaseButton, SeoHead } from "@/components/common";
 
 const Home = () => {
+  const [hasMarquee, setHasMarquee] = React.useState(false);
+  useEffect(() => {
+    const hasMarquee = localStorage.getItem("hasMarquee");
+    if (hasMarquee) {
+      setHasMarquee(JSON.parse(hasMarquee));
+    }
+  }, []);
   return (
     <>
       <SeoHead title="Home" />
@@ -15,7 +22,9 @@ const Home = () => {
         <Navbar setTab={() => {}} />
 
         {/* Main Split Screen Sections */}
-        <div className="md-mt-0 mt-16 flex flex-1 flex-col md:flex-row">
+        <div
+          className={`flex flex-1 flex-col md:flex-row ${hasMarquee ? "mt-28" : "mt-16 md:mt-0"}`}
+        >
           {/* Engineering Components Section */}
           <div className="relative cursor-pointer md:h-screen md:w-1/2">
             <div className="absolute inset-0" />
