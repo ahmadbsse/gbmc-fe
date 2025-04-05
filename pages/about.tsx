@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { appData } from "@/constants";
 import { Navbar, SeoHead } from "@/components/common";
 
 const AboutPage = () => {
+  const [hasMarquee, setHasMarquee] = React.useState(false);
+  useEffect(() => {
+    const hasMarquee = localStorage.getItem("hasMarquee");
+    if (hasMarquee) {
+      setHasMarquee(JSON.parse(hasMarquee));
+    }
+  }, []);
   return (
     <>
       <SeoHead title="About" />
-      <div className="mt-16 min-h-screen bg-slate-50">
+      <div className={`min-h-screen bg-slate-50 ${hasMarquee ? "mt-28" : "mt-16"}`}>
         {/* Navigation */}
         <Navbar setTab={() => {}} />
 

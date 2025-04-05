@@ -175,6 +175,13 @@ const EditPart = () => {
       router.push("/admin");
     }
   };
+  const [hasMarquee, setHasMarquee] = useState(false);
+  useEffect(() => {
+    const hasMarquee = localStorage.getItem("hasMarquee");
+    if (hasMarquee) {
+      setHasMarquee(JSON.parse(hasMarquee));
+    }
+  }, []);
   return (
     <>
       {showWarning ? (
@@ -192,8 +199,8 @@ const EditPart = () => {
         />
       ) : null}
       <SeoHead title="Admin" />
-      <div className="mt-20 min-h-screen bg-[#f3f3f3]">
-        <Navbar isAdmin setTab={setTab} activeTab={"Parts"} />
+      <Navbar isAdmin setTab={setTab} activeTab={"Parts"} />
+      <div className={`min-h-screen bg-[#f3f3f3] ${hasMarquee ? "mt-28" : "mt-20"}`}>
         <main className="mx-auto px-4 py-8 sm:container">
           {formData ? (
             <>

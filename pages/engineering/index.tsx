@@ -8,6 +8,8 @@ import Image from "next/image";
 const EngineeringHome = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [engineeringComponents, setEngineeringComponents] = useState([]);
+
+  const [hasMarquee, setHasMarquee] = useState(false);
   const getEngineering = async () => {
     try {
       setIsLoading(true);
@@ -34,13 +36,17 @@ const EngineeringHome = () => {
 
   useEffect(() => {
     getEngineering();
+    const hasMarquee = localStorage.getItem("hasMarquee");
+    if (hasMarquee) {
+      setHasMarquee(JSON.parse(hasMarquee));
+    }
   }, []);
 
   return (
     <>
       <SeoHead title={`Engineering Components`} />
       <Navbar setTab={() => {}} />
-      <div className="relative mt-16 h-96">
+      <div className={`relative h-96 ${hasMarquee ? "mt-28" : "mt-16"}`}>
         <div className="absolute inset-0 z-10 bg-gradient-to-r from-slate-900/50 to-slate-900/70" />
         <div className="relative h-full">
           <Image

@@ -1,5 +1,12 @@
 import showToast from "@/utils/toast";
 
+export const marqueeValidator = (formData) => {
+  if (formData.text == "") {
+    showToast(`Please enter text`, "error", true);
+    return false;
+  }
+  return true;
+};
 export const makeValidator = (formData) => {
   if (formData.name == "") {
     showToast(`Please enter name`, "error", true);

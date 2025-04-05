@@ -6,6 +6,7 @@ import { BaseLoader } from "@/components/common";
 import apiClient from "@/utils/apiClient";
 import { transformMedia } from "@/utils";
 import { tabsKey } from "@/data";
+import MarqueeDetails from "@/components/admin/MarqueeDetails";
 
 const PAGE_SIZE = 10;
 const AdminDashboard = () => {
@@ -20,6 +21,7 @@ const AdminDashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [pagination, setPagination] = useState(null);
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(searchQuery);
+  const [hasMarquee, setHasMarquee] = useState(false);
 
   const [activeTab, setActiveTab] = useState();
 
@@ -45,7 +47,7 @@ const AdminDashboard = () => {
         if (searchQuery == "") {
           url = `/parts?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=createdAt:desc`;
         } else {
-          url = `/parts?populate=*&filters[name][$containsi]=${searchQuery}&sort=createdAt:desc`;
+          url = `/parts?populate=*&filters[$or][0][name][$containsi]=${searchQuery}&filters[$or][1][oem_number][$containsi]=${searchQuery}&sort=createdAt:desc`;
         }
         await apiClient.GET(url).then(async (res) => {
           setPagination(null);
@@ -260,12 +262,17 @@ const AdminDashboard = () => {
     suppliers: makes?.length,
     "sub-assemblies": subAssemblies?.length,
   };
+  useEffect(() => {
+    const hasMarquee = localStorage.getItem("hasMarquee");
+    if (hasMarquee) {
+      setHasMarquee(JSON.parse(hasMarquee));
+    }
+  }, []);
   return (
     <>
       <SeoHead title="Admin" />
-      <div className="mt-20 min-h-screen bg-[#f3f3f3]">
-        <Navbar isAdmin setTab={setTab} activeTab={activeTab?.name} />
-
+      <Navbar isAdmin setTab={setTab} activeTab={activeTab?.name} />
+      <div className={`min-h-screen bg-[#f3f3f3] ${hasMarquee ? "mt-28" : "mt-20"}`}>
         <main className="container mx-auto px-4 py-8">
           <div className="mb-3 flex items-center justify-between md:mb-8">
             <h1 className="flex gap-2 text-2xl font-bold md:text-[1.65rem]">Admin Dashboard</h1>
@@ -305,6 +312,8 @@ const AdminDashboard = () => {
             <div className="mx-auto mt-10 w-fit">
               <BaseLoader width={40} height={40} />
             </div>
+          ) : activeTab?.key == "marquee" ? (
+            <MarqueeDetails />
           ) : (
             <>
               <ListDashboardData

@@ -10,6 +10,7 @@ const Article = () => {
   const router = useRouter();
   const [selectedImage, setSelectedImage] = useState(0);
   const [data, setData] = useState<EngineeringComponent | null>(null);
+  const [hasMarquee, setHasMarquee] = useState(false);
 
   const getComponentDetails = async () => {
     try {
@@ -50,13 +51,18 @@ const Article = () => {
     { text: "Engineering Components", href: "/engineering" },
     { text: data?.name, href: `/engineering/${router.query.slug}` },
   ];
-
+  useEffect(() => {
+    const hasMarquee = localStorage.getItem("hasMarquee");
+    if (hasMarquee) {
+      setHasMarquee(JSON.parse(hasMarquee));
+    }
+  }, []);
   return (
     <>
       <SeoHead title={`${data?.name}`} />
       <Navbar setTab={() => {}} />
       {data ? (
-        <div className="mx-auto mb-8 max-w-7xl px-4 pt-20">
+        <div className={`mx-auto mb-8 max-w-7xl px-4 pt-20 ${hasMarquee ? "pt-32" : "pt-20"}`}>
           <div className="my-4">
             <div className="mb-8 flex items-center gap-2 text-sm text-gray-500">
               {breadcrumbs.map((crumb, index) => (
@@ -99,29 +105,34 @@ const Article = () => {
               />
 
               <div className="mb-3 mt-4 flex flex-col gap-4 lg:flex-row lg:gap-10">
-                <div className="rounded-lg bg-[rgb(175,164,164)] p-4 text-sm text-white lg:h-[650px] lg:w-[700px] lg:text-base">
+                <div className="rounded-lg bg-[rgb(175,164,164)] p-4 text-sm text-white lg:h-[470px] lg:w-[700px] lg:text-base">
                   <div className="lg:w-[750px] lg:gap-5 lg:px-11 lg:py-7">
                     <div className="flex flex-col gap-2 lg:w-[500px]">
-                      <p className="text-xl font-bold">Key Features</p>
+                      <p className="text-2xl font-bold">Key Features</p>
                       <p>
-                        <strong>Weight:</strong>
+                        <span className="text-base font-bold lg:text-lg">Weight:</span>
                         <br />
-                        {data?.weight ? <span>{data?.weight}</span> : null}
+
+                        {data?.weight ? (
+                          <span className="text-base lg:text-lg">{data?.weight}</span>
+                        ) : null}
                       </p>
                       <p>
-                        <strong>Material:</strong>
+                        <span className="text-base font-bold lg:text-lg">Material:</span>
                         <br />
-                        {data.material ? <span>{data.material}</span> : null}
+                        {data.material ? (
+                          <span className="text-base lg:text-lg">{data.material}</span>
+                        ) : null}
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="z-20 flex h-[200px] w-full items-center justify-center rounded-lg bg-white p-6 text-white shadow-lg md:h-auto md:max-h-[400px] lg:my-20 lg:-ml-32 lg:max-h-[500px]">
+                <div className="z-20 flex h-[200px] w-full items-center justify-center rounded-lg bg-white p-6 text-white shadow-lg md:h-auto md:max-h-[300px] lg:my-8 lg:-ml-32 lg:max-h-[400px]">
                   {data?.media && data?.media[selectedImage] ? (
-                    <div className="m-1 h-[200px] p-1 text-black md:h-auto md:max-h-[400px] lg:max-h-[500px]">
+                    <div className="m-1 h-[100px] p-1 text-black md:h-auto md:max-h-[300px] lg:max-h-[400px]">
                       <BaseImage
-                        classes="object-contain rounded-lg p-1 lg:max-h-[490px] md:max-h-[390px] h-[190px] md:h-auto"
+                        classes="object-contain rounded-lg p-1 lg:max-h-[390px] md:max-h-[290px] h-[90px] md:h-auto"
                         height={data?.media[selectedImage]?.formats?.actual?.height}
                         width={data?.media[selectedImage]?.formats?.actual?.width}
                         src={data?.media[selectedImage]?.formats?.actual?.url}

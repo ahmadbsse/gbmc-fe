@@ -17,7 +17,7 @@ const Home = () => {
         {/* Main Split Screen Sections */}
         <div className="md-mt-0 mt-16 flex flex-1 flex-col md:flex-row">
           {/* Engineering Components Section */}
-          <div className="relative order-2 cursor-pointer md:order-1 md:h-screen md:w-1/2">
+          <div className="relative cursor-pointer md:h-screen md:w-1/2">
             <div className="absolute inset-0" />
             <Image
               src="/assets/banner01.jpg"
@@ -30,7 +30,7 @@ const Home = () => {
             <div className="relative flex h-full flex-col items-center justify-center p-8 text-black">
               <div className="flex flex-col items-center bg-gray-50 bg-opacity-70 p-3">
                 <Settings size={64} className="mb-6" />
-                <h2 className="mb-4 text-center text-2xl font-bold lg:text-4xl">
+                <h2 className="mb-4 text-center text-2xl font-bold uppercase lg:text-4xl">
                   Engineering Components
                 </h2>
                 <p className="mb-8 max-w-md text-center text-lg">
@@ -50,12 +50,14 @@ const Home = () => {
           </div>
 
           {/* Tractor Parts Section */}
-          <div className="relative order-1 cursor-pointer md:order-2 md:h-screen md:w-1/2">
+          <div className="relative cursor-pointer md:h-screen md:w-1/2">
             <div className="absolute inset-0 bg-primary" />
 
             <div className="relative flex h-full flex-col items-center justify-center p-8 text-black">
               <Tractor size={64} className="mb-6" />
-              <h2 className="mb-4 text-center text-2xl font-bold lg:text-4xl">Tractor Parts</h2>
+              <h2 className="mb-4 text-center text-2xl font-bold uppercase lg:text-4xl">
+                Tractor Parts
+              </h2>
               <p className="mb-8 max-w-md text-center text-lg text-black">
                 High-quality replacement parts for agricultural machinery.
               </p>

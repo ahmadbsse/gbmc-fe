@@ -19,6 +19,7 @@ const AllParts = () => {
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(searchQuery);
   const observerRef = useRef(null);
   const [message, setMessage] = useState("");
+  const [brandMediaMap, setBrandMediaMap] = useState({});
 
   const getParts = async (pageNum, isLoadMore = false) => {
     try {
@@ -101,15 +102,33 @@ const AllParts = () => {
   useEffect(() => {
     if (page > 1) getParts(page, true);
   }, [page]);
+  function extractMediaUrlsByName(data) {
+    const result = {};
+
+    data.forEach((item) => {
+      if (item.media && item.media.formats) {
+        const formats = item.media.formats;
+        const urls = {};
+
+        for (const formatKey in formats) {
+          urls[formatKey] = formats[formatKey].url;
+        }
+        result[decodeText(item.name)] = formats?.thumbnail?.url;
+      }
+    });
+
+    setBrandMediaMap(result);
+  }
 
   const getMakes = async () => {
     try {
-      await apiClient.GET(`/suppliers?filters[active]=true`).then(async (res) => {
+      await apiClient.GET(`/suppliers?populate=*&filters[active]=true`).then(async (res) => {
         if (res && res.data.length > 0) {
           res.data.unshift({ name: "All", documentId: "" });
           res.data.forEach((brand) => {
             brand.name = decodeText(brand.name);
           });
+          extractMediaUrlsByName(res.data);
           setMakes(res.data);
         } else {
           setMakes([]);
@@ -189,19 +208,36 @@ const AllParts = () => {
                     href={`/tractor-parts/${part.documentId}`}
                     key={part.id + index + part.documentId}
                   >
-                    <div className="w-[280px] min-w-[280px] rounded-lg border border-gray-200 bg-white shadow-sm transition xs:w-[330px] sm:w-[290px] sm:min-w-[290px]">
-                      <div className="relative h-[200px] w-full border-b border-gray-200 p-1">
+                    {/* <pre>{JSON.stringify(part, null, 2)}</pre> */}
+                    <div className="w-[280px] min-w-[280px] rounded-lg border border-gray-400 bg-white shadow-sm transition xs:w-[330px] sm:w-[290px] sm:min-w-[290px]">
+                      <div className="relative h-[200px] w-full border-b border-gray-400 p-1">
                         {part.media ? (
-                          <BaseImage
-                            width={part.media[0].formats?.actual?.width}
-                            height={part.media[0].formats?.actual?.height}
-                            src={part.media[0].formats?.actual?.url}
-                            alt={part.name}
-                            priority={true}
-                            classes="h-full w-full object-contain rounded-t-lg"
-                          />
+                          <>
+                            {" "}
+                            <BaseImage
+                              width={part.media[0].formats?.actual?.width}
+                              height={part.media[0].formats?.actual?.height}
+                              src={part.media[0].formats?.actual?.url}
+                              alt={part.name}
+                              priority={true}
+                              classes="h-full w-full object-contain rounded-t-lg"
+                            />
+                            {brandMediaMap[decodeText(part?.supplier?.name)] ? (
+                              <div className="absolute right-2 top-2 max-h-6 max-w-12 rounded text-xs font-bold">
+                                <BaseImage
+                                  width={60}
+                                  height={20}
+                                  src={brandMediaMap[decodeText(part?.supplier?.name)]}
+                                  alt={part?.supplier?.name}
+                                  priority={true}
+                                  classes="h-full w-full object-contain rounded-t-lg"
+                                />
+                              </div>
+                            ) : null}
+                          </>
                         ) : null}
                       </div>
+
                       <h3
                         title={part.name}
                         className="truncate p-4 text-center text-base font-bold sm:text-lg"

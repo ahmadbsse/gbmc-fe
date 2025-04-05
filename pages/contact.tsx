@@ -11,6 +11,7 @@ const ContactPage = () => {
   const [loading, setLoading] = useState(false);
   const [formIsValid, setFormIsValid] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(false);
+  const [hasMarquee, setHasMarquee] = useState(false);
   const [formValues, setFormValues] = useState({
     name: "",
     email: "",
@@ -69,6 +70,13 @@ const ContactPage = () => {
       setFormIsValid(false);
     }
   }, [formValues]);
+
+  useEffect(() => {
+    const hasMarquee = localStorage.getItem("hasMarquee");
+    if (hasMarquee) {
+      setHasMarquee(JSON.parse(hasMarquee));
+    }
+  }, []);
   return (
     <>
       <SeoHead title="Contact" />
@@ -77,7 +85,7 @@ const ContactPage = () => {
         {/* Navigation */}
         <Navbar setTab={() => {}} />
 
-        <div className="mx-auto mt-20 p-4 md:container">
+        <div className={`mx-auto p-4 md:container ${hasMarquee ? "mt-32" : "mt-20"}`}>
           <div className="mx-auto max-w-6xl">
             <h1 className="mb-4 text-3xl font-bold text-slate-900">Contact Us</h1>
             <div className="grid gap-4 md:grid-cols-2 lg:gap-8 xl:gap-12">

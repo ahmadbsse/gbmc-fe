@@ -39,11 +39,18 @@ const ViewSubAssemblyDetails = () => {
       router.push("/admin");
     }
   };
+  const [hasMarquee, setHasMarquee] = useState(false);
+  useEffect(() => {
+    const hasMarquee = localStorage.getItem("hasMarquee");
+    if (hasMarquee) {
+      setHasMarquee(JSON.parse(hasMarquee));
+    }
+  }, []);
   return (
     <>
       <SeoHead title="Admin" />
-      <div className="mt-20 min-h-screen bg-[#f3f3f3]">
-        <Navbar isAdmin setTab={setTab} activeTab={"Assemblies"} />
+      <Navbar isAdmin setTab={setTab} activeTab={"Assemblies"} />
+      <div className={`min-h-screen bg-[#f3f3f3] ${hasMarquee ? "mt-28" : "mt-20"}`}>
         <main className="mx-auto px-4 py-8 sm:container">
           {formData ? (
             <div className="mx-auto max-w-[810px] space-y-3 lg:space-y-5">

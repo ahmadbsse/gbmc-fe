@@ -32,7 +32,6 @@ export default {
     },
     fontFamily: {
       'primary-font': ['Albert Sans', 'sans-serif'],
-      'secondary-font': ['Roboto', 'sans-serif'],
     },
   },
   plugins: [],

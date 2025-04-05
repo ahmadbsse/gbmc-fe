@@ -7,3 +7,4 @@ export { default as AdminEditItemModal } from './AdminEditItemModal';
 export { default as ActiveConfirmationModal } from './ActiveConfirmationModal';
 export { default as FeatureConfirmationModal } from './FeatureConfirmationModal';
 export { default as MakeDetailModal } from './MakeDetailModal';
+export { default as MarqueeDetails } from './MarqueeDetails';
