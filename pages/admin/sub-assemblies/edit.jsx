@@ -80,7 +80,7 @@ const EditSubAssembly = () => {
             } else {
               formData.media = newMediaIds;
             }
-            if (formData.pdf && Object.keys(formData?.pdf).length > 0) {
+            if (Array.isArray(formData?.pdf) && formData.pdf[0].file) {
               const pdfFormdata = new FormData();
               formData.pdf.forEach((file) => {
                 pdfFormdata.append("files", file.file); // Use the correct file object
@@ -99,6 +99,8 @@ const EditSubAssembly = () => {
               } finally {
                 return;
               }
+            } else {
+              saveData();
             }
           })
           .catch((error) => {
@@ -121,6 +123,7 @@ const EditSubAssembly = () => {
     };
   };
   const saveData = () => {
+    console.log("save data");
     try {
       apiClient
         .PUT(`/sub-assemblies/${id}`, { data: sanitizedFormData() })
