@@ -280,7 +280,7 @@ const EditComponent = () => {
 
                 <div className="flex flex-col gap-3 md:flex-row md:gap-2">
                   <div className="w-full">
-                    <label className="required mb-1 block text-sm font-medium">Hero Image</label>
+                    <label className="required mb-1 block text-sm font-medium">Hero media</label>
 
                     <BaseFileUploader
                       setDataFilesIds={setHeroImage}
@@ -304,7 +304,7 @@ const EditComponent = () => {
                         {formData.hero_image?.type === "video" && formData.hero_image?.url ? (
                           <BaseVideo
                             src={formData.hero_image.url}
-                            autoPlay={true}
+                            autoPlay={false}
                             muted={true}
                             loop={true}
                             classes="object-contain w-full h-full rounded-lg"

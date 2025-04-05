@@ -163,7 +163,18 @@ export function decodeText(input) {
     .replace(/&#92;/g, "\\"); // Convert `&#92;` back to `\`
 }
 
-export const handleOpenLinkInNewTab = (url) => {
-  const u = process.env.NEXT_PUBLIC_API_BASE_URL + url;
-  window.open(u, "_blank", "noopener,noreferrer");
+export const downloadFile = async (fileUrl, filename = "download.pdf") => {
+  const response = await fetch(fileUrl);
+  const blob = await response.blob();
+
+  const blobUrl = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = blobUrl;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+
+  document.body.removeChild(link);
+  URL.revokeObjectURL(blobUrl);
 };

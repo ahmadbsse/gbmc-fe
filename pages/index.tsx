@@ -39,7 +39,7 @@ const Home = () => {
             <div className="relative flex h-full flex-col items-center justify-center p-8 text-black">
               <div className="flex flex-col items-center bg-gray-50 bg-opacity-70 p-3">
                 <Settings size={64} className="mb-6" />
-                <h2 className="mb-4 text-center text-2xl font-bold uppercase lg:text-4xl">
+                <h2 className="mb-4 text-center text-2xl font-bold uppercase lg:text-3xl">
                   Engineering Components
                 </h2>
                 <p className="mb-8 max-w-md text-center text-lg">
@@ -64,7 +64,7 @@ const Home = () => {
 
             <div className="relative flex h-full flex-col items-center justify-center p-8 text-black">
               <Tractor size={64} className="mb-6" />
-              <h2 className="mb-4 text-center text-2xl font-bold uppercase lg:text-4xl">
+              <h2 className="mb-4 text-center text-2xl font-bold uppercase lg:text-3xl">
                 Tractor Parts
               </h2>
               <p className="mb-8 max-w-md text-center text-lg text-black">

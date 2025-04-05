@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { X, File } from "lucide-react";
+import { X, Download } from "lucide-react";
 
 import apiClient from "@/utils/apiClient";
-import { sanitizeText, handleOpenLinkInNewTab } from "@/utils";
+import { sanitizeText, downloadFile } from "@/utils";
 import { transformMedia, uploadFilesRequest, deleteFilesRequest, decodeText } from "@/utils";
 import { Navbar, BaseLoader, BaseImage, BaseButton, SeoHead } from "@/components/common";
 import BaseFileUploader from "@/components/admin/BaseFileUploader";
@@ -342,17 +342,22 @@ const EditSubAssembly = () => {
                   />
                 </div>
                 {Object.keys(formData?.pdf).length && !Array.isArray(formData?.pdf) != 0 ? (
-                  <div className="flex items-center justify-between gap-3 rounded-lg border border-gray-300 bg-white px-4 py-2.5">
-                    <div
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleOpenLinkInNewTab(formData?.pdf?.url);
-                      }}
-                      className="flex items-center gap-3 hover:underline"
+                  <div className="flex items-center gap-3">
+                    <a
+                      href={process.env.NEXT_PUBLIC_API_BASE_URL + formData?.pdf?.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() =>
+                        downloadFile(formData?.pdf?.url, `${formData?.name}_specs.pdf`)
+                      }
                     >
-                      <File />
-                      {formData?.pdf?.name}
-                    </div>
+                      <p className="flex items-center gap-2">
+                        <Download className="h-5" />
+                        <span className="text-blue-900 underline">
+                          Download specifications as PDF
+                        </span>
+                      </p>
+                    </a>
                     <button
                       type="button"
                       onClick={(e) => {

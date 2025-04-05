@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { File } from "lucide-react";
+import { Download } from "lucide-react";
 import apiClient from "@/utils/apiClient";
 import RichTextEditor from "@/components/common/RichTextEditor";
 import { Navbar, BaseLoader, BaseImage, SeoHead } from "@/components/common";
-import { decodeText, handleOpenLinkInNewTab } from "@/utils";
+import { decodeText, downloadFile } from "@/utils";
 
 const ViewSubAssemblyDetails = () => {
   const router = useRouter();
@@ -132,12 +132,20 @@ const ViewSubAssemblyDetails = () => {
                 </div>
               </div>
               {Object.keys(formData?.pdf).length ? (
-                <div
-                  onClick={() => handleOpenLinkInNewTab(formData?.pdf?.url)}
-                  className="flex items-center gap-3 rounded-lg border border-gray-300 bg-white px-4 py-2.5 hover:underline"
-                >
-                  <File />
-                  {formData?.pdf?.name}
+                <div className="mt-5">
+                  <a
+                    href={process.env.NEXT_PUBLIC_API_BASE_URL + formData?.pdf?.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => downloadFile(formData?.pdf?.url, `${formData?.name}_specs.pdf`)}
+                  >
+                    <p className="flex items-center gap-2">
+                      <Download className="h-5" />
+                      <span className="text-blue-900 underline">
+                        Download specifications as PDF
+                      </span>
+                    </p>
+                  </a>
                 </div>
               ) : null}
               <div className="flex flex-col gap-2 pt-4">

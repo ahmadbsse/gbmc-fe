@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
 import apiClient from "@/utils/apiClient";
-import { transformMedia, decodeText, handleOpenLinkInNewTab } from "@/utils";
+import { transformMedia, decodeText, downloadFile } from "@/utils";
 import { Navbar, PageLayout, BaseImage, BaseLoader, SeoHead } from "@/components/common";
 import { ImageMagnifier } from "@/components/user";
-import { File } from "lucide-react";
+import { Download } from "lucide-react";
 
 const SubAssemblyDetails = () => {
   const router = useRouter();
@@ -159,16 +159,17 @@ const SubAssemblyDetails = () => {
               </table>
             </div>
             {Object.keys(data?.pdf).length ? (
-              <>
-                <h2 className="mb-3 text-lg font-bold"> Document</h2>
-                <div
-                  onClick={() => handleOpenLinkInNewTab(data?.pdf?.url)}
-                  className="flex max-w-3xl items-center gap-3 rounded-lg border border-gray-300 bg-white px-4 py-2.5 hover:underline"
-                >
-                  <File />
-                  {data?.pdf?.name}
-                </div>
-              </>
+              <a
+                href={process.env.NEXT_PUBLIC_API_BASE_URL + data?.pdf?.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => downloadFile(data?.pdf?.url, `${data?.name}_specs.pdf`)}
+              >
+                <p className="flex items-center gap-2">
+                  <Download className="h-5" />
+                  <span className="text-blue-900 underline">Download specifications as PDF</span>
+                </p>
+              </a>
             ) : null}
           </div>
         ) : (
