@@ -337,6 +337,7 @@ const EditSubAssembly = () => {
                   <BaseFileUploader
                     setDataFilesIds={setPDF}
                     removeMedia={removePDF}
+                    isPDF={true}
                     disabled={Object.keys(formData?.pdf).length != 0 ? true : false}
                   />
                 </div>
@@ -355,7 +356,6 @@ const EditSubAssembly = () => {
                     <button
                       type="button"
                       onClick={(e) => {
-                        e.stopPropagation();
                         removePDF();
                       }}
                     >
