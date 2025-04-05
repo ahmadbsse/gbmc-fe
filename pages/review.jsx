@@ -12,17 +12,16 @@ export default function ReviewDetails() {
 
   useEffect(() => {
     setData({
-      id: 181,
-      documentId: "hbfld5lsi9hll68i00trpdjl",
-      name: "jkas;djalskjdlajsdlkja;s",
-      number: "890",
-      material: "Cody's Terry>\\\\//",
-      weight: "Cody's Terry>\\\\//",
-      description: "<p>Quisquam quis iste c.jkasdjasd</p>",
-      publishedAt: "2025-03-14T14:59:04.131Z",
+      id: 37,
+      documentId: "le0crsuplj4awoui0wg4ct2j",
+      name: "test new",
+      oem_number: "555, 000",
+      material: "mixed wooden",
+      weight: "1kg",
+      description: "",
       active: true,
       featured: true,
-      oem_number: "Cody's Terry>\\\\//",
+      number: "30",
       media: [
         {
           type: "image",
@@ -32,127 +31,31 @@ export default function ReviewDetails() {
           createdAt: "2025-03-12T19:28:08.838Z",
           formats: {
             small: {
+              url: "/uploads/small_12_2933937d80.jpeg",
               width: 500,
               height: 500,
             },
             thumbnail: {
-              url: "/uploads/thumbnail_3_bd7f5092ef.jpeg",
+              url: "/uploads/thumbnail_12_2933937d80.jpeg",
               width: 156,
               height: 156,
             },
             actual: {
-              url: "/uploads/3_bd7f5092ef.jpeg",
+              url: "/uploads/12_bb3e96c0fe.jpeg",
               width: 400,
               height: 400,
             },
           },
         },
-        {
-          type: "image",
-          id: 651,
-          documentId: "ffsshpicgz315ef137x8v6bz",
-          name: "1.jpeg",
-          createdAt: "2025-03-12T19:28:09.461Z",
-          formats: {
-            small: {
-              url: "/uploads/small_1_19ae060fd4.jpeg",
-              width: 334,
-              height: 500,
-            },
-            thumbnail: {
-              url: "/uploads/thumbnail_1_19ae060fd4.jpeg",
-              width: 104,
-              height: 156,
-            },
-            actual: {
-              url: "/uploads/1_19ae060fd4.jpeg",
-              width: 854,
-              height: 1280,
-            },
-          },
-        },
-        {
-          type: "image",
-          id: 652,
-          documentId: "w1cchd2qorh7ibckjnzpylgw",
-          name: "4.jpeg",
-          createdAt: "2025-03-12T19:28:09.463Z",
-          formats: {
-            small: {
-              url: "/uploads/small_4_fdf6384cbc.jpeg",
-              width: 500,
-              height: 334,
-            },
-            thumbnail: {
-              url: "/uploads/thumbnail_4_fdf6384cbc.jpeg",
-              width: 234,
-              height: 156,
-            },
-            actual: {
-              url: "/uploads/4_fdf6384cbc.jpeg",
-              width: 1280,
-              height: 854,
-            },
-          },
-        },
-        {
-          type: "image",
-          id: 653,
-          documentId: "e5f9nd0hekb4ez7pha7x4z5g",
-          name: "2.jpeg",
-          createdAt: "2025-03-12T19:28:09.496Z",
-          formats: {
-            small: {
-              url: "/uploads/small_2_3518ccae1a.jpeg",
-              width: 500,
-              height: 334,
-            },
-            thumbnail: {
-              url: "/uploads/thumbnail_2_3518ccae1a.jpeg",
-              width: 234,
-              height: 156,
-            },
-            actual: {
-              url: "/uploads/2_3518ccae1a.jpeg",
-              width: 1280,
-              height: 854,
-            },
-          },
-        },
-        {
-          type: "image",
-          id: 661,
-          documentId: "zaxy84qv86wrxvien7oa5tmi",
-          name: "8.jpeg",
-          createdAt: "2025-03-14T14:38:35.222Z",
-          formats: {
-            small: {
-              url: "/uploads/small_8_3805eaefdd.jpeg",
-              width: 500,
-              height: 334,
-            },
-            thumbnail: {
-              url: "/uploads/thumbnail_8_3805eaefdd.jpeg",
-              width: 234,
-              height: 156,
-            },
-            actual: {
-              url: "/uploads/8_3805eaefdd.jpeg",
-              width: 1280,
-              height: 854,
-            },
-          },
-        },
       ],
       supplier: {
-        id: 106,
-        documentId: "f57u08vh7o85270vpvgeigae",
-        name: "abc",
-        description: null,
-        createdAt: "2025-03-14T14:47:56.176Z",
-        updatedAt: "2025-03-14T14:47:59.683Z",
-        publishedAt: "2025-03-14T14:47:59.700Z",
+        documentId: "aykuydpxmuzq49a53eywstuy",
+        name: "Ford",
+        description: "Ford test",
         active: true,
+        createdAt: "2025-03-23T21:48:32.501Z",
+        updatedAt: "2025-03-23T21:48:32.501Z",
+        publishedAt: "2025-03-23T21:48:32.541Z",
       },
     });
   }, []);
