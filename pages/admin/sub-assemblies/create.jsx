@@ -251,7 +251,8 @@ const CreateSubAssembly = () => {
               <label className="mb-1 block text-sm font-medium"> PDF</label>
               <BaseFileUploader
                 setDataFilesIds={setPDF}
-                multiple={true}
+                multiple={false}
+                isPDF={true}
                 removeMedia={removePDF}
                 disabled={Object.keys(formData?.pdf).length === 0 ? false : true}
               />

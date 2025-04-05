@@ -13,11 +13,18 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "noEmitOnError": false,       // Allows emitting output even if there are type errors
+    "noEmitOnError": false, // Allows emitting output even if there are type errors
     "paths": {
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "utils/index.js", "components/user/FeaturedParts.jsx", "pages/admin/index.jsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "utils/index.js",
+    "components/user/FeaturedParts.jsx",
+    "pages/admin/index.jsx"
+  ],
   "exclude": ["node_modules"]
 }

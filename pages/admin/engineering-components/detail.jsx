@@ -100,13 +100,13 @@ const ViewComponentDetails = () => {
 
               <div className="flex flex-col gap-3 md:flex-row md:gap-5">
                 <div className="basis-1/2">
-                  <label className="required mb-1 block text-sm font-medium">Hero Image</label>
+                  <label className="required mb-1 block text-sm font-medium">Hero media</label>
                   <div className="h-28 w-44 rounded-lg bg-white">
                     {formData.hero_image ? (
                       formData.hero_image.type === "video" ? (
                         <BaseVideo
                           src={formData.hero_image.url}
-                          autoPlay={true}
+                          autoPlay={false}
                           muted={true}
                           loop={true}
                           classes="object-contain w-full h-full"

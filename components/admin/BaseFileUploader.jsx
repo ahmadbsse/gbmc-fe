@@ -8,6 +8,7 @@ const BaseFileUploader = ({
   multiple = false,
   disabled = false,
   removeMedia = () => {},
+  isPDF = false,
 }) => {
   const [files, setFiles] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
@@ -88,6 +89,9 @@ const BaseFileUploader = ({
       removeMedia(file);
     } else {
       setDataFilesIds("");
+    }
+    if (isPDF) {
+      removeMedia();
     }
   };
 
