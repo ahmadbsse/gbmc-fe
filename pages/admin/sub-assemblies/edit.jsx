@@ -123,7 +123,6 @@ const EditSubAssembly = () => {
     };
   };
   const saveData = () => {
-    console.log("save data");
     try {
       apiClient
         .PUT(`/sub-assemblies/${id}`, { data: sanitizedFormData() })
