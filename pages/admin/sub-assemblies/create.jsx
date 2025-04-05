@@ -248,7 +248,7 @@ const CreateSubAssembly = () => {
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm font-medium"> PDF</label>
+              <label className="mb-1 block text-sm font-medium">Specification PDF</label>
               <BaseFileUploader
                 setDataFilesIds={setPDF}
                 multiple={false}

@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import { Upload, X, CheckCircle, AlertCircle } from "lucide-react";
-import apiClient from "@/utils/apiClient";
 import ImagePreview from "./ImagePreview";
 
 const BaseFileUploader = ({
@@ -117,7 +116,7 @@ const BaseFileUploader = ({
           <input
             ref={fileInputRef}
             type="file"
-            accept="image/*, video/*,application/pdf"
+            accept={isPDF ? "application/pdf" : "image/*, video/*"}
             disabled={disabled}
             multiple={multiple}
             className={`hidden`}

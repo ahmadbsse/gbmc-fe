@@ -19,7 +19,7 @@ export default function ReviewDetails() {
       oem_number: "555, 000",
       material: "mixed wooden",
       weight: "1kg",
-      description: "",
+      description: `<p>So, let’s suppose that you have done some brainstorming to develop your thesis. What else should you keep in mind as you begin to create paragraphs.</p>`,
       active: true,
       featured: true,
       number: "30",
