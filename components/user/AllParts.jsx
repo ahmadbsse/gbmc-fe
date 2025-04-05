@@ -222,7 +222,10 @@ const AllParts = () => {
                               classes="h-full w-full object-contain rounded-t-lg"
                             />
                             {brandMediaMap[decodeText(part?.supplier?.name)] ? (
-                              <div className="absolute right-2 top-2 max-h-6 max-w-12 rounded text-xs font-bold">
+                              <div
+                                title={part?.supplier?.name}
+                                className="absolute right-2 top-2 max-h-6 max-w-12 rounded text-xs font-bold"
+                              >
                                 <BaseImage
                                   width={60}
                                   height={20}
