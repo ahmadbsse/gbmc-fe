@@ -208,7 +208,6 @@ const AllParts = () => {
                     href={`/tractor-parts/${part.documentId}`}
                     key={part.id + index + part.documentId}
                   >
-                    {/* <pre>{JSON.stringify(part, null, 2)}</pre> */}
                     <div className="w-[280px] min-w-[280px] rounded-lg border border-gray-400 bg-white shadow-sm transition xs:w-[330px] sm:w-[290px] sm:min-w-[290px]">
                       <div className="relative h-[200px] w-full border-b border-gray-400 p-1">
                         {part.media ? (

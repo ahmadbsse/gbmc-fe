@@ -40,7 +40,10 @@ const BaseFileUploader = ({
   // Handle file selection
   const handleFiles = (selectedFiles) => {
     const validFiles = Array.from(selectedFiles).filter(
-      (file) => file.type.startsWith("image/") || file.type.startsWith("video/")
+      (file) =>
+        file.type.startsWith("image/") ||
+        file.type.startsWith("video/") ||
+        file.type === "application/pdf"
     );
 
     if (validFiles.length === 0) {
@@ -110,7 +113,7 @@ const BaseFileUploader = ({
           <input
             ref={fileInputRef}
             type="file"
-            accept="image/*, video/*"
+            accept="image/*, video/*,application/pdf"
             disabled={disabled}
             multiple={multiple}
             className={`hidden`}

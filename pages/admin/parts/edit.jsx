@@ -120,7 +120,6 @@ const EditPart = () => {
   };
   const saveData = () => {
     try {
-      console.log(sanitizedFormData());
       apiClient
         .PUT(`/parts/${id}`, { data: sanitizedFormData() })
         .then(async () => {
