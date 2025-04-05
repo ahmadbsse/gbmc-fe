@@ -36,7 +36,7 @@ const ScrollingMarquee: React.FC<ScrollingMarqueeProps> = ({
 
   return (
     <div className="w-full overflow-hidden bg-blue-900 text-white">
-      <div ref={containerRef} className="relative flex h-10 items-center">
+      <div ref={containerRef} className="relative flex h-10 items-center font-bold">
         <div
           ref={contentRef}
           className="absolute whitespace-nowrap"

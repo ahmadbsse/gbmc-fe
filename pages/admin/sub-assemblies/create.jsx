@@ -129,7 +129,7 @@ const CreateSubAssembly = () => {
         />
       ) : null}
       <SeoHead title="Admin" />
-      <Navbar isAdmin setTab={setTab} activeTab={"Assemblies"} />
+      <Navbar isAdmin setTab={setTab} activeTab={"Assemblies"} showMarquee={false} />
       <div className={`min-h-screen bg-[#f3f3f3] ${hasMarquee ? "mt-28" : "mt-20"}`}>
         <main className="mx-auto px-4 py-8 sm:container">
           <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">Create Assembly</h1>

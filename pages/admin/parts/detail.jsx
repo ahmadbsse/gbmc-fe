@@ -50,7 +50,7 @@ const ViewPartDetails = () => {
   return (
     <>
       <SeoHead title="Admin" />
-      <Navbar isAdmin setTab={setTab} activeTab={"Parts"} />
+      <Navbar isAdmin setTab={setTab} activeTab={"Parts"} showMarquee={false} />
       <div className={`min-h-screen bg-[#f3f3f3] ${hasMarquee ? "mt-28" : "mt-20"}`}>
         <main className="bg-gray-5 mx-auto px-4 py-8 sm:container">
           {formData ? (
