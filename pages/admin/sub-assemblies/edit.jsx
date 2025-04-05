@@ -81,12 +81,12 @@ const EditSubAssembly = () => {
               formData.media = newMediaIds;
             }
             if (formData.pdf && Object.keys(formData?.pdf).length > 0) {
-              const pdffff = new FormData();
+              const pdfFormdata = new FormData();
               formData.pdf.forEach((file) => {
-                pdffff.append("files", file.file); // Use the correct file object
+                pdfFormdata.append("files", file.file); // Use the correct file object
               });
               try {
-                await apiClient.UPLOAD("/upload", pdffff).then((response) => {
+                await apiClient.UPLOAD("/upload", pdfFormdata).then((response) => {
                   if (response) {
                     formData.pdf = response[0];
                     saveData();
@@ -355,7 +355,7 @@ const EditSubAssembly = () => {
                     <button
                       type="button"
                       onClick={(e) => {
-                        e.stopPropagation;
+                        e.stopPropagation();
                         removePDF();
                       }}
                     >

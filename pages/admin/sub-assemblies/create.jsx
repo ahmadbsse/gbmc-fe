@@ -63,12 +63,12 @@ const CreateSubAssembly = () => {
           formData.media = res;
         }
         if (formData.pdf && formData.pdf.length > 0) {
-          const pdffff = new FormData();
+          const pdfFormdata = new FormData();
           formData.pdf.forEach((file) => {
-            pdffff.append("files", file.file); // Use the correct file object
+            pdfFormdata.append("files", file.file); // Use the correct file object
           });
           try {
-            await apiClient.UPLOAD("/upload", pdffff).then((response) => {
+            await apiClient.UPLOAD("/upload", pdfFormdata).then((response) => {
               if (response) {
                 formData.pdf = response[0];
                 finaluploadData();
