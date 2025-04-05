@@ -61,7 +61,7 @@ const ViewComponentDetails = () => {
   return (
     <>
       <SeoHead title="Admin" />
-      <Navbar isAdmin setTab={setTab} activeTab={"Engineering Components"} />
+      <Navbar isAdmin setTab={setTab} activeTab={"Engineering Components"} showMarquee={false} />
       <div className={`min-h-screen bg-[#f3f3f3] ${hasMarquee ? "mt-28" : "mt-20"}`}>
         <main className="mx-auto px-4 py-8 sm:container">
           {formData ? (

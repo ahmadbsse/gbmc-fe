@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { X } from "lucide-react";
+import { X, File } from "lucide-react";
 
 import apiClient from "@/utils/apiClient";
-import { sanitizeText } from "@/utils";
+import { sanitizeText, handleOpenLinkInNewTab } from "@/utils";
 import { transformMedia, uploadFilesRequest, deleteFilesRequest, decodeText } from "@/utils";
 import { Navbar, BaseLoader, BaseImage, BaseButton, SeoHead } from "@/components/common";
 import BaseFileUploader from "@/components/admin/BaseFileUploader";
@@ -74,13 +74,31 @@ const EditSubAssembly = () => {
         const newMediaIds = previousMedia.map((file) => file.id);
         delete formData.documentId;
         await uploadFilesRequest(flattenedData, true)
-          .then((res) => {
+          .then(async (res) => {
             if (res) {
               formData.media = [...res, ...newMediaIds];
-              saveData();
             } else {
               formData.media = newMediaIds;
-              saveData();
+            }
+            if (formData.pdf && Object.keys(formData?.pdf).length > 0) {
+              const pdfFormdata = new FormData();
+              formData.pdf.forEach((file) => {
+                pdfFormdata.append("files", file.file); // Use the correct file object
+              });
+              try {
+                await apiClient.UPLOAD("/upload", pdfFormdata).then((response) => {
+                  if (response) {
+                    formData.pdf = response[0];
+                    saveData();
+                  } else {
+                    saveData();
+                  }
+                });
+              } catch (error) {
+                console.error(error);
+              } finally {
+                return;
+              }
             }
           })
           .catch((error) => {
@@ -150,6 +168,14 @@ const EditSubAssembly = () => {
       media: formData?.media?.filter((mediaItem) => mediaItem?.preview !== file?.preview),
     });
   };
+  const setPDF = (file) => {
+    if (typeof file === "object") {
+      setFormData({ ...formData, pdf: file });
+    }
+  };
+  const removePDF = () => {
+    setFormData({ ...formData, pdf: {} });
+  };
   const setTab = (tab) => {
     //store tab object to local storage
     if (tab) {
@@ -181,7 +207,7 @@ const EditSubAssembly = () => {
         />
       ) : null}
       <SeoHead title="Admin" />
-      <Navbar isAdmin setTab={setTab} activeTab={"Assemblies"} />
+      <Navbar isAdmin setTab={setTab} activeTab={"Assemblies"} showMarquee={false} />
       <div className={`min-h-screen bg-[#f3f3f3] ${hasMarquee ? "mt-28" : "mt-20"}`}>
         <main className="mx-auto px-4 py-8 sm:container">
           {formData ? (
@@ -275,6 +301,7 @@ const EditSubAssembly = () => {
                     removeMedia={removeMedia}
                   />
                 </div>
+
                 <div className="flex items-center gap-4">
                   {formData?.media?.map((item) => {
                     if (item && item?.formats) {
@@ -304,6 +331,38 @@ const EditSubAssembly = () => {
                     }
                   })}
                 </div>
+
+                <div>
+                  <label className="mb-1 block text-sm font-medium"> PDF</label>
+                  <BaseFileUploader
+                    setDataFilesIds={setPDF}
+                    removeMedia={removePDF}
+                    disabled={Object.keys(formData?.pdf).length != 0 ? true : false}
+                  />
+                </div>
+                {Object.keys(formData?.pdf).length && !Array.isArray(formData?.pdf) != 0 ? (
+                  <div className="flex items-center justify-between gap-3 rounded-lg border border-gray-300 bg-white px-4 py-2.5">
+                    <div
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleOpenLinkInNewTab(formData?.pdf?.url);
+                      }}
+                      className="flex items-center gap-3 hover:underline"
+                    >
+                      <File />
+                      {formData?.pdf?.name}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        removePDF();
+                      }}
+                    >
+                      <X className="h-4 w-4 text-black" />
+                    </button>
+                  </div>
+                ) : null}
                 <div className="flex flex-col gap-2 pt-4">
                   <div className="flex w-full items-center gap-2">
                     <input

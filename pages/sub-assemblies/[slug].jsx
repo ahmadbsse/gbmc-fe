@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
 import apiClient from "@/utils/apiClient";
-import { transformMedia, decodeText } from "@/utils";
+import { transformMedia, decodeText, handleOpenLinkInNewTab } from "@/utils";
 import { Navbar, PageLayout, BaseImage, BaseLoader, SeoHead } from "@/components/common";
 import { ImageMagnifier } from "@/components/user";
+import { File } from "lucide-react";
 
 const SubAssemblyDetails = () => {
   const router = useRouter();
@@ -157,6 +158,18 @@ const SubAssemblyDetails = () => {
                 </tbody>
               </table>
             </div>
+            {Object.keys(data?.pdf).length ? (
+              <>
+                <h2 className="mb-3 text-lg font-bold"> Document</h2>
+                <div
+                  onClick={() => handleOpenLinkInNewTab(data?.pdf?.url)}
+                  className="flex max-w-3xl items-center gap-3 rounded-lg border border-gray-300 bg-white px-4 py-2.5 hover:underline"
+                >
+                  <File />
+                  {data?.pdf?.name}
+                </div>
+              </>
+            ) : null}
           </div>
         ) : (
           <p className="mx-auto w-fit">

@@ -8,7 +8,7 @@ import ScrollingMarquee from "@/components/common/Marquee";
 import { userRoutes, tabsKey } from "@/data";
 import apiClient from "@/utils/apiClient";
 
-const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
+const Navbar = ({ isAdmin = false, setTab, activeTab = "", showMarquee = true }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [marqueeData, setMarqueeData] = useState(null);
@@ -53,7 +53,9 @@ const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
       <nav
         className={`fixed top-0 z-40 w-full drop-shadow-xl ${router?.pathname == "/" ? "bg-[linear-gradient(to_right,#ffffff_50%,#FFBF32_50%)]" : "bg-white"} `}
       >
-        {marqueeData ? <ScrollingMarquee text={marqueeData?.text} speed={30} /> : null}
+        {marqueeData && showMarquee ? (
+          <ScrollingMarquee text={marqueeData?.text} speed={30} />
+        ) : null}
         <div className={`mx-auto px-4 sm:container`}>
           <div className="flex h-[74px] items-center justify-between">
             <div className="flex w-full items-center justify-between gap-8">
@@ -134,10 +136,10 @@ const Navbar = ({ isAdmin = false, setTab, activeTab = "" }) => {
                       <Link
                         key={index}
                         href={item.href}
-                        className={`hover:text-solidGray ${
+                        className={`font-medium hover:text-solidGray ${
                           item.routeName.toLowerCase() === router.route.toLowerCase() ||
                           router.route.toLowerCase().includes(item.routeName.toLowerCase())
-                            ? "border-b-2 border-primary-color font-medium text-black"
+                            ? "border-b-2 border-primary-color font-semibold text-black"
                             : ""
                         }`}
                       >

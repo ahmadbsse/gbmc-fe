@@ -22,6 +22,7 @@ const CreateSubAssembly = () => {
     active: false,
     featured: false,
     media: "",
+    pdf: {},
   };
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
@@ -57,30 +58,51 @@ const CreateSubAssembly = () => {
     e.preventDefault();
     if (subAssemblyValidator(formData)) {
       setLoading(true);
-      await uploadFilesRequest(formData.media, true).then((res) => {
+      await uploadFilesRequest(formData.media, true).then(async (res) => {
         if (res) {
           formData.media = res;
         }
-        try {
-          apiClient
-            .POST(`/sub-assemblies`, { data: sanitizedFormData() })
-            .then(() => {
-              setFormData(initialFormData);
-              showToast(`${formData.name} Created Successfully`, "success");
-              router.push("/admin");
-            })
-            .catch((error) => {
-              showToast(error.message, "error", true);
+        if (formData.pdf && formData.pdf.length > 0) {
+          const pdfFormdata = new FormData();
+          formData.pdf.forEach((file) => {
+            pdfFormdata.append("files", file.file); // Use the correct file object
+          });
+          try {
+            await apiClient.UPLOAD("/upload", pdfFormdata).then((response) => {
+              if (response) {
+                formData.pdf = response[0];
+                finaluploadData();
+              }
             });
-        } catch (error) {
-          showToast(error.message, "error", true);
-        } finally {
-          setLoading(false);
+          } catch (error) {
+            console.error(error);
+          } finally {
+            return;
+          }
+        } else {
+          finaluploadData();
         }
       });
     }
   };
-
+  const finaluploadData = async (files) => {
+    try {
+      apiClient
+        .POST(`/sub-assemblies`, { data: sanitizedFormData() })
+        .then(() => {
+          setFormData(initialFormData);
+          showToast(`${formData.name} Created Successfully`, "success");
+          router.push("/admin");
+        })
+        .catch((error) => {
+          showToast(error.message, "error", true);
+        });
+    } catch (error) {
+      showToast(error.message, "error", true);
+    } finally {
+      setLoading(false);
+    }
+  };
   const handleChange = (content) => {
     setFormData({ ...formData, description: content });
   };
@@ -90,6 +112,11 @@ const CreateSubAssembly = () => {
         ...prevData,
         media: [...prevData?.media, ...media],
       }));
+    }
+  };
+  const setPDF = (file) => {
+    if (typeof file === "object") {
+      setFormData({ ...formData, pdf: file });
     }
   };
   const setTab = (tab) => {
@@ -104,6 +131,9 @@ const CreateSubAssembly = () => {
       ...formData,
       media: formData?.media?.filter((mediaItem) => mediaItem?.preview !== file?.preview),
     });
+  };
+  const removePDF = () => {
+    setFormData({ ...formData, pdf: {} });
   };
   const [hasMarquee, setHasMarquee] = useState(false);
   useEffect(() => {
@@ -129,7 +159,7 @@ const CreateSubAssembly = () => {
         />
       ) : null}
       <SeoHead title="Admin" />
-      <Navbar isAdmin setTab={setTab} activeTab={"Assemblies"} />
+      <Navbar isAdmin setTab={setTab} activeTab={"Assemblies"} showMarquee={false} />
       <div className={`min-h-screen bg-[#f3f3f3] ${hasMarquee ? "mt-28" : "mt-20"}`}>
         <main className="mx-auto px-4 py-8 sm:container">
           <h1 className="mx-auto mb-10 w-fit text-2xl font-bold">Create Assembly</h1>
@@ -215,6 +245,15 @@ const CreateSubAssembly = () => {
                 setDataFilesIds={setMedia}
                 multiple={true}
                 removeMedia={removeMedia}
+              />
+            </div>
+            <div>
+              <label className="mb-1 block text-sm font-medium"> PDF</label>
+              <BaseFileUploader
+                setDataFilesIds={setPDF}
+                multiple={true}
+                removeMedia={removePDF}
+                disabled={Object.keys(formData?.pdf).length === 0 ? false : true}
               />
             </div>
             <div className="flex flex-col gap-2 pt-4">

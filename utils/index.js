@@ -162,3 +162,8 @@ export function decodeText(input) {
     .replace(/&#39;/g, "'") // Convert `&#39;` back to `'`
     .replace(/&#92;/g, "\\"); // Convert `&#92;` back to `\`
 }
+
+export const handleOpenLinkInNewTab = (url) => {
+  const u = process.env.NEXT_PUBLIC_API_BASE_URL + url;
+  window.open(u, "_blank", "noopener,noreferrer");
+};

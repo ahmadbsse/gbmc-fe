@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-
+import { File } from "lucide-react";
 import apiClient from "@/utils/apiClient";
 import RichTextEditor from "@/components/common/RichTextEditor";
 import { Navbar, BaseLoader, BaseImage, SeoHead } from "@/components/common";
-import { decodeText } from "@/utils";
+import { decodeText, handleOpenLinkInNewTab } from "@/utils";
 
 const ViewSubAssemblyDetails = () => {
   const router = useRouter();
@@ -49,7 +49,7 @@ const ViewSubAssemblyDetails = () => {
   return (
     <>
       <SeoHead title="Admin" />
-      <Navbar isAdmin setTab={setTab} activeTab={"Assemblies"} />
+      <Navbar isAdmin setTab={setTab} activeTab={"Assemblies"} showMarquee={false} />
       <div className={`min-h-screen bg-[#f3f3f3] ${hasMarquee ? "mt-28" : "mt-20"}`}>
         <main className="mx-auto px-4 py-8 sm:container">
           {formData ? (
@@ -131,6 +131,15 @@ const ViewSubAssemblyDetails = () => {
                   )}
                 </div>
               </div>
+              {Object.keys(formData?.pdf).length ? (
+                <div
+                  onClick={() => handleOpenLinkInNewTab(formData?.pdf?.url)}
+                  className="flex items-center gap-3 rounded-lg border border-gray-300 bg-white px-4 py-2.5 hover:underline"
+                >
+                  <File />
+                  {formData?.pdf?.name}
+                </div>
+              ) : null}
               <div className="flex flex-col gap-2 pt-4">
                 <div className="flex w-full items-center gap-2">
                   <input
