@@ -333,7 +333,7 @@ const EditSubAssembly = () => {
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium"> PDF</label>
+                  <label className="mb-1 block text-sm font-medium"> Specification PDF</label>
                   <BaseFileUploader
                     setDataFilesIds={setPDF}
                     removeMedia={removePDF}
@@ -353,7 +353,7 @@ const EditSubAssembly = () => {
                     >
                       <p className="flex items-center gap-2">
                         <Download className="h-5" />
-                        <span className="text-blue-900 underline">
+                        <span className="font-bold text-blue-900 underline">
                           Download specifications as PDF
                         </span>
                       </p>
