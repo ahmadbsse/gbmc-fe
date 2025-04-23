@@ -126,7 +126,6 @@ const EditComponent = () => {
         .then(async () => {
           showToast(`${formData.name} saved Successfully`, "success");
           await deleteFilesRequest(idsToRemove).then(() => {});
-          setLoading(false);
           router.push("/admin");
         })
         .catch((error) => {
@@ -134,6 +133,8 @@ const EditComponent = () => {
         });
     } catch (error) {
       showToast(error.message, "error", true);
+    } finally {
+      setLoading(false);
     }
   };
   const deletePreviousImage = async (id, key) => {
