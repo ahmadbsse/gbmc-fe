@@ -22,11 +22,9 @@ const Navbar = ({ isAdmin = false, setTab, activeTab = "", showMarquee = true })
           if (res.data.active) {
             setMarqueeData(res.data);
             setHasMarquee(true);
-            localStorage.setItem("hasMarquee", JSON.stringify(true));
           } else {
             setMarqueeData(null);
             setHasMarquee(false);
-            localStorage.setItem("hasMarquee", JSON.stringify(false));
           }
         } else {
           setMarqueeData(null);
