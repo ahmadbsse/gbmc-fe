@@ -16,8 +16,10 @@ import BaseFileUploader from "@/components/admin/BaseFileUploader";
 import showToast from "@/utils/toast";
 import { engineeringComponentValidator } from "@/utils/validators";
 import RichTextEditor from "@/components/common/RichTextEditor";
+import useMarqueeStateStore from "@/stores/marquee";
 
 const EditComponent = () => {
+  const { hasMarquee } = useMarqueeStateStore();
   const router = useRouter();
   const { id } = router.query;
   const [formData, setFormData] = useState(null);
@@ -25,7 +27,6 @@ const EditComponent = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [idsToRemove, setIdsToRemove] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [hasMarquee, setHasMarquee] = useState(false);
 
   useEffect(() => {
     if (formData) {
@@ -188,12 +189,7 @@ const EditComponent = () => {
       router.push("/admin");
     }
   };
-  useEffect(() => {
-    const hasMarquee = localStorage.getItem("hasMarquee");
-    if (hasMarquee) {
-      setHasMarquee(JSON.parse(hasMarquee));
-    }
-  }, []);
+
   return (
     <>
       {showWarning ? (

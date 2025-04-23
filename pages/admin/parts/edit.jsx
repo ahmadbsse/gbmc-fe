@@ -10,8 +10,10 @@ import { sanitizeText, decodeText } from "@/utils";
 import RichTextEditor from "@/components/common/RichTextEditor";
 import { partValidator } from "@/utils/validators";
 import WarningModal from "@/components/admin/WarningModal";
+import useMarqueeStateStore from "@/stores/marquee";
 
 const EditPart = () => {
+  const { hasMarquee } = useMarqueeStateStore();
   const router = useRouter();
   const { id } = router.query;
   const [loading, setLoading] = useState(false);
@@ -174,13 +176,7 @@ const EditPart = () => {
       router.push("/admin");
     }
   };
-  const [hasMarquee, setHasMarquee] = useState(false);
-  useEffect(() => {
-    const hasMarquee = localStorage.getItem("hasMarquee");
-    if (hasMarquee) {
-      setHasMarquee(JSON.parse(hasMarquee));
-    }
-  }, []);
+
   return (
     <>
       {showWarning ? (

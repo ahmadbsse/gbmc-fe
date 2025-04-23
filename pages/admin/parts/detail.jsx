@@ -5,8 +5,10 @@ import apiClient from "@/utils/apiClient";
 import RichTextEditor from "@/components/common/RichTextEditor";
 import { Navbar, BaseLoader, BaseImage, SeoHead } from "@/components/common";
 import { decodeText } from "@/utils";
+import useMarqueeStateStore from "@/stores/marquee";
 
 const ViewPartDetails = () => {
+  const { hasMarquee } = useMarqueeStateStore();
   const router = useRouter();
   const { id } = router.query;
   const [formData, setFormData] = useState(null);
@@ -40,13 +42,7 @@ const ViewPartDetails = () => {
       router.push("/admin");
     }
   };
-  const [hasMarquee, setHasMarquee] = useState(false);
-  useEffect(() => {
-    const hasMarquee = localStorage.getItem("hasMarquee");
-    if (hasMarquee) {
-      setHasMarquee(JSON.parse(hasMarquee));
-    }
-  }, []);
+
   return (
     <>
       <SeoHead title="Admin" />

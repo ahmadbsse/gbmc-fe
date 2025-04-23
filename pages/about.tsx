@@ -1,16 +1,10 @@
-import React, { useEffect } from "react";
 import Image from "next/image";
 import { appData } from "@/constants";
 import { Navbar, SeoHead } from "@/components/common";
-
+import useMarqueeStateStore from "@/stores/marquee";
 const AboutPage = () => {
-  const [hasMarquee, setHasMarquee] = React.useState(false);
-  useEffect(() => {
-    const hasMarquee = localStorage.getItem("hasMarquee");
-    if (hasMarquee) {
-      setHasMarquee(JSON.parse(hasMarquee));
-    }
-  }, []);
+  const { hasMarquee } = useMarqueeStateStore();
+
   return (
     <>
       <SeoHead title="About" />

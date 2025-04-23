@@ -11,7 +11,10 @@ import { subAssemblyValidator } from "@/utils/validators";
 import RichTextEditor from "@/components/common/RichTextEditor";
 import WarningModal from "@/components/admin/WarningModal";
 
+import useMarqueeStateStore from "@/stores/marquee";
+
 const CreateSubAssembly = () => {
+  const { hasMarquee } = useMarqueeStateStore();
   const router = useRouter();
   const initialFormData = {
     name: "",
@@ -135,13 +138,7 @@ const CreateSubAssembly = () => {
   const removePDF = () => {
     setFormData({ ...formData, pdf: {} });
   };
-  const [hasMarquee, setHasMarquee] = useState(false);
-  useEffect(() => {
-    const hasMarquee = localStorage.getItem("hasMarquee");
-    if (hasMarquee) {
-      setHasMarquee(JSON.parse(hasMarquee));
-    }
-  }, []);
+
   return (
     <>
       {showWarning ? (

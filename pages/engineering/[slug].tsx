@@ -5,12 +5,13 @@ import apiClient from "@/utils/apiClient";
 import { transformHeroVideo, transformMedia, decodeText } from "@/utils";
 import type { EngineeringComponent } from "@/types";
 import Link from "next/link";
+import useMarqueeStateStore from "@/stores/marquee";
 
 const Article = () => {
+  const { hasMarquee } = useMarqueeStateStore();
   const router = useRouter();
   const [selectedImage, setSelectedImage] = useState(0);
   const [data, setData] = useState<EngineeringComponent | null>(null);
-  const [hasMarquee, setHasMarquee] = useState(false);
 
   const getComponentDetails = async () => {
     try {
@@ -51,12 +52,7 @@ const Article = () => {
     { text: "Engineering Components", href: "/engineering" },
     { text: data?.name, href: `/engineering/${router.query.slug}` },
   ];
-  useEffect(() => {
-    const hasMarquee = localStorage.getItem("hasMarquee");
-    if (hasMarquee) {
-      setHasMarquee(JSON.parse(hasMarquee));
-    }
-  }, []);
+
   return (
     <>
       <SeoHead title={`${data?.name}`} />
