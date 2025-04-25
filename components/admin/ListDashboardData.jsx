@@ -4,9 +4,9 @@ import { useRouter } from "next/router";
 
 import showToast from "@/utils/toast";
 import {
-  AdminAddItemModal,
+  MakeAddModal,
   DeleteConfirmationModal,
-  AdminEditItemModal,
+  MakeEditIModal,
   FeatureConfirmationModal,
   MakeDetailModal,
   ActiveConfirmationModal,
@@ -161,7 +161,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
   return (
     <>
       {showAddItemModal ? (
-        <AdminAddItemModal
+        <MakeAddModal
           setShowAddItemModal={setShowAddItemModal}
           type="product"
           currentTab={currentTab}
@@ -173,7 +173,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
         <MakeDetailModal activeID={activeID} setShowMakeDetailModal={setShowMakeDetailModal} />
       ) : null}
       {showEditModal ? (
-        <AdminEditItemModal
+        <MakeEditIModal
           activeID={activeID}
           currentTab={currentTab}
           setShowEditModal={setShowEditModal}

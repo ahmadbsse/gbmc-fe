@@ -15,7 +15,7 @@ import BaseFileUploader from "./BaseFileUploader";
 import { makeValidator } from "@/utils/validators";
 import WarningModal from "@/components/admin/WarningModal";
 
-const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData }) => {
+const MakeEditIModal = ({ activeID, setShowEditModal, currentTab, getData }) => {
   const [formData, setFormData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
@@ -196,7 +196,7 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
                               e.preventDefault();
                               deletePreviousImage(item.id);
                             }}
-                            className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
+                            className="absolute right-3 top-3 z-30 rounded-full bg-solidGray/40 p-1"
                           >
                             <X className="h-4 w-4 text-white" />
                           </button>
@@ -246,4 +246,4 @@ const AdminEditItemModal = ({ activeID, setShowEditModal, currentTab, getData })
   );
 };
 
-export default AdminEditItemModal;
+export default MakeEditIModal;

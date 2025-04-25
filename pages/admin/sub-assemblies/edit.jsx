@@ -313,7 +313,7 @@ const EditSubAssembly = () => {
                               e.preventDefault();
                               deletePreviousImage(item.id);
                             }}
-                            className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
+                            className="absolute right-3 top-3 z-30 rounded-full bg-solidGray/40 p-1"
                           >
                             <X className="h-4 w-4 text-white" />
                           </button>

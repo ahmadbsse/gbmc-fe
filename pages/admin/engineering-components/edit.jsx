@@ -294,7 +294,7 @@ const EditComponent = () => {
                             e.preventDefault();
                             deletePreviousImage(formData.hero_image.id, "hero_image");
                           }}
-                          className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
+                          className="absolute right-3 top-3 z-30 rounded-full bg-solidGray/40 p-1"
                         >
                           <X className="h-4 w-4 text-white" />
                         </button>
@@ -339,7 +339,7 @@ const EditComponent = () => {
                                     e.preventDefault();
                                     deletePreviousImage(item.id, "media");
                                   }}
-                                  className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
+                                  className="absolute right-3 top-3 z-30 rounded-full bg-solidGray/40 p-1"
                                 >
                                   <X className="h-4 w-4 text-white" />
                                 </button>
