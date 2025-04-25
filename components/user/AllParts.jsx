@@ -221,22 +221,22 @@ const AllParts = () => {
                               priority={true}
                               classes="h-full w-full object-contain rounded-t-lg"
                             />
-                            {brandMediaMap[decodeText(part?.supplier?.name)] ? (
-                              <div
-                                title={part?.supplier?.name}
-                                className="absolute right-2 top-2 max-h-6 max-w-12 rounded text-xs font-bold"
-                              >
-                                <BaseImage
-                                  width={60}
-                                  height={20}
-                                  src={brandMediaMap[decodeText(part?.supplier?.name)]}
-                                  alt={part?.supplier?.name}
-                                  priority={true}
-                                  classes="h-full w-full object-contain rounded-t-lg"
-                                />
-                              </div>
-                            ) : null}
                           </>
+                        ) : null}
+                        {brandMediaMap[decodeText(part?.supplier?.name)] ? (
+                          <div
+                            title={part?.supplier?.name}
+                            className="absolute right-2 top-2 max-h-6 max-w-12 rounded text-xs font-bold"
+                          >
+                            <BaseImage
+                              width={60}
+                              height={20}
+                              src={brandMediaMap[decodeText(part?.supplier?.name)]}
+                              alt={part?.supplier?.name}
+                              priority={true}
+                              classes="h-full w-full object-contain rounded-t-lg"
+                            />
+                          </div>
                         ) : null}
                       </div>
 
