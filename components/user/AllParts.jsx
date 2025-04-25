@@ -190,6 +190,27 @@ const AllParts = () => {
           </span>
         ))}
       </div>
+      {/* <div className="mb-7 flex text-center text-xl lg:gap-x-8">
+        {makes.map((brand, index) => (
+          <div
+            onClick={() => setTab(brand.documentId)}
+            className={`flex w-fit cursor-pointer items-center gap-3 break-all px-2 py-2 pb-1 font-bold uppercase hover:text-black md:px-4 md:py-2 ${brand.documentId === selectedSupplier ? "rounded-lg border-2 border-primary text-black hover:bg-primary/10" : ""}`}
+            key={index + brand.name}
+          >
+            {brandMediaMap[decodeText(brand?.name)] ? (
+              <BaseImage
+                width={60}
+                height={80}
+                src={brandMediaMap[decodeText(brand?.name)]}
+                alt={brand?.name}
+                priority={true}
+                classes="object-contain rounded-t-lg h-14 w--14"
+              />
+            ) : null}
+            <span>{brand.name}</span>
+          </div>
+        ))}
+      </div> */}
       {isLoading ? (
         <p className="mx-auto w-fit">
           <BaseLoader />
