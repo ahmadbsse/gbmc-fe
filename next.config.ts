@@ -26,7 +26,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "d1m321zr0yue3p.cloudfront.net",
+        hostname: process.env.AWS_CLOUDFRONT_URL,
         port: "",
         pathname: "**",
       },
