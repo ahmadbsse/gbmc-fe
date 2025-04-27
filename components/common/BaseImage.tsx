@@ -19,7 +19,7 @@ const BaseImage = ({
   priority = false,
   fill = false,
 }: CustomImageProps) => {
-  const fullUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}${src}`;
+  const fullUrl = src.includes('https')?src:`${process.env.NEXT_PUBLIC_API_BASE_URL}${src}`;
   return (
     <Image
       className={`${classes}`}
