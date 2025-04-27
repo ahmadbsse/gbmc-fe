@@ -19,7 +19,16 @@ const BaseImage = ({
   priority = false,
   fill = false,
 }: CustomImageProps) => {
-  const fullUrl = src.includes('https')?src:`${process.env.NEXT_PUBLIC_API_BASE_URL}${src}`;
+  // Check if the src is a valid URL
+  const isValidUrl = (url: string) => {
+    try {
+      new URL(url);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
+  const fullUrl = isValidUrl(src) ? src : `${process.env.NEXT_PUBLIC_API_BASE_URL}${src}`;
   return (
     <Image
       className={`${classes}`}
