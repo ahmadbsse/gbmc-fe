@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import Image from "next/image";
 
 interface CustomImageProps {
@@ -26,6 +25,7 @@ const BaseImage = ({
       new URL(url);
       return true;
     } catch (error) {
+      console.error("Invalid URL:", error);
       return false;
     }
   };
