@@ -1,18 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Settings, Tractor, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import useMarqueeStateStore from "@/stores/marquee";
 // import { Footer } from "../components/user";
 import { Navbar, BaseButton, SeoHead } from "@/components/common";
 
 const Home = () => {
-  const [hasMarquee, setHasMarquee] = React.useState(false);
-  useEffect(() => {
-    const hasMarquee = localStorage.getItem("hasMarquee");
-    if (hasMarquee) {
-      setHasMarquee(JSON.parse(hasMarquee));
-    }
-  }, []);
+  const { hasMarquee } = useMarqueeStateStore();
   return (
     <>
       <SeoHead title="Home" />

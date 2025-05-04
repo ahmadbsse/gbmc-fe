@@ -4,16 +4,16 @@ import { useRouter } from "next/router";
 
 import showToast from "@/utils/toast";
 import {
-  AdminAddItemModal,
+  MakeAddModal,
   DeleteConfirmationModal,
-  AdminEditItemModal,
+  MakeEditIModal,
   FeatureConfirmationModal,
   MakeDetailModal,
   ActiveConfirmationModal,
 } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
 import { BaseButton, BaseImage, BaseVideo } from "@/components/common";
-import { decodeText } from "@/utils";
+import { decodeText, deleteFilesRequest } from "@/utils";
 
 const ListDashboardData = ({ data, activeTab, getData, total, setData, pagination }) => {
   const [showAddItemModal, setShowAddItemModal] = useState(false);
@@ -105,12 +105,37 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
     }
   };
   const deleteItem = async () => {
+    const mediaIdsToDelete = [];
+    if (activeItem) {
+      if (activeItem?.media) {
+        if (Array.isArray(activeItem.media)) {
+          activeItem.media.forEach((item) => {
+            mediaIdsToDelete.push(item.id);
+          });
+        }
+        if (activeItem?.media?.id) {
+          mediaIdsToDelete.push(activeItem.media.id);
+        }
+      }
+      if (activeItem?.hero_image) {
+        if (Array.isArray(activeItem.hero_image)) {
+          activeItem.hero_image.forEach((item) => {
+            mediaIdsToDelete.push(item.id);
+          });
+        }
+        if (activeItem?.hero_image?.id) {
+          mediaIdsToDelete.push(activeItem.hero_image.id);
+        }
+      }
+    }
+    console.log(mediaIdsToDelete);
     try {
       const url = `/${currentTab}/${activeID}`;
       await apiClient
         .DELETE(url)
-        .then((res) => {
+        .then(async (res) => {
           setShowDeleteModal(false);
+          await deleteFilesRequest(mediaIdsToDelete).then(() => {});
           showToast(`${activeItem.name} ${" "}deleted successfully`, "success");
           setActiveID(null);
           setActiveItem(null);
@@ -161,7 +186,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
   return (
     <>
       {showAddItemModal ? (
-        <AdminAddItemModal
+        <MakeAddModal
           setShowAddItemModal={setShowAddItemModal}
           type="product"
           currentTab={currentTab}
@@ -173,7 +198,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
         <MakeDetailModal activeID={activeID} setShowMakeDetailModal={setShowMakeDetailModal} />
       ) : null}
       {showEditModal ? (
-        <AdminEditItemModal
+        <MakeEditIModal
           activeID={activeID}
           currentTab={currentTab}
           setShowEditModal={setShowEditModal}

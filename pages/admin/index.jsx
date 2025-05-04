@@ -7,10 +7,12 @@ import apiClient from "@/utils/apiClient";
 import { transformMedia } from "@/utils";
 import { tabsKey } from "@/data";
 import MarqueeDetails from "@/components/admin/MarqueeDetails";
+import useMarqueeStateStore from "@/stores/marquee";
 
 const PAGE_SIZE = 10;
 const AdminDashboard = () => {
   const [page, setPage] = useState(1);
+  const { hasMarquee } = useMarqueeStateStore();
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [parts, setParts] = useState([]);
@@ -21,7 +23,6 @@ const AdminDashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [pagination, setPagination] = useState(null);
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(searchQuery);
-  const [hasMarquee, setHasMarquee] = useState(false);
 
   const [activeTab, setActiveTab] = useState();
 
@@ -262,12 +263,7 @@ const AdminDashboard = () => {
     suppliers: makes?.length,
     "sub-assemblies": subAssemblies?.length,
   };
-  useEffect(() => {
-    const hasMarquee = localStorage.getItem("hasMarquee");
-    if (hasMarquee) {
-      setHasMarquee(JSON.parse(hasMarquee));
-    }
-  }, []);
+
   return (
     <>
       <SeoHead title="Admin" />

@@ -4,12 +4,13 @@ import EngineeringListingCard from "@/components/user/EngineeringListingCard";
 import apiClient from "@/utils/apiClient";
 import { decodeText, transformMedia } from "@/utils";
 import Image from "next/image";
+import useMarqueeStateStore from "@/stores/marquee";
 
 const EngineeringHome = () => {
+  const { hasMarquee } = useMarqueeStateStore();
   const [isLoading, setIsLoading] = useState(false);
   const [engineeringComponents, setEngineeringComponents] = useState([]);
 
-  const [hasMarquee, setHasMarquee] = useState(false);
   const getEngineering = async () => {
     try {
       setIsLoading(true);
@@ -36,10 +37,6 @@ const EngineeringHome = () => {
 
   useEffect(() => {
     getEngineering();
-    const hasMarquee = localStorage.getItem("hasMarquee");
-    if (hasMarquee) {
-      setHasMarquee(JSON.parse(hasMarquee));
-    }
   }, []);
 
   return (

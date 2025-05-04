@@ -16,11 +16,8 @@ export type TabProps = {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   children: ReactNode;
 };
-export type AdminAddItemModalProps = {
-
-  setShowAddItemModal: (
-    value: boolean
-  ) => void;
+export type MakeAddModalProps = {
+  setShowAddItemModal: (value: boolean) => void;
   activeTab: tab;
   currentTab: string;
   getData: () => void;
@@ -59,7 +56,7 @@ export interface EngineeringCardProps {
   };
   featured: boolean;
   isImage: boolean;
-  heroVideo: { url: string; } | null;
+  heroVideo: { url: string } | null;
 }
 
 export type Category = {
@@ -76,18 +73,17 @@ export type Category = {
   publishedAt: string;
 };
 export type Media = {
-  id: number,
-  documentId: string,
-  name: string,
-  formats: ImageFormats,
+  id: number;
+  documentId: string;
+  name: string;
+  formats: ImageFormats;
 };
 export type ImageFormats = {
-  small: Format,
+  small: Format;
   thumbnail: Format;
   actual: Format;
 };
-export type Format = { url: string, width: number, height: number; };
-
+export type Format = { url: string; width: number; height: number };
 
 export type DecodedToken = {
   jwt: string;

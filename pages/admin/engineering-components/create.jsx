@@ -11,8 +11,10 @@ import { engineeringComponentValidator } from "@/utils/validators";
 import RichTextEditor from "@/components/common/RichTextEditor";
 
 import { uploadFilesRequest, deepEqual } from "@/utils";
+import useMarqueeStateStore from "@/stores/marquee";
 
 const CreateEngineeringComponent = () => {
+  const { hasMarquee } = useMarqueeStateStore();
   const router = useRouter();
   const initialFormData = {
     name: "",
@@ -132,13 +134,7 @@ const CreateEngineeringComponent = () => {
       media: formData?.media?.filter((mediaItem) => mediaItem?.preview !== file?.preview),
     });
   };
-  const [hasMarquee, setHasMarquee] = useState(false);
-  useEffect(() => {
-    const hasMarquee = localStorage.getItem("hasMarquee");
-    if (hasMarquee) {
-      setHasMarquee(JSON.parse(hasMarquee));
-    }
-  }, []);
+
   return (
     <>
       {showWarning ? (

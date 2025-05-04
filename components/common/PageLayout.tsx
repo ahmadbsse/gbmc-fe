@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Link from "next/link";
+import useMarqueeStateStore from "@/stores/marquee";
 
 import type { PageLayoutProps } from "@/types";
 
@@ -10,13 +11,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
   paddingTop = true,
   isDetailsPage = false,
 }) => {
-  const [hasMarquee, setHasMarquee] = React.useState(false);
-  useEffect(() => {
-    const hasMarquee = localStorage.getItem("hasMarquee");
-    if (hasMarquee) {
-      setHasMarquee(JSON.parse(hasMarquee));
-    }
-  }, []);
+  const { hasMarquee } = useMarqueeStateStore();
   return (
     <div
       className={`min-h-screen bg-[#f3f3f3] ${paddingTop ? "pt-20" : ""} ${hasMarquee ? "mt-10" : ""}`}

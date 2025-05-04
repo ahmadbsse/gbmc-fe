@@ -16,8 +16,10 @@ import BaseFileUploader from "@/components/admin/BaseFileUploader";
 import showToast from "@/utils/toast";
 import { engineeringComponentValidator } from "@/utils/validators";
 import RichTextEditor from "@/components/common/RichTextEditor";
+import useMarqueeStateStore from "@/stores/marquee";
 
 const EditComponent = () => {
+  const { hasMarquee } = useMarqueeStateStore();
   const router = useRouter();
   const { id } = router.query;
   const [formData, setFormData] = useState(null);
@@ -25,7 +27,6 @@ const EditComponent = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [idsToRemove, setIdsToRemove] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [hasMarquee, setHasMarquee] = useState(false);
 
   useEffect(() => {
     if (formData) {
@@ -125,7 +126,6 @@ const EditComponent = () => {
         .then(async () => {
           showToast(`${formData.name} saved Successfully`, "success");
           await deleteFilesRequest(idsToRemove).then(() => {});
-          setLoading(false);
           router.push("/admin");
         })
         .catch((error) => {
@@ -133,6 +133,8 @@ const EditComponent = () => {
         });
     } catch (error) {
       showToast(error.message, "error", true);
+    } finally {
+      setLoading(false);
     }
   };
   const deletePreviousImage = async (id, key) => {
@@ -188,12 +190,7 @@ const EditComponent = () => {
       router.push("/admin");
     }
   };
-  useEffect(() => {
-    const hasMarquee = localStorage.getItem("hasMarquee");
-    if (hasMarquee) {
-      setHasMarquee(JSON.parse(hasMarquee));
-    }
-  }, []);
+
   return (
     <>
       {showWarning ? (
@@ -297,7 +294,7 @@ const EditComponent = () => {
                             e.preventDefault();
                             deletePreviousImage(formData.hero_image.id, "hero_image");
                           }}
-                          className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
+                          className="absolute right-3 top-3 z-30 rounded-full bg-solidGray/40 p-1"
                         >
                           <X className="h-4 w-4 text-white" />
                         </button>
@@ -342,7 +339,7 @@ const EditComponent = () => {
                                     e.preventDefault();
                                     deletePreviousImage(item.id, "media");
                                   }}
-                                  className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
+                                  className="absolute right-3 top-3 z-30 rounded-full bg-solidGray/40 p-1"
                                 >
                                   <X className="h-4 w-4 text-white" />
                                 </button>

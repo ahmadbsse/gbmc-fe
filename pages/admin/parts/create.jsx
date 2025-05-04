@@ -13,7 +13,10 @@ import RichTextEditor from "@/components/common/RichTextEditor";
 import { sanitizeText } from "@/utils";
 import WarningModal from "@/components/admin/WarningModal";
 
+import useMarqueeStateStore from "@/stores/marquee";
+
 const CreatePart = () => {
+  const { hasMarquee } = useMarqueeStateStore();
   const router = useRouter();
   const initialFormData = {
     name: "",
@@ -134,13 +137,7 @@ const CreatePart = () => {
       media: formData?.media?.filter((mediaItem) => mediaItem?.preview !== file?.preview),
     });
   };
-  const [hasMarquee, setHasMarquee] = useState(false);
-  useEffect(() => {
-    const hasMarquee = localStorage.getItem("hasMarquee");
-    if (hasMarquee) {
-      setHasMarquee(JSON.parse(hasMarquee));
-    }
-  }, []);
+
   return (
     <>
       {showWarning ? (

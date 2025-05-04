@@ -10,8 +10,10 @@ import { sanitizeText, decodeText } from "@/utils";
 import RichTextEditor from "@/components/common/RichTextEditor";
 import { partValidator } from "@/utils/validators";
 import WarningModal from "@/components/admin/WarningModal";
+import useMarqueeStateStore from "@/stores/marquee";
 
 const EditPart = () => {
+  const { hasMarquee } = useMarqueeStateStore();
   const router = useRouter();
   const { id } = router.query;
   const [loading, setLoading] = useState(false);
@@ -174,13 +176,7 @@ const EditPart = () => {
       router.push("/admin");
     }
   };
-  const [hasMarquee, setHasMarquee] = useState(false);
-  useEffect(() => {
-    const hasMarquee = localStorage.getItem("hasMarquee");
-    if (hasMarquee) {
-      setHasMarquee(JSON.parse(hasMarquee));
-    }
-  }, []);
+
   return (
     <>
       {showWarning ? (
@@ -343,7 +339,7 @@ const EditPart = () => {
                               e.preventDefault();
                               deletePreviousImage(item.id);
                             }}
-                            className="absolute right-3 top-3 rounded-full bg-solidGray/40 p-1"
+                            className="absolute right-3 top-3 z-30 rounded-full bg-solidGray/40 p-1"
                           >
                             <X className="h-4 w-4 text-white" />
                           </button>

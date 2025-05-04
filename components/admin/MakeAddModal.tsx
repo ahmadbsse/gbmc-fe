@@ -7,7 +7,7 @@ import { BaseFileUploader } from "@/components/admin";
 import apiClient from "@/utils/apiClient";
 import { makeValidator } from "@/utils/validators";
 import { uploadFilesRequest, deepEqual, sanitizeText } from "@/utils";
-import type { AdminAddItemModalProps } from "@/types";
+import type { MakeAddModalProps } from "@/types";
 import WarningModal from "@/components/admin/WarningModal";
 
 type FormDataTypes = {
@@ -16,7 +16,7 @@ type FormDataTypes = {
   media: string | string[];
 };
 
-const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
+const MakeAddModal: React.FC<MakeAddModalProps> = ({
   setShowAddItemModal,
   currentTab,
   getData,
@@ -168,4 +168,4 @@ const AdminAddItemModal: React.FC<AdminAddItemModalProps> = ({
   );
 };
 
-export default AdminAddItemModal;
+export default MakeAddModal;

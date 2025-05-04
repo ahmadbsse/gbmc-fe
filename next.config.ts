@@ -25,6 +25,13 @@ const nextConfig = {
         pathname: "**",
       },
       {
+        protocol: "https",
+        hostname: process.env.AWS_CLOUDFRONT_URL,
+        port: "",
+        pathname: "**",
+      },
+      
+      {
         protocol: "http",
         hostname: 'localhost',
       },

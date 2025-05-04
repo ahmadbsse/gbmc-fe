@@ -6,12 +6,13 @@ import { Navbar, BaseButton, SeoHead } from "@/components/common";
 import { appData } from "@/constants";
 import { GoogleMap } from "@/components/user";
 import showToast from "@/utils/toast";
+import useMarqueeStateStore from "@/stores/marquee";
 
 const ContactPage = () => {
+  const { hasMarquee } = useMarqueeStateStore();
   const [loading, setLoading] = useState(false);
   const [formIsValid, setFormIsValid] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(false);
-  const [hasMarquee, setHasMarquee] = useState(false);
   const [formValues, setFormValues] = useState({
     name: "",
     email: "",
@@ -71,12 +72,6 @@ const ContactPage = () => {
     }
   }, [formValues]);
 
-  useEffect(() => {
-    const hasMarquee = localStorage.getItem("hasMarquee");
-    if (hasMarquee) {
-      setHasMarquee(JSON.parse(hasMarquee));
-    }
-  }, []);
   return (
     <>
       <SeoHead title="Contact" />

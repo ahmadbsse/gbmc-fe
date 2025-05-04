@@ -7,11 +7,13 @@ import ScrollingMarquee from "@/components/common/Marquee";
 
 import { userRoutes, tabsKey } from "@/data";
 import apiClient from "@/utils/apiClient";
+import useMarqueeStateStore from "@/stores/marquee";
 
 const Navbar = ({ isAdmin = false, setTab, activeTab = "", showMarquee = true }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [marqueeData, setMarqueeData] = useState(null);
+  const { setHasMarquee } = useMarqueeStateStore();
 
   const getMarqueeText = async () => {
     try {
@@ -19,10 +21,10 @@ const Navbar = ({ isAdmin = false, setTab, activeTab = "", showMarquee = true })
         if (res.data) {
           if (res.data.active) {
             setMarqueeData(res.data);
-            localStorage.setItem("hasMarquee", JSON.stringify(true));
+            setHasMarquee(true);
           } else {
             setMarqueeData(null);
-            localStorage.setItem("hasMarquee", JSON.stringify(false));
+            setHasMarquee(false);
           }
         } else {
           setMarqueeData(null);
