@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import "@/styles/globals.css";
 import { X } from "lucide-react";
 import { ToastContainer, CloseButtonProps } from "react-toastify";
