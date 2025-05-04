@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useEffect, useState } from "react";
 import { Menu, LogOut, X } from "lucide-react";
 import Link from "next/link";
