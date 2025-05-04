@@ -24,7 +24,8 @@ const BaseImage = ({
     try {
       new URL(url);
       return true;
-    } catch (e) {
+    } catch (error) {
+      console.error("Invalid URL:", error);
       return false;
     }
   };
