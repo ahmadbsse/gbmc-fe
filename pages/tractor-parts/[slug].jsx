@@ -24,10 +24,12 @@ const PartDetails = () => {
         if (!Array.isArray(response?.media)) {
           response.media = [response?.media];
         }
-        response.description = response.description.replace(
-          /\*\*(.*?)\*\*/g,
-          "<strong>$1</strong>"
-        );
+        if (response.description) {
+          response.description = response.description.replace(
+            /\*\*(.*?)\*\*/g,
+            "<strong>$1</strong>"
+          );
+        }
         setSelectedImage(0);
         response.name = decodeText(response.name);
         response.weight = decodeText(response.weight);

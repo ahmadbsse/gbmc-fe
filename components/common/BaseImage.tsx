@@ -20,16 +20,15 @@ const BaseImage = ({
   fill = false,
 }: CustomImageProps) => {
   // Check if the src is a valid URL
-  const isValidUrl = (url: string) => {
+  const isValidFullUrl = (url: string): boolean => {
     try {
-      new URL(url);
-      return true;
-    } catch (error) {
-      console.error("Invalid URL:", error);
+      const parsed = new URL(url);
+      return parsed.protocol === "http:" || parsed.protocol === "https:";
+    } catch {
       return false;
     }
   };
-  const fullUrl = isValidUrl(src) ? src : `${process.env.NEXT_PUBLIC_API_BASE_URL}${src}`;
+  const fullUrl = isValidFullUrl(src) ? src : `${process.env.NEXT_PUBLIC_API_BASE_URL}${src}`;
   return (
     <Image
       className={`${classes}`}
