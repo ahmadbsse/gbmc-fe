@@ -26,11 +26,10 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: process.env.AWS_CLOUDFRONT_URL,
+        hostname: process.env.NEXT_PUBLIC_AWS_CLOUDFRONT_URL,
         port: "",
         pathname: "**",
       },
-      
       {
         protocol: "http",
         hostname: 'localhost',

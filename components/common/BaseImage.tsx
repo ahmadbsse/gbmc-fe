@@ -28,7 +28,15 @@ const BaseImage = ({
       return false;
     }
   };
-  const fullUrl = isValidFullUrl(src) ? src : `${process.env.NEXT_PUBLIC_API_BASE_URL}${src}`;
+
+  let fullUrl = "";
+  if (isValidFullUrl(src)) {
+    fullUrl = src;
+  } else {
+    const result = src.replace("/uploads", "");
+    fullUrl = `https://${process.env.NEXT_PUBLIC_AWS_CLOUDFRONT_URL}${result}`;
+  }
+  if (!fullUrl) return null
   return (
     <Image
       className={`${classes}`}
