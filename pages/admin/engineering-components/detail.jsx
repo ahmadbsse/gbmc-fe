@@ -28,10 +28,12 @@ const ViewComponentDetails = () => {
         ) {
           response.hero_image = transformHeroVideo(response.hero_image);
         }
-        response.description = response.description.replace(
-          /\*\*(.*?)\*\*/g,
-          "<strong>$1</strong>"
-        );
+        if (response.description) {
+          response.description = response.description.replace(
+            /\*\*(.*?)\*\*/g,
+            "<strong>$1</strong>"
+          );
+        }
         response.name = decodeText(response.name);
         response.material = decodeText(response.material);
         response.weight = decodeText(response.weight);

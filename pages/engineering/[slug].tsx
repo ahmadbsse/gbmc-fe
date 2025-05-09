@@ -30,10 +30,12 @@ const Article = () => {
         } else {
           response.hero_image = transformMedia([response.hero_image])[0];
         }
-        response.description = response.description.replace(
-          /\*\*(.*?)\*\*/g,
-          "<strong>$1</strong>"
-        );
+        if (response.description) {
+          response.description = response.description.replace(
+            /\*\*(.*?)\*\*/g,
+            "<strong>$1</strong>"
+          );
+        }
         response.name = decodeText(response.name);
         response.material = decodeText(response.material);
         response.weight = decodeText(response.weight);

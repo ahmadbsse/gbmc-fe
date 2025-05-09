@@ -20,16 +20,23 @@ const BaseImage = ({
   fill = false,
 }: CustomImageProps) => {
   // Check if the src is a valid URL
-  const isValidUrl = (url: string) => {
+  const isValidFullUrl = (url: string): boolean => {
     try {
-      new URL(url);
-      return true;
-    } catch (error) {
-      console.error("Invalid URL:", error);
+      const parsed = new URL(url);
+      return parsed.protocol === "http:" || parsed.protocol === "https:";
+    } catch {
       return false;
     }
   };
-  const fullUrl = isValidUrl(src) ? src : `${process.env.NEXT_PUBLIC_API_BASE_URL}${src}`;
+
+  let fullUrl = "";
+  if (isValidFullUrl(src)) {
+    fullUrl = src;
+  } else {
+    const result = src.replace("/uploads", "");
+    fullUrl = `https://${process.env.NEXT_PUBLIC_AWS_CLOUDFRONT_URL}${result}`;
+  }
+  if (!fullUrl) return null
   return (
     <Image
       className={`${classes}`}
