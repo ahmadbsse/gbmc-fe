@@ -10,7 +10,23 @@ const ImageMagnifier = ({ image, title }) => {
   const zoomRef = useRef(null);
   const driftInstanceRef = useRef(null);
   const [isHovering, setIsHovering] = useState(false);
-  const imageUrl = process.env.NEXT_PUBLIC_API_BASE_URL + image.formats.actual.url;
+
+  let imageUrl = "";
+  const isValidFullUrl = (url) => {
+    try {
+      const parsed = new URL(url);
+      return parsed.protocol === "http:" || parsed.protocol === "https:";
+    } catch {
+      return false;
+    }
+  };
+
+  if (isValidFullUrl(image.formats.actual.url)) {
+    imageUrl = image.formats.actual.url;
+  } else {
+    const result = image.formats.actual.url.replace("/uploads", "");
+    imageUrl = `https://${process.env.NEXT_PUBLIC_AWS_CLOUDFRONT_URL}${result}`;
+  }
 
   const destroyDrift = () => {
     if (driftInstanceRef.current) {

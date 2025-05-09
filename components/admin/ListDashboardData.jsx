@@ -128,7 +128,6 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
         }
       }
     }
-    console.log(mediaIdsToDelete);
     try {
       const url = `/${currentTab}/${activeID}`;
       await apiClient
