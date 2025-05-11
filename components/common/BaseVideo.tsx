@@ -1,4 +1,4 @@
-import { generateAssetedUrl } from "@/utils";
+import { generateAssetsUrl } from "@/utils";
 
 interface CustomVideoProps {
   src: string;
@@ -9,7 +9,7 @@ interface CustomVideoProps {
 }
 
 const BaseVideo = ({ src, autoPlay, muted, loop, classes = "" }: CustomVideoProps) => {
-  const fullUrl = generateAssetedUrl(src);
+  const fullUrl = generateAssetsUrl(src);
   if (!fullUrl) return null;
   return (
     <video className={`${classes} h-full w-full`} autoPlay={autoPlay} muted={muted} loop={loop}>

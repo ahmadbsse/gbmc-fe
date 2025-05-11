@@ -179,7 +179,7 @@ export const downloadFile = async (fileUrl, filename = "download.pdf") => {
   URL.revokeObjectURL(blobUrl);
 };
 
-export const generateAssetedUrl = (url) => {
+export const generateAssetsUrl = (url) => {
   const isValidFullUrl = (url) => {
     try {
       const parsed = new URL(url);

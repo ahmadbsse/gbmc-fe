@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Script from "next/script";
+import { generateAssetsUrl } from "@/utils";
 
 const ImageMagnifier = ({ image, title }) => {
   const containerRef = useRef(null);
@@ -11,7 +12,7 @@ const ImageMagnifier = ({ image, title }) => {
   const driftInstanceRef = useRef(null);
   const [isHovering, setIsHovering] = useState(false);
 
-  let imageUrl = generateAssetedUrl(src);
+  let imageUrl = generateAssetsUrl(image.formats.actual.url);
 
   const destroyDrift = () => {
     if (driftInstanceRef.current) {

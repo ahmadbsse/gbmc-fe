@@ -1,4 +1,4 @@
-import { generateAssetedUrl } from "@/utils";
+import { generateAssetsUrl } from "@/utils";
 import Image from "next/image";
 
 interface CustomImageProps {
@@ -20,7 +20,7 @@ const BaseImage = ({
   priority = false,
   fill = false,
 }: CustomImageProps) => {
-  const fullUrl = generateAssetedUrl(src);
+  const fullUrl = generateAssetsUrl(src);
   if (!fullUrl) return null;
   return (
     <Image
