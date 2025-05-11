@@ -1,7 +1,7 @@
 // import Link from "next/link";
 import { useState, FormEvent, useEffect } from "react";
 import { useRouter } from "next/router";
-
+import { Eye, EyeOff } from "lucide-react";
 import showToast from "@/utils/toast";
 import apiClient from "@/utils/apiClient";
 import Image from "next/image";
@@ -13,6 +13,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     setIsLoading(true);
@@ -86,12 +87,12 @@ const Login = () => {
                     onChange={(e) => setIdentifier(e.target.value)}
                   />
                 </div>
-                <div>
+                <div className="relative">
                   <label htmlFor="password" className="required mb-2 block text-sm font-medium">
                     Password
                   </label>
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     name="password"
                     id="password"
                     value={password}
@@ -100,6 +101,14 @@ const Login = () => {
                     required
                     onChange={(e) => setPassword(e.target.value)}
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-10 flex items-center text-gray-500 transition-transform hover:text-primary"
+                    tabIndex={-1}
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
                 </div>
                 {/* <div className="ml-auto w-fit">
                   <Link
