@@ -178,3 +178,23 @@ export const downloadFile = async (fileUrl, filename = "download.pdf") => {
   document.body.removeChild(link);
   URL.revokeObjectURL(blobUrl);
 };
+
+export const generateAssetedUrl = (url) => {
+  const isValidFullUrl = (url) => {
+    try {
+      const parsed = new URL(url);
+      return parsed.protocol === "http:" || parsed.protocol === "https:";
+    } catch {
+      return false;
+    }
+  };
+
+  let fullUrl = "";
+  if (isValidFullUrl(url)) {
+    fullUrl = url;
+  } else {
+    const result = url.replace("/uploads", "");
+    fullUrl = `https://${process.env.NEXT_PUBLIC_AWS_CLOUDFRONT_URL}${result}`;
+  }
+  return fullUrl;
+};

@@ -1,3 +1,4 @@
+import { generateAssetedUrl } from "@/utils";
 import Image from "next/image";
 
 interface CustomImageProps {
@@ -19,24 +20,8 @@ const BaseImage = ({
   priority = false,
   fill = false,
 }: CustomImageProps) => {
-  // Check if the src is a valid URL
-  const isValidFullUrl = (url: string): boolean => {
-    try {
-      const parsed = new URL(url);
-      return parsed.protocol === "http:" || parsed.protocol === "https:";
-    } catch {
-      return false;
-    }
-  };
-
-  let fullUrl = "";
-  if (isValidFullUrl(src)) {
-    fullUrl = src;
-  } else {
-    const result = src.replace("/uploads", "");
-    fullUrl = `https://${process.env.NEXT_PUBLIC_AWS_CLOUDFRONT_URL}${result}`;
-  }
-  if (!fullUrl) return null
+  const fullUrl = generateAssetedUrl(src);
+  if (!fullUrl) return null;
   return (
     <Image
       className={`${classes}`}
