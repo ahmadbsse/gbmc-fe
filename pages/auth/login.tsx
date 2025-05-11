@@ -97,7 +97,7 @@ const Login = () => {
                     id="password"
                     value={password}
                     placeholder="••••••••"
-                    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 outline-none focus:border-primary focus:ring-primary"
+                    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pr-10 outline-none focus:border-primary focus:ring-primary"
                     required
                     onChange={(e) => setPassword(e.target.value)}
                   />
