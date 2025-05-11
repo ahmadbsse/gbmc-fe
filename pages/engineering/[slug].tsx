@@ -76,7 +76,7 @@ const Article = () => {
               ))}
             </div>
           </div>
-          <div className="mx-auto mt-2 flex h-[190px] w-full max-w-7xl items-center justify-center rounded-lg bg-white p-1 shadow-lg sm:h-[350px] lg:h-[645px] lg:px-16">
+          <div className="mx-auto mt-2 flex h-[190px] w-full max-w-7xl items-center justify-center rounded-lg bg-[rgb(175,185,215)] p-1 shadow-lg sm:h-[350px] lg:h-[645px] lg:px-16">
             {data?.hero_image ? (
               data?.hero_image?.type === "video" ? (
                 <BaseVideo src={data?.hero_image?.url} autoPlay={true} muted={false} loop={true} />
