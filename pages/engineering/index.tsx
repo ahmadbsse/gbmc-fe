@@ -56,7 +56,7 @@ const EngineeringHome = () => {
         <div className="absolute inset-0 z-20 flex items-center justify-center text-center">
           <div className="max-w-3xl px-4">
             <h1 className="mb-6 text-4xl font-bold text-white md:text-5xl">
-              Manufactoring Processes
+              Manufacturing Processes
             </h1>
           </div>
         </div>
