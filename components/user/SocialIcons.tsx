@@ -1,25 +1,23 @@
-import { Facebook, Instagram, Linkedin } from "lucide-react";
 import { appData } from "@/constants/index";
 import Image from "next/image";
 const { facebookUrl, instagramUrl, linkedinUrl } = appData;
 
 export default function SocialLinks() {
-  const iconClasses = "h-6 w-6 text-primary transition-transform hover:scale-110";
   const socialLinks = [
     {
       name: "Facebook",
       url: facebookUrl,
-      icon: '/assets/facebook.svg',
+      icon: "/assets/facebook.svg",
     },
     {
       name: "Instagram",
       url: instagramUrl,
-      icon: '/assets/instagram.svg',
+      icon: "/assets/instagram.svg",
     },
     {
       name: "LinkedIn",
       url: linkedinUrl,
-      icon: '/assets/linkedin.svg',
+      icon: "/assets/linkedin.svg",
     },
   ];
 
@@ -33,7 +31,13 @@ export default function SocialLinks() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Image width={24} height={24} src={link.icon} alt={link.name} className="h-6 w-6  transition-transform hover:scale-110"/>
+          <Image
+            width={24}
+            height={24}
+            src={link.icon}
+            alt={link.name}
+            className="h-6 w-6 transition-transform hover:scale-110"
+          />
         </a>
       ))}
     </div>
