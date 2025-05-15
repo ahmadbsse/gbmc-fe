@@ -101,43 +101,42 @@ const Article = () => {
                 className="mt-5 min-h-10 text-lg"
                 dangerouslySetInnerHTML={{ __html: data?.description }}
               />
-
-              <div className="mb-3 mt-4 flex flex-col gap-4 lg:flex-row lg:gap-10">
-                <div className="rounded-lg bg-[rgb(175,164,164)] p-4 text-sm text-white lg:h-[470px] lg:w-[700px] lg:text-base">
-                  <div className="lg:w-[750px] lg:gap-5 lg:px-11 lg:py-7">
-                    <div className="flex flex-col gap-2 lg:w-[500px]">
-                      <p className="text-2xl font-bold">Key Features</p>
-                      <p>
-                        <span className="text-base font-bold lg:text-lg">Weight:</span>
-                        <br />
-
-                        {data?.weight ? (
-                          <span className="text-base lg:text-lg">{data?.weight}</span>
-                        ) : null}
-                      </p>
-                      <p>
-                        <span className="text-base font-bold lg:text-lg">Material:</span>
-                        <br />
-                        {data.material ? (
-                          <span className="text-base lg:text-lg">{data.material}</span>
-                        ) : null}
-                      </p>
-                    </div>
+            </div>
+            <div className="mb-3 mt-4 flex flex-col justify-between gap-4 lg:flex-row lg:gap-10">
+              <div className="order-2 flex h-[200px] w-full items-center justify-center rounded-lg bg-white p-6 text-white shadow-lg md:h-auto md:max-h-[300px] lg:order-1 lg:max-h-[400px] lg:w-1/2">
+                {data?.media && data?.media[selectedImage] ? (
+                  <div className="m-1 h-[100px] p-1 text-black md:h-auto md:max-h-[300px] lg:max-h-[400px]">
+                    <BaseImage
+                      classes="object-contain rounded-lg p-1 lg:max-h-[390px] md:max-h-[290px] h-[90px] md:h-auto"
+                      height={data?.media[selectedImage]?.formats?.actual?.height}
+                      width={data?.media[selectedImage]?.formats?.actual?.width}
+                      src={data?.media[selectedImage]?.formats?.actual?.url}
+                      alt="Engineering Images"
+                    />
                   </div>
-                </div>
+                ) : null}
+              </div>
 
-                <div className="z-20 flex h-[200px] w-full items-center justify-center rounded-lg bg-white p-6 text-white shadow-lg md:h-auto md:max-h-[300px] lg:my-8 lg:-ml-32 lg:max-h-[400px]">
-                  {data?.media && data?.media[selectedImage] ? (
-                    <div className="m-1 h-[100px] p-1 text-black md:h-auto md:max-h-[300px] lg:max-h-[400px]">
-                      <BaseImage
-                        classes="object-contain rounded-lg p-1 lg:max-h-[390px] md:max-h-[290px] h-[90px] md:h-auto"
-                        height={data?.media[selectedImage]?.formats?.actual?.height}
-                        width={data?.media[selectedImage]?.formats?.actual?.width}
-                        src={data?.media[selectedImage]?.formats?.actual?.url}
-                        alt="Engineering Images"
-                      />
-                    </div>
-                  ) : null}
+              <div className="order-1 h-fit w-full rounded-lg bg-[rgb(175,164,164)] p-4 text-sm text-white lg:order-2 lg:w-1/2 lg:text-base">
+                <div className="lg:gap-5 lg:px-11 lg:py-7">
+                  <div className="flex flex-col gap-2">
+                    <p className="text-2xl font-bold">Key Features</p>
+                    <p>
+                      <span className="text-base font-bold lg:text-xl">Weight:</span>
+                      <br />
+
+                      {data?.weight ? (
+                        <span className="text-base lg:text-xl">{data?.weight}</span>
+                      ) : null}
+                    </p>
+                    <p>
+                      <span className="text-base font-bold lg:text-xl">Material:</span>
+                      <br />
+                      {data.material ? (
+                        <span className="text-base lg:text-xl">{data.material}</span>
+                      ) : null}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -177,7 +176,7 @@ const Article = () => {
                 </div>
               </div>
             </div>
-          </div>{" "}
+          </div>
         </div>
       ) : (
         <div className="mx-auto w-fit">
