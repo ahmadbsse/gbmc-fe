@@ -69,7 +69,7 @@ label {
   }
 }
 
-*+.product-specification-table {
+* + .product-specification-table {
   margin-top: 20px;
 }
 
@@ -111,8 +111,6 @@ label {
 
 /* projects section */
 
-
-
 .custom-scrollbar::-webkit-scrollbar,
 body::-webkit-scrollbar {
   width: 6px;
@@ -121,13 +119,13 @@ body::-webkit-scrollbar {
 
 .custom-scrollbar::-webkit-scrollbar-thumb,
 body::-webkit-scrollbar-thumb {
-  background-color: #FFAD32;
+  background-color: #ffad32;
   border-radius: 2px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track,
 body::-webkit-scrollbar-track {
-  background-color: #463E2C;
+  background-color: #463e2c;
   border-radius: 2px;
 }
 
@@ -137,15 +135,15 @@ body::-webkit-scrollbar-track {
 }
 
 .product-description h1 {
-  @apply text-3xl font-bold mt-4 mb-2;
+  @apply mb-2 mt-4 text-3xl font-bold;
 }
 
 .product-description ul {
-  @apply list-disc list-inside ml-5;
+  @apply ml-5 list-inside list-disc;
 }
 
 .product-description li {
-  @apply text-base mb-1;
+  @apply mb-1 text-base;
 }
 
 input[type="checkbox"]:checked {
@@ -183,7 +181,6 @@ input {
   padding-right: 35px !important;
 }
 
-
 .swiper-container {
   position: relative;
   padding-bottom: 10px;
@@ -211,7 +208,6 @@ input {
   opacity: 1;
   background-color: #3b82f6;
 }
-
 
 @media (max-width: 640px) {
   .swiper-button-prev,
@@ -273,4 +269,10 @@ input {
 .swiper-container:hover .swiper-button-next:not(.swiper-button-disabled) {
   opacity: 1 !important;
   visibility: visible !important;
+}
+
+/* Make sure navigation buttons have cursor pointer */
+.swiper-button-prev,
+.swiper-button-next {
+  cursor: pointer !important;
 }
