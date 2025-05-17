@@ -179,7 +179,7 @@ const AllParts = () => {
           <BaseSearchbar setSearchQuery={setSearchQuery} searchQuery={searchQuery} />
         </div>
       </div>
-      <div className="mb-7 flex flex-wrap justify-center text-center text-xl lg:justify-center lg:gap-x-5">
+      <div className="mb-7 hidden flex-wrap justify-center text-center text-xl md:flex lg:justify-center lg:gap-x-5">
         {makes.map((brand, index) => (
           <span
             onClick={() => setTab(brand.documentId)}
@@ -190,7 +190,7 @@ const AllParts = () => {
           </span>
         ))}
       </div>
-      {/* <div className="mb-7 flex text-center text-xl lg:gap-x-8">
+      <div className="mb-7 flex gap-x-2 text-center text-xl md:hidden">
         {makes.map((brand, index) => (
           <div
             onClick={() => setTab(brand.documentId)}
@@ -207,10 +207,10 @@ const AllParts = () => {
                 classes="object-contain rounded-t-lg h-14 w--14"
               />
             ) : null}
-            <span>{brand.name}</span>
+            {!brandMediaMap[decodeText(brand?.name)] && <span>{brand.name}</span>}
           </div>
         ))}
-      </div> */}
+      </div>
       {isLoading ? (
         <p className="mx-auto w-fit">
           <BaseLoader />

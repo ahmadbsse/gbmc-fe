@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Script from "next/script";
+import { generateAssetsUrl } from "@/utils";
 
 const ImageMagnifier = ({ image, title }) => {
   const containerRef = useRef(null);
@@ -11,22 +12,7 @@ const ImageMagnifier = ({ image, title }) => {
   const driftInstanceRef = useRef(null);
   const [isHovering, setIsHovering] = useState(false);
 
-  let imageUrl = "";
-  const isValidFullUrl = (url) => {
-    try {
-      const parsed = new URL(url);
-      return parsed.protocol === "http:" || parsed.protocol === "https:";
-    } catch {
-      return false;
-    }
-  };
-
-  if (isValidFullUrl(image.formats.actual.url)) {
-    imageUrl = image.formats.actual.url;
-  } else {
-    const result = image.formats.actual.url.replace("/uploads", "");
-    imageUrl = `https://${process.env.NEXT_PUBLIC_AWS_CLOUDFRONT_URL}${result}`;
-  }
+  let imageUrl = generateAssetsUrl(image.formats.actual.url);
 
   const destroyDrift = () => {
     if (driftInstanceRef.current) {

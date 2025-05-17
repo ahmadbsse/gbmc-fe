@@ -69,7 +69,7 @@ label {
   }
 }
 
-*+.product-specification-table {
+* + .product-specification-table {
   margin-top: 20px;
 }
 
@@ -111,8 +111,6 @@ label {
 
 /* projects section */
 
-
-
 .custom-scrollbar::-webkit-scrollbar,
 body::-webkit-scrollbar {
   width: 6px;
@@ -121,13 +119,13 @@ body::-webkit-scrollbar {
 
 .custom-scrollbar::-webkit-scrollbar-thumb,
 body::-webkit-scrollbar-thumb {
-  background-color: #FFAD32;
+  background-color: #ffad32;
   border-radius: 2px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track,
 body::-webkit-scrollbar-track {
-  background-color: #463E2C;
+  background-color: #463e2c;
   border-radius: 2px;
 }
 
@@ -137,15 +135,15 @@ body::-webkit-scrollbar-track {
 }
 
 .product-description h1 {
-  @apply text-3xl font-bold mt-4 mb-2;
+  @apply mb-2 mt-4 text-3xl font-bold;
 }
 
 .product-description ul {
-  @apply list-disc list-inside ml-5;
+  @apply ml-5 list-inside list-disc;
 }
 
 .product-description li {
-  @apply text-base mb-1;
+  @apply mb-1 text-base;
 }
 
 input[type="checkbox"]:checked {
@@ -183,7 +181,6 @@ input {
   padding-right: 35px !important;
 }
 
-
 .swiper-container {
   position: relative;
   padding-bottom: 10px;
@@ -213,11 +210,10 @@ input {
 }
 
 @media (max-width: 640px) {
-
   .swiper-button-prev,
   .swiper-button-next {
     width: 24px !important;
-    height: 24px !important;
+    height: 100% !important;
   }
 
   .swiper-button-prev::after,
@@ -225,4 +221,58 @@ input {
     font-size: 20px !important;
     /* Adjust arrow size */
   }
+}
+
+/* Base styles for navigation buttons - initially hidden */
+.swiper-button-prev,
+.swiper-button-next {
+  background-color: rgb(0 0 0 / 0.7) !important;
+  height: 100% !important; /* Full height of the slider */
+  top: 0 !important;
+  margin-top: 0 !important;
+  width: 60px !important;
+  transition: all 0.2s ease !important;
+  opacity: 0 !important; /* Initially hidden */
+  visibility: hidden !important; /* Initially hidden */
+}
+
+/* Position the arrows in the center of the navigation area */
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Add border radius to soften the edges */
+.swiper-button-prev {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  left: 0 !important;
+}
+
+.swiper-button-next {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  right: 0 !important;
+}
+
+/* Keep disabled buttons hidden even on hover */
+.swiper-button-disabled {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Show non-disabled buttons only on container hover */
+.swiper-container:hover .swiper-button-prev:not(.swiper-button-disabled),
+.swiper-container:hover .swiper-button-next:not(.swiper-button-disabled) {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Make sure navigation buttons have cursor pointer */
+.swiper-button-prev,
+.swiper-button-next {
+  cursor: pointer !important;
 }
