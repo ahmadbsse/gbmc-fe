@@ -16,7 +16,7 @@ const AboutPage = () => {
         <div className="relative h-96">
           <div className="absolute inset-0 z-10 bg-gradient-to-r from-slate-900/50 to-slate-900/70" />
           <div className="relative h-full">
-            <Image src="/assets/about.jpg" alt="Factory" fill className="object-cover" />
+            <Image src="/assets/aboutus.png" alt="Factory" fill className="object-cover" />
           </div>
           <div className="absolute inset-0 z-20 flex items-center justify-center text-center">
             <div className="max-w-3xl px-4">
