@@ -7,6 +7,7 @@ import { appData } from "@/constants";
 import { GoogleMap } from "@/components/user";
 import showToast from "@/utils/toast";
 import useMarqueeStateStore from "@/stores/marquee";
+import SocialLinks from "@/components/user/SocialIcons";
 
 const ContactPage = () => {
   const { hasMarquee } = useMarqueeStateStore();
@@ -87,11 +88,11 @@ const ContactPage = () => {
               {/* Contact Form */}
               <div className="rounded-lg bg-white p-6 shadow-md">
                 <h2 className="text-2xl font-semibold text-slate-800">Send us an Email</h2>
-                <p className="my-3 text-sm">
+                <p className="my-2 text-sm">
                   Please contact us for unmatched quality services for your industrial needs. Our
                   representative will get in touch with you very soon.
                 </p>
-                <form ref={form} onSubmit={sendEmail} className="space-y-5">
+                <form ref={form} onSubmit={sendEmail} className="space-y-2">
                   <div>
                     <label
                       htmlFor="name"
@@ -179,7 +180,7 @@ const ContactPage = () => {
                   <h2 className="mb-3 text-2xl font-semibold text-slate-800">
                     Contact Information
                   </h2>
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     <div className="flex items-start gap-4">
                       <Mail className="h-6 w-6 text-primary" />
                       <div>
@@ -232,22 +233,9 @@ const ContactPage = () => {
                   </div>
                 </div>
 
-                <div className="rounded-lg bg-white p-6 shadow-md">
-                  <h2 className="mb-6 text-2xl font-semibold text-slate-800">Business Hours</h2>
-                  <div className="space-y-2">
-                    <p className="flex justify-between">
-                      <span className="text-slate-600">Monday - Friday</span>
-                      <span className="font-medium">8:00 AM - 7:00 PM</span>
-                    </p>
-                    <p className="flex justify-between">
-                      <span className="text-slate-600">Saturday</span>
-                      <span className="font-medium">8:00 AM - 2:00 PM</span>
-                    </p>
-                    <p className="flex justify-between">
-                      <span className="text-slate-600">Sunday</span>
-                      <span className="font-medium">Closed</span>
-                    </p>
-                  </div>
+                <div className="flex items-center justify-between gap-4 rounded-lg bg-white px-6 py-8 shadow-md">
+                  <h2 className="text-2xl font-semibold text-slate-800">Social Links</h2>
+                  <SocialLinks />
                 </div>
               </div>
             </div>
