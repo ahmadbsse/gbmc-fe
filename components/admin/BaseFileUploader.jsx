@@ -39,12 +39,28 @@ const BaseFileUploader = ({
 
   // Handle file selection
   const handleFiles = (selectedFiles) => {
-    const validFiles = Array.from(selectedFiles).filter(
-      (file) =>
+    const validExtensions = [
+      "jpg",
+      "jpeg",
+      "png",
+      "gif",
+      "webp",
+      "mp4",
+      "mov",
+      "avi",
+      "mkv",
+      "pdf",
+    ];
+console.log(selectedFiles);
+    const validFiles = Array.from(selectedFiles).filter((file) => {
+      const extension = file.name.split(".").pop().toLowerCase();
+      return (
         file.type.startsWith("image/") ||
         file.type.startsWith("video/") ||
-        file.type === "application/pdf"
-    );
+        file.type === "application/pdf" ||
+        validExtensions.includes(extension)
+      );
+    });
 
     if (validFiles.length === 0) {
       alert("Only images and videos are allowed.");
@@ -77,7 +93,10 @@ const BaseFileUploader = ({
   const handleDrop = (e) => {
     e.preventDefault();
     setIsDragging(false);
-    handleFiles(e.dataTransfer.files);
+    setTimeout(() => {
+      console.log(e.dataTransfer.files);
+      handleFiles(e.dataTransfer.files);
+    }, 500);
   };
 
   // Remove file handler
