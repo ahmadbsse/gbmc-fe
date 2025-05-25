@@ -13,8 +13,8 @@ const AboutPage = () => {
         <Navbar setTab={() => {}} />
 
         {/* Hero Section */}
-        <div className="relative h-96">
-          <div className="absolute inset-0 z-10 bg-gradient-to-r from-slate-900/50 to-slate-900/70" />
+        <div className="relative h-96 lg:h-[570px]">
+          <div className="absolute inset-0 z-10 bg-gradient-to-r from-slate-900/30 to-slate-900/50" />
           <div className="relative h-full">
             <Image src="/assets/aboutus.png" alt="About us Banner" fill={true} className="object-fill" />
           </div>
