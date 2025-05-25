@@ -76,6 +76,7 @@ const EditComponent = () => {
 
     if (engineeringComponentValidator(formData)) {
       setLoading(true);
+      let somethingIsWrong = false;
       delete formData.documentId;
       const heroUpdated = Array.isArray(formData.hero_image);
       const flattenedMediaData = formData.media
@@ -90,25 +91,31 @@ const EditComponent = () => {
             formData.hero_image = res[0];
             return res;
           } else {
+            somethingIsWrong = true;
             return formData.hero_image;
           }
         });
       } else {
         formData.hero_image = formData.hero_image.id;
       }
-      if (flattenedMediaData.length > 0) {
-        await uploadFilesRequest(flattenedMediaData, true).then((res) => {
-          if (res) {
-            formData.media = [...res, ...newMediaIds];
-          } else {
-            formData.media = newMediaIds;
-          }
-        });
+      if (!somethingIsWrong) {
+        if (flattenedMediaData.length > 0) {
+          await uploadFilesRequest(flattenedMediaData, true).then((res) => {
+            if (res) {
+              formData.media = [...res, ...newMediaIds];
+            } else {
+              formData.media = newMediaIds;
+            }
+            saveData();
+          });
+        } else {
+          formData.media = newMediaIds;
+          saveData();
+        }
       } else {
-        formData.media = newMediaIds;
+        setLoading(false);
+        showToast("Hero Media not uploaded check your connection", "error", true);
       }
-
-      saveData();
     }
   };
   const sanitizedFormData = () => {
@@ -126,6 +133,7 @@ const EditComponent = () => {
         .then(async () => {
           showToast(`${formData.name} saved Successfully`, "success");
           await deleteFilesRequest(idsToRemove).then(() => {});
+          setLoading(false);
           router.push("/admin");
         })
         .catch((error) => {
@@ -193,7 +201,7 @@ const EditComponent = () => {
   const removeHeroMedia = () => {
     setFormData({
       ...formData,
-      hero_image: '',
+      hero_image: "",
     });
   };
   return (

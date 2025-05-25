@@ -23,7 +23,7 @@ const AboutPage = () => {
               <h1 className="mb-6 text-4xl font-bold text-white md:text-5xl">
                 Global Leader in Engineering & Agricultural Solutions
               </h1>
-              <p className="text-xl text-slate-200">
+              <p className="text-xl text-slate-200 font-medium">
                 Delivering precision engineering and quality tractor parts worldwide since 1980
               </p>
             </div>
