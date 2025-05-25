@@ -13,8 +13,8 @@ const AboutPage = () => {
         <Navbar setTab={() => {}} />
 
         {/* Hero Section */}
-        <div className="relative h-96">
-          <div className="absolute inset-0 z-10 bg-gradient-to-r from-slate-900/50 to-slate-900/70" />
+        <div className="relative h-96 lg:h-[570px]">
+          <div className="absolute inset-0 z-10 bg-gradient-to-r from-slate-900/30 to-slate-900/50" />
           <div className="relative h-full">
             <Image src="/assets/aboutus.png" alt="About us Banner" fill={true} className="object-fill" />
           </div>
@@ -23,7 +23,7 @@ const AboutPage = () => {
               <h1 className="mb-6 text-4xl font-bold text-white md:text-5xl">
                 Global Leader in Engineering & Agricultural Solutions
               </h1>
-              <p className="text-xl text-slate-200">
+              <p className="text-xl text-slate-200 font-medium">
                 Delivering precision engineering and quality tractor parts worldwide since 1980
               </p>
             </div>
