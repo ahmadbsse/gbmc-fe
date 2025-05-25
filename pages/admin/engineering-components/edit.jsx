@@ -98,7 +98,10 @@ const EditComponent = () => {
       } else {
         formData.hero_image = formData.hero_image.id;
       }
-      if (!somethingIsWrong) {
+      if (somethingIsWrong) {
+        setLoading(false);
+        showToast("Hero Media not uploaded check your connection", "error", true);
+      } else {
         if (flattenedMediaData.length > 0) {
           await uploadFilesRequest(flattenedMediaData, true).then((res) => {
             if (res) {
@@ -112,9 +115,6 @@ const EditComponent = () => {
           formData.media = newMediaIds;
           saveData();
         }
-      } else {
-        setLoading(false);
-        showToast("Hero Media not uploaded check your connection", "error", true);
       }
     }
   };
