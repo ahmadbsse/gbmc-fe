@@ -190,7 +190,12 @@ const EditComponent = () => {
       router.push("/admin");
     }
   };
-
+  const removeHeroMedia = () => {
+    setFormData({
+      ...formData,
+      hero_image: '',
+    });
+  };
   return (
     <>
       {showWarning ? (
@@ -278,9 +283,10 @@ const EditComponent = () => {
                 <div className="flex flex-col gap-3 md:flex-row md:gap-2">
                   <div className="w-full">
                     <label className="required mb-1 block text-sm font-medium">Hero media</label>
-
                     <BaseFileUploader
                       setDataFilesIds={setHeroImage}
+                      removeMedia={removeHeroMedia}
+                      isHero={true}
                       disabled={
                         formData?.hero_image != "" || Object.keys(formData.hero_image).length !== 0
                       }

@@ -5,6 +5,7 @@ import ImagePreview from "./ImagePreview";
 const BaseFileUploader = ({
   setDataFilesIds,
   multiple = false,
+  isHero = false,
   disabled = false,
   removeMedia = () => {},
   isPDF = false,
@@ -36,16 +37,39 @@ const BaseFileUploader = ({
       );
     }
   };
+  const imageTypes = [
+    "image/jpeg",
+    "image/jpg",
+    "image/png",
+    "image/gif",
+    "image/bmp",
+    "image/webp",
+    "image/svg+xml",
+  ];
+  const videoTypes = [
+    "video/mp4",
+    "video/avi",
+    "video/mov",
+    "video/wmv",
+    "video/flv",
+    "video/webm",
+    "video/mkv",
+  ];
+  const pdfTypes = ["application/pdf"];
 
+
+  const isValidFileType = (file) => {
+    const imageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/bmp', 'image/webp', 'image/svg+xml'];
+    const videoTypes = ['video/mp4', 'video/avi', 'video/mov', 'video/wmv', 'video/flv', 'video/webm', 'video/mkv'];
+    const pdfTypes = ['application/pdf'];
+    
+    return [...imageTypes, ...videoTypes, ...pdfTypes].includes(file.type);
+  };
   // Handle file selection
   const handleFiles = (selectedFiles) => {
-    const validFiles = Array.from(selectedFiles).filter(
-      (file) =>
-        file.type.startsWith("image/") ||
-        file.type.startsWith("video/") ||
-        file.type === "application/pdf"
-    );
-
+    const validFiles = Array.from(selectedFiles).filter((file) => {
+      if ([...imageTypes, ...videoTypes, ...pdfTypes].includes(file.type)) return file;
+    });
     if (validFiles.length === 0) {
       alert("Only images and videos are allowed.");
       return;
@@ -66,20 +90,32 @@ const BaseFileUploader = ({
   // Drag and drop handlers
   const handleDragEnter = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     setIsDragging(true);
   };
 
   const handleDragLeave = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     setIsDragging(false);
   };
 
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
   const handleDrop = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     setIsDragging(false);
-    handleFiles(e.dataTransfer.files);
-  };
 
+    const droppedFiles = Array.from(e.dataTransfer.files);
+    const validFiles = droppedFiles.filter(isValidFileType);
+
+    if (validFiles.length > 0) {
+      handleFiles(validFiles);
+    }
+  };
   // Remove file handler
   const handleRemoveFile = (file) => {
     const updatedFiles = files.filter((f) => f?.preview !== file?.preview);
@@ -90,6 +126,9 @@ const BaseFileUploader = ({
       setDataFilesIds("");
     }
     if (isPDF) {
+      removeMedia();
+    }
+    if(isHero){
       removeMedia();
     }
   };
@@ -104,8 +143,8 @@ const BaseFileUploader = ({
         <div
           className={`cursor-pointer rounded-lg border-2 border-dashed bg-white p-8 text-center transition-colors ${isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300 hover:border-gray-400"} ${disabled ? "pointer-events-none opacity-50" : ""}`}
           onDragEnter={handleDragEnter}
-          onDragOver={handleDragEnter}
           onDragLeave={handleDragLeave}
+          onDragOver={handleDragOver}
           onDrop={handleDrop}
           onClick={() => fileInputRef.current?.click()}
         >
