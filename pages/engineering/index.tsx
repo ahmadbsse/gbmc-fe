@@ -44,7 +44,7 @@ const EngineeringHome = () => {
       <SeoHead title={`Engineering Components`} />
       <Navbar setTab={() => {}} />
       <div className={`relative h-96 lg:h-[570px] ${hasMarquee ? "mt-28" : "mt-16"}`}>
-        <div className="absolute inset-0 z-10 bg-gradient-to-r from-slate-900/30 to-slate-900/50" />
+        <div className="absolute inset-0 z-10" />
         <div className="relative h-full">
           <Image
             src="/assets/ecom.png"
@@ -53,13 +53,13 @@ const EngineeringHome = () => {
             className="object-fill"
           />
         </div>
-        <div className="absolute inset-0 z-20 flex items-center justify-center text-center">
+        {/* <div className="absolute inset-0 z-20 flex items-center justify-center text-center">
           <div className="max-w-3xl px-4">
             <h1 className="mb-6 text-4xl font-bold text-white md:text-5xl">
               Manufacturing Processes
             </h1>
           </div>
-        </div>
+        </div> */}
       </div>
       <PageLayout
         title=""
