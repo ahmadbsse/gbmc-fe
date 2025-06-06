@@ -64,7 +64,6 @@ const CreateEngineeringComponent = () => {
         setLoading(true);
         const media = formData.media;
         const hero_image = formData.hero_image;
-        setLoading(true); // Start loading at the beginning
 
         const mediaRes = await uploadFilesRequest(media, true);
         if (mediaRes) {
