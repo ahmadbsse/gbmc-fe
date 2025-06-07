@@ -59,53 +59,45 @@ const CreateSubAssembly = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (subAssemblyValidator(formData)) {
-      setLoading(true);
-      await uploadFilesRequest(formData.media, true).then(async (res) => {
-        if (res) {
-          formData.media = res;
-        }
-        if (formData.pdf && formData.pdf.length > 0) {
-          const pdfFormdata = new FormData();
-          formData.pdf.forEach((file) => {
-            pdfFormdata.append("files", file.file); // Use the correct file object
-          });
-          try {
-            await apiClient.UPLOAD("/upload", pdfFormdata).then((response) => {
-              if (response) {
-                formData.pdf = response[0];
-                finaluploadData();
-              }
-            });
-          } catch (error) {
-            console.error(error);
-          } finally {
-            return;
-          }
-        } else {
-          finaluploadData();
-        }
-      });
-    }
-  };
-  const finaluploadData = async (files) => {
+
+    if (!subAssemblyValidator(formData)) return;
+
     try {
-      apiClient
-        .POST(`/sub-assemblies`, { data: sanitizedFormData() })
-        .then(() => {
-          setFormData(initialFormData);
-          showToast(`${formData.name} Created Successfully`, "success");
-          router.push("/admin");
-        })
-        .catch((error) => {
-          showToast(error.message, "error", true);
+      setLoading(true);
+
+      // Upload media
+      const mediaRes = await uploadFilesRequest(formData.media, true);
+      if (mediaRes) {
+        formData.media = mediaRes;
+      }
+
+      // Upload PDF if present
+      if (formData.pdf && formData.pdf.length > 0) {
+        const pdfFormdata = new FormData();
+        formData.pdf.forEach((file) => {
+          pdfFormdata.append("files", file.file); // Ensure `file.file` is correct
         });
+
+        const pdfResponse = await apiClient.UPLOAD("/upload", pdfFormdata);
+        if (pdfResponse && pdfResponse.length > 0) {
+          formData.pdf = pdfResponse[0];
+        }
+      }
+
+      // Final API call
+      await apiClient.POST(`/sub-assemblies`, { data: sanitizedFormData() });
+
+      setFormData(initialFormData);
+      router.push("/admin");
+      showToast(`${formData.name} Created Successfully`, "success");
     } catch (error) {
-      showToast(error.message, "error", true);
+      console.error(error);
+      showToast(error.message || "Something went wrong", "error", true);
     } finally {
       setLoading(false);
     }
   };
+
   const handleChange = (content) => {
     setFormData({ ...formData, description: content });
   };
