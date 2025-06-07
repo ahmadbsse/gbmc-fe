@@ -53,6 +53,7 @@ const CreatePart = () => {
       setIsFormValid(true);
     }
   }, [formData]);
+
   const sanitizedFormData = () => {
     return {
       ...formData,
@@ -63,36 +64,35 @@ const CreatePart = () => {
       oem_number: sanitizeText(formData.oem_number),
     };
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (partValidator(formData)) {
+
+    if (!partValidator(formData)) return;
+
+    try {
       setLoading(true);
-      await uploadFilesRequest(formData.media, true)
-        .then((res) => {
-          if (res) {
-            formData.media = res;
-            try {
-              apiClient
-                .POST(`/parts`, { data: sanitizedFormData() })
-                .then(() => {
-                  setFormData(initialFormData);
-                  showToast(`${formData.name} created successfully`, "success");
-                  router.push("/admin");
-                })
-                .catch((error) => {
-                  showToast(error.message, "error", true);
-                });
-            } catch (error) {
-              showToast(error.message, "error", true);
-            }
-          }
-        })
-        .catch((error) => {})
-        .finally(() => {
-          setLoading(false);
-        });
+
+      // Upload media
+      const mediaRes = await uploadFilesRequest(formData.media, true);
+      if (mediaRes) {
+        formData.media = mediaRes;
+      }
+
+      // Submit part data
+      await apiClient.POST(`/parts`, { data: sanitizedFormData() });
+
+      setFormData(initialFormData);
+      router.push("/admin");
+      showToast(`${formData.name} created successfully`, "success");
+    } catch (error) {
+      console.error(error);
+      showToast(error.message || "Something went wrong", "error", true);
+    } finally {
+      setLoading(false);
     }
   };
+
   const getMakes = async () => {
     try {
       const url = `/suppliers?fields=name&filters[active]=true`;

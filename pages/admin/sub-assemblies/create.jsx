@@ -88,8 +88,8 @@ const CreateSubAssembly = () => {
       await apiClient.POST(`/sub-assemblies`, { data: sanitizedFormData() });
 
       setFormData(initialFormData);
-      showToast(`${formData.name} Created Successfully`, "success");
       router.push("/admin");
+      showToast(`${formData.name} Created Successfully`, "success");
     } catch (error) {
       console.error(error);
       showToast(error.message || "Something went wrong", "error", true);
