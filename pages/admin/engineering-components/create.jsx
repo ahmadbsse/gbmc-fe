@@ -60,42 +60,31 @@ const CreateEngineeringComponent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (engineeringComponentValidator(formData)) {
-      setLoading(true);
-      const media = formData.media;
-      const hero_image = formData.hero_image;
       try {
-        await uploadFilesRequest(media, true).then(async (res) => {
-          if (res) {
-            formData.media = res;
-          }
-          try {
-            await uploadFilesRequest(hero_image, true).then((res) => {
-              if (res) {
-                formData.hero_image = res[0];
-              }
-              try {
-                apiClient
-                  .POST(`/engineering-components`, { data: sanitizedFormData() })
-                  .then(() => {
-                    setFormData(initialFormData);
-                    showToast(`${formData.name} Created Successfully`, "success");
-                    router.push("/admin");
-                  })
-                  .catch((error) => {
-                    showToast(error.message, "error", true);
-                  });
-              } catch (error) {
-                console.error(error);
-              }
-            });
-          } catch (error) {
-            console.error(error);
-          }
-        });
+        setLoading(true);
+        const media = formData.media;
+        const hero_image = formData.hero_image;
+
+        const mediaRes = await uploadFilesRequest(media, true);
+        if (mediaRes) {
+          formData.media = mediaRes;
+        }
+
+        const heroImageRes = await uploadFilesRequest(hero_image, true);
+        if (heroImageRes) {
+          formData.hero_image = heroImageRes[0];
+        }
+
+        await apiClient.POST(`/engineering-components`, { data: sanitizedFormData() });
+
+        setFormData(initialFormData);
+        router.push("/admin");
+        showToast(`${formData.name} Created Successfully`, "success");
       } catch (error) {
         console.error(error);
+        showToast(error.message || "Something went wrong", "error", true);
       } finally {
-        setLoading(false);
+        setLoading(false); // Only ends loading after all is done or failed
       }
     }
   };
