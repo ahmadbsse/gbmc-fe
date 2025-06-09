@@ -160,7 +160,7 @@ const SubAssemblyDetails = () => {
                 </tbody>
               </table>
             </div>
-            {Object.keys(data?.pdf).length ? (
+            {data?.pdf && Object.keys(data?.pdf).length ? (
               <a
                 href={process.env.NEXT_PUBLIC_API_BASE_URL + data?.pdf?.url}
                 target="_blank"
