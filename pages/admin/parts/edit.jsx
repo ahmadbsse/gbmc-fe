@@ -320,7 +320,7 @@ const EditPart = () => {
                     removeMedia={removeMedia}
                   />
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex flex-wrap items-center gap-4">
                   {formData?.media?.map((item) => {
                     if (item && item?.formats) {
                       return (
