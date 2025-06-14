@@ -65,56 +65,54 @@ const EditSubAssembly = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (subAssemblyValidator(formData)) {
-      setLoading(true);
-      try {
-        const flattenedData = formData.media
-          .flat()
-          .filter((item) => item && typeof item === "object" && !item.id);
 
-        const previousMedia = formData.media.filter((item) => item && item.id);
-        const newMediaIds = previousMedia.map((file) => file.id);
-        delete formData.documentId;
-        await uploadFilesRequest(flattenedData, true)
-          .then(async (res) => {
-            if (res) {
-              formData.media = [...res, ...newMediaIds];
-            } else {
-              formData.media = newMediaIds;
-            }
-            if (Array.isArray(formData?.pdf) && formData.pdf[0].file) {
-              const pdfFormdata = new FormData();
-              formData.pdf.forEach((file) => {
-                pdfFormdata.append("files", file.file); // Use the correct file object
-              });
-              try {
-                await apiClient.UPLOAD("/upload", pdfFormdata).then((response) => {
-                  if (response) {
-                    formData.pdf = response[0];
-                    saveData();
-                  } else {
-                    saveData();
-                  }
-                });
-              } catch (error) {
-                console.error(error);
-              } finally {
-                return;
-              }
-            } else {
-              saveData();
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
+    if (!subAssemblyValidator(formData)) return;
+
+    setLoading(true);
+
+    try {
+      // Separate media
+      const flattenedData = formData.media
+        .flat()
+        .filter((item) => item && typeof item === "object" && !item.id);
+
+      const previousMedia = formData.media.filter((item) => item && item.id);
+      const existingMediaIds = previousMedia.map((file) => file.id);
+
+      delete formData.documentId;
+
+      // Upload media
+      const mediaRes = await uploadFilesRequest(flattenedData, true);
+      formData.media = mediaRes ? [...mediaRes, ...existingMediaIds] : existingMediaIds;
+
+      // Upload PDF if needed
+      if (Array.isArray(formData?.pdf) && formData.pdf[0]?.file) {
+        const pdfFormdata = new FormData();
+        formData.pdf.forEach((file) => {
+          pdfFormdata.append("files", file.file);
+        });
+
+        const pdfRes = await apiClient.UPLOAD("/upload", pdfFormdata);
+        if (pdfRes) {
+          formData.pdf = pdfRes[0];
+        }
       }
+
+      // Save sub-assembly
+      await apiClient.PUT(`/sub-assemblies/${id}`, { data: sanitizedFormData() });
+
+      showToast(`${formData.name} Saved Successfully`, "success");
+
+      await deleteFilesRequest(idsToRemove);
+      router.push("/admin");
+    } catch (error) {
+      console.error(error);
+      showToast(error.message || "Something went wrong", "error", true);
+    } finally {
+      setLoading(false);
     }
   };
+
   const sanitizedFormData = () => {
     return {
       ...formData,
@@ -123,22 +121,6 @@ const EditSubAssembly = () => {
       oem_number: sanitizeText(formData.oem_number),
       weight: sanitizeText(formData.weight),
     };
-  };
-  const saveData = () => {
-    try {
-      apiClient
-        .PUT(`/sub-assemblies/${id}`, { data: sanitizedFormData() })
-        .then(async () => {
-          showToast(`${formData.name} Saved Successfully`, "success");
-          router.push("/admin");
-          await deleteFilesRequest(idsToRemove).then(() => {});
-        })
-        .catch((error) => {
-          showToast(error.message, "error", true);
-        });
-    } catch (error) {
-      showToast(error.message, "error", true);
-    }
   };
   const deletePreviousImage = async (id) => {
     setFormData(removeMediaById(id));
