@@ -72,52 +72,59 @@ const EditComponent = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (engineeringComponentValidator(formData)) {
-      setLoading(true);
-      let somethingIsWrong = false;
-      delete formData.documentId;
-      const heroUpdated = Array.isArray(formData.hero_image);
-      const flattenedMediaData = formData.media
-        .flat()
-        .filter((item) => item && typeof item === "object" && !item.id);
+  if (!engineeringComponentValidator(formData)) return;
 
-      const previousMedia = formData.media.filter((item) => item && item.id);
-      const newMediaIds = previousMedia.map((file) => file.id);
-      if (heroUpdated) {
-        await uploadFilesRequest(formData.hero_image, true).then((res) => {
-          if (res) {
-            formData.hero_image = res[0];
-            return res;
-          } else {
-            somethingIsWrong = true;
-            return formData.hero_image;
-          }
-        });
+  setLoading(true);
+  try {
+    delete formData.documentId;
+
+    const heroUpdated = Array.isArray(formData.hero_image);
+    const flattenedMediaData = formData.media
+      .flat()
+      .filter((item) => item && typeof item === "object" && !item.id);
+
+    const previousMedia = formData.media.filter((item) => item && item.id);
+    const existingMediaIds = previousMedia.map((file) => file.id);
+
+    // Upload Hero Image
+    if (heroUpdated) {
+      const heroRes = await uploadFilesRequest(formData.hero_image, true);
+      if (heroRes) {
+        formData.hero_image = heroRes[0];
       } else {
-        formData.hero_image = formData.hero_image.id;
-      }
-      if (somethingIsWrong) {
+        showToast("Hero Media not uploaded. Check your connection.", "error", true);
         setLoading(false);
-        showToast("Hero Media not uploaded check your connection", "error", true);
-      } else {
-        if (flattenedMediaData.length > 0) {
-          await uploadFilesRequest(flattenedMediaData, true).then((res) => {
-            if (res) {
-              formData.media = [...res, ...newMediaIds];
-            } else {
-              formData.media = newMediaIds;
-            }
-            saveData();
-          });
-        } else {
-          formData.media = newMediaIds;
-          saveData();
-        }
+        return;
       }
+    } else {
+      formData.hero_image = formData.hero_image.id;
     }
-  };
+
+    // Upload Media Files
+    if (flattenedMediaData.length > 0) {
+      const mediaRes = await uploadFilesRequest(flattenedMediaData, true);
+      formData.media = mediaRes ? [...mediaRes, ...existingMediaIds] : existingMediaIds;
+    } else {
+      formData.media = existingMediaIds;
+    }
+
+    // Save to backend
+    await apiClient.PUT(`/engineering-components/${id}`, { data: sanitizedFormData() });
+
+    showToast(`${formData.name} saved Successfully`, "success");
+    await deleteFilesRequest(idsToRemove);
+    router.push("/admin");
+
+  } catch (error) {
+    console.error(error);
+    showToast(error.message || "Something went wrong", "error", true);
+  } finally {
+    setLoading(false);
+  }
+};
+
   const sanitizedFormData = () => {
     return {
       ...formData,
@@ -125,25 +132,6 @@ const EditComponent = () => {
       material: sanitizeText(formData.material),
       weight: sanitizeText(formData.weight),
     };
-  };
-  const saveData = () => {
-    try {
-      apiClient
-        .PUT(`/engineering-components/${id}`, { data: sanitizedFormData() })
-        .then(async () => {
-          showToast(`${formData.name} saved Successfully`, "success");
-          await deleteFilesRequest(idsToRemove).then(() => {});
-          setLoading(false);
-          router.push("/admin");
-        })
-        .catch((error) => {
-          showToast(error.message, "error", true);
-        });
-    } catch (error) {
-      showToast(error.message, "error", true);
-    } finally {
-      setLoading(false);
-    }
   };
   const deletePreviousImage = async (id, key) => {
     setFormData(removeMediaById(id, key));
