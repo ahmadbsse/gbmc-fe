@@ -61,60 +61,42 @@ const MakeEditIModal = ({ activeID, setShowEditModal, currentTab, getData }) => 
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (makeValidator(formData)) {
+
+    if (!makeValidator(formData)) {
+      showToast("Please fill all required fields", "error", true);
+      return;
+    }
+
+    try {
       setLoading(true);
-      try {
-        await uploadFilesRequest(formData.media, false)
-          .then((res) => {
-            delete formData.documentId;
-            if (res) {
-              formData.media = res;
-              try {
-                apiClient
-                  .PUT(`/${currentTab}/${activeID}`, { data: sanitizedFormData() })
-                  .then(async () => {
-                    showToast(`${formData.name} saved successfully`, "success");
-                    await deleteFilesRequest(idsToRemove).then(() => {
-                      getData();
-                      setShowEditModal(false);
-                    });
-                  })
-                  .catch((error) => {
-                    showToast(error.message, "error", true);
-                  });
-              } catch (error) {
-                showToast(error.message, "error", true);
-              }
-            } else {
-              try {
-                formData.media = formData.media.id;
-                apiClient
-                  .PUT(`/${currentTab}/${activeID}`, { data: formData })
-                  .then(async () => {
-                    showToast(`${formData.name} saved successfully`, "success");
-                    await deleteFilesRequest(idsToRemove).then(() => {
-                      getData();
-                      setShowEditModal(false);
-                    });
-                  })
-                  .catch((error) => {
-                    showToast(error.message, "error", true);
-                  });
-              } catch (error) {
-                showToast(error.message, "error", true);
-              }
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
+      delete formData.documentId;
+
+      let updatedMedia = formData.media;
+
+      const uploadRes = await uploadFilesRequest(formData.media, false);
+      if (uploadRes) {
+        updatedMedia = [{ id: uploadRes }];
+      } else if (formData.media?.id) {
+        updatedMedia = formData.media.id; // fallback to existing media id
       }
+      const updatedData = { ...sanitizedFormData(), media: updatedMedia[0].id };
+
+      await apiClient.PUT(`/${currentTab}/${activeID}`, { data: updatedData });
+
+      showToast(`${formData.name} saved successfully`, "success");
+
+      await deleteFilesRequest(idsToRemove);
+
+      getData();
+      setShowEditModal(false);
+    } catch (error) {
+      console.error(error);
+      showToast(error.message || "Something went wrong", "error", true);
+    } finally {
+      setLoading(false);
     }
   };
+
   const deletePreviousImage = async (id) => {
     setFormData(removeMediaById(id));
     setIdsToRemove([...idsToRemove, id]);

@@ -50,36 +50,33 @@ const MakeAddModal: React.FC<MakeAddModalProps> = ({
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (makeValidator(formData)) {
-      setLoading(true);
-      await uploadFilesRequest(formData.media, false).then((res) => {
-        if (res) {
-          formData.media = res;
-        }
-        try {
-          apiClient
-            .POST(`/${currentTab}`, { data: sanitizedFormData() })
-            .then(() => {
-              setFormData(initialFormData);
-              if (currentTab === "suppliers") {
-                showToast(`${formData.name} added successfully`, "success");
-              } else {
-                showToast(`${currentTab} added successfully`, "success");
-              }
-              getData();
-              setShowAddItemModal(false);
-            })
-            .catch((error) => {
-              showToast(error.message, "error", true);
-            });
-        } catch (error) {
-          showToast(error.message, "error", true);
-        } finally {
-          setLoading(false);
-        }
-      });
-    } else {
+
+    if (!makeValidator(formData)) {
       showToast("Please fill all required fields", "error", true);
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const mediaRes = await uploadFilesRequest(formData.media, false);
+      if (mediaRes) {
+        formData.media = mediaRes;
+      }
+
+      await apiClient.POST(`/${currentTab}`, { data: sanitizedFormData() });
+
+      setFormData(initialFormData);
+      const label = currentTab === "suppliers" ? formData.name : currentTab;
+      showToast(`${label} added successfully`, "success");
+
+      getData();
+      setShowAddItemModal(false);
+    } catch (error) {
+      console.error(error);
+      showToast(error.message || "Something went wrong", "error", true);
+    } finally {
+      setLoading(false);
     }
   };
 
