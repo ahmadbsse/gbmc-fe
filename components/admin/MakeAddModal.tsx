@@ -72,7 +72,7 @@ const MakeAddModal: React.FC<MakeAddModalProps> = ({
 
       getData();
       setShowAddItemModal(false);
-    } catch (error: any) {
+    } catch (error) {
       console.error(error);
       showToast(error.message || "Something went wrong", "error", true);
     } finally {
