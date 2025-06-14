@@ -82,60 +82,54 @@ const EditPart = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (partValidator(formData)) {
-      setLoading(true);
-      try {
-        const flattenedData = formData.media
-          .flat()
-          .filter((item) => item && typeof item === "object" && !item.id);
-        const previousMedia = formData.media.filter((item) => item && item.id);
-        const newMediaIds = previousMedia.map((file) => file.id);
-        formData.supplier = formData.supplier?.documentId
-          ? formData.supplier?.documentId
-          : formData.supplier;
-        delete formData?.documentId;
-        await uploadFilesRequest(flattenedData, true).then((res) => {
-          if (res) {
-            formData.media = [...res, ...newMediaIds];
-            saveData();
-          } else {
-            formData.media = newMediaIds;
-            saveData();
-          }
-        });
-      } catch (error) {
-        showToast(error.message, "error", true);
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
-  const sanitizedFormData = () => {
-    return {
-      ...formData,
-      name: sanitizeText(formData.name),
-      number: sanitizeText(formData.number),
-      material: sanitizeText(formData.material),
-      weight: sanitizeText(formData.weight),
-      oem_number: sanitizeText(formData.oem_number),
-    };
-  };
-  const saveData = () => {
+
+    if (!partValidator(formData)) return;
+
+    setLoading(true);
+
     try {
-      apiClient
-        .PUT(`/parts/${id}`, { data: sanitizedFormData() })
-        .then(async () => {
-          showToast(`${formData.name} Saved Successfully`, "success");
-          await deleteFilesRequest(idsToRemove).then(() => {});
-          router.push("/admin");
-        })
-        .catch((error) => {
-          showToast(error.message, "error", true);
-        });
+      // Separate new and existing media
+      const flattenedData = formData.media
+        .flat()
+        .filter((item) => item && typeof item === "object" && !item.id);
+
+      const previousMedia = formData.media.filter((item) => item && item.id);
+      const newMediaIds = previousMedia.map((file) => file.id);
+
+      // Normalize supplier field
+      formData.supplier = formData.supplier?.documentId || formData.supplier;
+      delete formData.documentId;
+
+      // Upload new media if available
+      const uploadRes = await uploadFilesRequest(flattenedData, true);
+      formData.media = uploadRes ? [...uploadRes, ...newMediaIds] : newMediaIds;
+
+      // Save updated part
+      await apiClient.PUT(`/parts/${id}`, { data: sanitizedFormData() });
+
+      showToast(`${formData.name} Saved Successfully`, "success");
+
+      // Delete removed media
+      await deleteFilesRequest(idsToRemove);
+
+      router.push("/admin");
     } catch (error) {
-      showToast(error.message, "error", true);
+      console.error(error);
+      showToast(error.message || "Something went wrong", "error", true);
+    } finally {
+      setLoading(false);
     }
   };
+
+  const sanitizedFormData = () => ({
+    ...formData,
+    name: sanitizeText(formData.name),
+    number: sanitizeText(formData.number),
+    material: sanitizeText(formData.material),
+    weight: sanitizeText(formData.weight),
+    oem_number: sanitizeText(formData.oem_number),
+  });
+
   const deletePreviousImage = async (id) => {
     setFormData(removeMediaById(id));
     setIdsToRemove([...idsToRemove, id]);
