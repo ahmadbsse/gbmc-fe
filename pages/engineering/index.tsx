@@ -47,7 +47,7 @@ const EngineeringHome = () => {
         <div className="absolute inset-0 z-10" />
         <div className="relative h-full">
           <Image
-            src="/assets/ecom.png"
+            src="/assets/ecom-banner.png"
             alt="Engineering Component Banner"
             fill={true}
             className="object-fill"

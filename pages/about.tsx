@@ -17,7 +17,7 @@ const AboutPage = () => {
           <div className="absolute inset-0 z-10 bg-gradient-to-r from-slate-900/30 to-slate-900/50" />
           <div className="relative h-full">
             <Image
-              src="/assets/aboutus.png"
+              src="/assets/aboutus-banner.png"
               alt="About us Banner"
               fill={true}
               className="object-fill"
