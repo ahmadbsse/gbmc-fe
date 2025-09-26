@@ -15,7 +15,7 @@ const EngineeringHome = () => {
     try {
       setIsLoading(true);
       await apiClient
-        .GET("/engineering-components?populate=*&filters[active]=true&sort=createdAt:desc")
+        .GET("/engineering-components?populate=*&filters[active]=true&sort=updatedAt:desc")
         .then(async (res) => {
           if (res && res.data.length > 0) {
             const transformedData = transformMedia(res.data);
@@ -43,7 +43,9 @@ const EngineeringHome = () => {
     <>
       <SeoHead title={`Engineering Components`} />
       <Navbar setTab={() => {}} />
-      <div className={`relative h-[200px] sm:h-[360px] md:h-[400px] lg:h-[620px] ${hasMarquee ? "mt-28" : "mt-16"}`}>
+      <div
+        className={`relative h-[200px] sm:h-[360px] md:h-[400px] lg:h-[620px] ${hasMarquee ? "mt-28" : "mt-16"}`}
+      >
         <div className="absolute inset-0 z-10" />
         <div className="relative h-full">
           <Image

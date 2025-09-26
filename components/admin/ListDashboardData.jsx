@@ -1,4 +1,4 @@
-import { Eye, EyeOff, Star, Pencil, Trash, Plus } from "lucide-react";
+import { Eye, EyeOff, Star, Pencil, Trash, Plus, ArrowUp } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
@@ -182,6 +182,33 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
       setPaginationInfo(Math.min(pagination.page * pagination.pageSize, pagination.total));
     }
   }, [pagination]);
+
+  const moveToTop = async (id) => {
+    // map currentTab to corresponding collection
+    const tabToCollection = {
+      parts: "part",
+      suppliers: "supplier",
+      "sub-assemblies": "sub-assembly",
+      "engineering-components": "engineering-component",
+    };
+
+    const collection = tabToCollection[currentTab];
+
+    if (!collection) {
+      showToast("Move to top is not supported for this category", "error");
+      return;
+    }
+
+    try {
+      const res = await apiClient.POST("/touch", { id, collection });
+      showToast(res.message, "success");
+      getData();
+    } catch (error) {
+      showToast(error.message, "error", true);
+      console.error(error.message);
+    }
+  };
+
   return (
     <>
       {showAddItemModal ? (
@@ -382,6 +409,13 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
                         className="rounded-lg bg-gray-100 p-2 hover:bg-yellow-50 hover:text-yellow-600"
                       >
                         <Trash className="h-4 w-4" />
+                      </i>
+                      <i
+                        title="Move to top"
+                        onClick={() => moveToTop(item.id)}
+                        className="rounded-lg bg-gray-100 p-2 hover:bg-yellow-50 hover:text-yellow-600"
+                      >
+                        <ArrowUp className="h-4 w-4" />
                       </i>
                     </div>
                   </div>

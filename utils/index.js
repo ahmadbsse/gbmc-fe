@@ -193,8 +193,12 @@ export const generateAssetsUrl = (url) => {
   if (isValidFullUrl(url)) {
     fullUrl = url;
   } else {
-    const result = url.replace("/uploads", "");
-    fullUrl = `https://${process.env.NEXT_PUBLIC_AWS_CLOUDFRONT_URL}${result}`;
+    if (process.env.NEXT_PUBLIC_IS_DEV) {
+      fullUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}${url}`;
+    } else {
+      const result = url.replace("/uploads", "");
+      fullUrl = `https://${process.env.NEXT_PUBLIC_AWS_CLOUDFRONT_URL}${result}`;
+    }
   }
   return fullUrl;
 };

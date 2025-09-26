@@ -28,9 +28,9 @@ const AllSubAssemblies = () => {
       }
       let url = "";
       if (searchQuery == "") {
-        url = `/sub-assemblies?populate=*&filters[active]=true&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=createdAt:desc`;
+        url = `/sub-assemblies?populate=*&filters[active]=true&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=updatedAt:desc`;
       } else {
-        url = `/sub-assemblies?populate=*&filters[active]=true&filters[$or][0][name][$containsi]=${searchQuery}&filters[$or][1][oem_number][$containsi]=${searchQuery}&sort=createdAt:desc`;
+        url = `/sub-assemblies?populate=*&filters[active]=true&filters[$or][0][name][$containsi]=${searchQuery}&filters[$or][1][oem_number][$containsi]=${searchQuery}&sort=updatedAt:desc`;
       }
 
       const res = await apiClient.GET(url);

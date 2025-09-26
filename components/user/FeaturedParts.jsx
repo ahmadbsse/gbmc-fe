@@ -98,7 +98,7 @@ const FeaturedParts = () => {
   const getParts = async () => {
     try {
       setIsLoading(true);
-      let url = `/parts?populate=*&filters[active]=true&filters[featured]=true&sort=createdAt:desc`;
+      let url = `/parts?populate=*&filters[active]=true&filters[featured]=true&sort=updatedAt:desc`;
       const res = await apiClient.GET(url);
       if (res && res.data.length > 0) {
         const parts = res.data.filter((part) => part.supplier.active);
