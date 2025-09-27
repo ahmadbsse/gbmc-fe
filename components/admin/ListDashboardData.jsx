@@ -418,7 +418,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
                       <i
                         title="Move to top"
                         onClick={() => moveToTop(item, index)}
-                        className="rounded-lg bg-gray-100 p-2 hover:bg-yellow-50 hover:text-yellow-600"
+                        className={`rounded-lg bg-gray-100 p-2 ${index === 0 ? "cursor-not-allowed" : "cursor-pointer hover:bg-yellow-50 hover:text-yellow-600"}`}
                       >
                         <ArrowUp className="h-4 w-4" />
                       </i>
