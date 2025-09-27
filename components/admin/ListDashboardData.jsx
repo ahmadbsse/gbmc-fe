@@ -183,7 +183,10 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
     }
   }, [pagination]);
 
-  const moveToTop = async (id) => {
+  const moveToTop = async (item, index) => {
+    if (index === 0) return;
+
+    const id = item.id;
     // map currentTab to corresponding collection
     const tabToCollection = {
       parts: "part",
@@ -199,9 +202,11 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
       return;
     }
 
+    const itemName = item.name;
+
     try {
-      const res = await apiClient.POST("/touch", { id, collection });
-      showToast(res.message, "success");
+      const res = await apiClient.POST("/touch", { id, collection, itemName });
+      showToast(res.message, "success", true);
       getData();
     } catch (error) {
       showToast(error.message, "error", true);
@@ -412,7 +417,7 @@ const ListDashboardData = ({ data, activeTab, getData, total, setData, paginatio
                       </i>
                       <i
                         title="Move to top"
-                        onClick={() => moveToTop(item.id)}
+                        onClick={() => moveToTop(item, index)}
                         className="rounded-lg bg-gray-100 p-2 hover:bg-yellow-50 hover:text-yellow-600"
                       >
                         <ArrowUp className="h-4 w-4" />
