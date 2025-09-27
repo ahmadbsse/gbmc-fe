@@ -1,8 +1,8 @@
 import { BaseImage, BaseLoader } from "@/components/common";
-import { useState, useEffect,useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import apiClient from "@/utils/apiClient";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Mousewheel,Autoplay } from "swiper/modules";
+import { Navigation, Pagination, Mousewheel, Autoplay } from "swiper/modules";
 import { transformMedia, decodeText } from "@/utils";
 import Link from "next/link";
 
@@ -15,89 +15,89 @@ const FeaturedSubAssemblies = () => {
   const [featuredSubAssemblies, setFeaturedSubAssemblies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const swiperRef = useRef(null);
-    const swiperInitialized = useRef(false);
-  
-    // Setup event listeners for slider navigation arrows
-    useEffect(() => {
-      // Only set up listeners after featuredSubAssemblies are loaded
-      if (featuredSubAssemblies.length === 0 || !swiperRef.current) {
-        return;
-      }
-  
-      // Function to set up event listeners
-      const setupEventListeners = () => {
-        // Wait for the swiper to be fully initialized and DOM to be updated
-        setTimeout(() => {
-          const prevButton = document.querySelector(".swiper-button-prev");
-          const nextButton = document.querySelector(".swiper-button-next");
-  
-          // Function to handle mouse enter event on prev button
-          const handlePrevEnter = () => {
-            if (swiperRef.current && swiperRef.current.swiper) {
-              // Start sliding in reverse direction with small delay
-              swiperRef.current.swiper.params.autoplay.delay = 1000;
-              swiperRef.current.swiper.params.autoplay.reverseDirection = true;
-              swiperRef.current.swiper.autoplay.start();
-            }
-          };
-  
-          // Function to handle mouse enter event on next button
-          const handleNextEnter = () => {
-            if (swiperRef.current && swiperRef.current.swiper) {
-              // Start sliding in forward direction with small delay
-              swiperRef.current.swiper.params.autoplay.delay = 1000;
-              swiperRef.current.swiper.params.autoplay.reverseDirection = false;
-              swiperRef.current.swiper.autoplay.start();
-            }
-          };
-  
-          // Function to handle mouse leave event
-          const handleMouseLeave = () => {
-            if (swiperRef.current && swiperRef.current.swiper) {
-              // Stop autoplay when mouse leaves
-              swiperRef.current.swiper.autoplay.stop();
-            }
-          };
-  
-          // Add event listeners if elements exist
+  const swiperInitialized = useRef(false);
+
+  // Setup event listeners for slider navigation arrows
+  useEffect(() => {
+    // Only set up listeners after featuredSubAssemblies are loaded
+    if (featuredSubAssemblies.length === 0 || !swiperRef.current) {
+      return;
+    }
+
+    // Function to set up event listeners
+    const setupEventListeners = () => {
+      // Wait for the swiper to be fully initialized and DOM to be updated
+      setTimeout(() => {
+        const prevButton = document.querySelector(".swiper-button-prev");
+        const nextButton = document.querySelector(".swiper-button-next");
+
+        // Function to handle mouse enter event on prev button
+        const handlePrevEnter = () => {
+          if (swiperRef.current && swiperRef.current.swiper) {
+            // Start sliding in reverse direction with small delay
+            swiperRef.current.swiper.params.autoplay.delay = 1000;
+            swiperRef.current.swiper.params.autoplay.reverseDirection = true;
+            swiperRef.current.swiper.autoplay.start();
+          }
+        };
+
+        // Function to handle mouse enter event on next button
+        const handleNextEnter = () => {
+          if (swiperRef.current && swiperRef.current.swiper) {
+            // Start sliding in forward direction with small delay
+            swiperRef.current.swiper.params.autoplay.delay = 1000;
+            swiperRef.current.swiper.params.autoplay.reverseDirection = false;
+            swiperRef.current.swiper.autoplay.start();
+          }
+        };
+
+        // Function to handle mouse leave event
+        const handleMouseLeave = () => {
+          if (swiperRef.current && swiperRef.current.swiper) {
+            // Stop autoplay when mouse leaves
+            swiperRef.current.swiper.autoplay.stop();
+          }
+        };
+
+        // Add event listeners if elements exist
+        if (prevButton) {
+          prevButton.addEventListener("mouseenter", handlePrevEnter);
+          prevButton.addEventListener("mouseleave", handleMouseLeave);
+        }
+
+        if (nextButton) {
+          nextButton.addEventListener("mouseenter", handleNextEnter);
+          nextButton.addEventListener("mouseleave", handleMouseLeave);
+        }
+
+        // Store cleanup functions
+        return () => {
           if (prevButton) {
-            prevButton.addEventListener("mouseenter", handlePrevEnter);
-            prevButton.addEventListener("mouseleave", handleMouseLeave);
+            prevButton.removeEventListener("mouseenter", handlePrevEnter);
+            prevButton.removeEventListener("mouseleave", handleMouseLeave);
           }
-  
+
           if (nextButton) {
-            nextButton.addEventListener("mouseenter", handleNextEnter);
-            nextButton.addEventListener("mouseleave", handleMouseLeave);
+            nextButton.removeEventListener("mouseenter", handleNextEnter);
+            nextButton.removeEventListener("mouseleave", handleMouseLeave);
           }
-  
-          // Store cleanup functions
-          return () => {
-            if (prevButton) {
-              prevButton.removeEventListener("mouseenter", handlePrevEnter);
-              prevButton.removeEventListener("mouseleave", handleMouseLeave);
-            }
-  
-            if (nextButton) {
-              nextButton.removeEventListener("mouseenter", handleNextEnter);
-              nextButton.removeEventListener("mouseleave", handleMouseLeave);
-            }
-          };
-        }, 500); // Give some time for Swiper to fully initialize and render buttons
-      };
-  
-      // Set up listeners and store cleanup function
-      const cleanup = setupEventListeners();
-  
-      // Clean up event listeners on component unmount or when featuredSubAssemblies change
-      return () => {
-        if (cleanup) cleanup();
-      };
-    }, [featuredSubAssemblies]);
+        };
+      }, 500); // Give some time for Swiper to fully initialize and render buttons
+    };
+
+    // Set up listeners and store cleanup function
+    const cleanup = setupEventListeners();
+
+    // Clean up event listeners on component unmount or when featuredSubAssemblies change
+    return () => {
+      if (cleanup) cleanup();
+    };
+  }, [featuredSubAssemblies]);
 
   const getSubAssemblies = async () => {
     try {
       setIsLoading(true);
-      let url = `/sub-assemblies?populate=*&filters[active]=true&filters[featured]=true&sort=createdAt:desc`;
+      let url = `/sub-assemblies?populate=*&filters[active]=true&filters[featured]=true&sort=updatedAt:desc`;
       const res = await apiClient.GET(url);
       if (res && res.data.length > 0) {
         const transformedData = transformMedia(res.data);
@@ -153,7 +153,7 @@ const FeaturedSubAssemblies = () => {
                 enabled: false, // Initially disabled
               }}
               className="swiper-container w-full"
-               onSwiper={(swiper) => {
+              onSwiper={(swiper) => {
                 // Store the swiper instance once initialized
                 swiperInitialized.current = true;
               }}

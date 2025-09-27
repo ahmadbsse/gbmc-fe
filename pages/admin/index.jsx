@@ -46,9 +46,9 @@ const AdminDashboard = () => {
         }
         let url = "";
         if (searchQuery == "") {
-          url = `/parts?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=createdAt:desc`;
+          url = `/parts?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=updatedAt:desc`;
         } else {
-          url = `/parts?populate=*&filters[$or][0][name][$containsi]=${searchQuery}&filters[$or][1][oem_number][$containsi]=${searchQuery}&sort=createdAt:desc`;
+          url = `/parts?populate=*&filters[$or][0][name][$containsi]=${searchQuery}&filters[$or][1][oem_number][$containsi]=${searchQuery}&sort=updatedAt:desc`;
         }
         await apiClient.GET(url).then(async (res) => {
           setPagination(null);
@@ -87,9 +87,9 @@ const AdminDashboard = () => {
         }
         let url = "";
         if (searchQuery == "") {
-          url = `/engineering-components?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=createdAt:desc`;
+          url = `/engineering-components?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=updatedAt:desc`;
         } else {
-          url = `/engineering-components?populate=*&filters[name][$containsi]=${searchQuery}&sort=createdAt:desc`;
+          url = `/engineering-components?populate=*&filters[name][$containsi]=${searchQuery}&sort=updatedAt:desc`;
         }
         await apiClient.GET(url).then(async (res) => {
           setPagination(null);
@@ -129,9 +129,9 @@ const AdminDashboard = () => {
         }
         let url = "";
         if (searchQuery == "") {
-          url = `/sub-assemblies?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=createdAt:desc`;
+          url = `/sub-assemblies?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=updatedAt:desc`;
         } else {
-          url = `/sub-assemblies?populate=*&filters[name][$containsi]=${searchQuery}&sort=createdAt:desc`;
+          url = `/sub-assemblies?populate=*&filters[name][$containsi]=${searchQuery}&sort=updatedAt:desc`;
         }
         await apiClient.GET(url).then(async (res) => {
           setPagination(null);
@@ -171,9 +171,9 @@ const AdminDashboard = () => {
         }
         let url = "";
         if (searchQuery == "") {
-          url = `/suppliers?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=createdAt:desc`;
+          url = `/suppliers?populate=*&pagination[page]=${pageNum}&pagination[pageSize]=${PAGE_SIZE}&sort=updatedAt:desc`;
         } else {
-          url = `/suppliers?populate=*&filters[name][$containsi]=${searchQuery}&sort=createdAt:desc`;
+          url = `/suppliers?populate=*&filters[name][$containsi]=${searchQuery}&sort=updatedAt:desc`;
         }
         await apiClient.GET(url).then(async (res) => {
           setPagination(null);
